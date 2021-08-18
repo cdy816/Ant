@@ -3,9 +3,30 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31515.178
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Run", "Run", "{2DAF4C7E-14B0-4A5C-87E9-F2BE612EDEC5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Develop", "Develop", "{D0FD1ABD-FC41-4C7B-B465-EDD657120D4A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{40A33EC7-14EA-48CF-A06B-C1C3941D176A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cdy.Ant.Tag", "Common\Cdy.Ant.Tag\Cdy.Ant.Tag.csproj", "{BDC9C4C5-8C23-468F-9C8D-A890F416502C}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BDC9C4C5-8C23-468F-9C8D-A890F416502C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BDC9C4C5-8C23-468F-9C8D-A890F416502C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BDC9C4C5-8C23-468F-9C8D-A890F416502C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BDC9C4C5-8C23-468F-9C8D-A890F416502C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{BDC9C4C5-8C23-468F-9C8D-A890F416502C} = {40A33EC7-14EA-48CF-A06B-C1C3941D176A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D298DE71-994E-4E0F-94CD-1FD0C85FE2DD}
