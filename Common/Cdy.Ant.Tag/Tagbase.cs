@@ -27,9 +27,17 @@ namespace Cdy.Ant
         /// </summary>
         AnalogAlarm,
         /// <summary>
+        /// 模拟量范围报警
+        /// </summary>
+        AnalogRangeAlarm,
+        /// <summary>
         /// 数字量
         /// </summary>
         DigitalAlarm,
+        /// <summary>
+        /// 延迟类型数字变量
+        /// </summary>
+        DelayDigitalAlarm,
         /// <summary>
         /// 字符串
         /// </summary>
@@ -56,6 +64,9 @@ namespace Cdy.Ant
         ThreeRange
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public class TagManager
     {
         /// <summary>
@@ -265,7 +276,7 @@ namespace Cdy.Ant
         /// 
         /// </summary>
         /// <param name="xe"></param>
-        public void LoadFrom(XElement xe)
+        public virtual void LoadFrom(XElement xe)
         {
             this.Id = int.Parse(xe.Attribute("Id").Value);
             this.Name = xe.Attribute("Name").Value;
@@ -304,6 +315,7 @@ namespace Cdy.Ant
 
         #region ... Variables  ...
         private string mLinkTag = "";
+    
         #endregion ...Variables...
 
         #region ... Events     ...
@@ -333,9 +345,33 @@ namespace Cdy.Ant
             }
         }
 
+
+
+
         #endregion ...Properties...
 
         #region ... Methods    ...
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public override XElement SaveTo()
+        {
+            var re = base.SaveTo();
+            re.SetAttributeValue("LinkTag", LinkTag);
+            return re;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="xe"></param>
+        public override void LoadFrom(XElement xe)
+        {
+            base.LoadFrom(xe);
+            LinkTag = xe.Attribute("LinkTag") != null ? xe.Attribute("LinkTag").Value : string.Empty;
+        }
+
 
         #endregion ...Methods...
 
@@ -353,6 +389,127 @@ namespace Cdy.Ant
         /// 报警级别
         /// </summary>
         public AlarmLevel AlarmLevel { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public override XElement SaveTo()
+        {
+            var re = base.SaveTo();
+            re.SetAttributeValue("AlarmLevel", (int)AlarmLevel);
+            return re;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="xe"></param>
+        public override void LoadFrom(XElement xe)
+        {
+            base.LoadFrom(xe);
+            if(xe.Attribute("AlarmLevel") !=null)
+            {
+                AlarmLevel = (AlarmLevel)int.Parse(xe.Attribute("AlarmLevel").Value);
+            }
+        }
+    }
+
+
+    public class AnalogRangeAlarmItem
+    {
+        /// <summary>
+        /// 最小值
+        /// </summary>
+        public double MinValue { get; set; }
+
+        /// <summary>
+        /// 最大值
+        /// </summary>
+        public double MaxValue { get; set; }
+
+        /// <summary>
+        /// 报警级别
+        /// </summary>
+        public AlarmLevel AlarmLevel { get; set; }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public double DeadArea { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public XElement SaveTo()
+        {
+            XElement re = new XElement("AnalogRangeAlarmItem");
+            re.SetAttributeValue("MinValue", MinValue);
+            re.SetAttributeValue("MaxValue", MaxValue);
+            re.SetAttributeValue("DeadArea", DeadArea);
+            re.SetAttributeValue("AlarmLevel", (int)AlarmLevel);
+            return re;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="xe"></param>
+        public AnalogRangeAlarmItem LoadFrom(XElement xe)
+        {
+            if (xe.Attribute("AlarmLevel") != null)
+            {
+                AlarmLevel = (AlarmLevel)int.Parse(xe.Attribute("AlarmLevel").Value);
+            }
+            if (xe.Attribute("MinValue") != null)
+            {
+                MinValue = double.Parse(xe.Attribute("MinValue").Value);
+            }
+            if (xe.Attribute("MaxValue") != null)
+            {
+                MaxValue = double.Parse(xe.Attribute("MaxValue").Value);
+            }
+            if (xe.Attribute("DeadArea") != null)
+            {
+                DeadArea = double.Parse(xe.Attribute("DeadArea").Value);
+            }
+            return this;
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public class AnalogRangeAlarmTag : AlarmTag
+    {
+        public List<AnalogRangeAlarmItem> Items { get; set; }
+
+        public override TagType Type => TagType.AnalogRangeAlarm;
+
+        public override XElement SaveTo()
+        {
+            var re = base.SaveTo();
+            if(Items!=null)
+            {
+                foreach(var vv in Items)
+                {
+                    re.Add(vv.SaveTo());
+                }
+            }
+            return re;
+        }
+
+        public override void LoadFrom(XElement xe)
+        {
+            Items = new List<AnalogRangeAlarmItem>();
+            base.LoadFrom(xe);
+            foreach(var vv in xe.Elements("AnalogRangeAlarmItem"))
+            {
+                Items.Add(new AnalogRangeAlarmItem().LoadFrom(vv));
+            }
+        }
     }
 
 
@@ -367,8 +524,7 @@ namespace Cdy.Ant
         private AnalogAlarmItem mHighValue;
         private AnalogAlarmItem mLowValue;
         private AnalogAlarmItem mLowLowValue;
-        private double mDelay = 0;
-
+    
         #endregion ...Variables...
 
         #region ... Events     ...
@@ -445,30 +601,73 @@ namespace Cdy.Ant
             }
         }
 
-        /// <summary>
-            /// 
-            /// </summary>
-        public double Delay
-        {
-            get
-            {
-                return mDelay;
-            }
-            set
-            {
-                if (mDelay != value)
-                {
-                    mDelay = value;
-                }
-            }
-        }
-
-
         #endregion ...Properties...
 
         #region ... Methods    ...
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public override XElement SaveTo()
+        {
+            var re = base.SaveTo();
 
+            XElement xe;
+            if (HighHighValue != null)
+            {
+                xe = new XElement("HighHighValue");
+                xe.Add(HighHighValue.SaveTo());
+                re.Add(xe);
+            }
+            if (HighValue != null)
+            {
+                xe = new XElement("HighValue");
+                xe.Add(HighValue.SaveTo());
+                re.Add(xe);
+            }
+            if (LowValue != null)
+            {
+                xe = new XElement("LowValue");
+                xe.Add(LowValue.SaveTo());
+                re.Add(xe);
+            }
+            if (LowLowValue != null)
+            {
+                xe = new XElement("LowLowValue");
+                xe.Add(LowLowValue.SaveTo());
+                re.Add(xe);
+            }
+            return re;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="xe"></param>
+        public override void LoadFrom(XElement xe)
+        {
+            base.LoadFrom(xe);
+            if(xe.Element("HighHighValue") !=null)
+            {
+                HighHighValue = new AnalogAlarmItem().LoadFrom(xe.Element("HighHighValue").FirstNode as XElement);
+            }
+
+            if (xe.Element("HighValue") != null)
+            {
+                HighValue = new AnalogAlarmItem().LoadFrom(xe.Element("HighValue").FirstNode as XElement);
+            }
+
+            if (xe.Element("LowValue") != null)
+            {
+                LowValue = new AnalogAlarmItem().LoadFrom(xe.Element("LowValue").FirstNode as XElement);
+            }
+
+            if (xe.Element("LowLowValue") != null)
+            {
+                LowLowValue = new AnalogAlarmItem().LoadFrom(xe.Element("LowLowValue").FirstNode as XElement);
+            }
+        }
 
         #endregion ...Methods...
 
@@ -481,7 +680,7 @@ namespace Cdy.Ant
     /// <summary>
     /// 
     /// </summary>
-    public struct AnalogAlarmItem
+    public class AnalogAlarmItem
     {
         /// <summary>
         /// 值
@@ -497,6 +696,112 @@ namespace Cdy.Ant
         /// 报警级别
         /// </summary>
         public AlarmLevel AlarmLevel { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public XElement SaveTo()
+        {
+            XElement re = new XElement("AnalogRangeAlarmItem");
+            re.SetAttributeValue("Value", Value);
+            re.SetAttributeValue("DeadArea", DeadArea);
+            re.SetAttributeValue("AlarmLevel", (int)AlarmLevel);
+            return re;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="xe"></param>
+        public AnalogAlarmItem LoadFrom(XElement xe)
+        {
+            if (xe.Attribute("AlarmLevel") != null)
+            {
+                AlarmLevel = (AlarmLevel)int.Parse(xe.Attribute("AlarmLevel").Value);
+            }
+            if (xe.Attribute("Value") != null)
+            {
+                Value = double.Parse(xe.Attribute("Value").Value);
+            }
+            if (xe.Attribute("DeadArea") != null)
+            {
+                DeadArea = double.Parse(xe.Attribute("DeadArea").Value);
+            }
+            return this;
+        }
+    }
+
+    /// <summary>
+    /// 延时数字量报警
+    /// </summary>
+    public class DelayDigitalAlarmTag : SimpleAlarmTag
+    {
+
+        #region ... Variables  ...
+        private double mDelay = 0;
+        #endregion ...Variables...
+
+        #region ... Events     ...
+
+        #endregion ...Events...
+
+        #region ... Constructor...
+
+        #endregion ...Constructor...
+
+        #region ... Properties ...
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public override TagType Type => TagType.DigitalAlarm;
+
+        /// <summary>
+        /// 值
+        /// </summary>
+        public bool Value { get; set; }
+
+        public double Delay { get { return mDelay; } set { mDelay = value; } }
+
+        #endregion ...Properties...
+
+        #region ... Methods    ...
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="xe"></param>
+        public override void LoadFrom(XElement xe)
+        {
+            base.LoadFrom(xe);
+            if (xe.Attribute("Value") != null)
+            {
+                Value = bool.Parse(xe.Attribute("Value").Value);
+            }
+            if (xe.Attribute("Delay") != null)
+            {
+                Delay = double.Parse(xe.Attribute("Delay").Value);
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public override XElement SaveTo()
+        {
+            var re = base.SaveTo();
+            re.SetAttributeValue("IsReverse", Value);
+            re.SetAttributeValue("Delay", Delay);
+            return re;
+        }
+
+        #endregion ...Methods...
+
+        #region ... Interfaces ...
+
+        #endregion ...Interfaces...
+
     }
 
     /// <summary>
@@ -506,7 +811,7 @@ namespace Cdy.Ant
     {
 
         #region ... Variables  ...
-
+        private double mDelay = 0;
         #endregion ...Variables...
 
         #region ... Events     ...
@@ -527,21 +832,58 @@ namespace Cdy.Ant
         /// <summary>
         /// 是否取反
         /// </summary>
-        public bool IsReverse { get; set; }
-
+        public bool Value { get; set; }
 
         /// <summary>
-        /// 延时
+        /// 复制延时
         /// </summary>
         public double Delay
         {
-            get;
-            set;
+            get
+            {
+                return mDelay;
+            }
+            set
+            {
+                if (mDelay != value)
+                {
+                    mDelay = value;
+                }
+            }
         }
 
         #endregion ...Properties...
 
         #region ... Methods    ...
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="xe"></param>
+        public override void LoadFrom(XElement xe)
+        {
+            base.LoadFrom(xe);
+            if(xe.Attribute("Value") !=null)
+            {
+                Value = bool.Parse(xe.Attribute("Value").Value);
+            }
+
+            if (xe.Attribute("Delay") != null)
+            {
+                Delay = double.Parse(xe.Attribute("Delay").Value);
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public override XElement SaveTo()
+        {
+            var re = base.SaveTo();
+            re.SetAttributeValue("IsReverse", Value);
+            re.SetAttributeValue("Delay", Delay);
+            return re;
+        }
 
         #endregion ...Methods...
 
@@ -592,7 +934,7 @@ namespace Cdy.Ant
         #region ... Properties ...
 
 
-        public override TagType Type => TagType.Script;
+        public override TagType Type => TagType.Pulse;
 
         /// <summary>
         /// 跳变类型
@@ -603,6 +945,30 @@ namespace Cdy.Ant
         #endregion ...Properties...
 
         #region ... Methods    ...
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public override XElement SaveTo()
+        {
+            var re = base.SaveTo();
+            re.SetAttributeValue("PulseType", (int)PulseType);
+            return re;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="xe"></param>
+        public override void LoadFrom(XElement xe)
+        {
+            base.LoadFrom(xe);
+            if(xe.Attribute("PulseType") !=null)
+            {
+                PulseType = (PulseAlarmType)int.Parse(xe.Attribute("PulseType").Value);
+            }
+        }
 
         #endregion ...Methods...
 
@@ -644,6 +1010,27 @@ namespace Cdy.Ant
         #endregion ...Properties...
 
         #region ... Methods    ...
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="xe"></param>
+        public override void LoadFrom(XElement xe)
+        {
+            base.LoadFrom(xe);
+            Value = xe.Attribute("Value") != null ? xe.Attribute("Value").Value : string.Empty;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public override XElement SaveTo()
+        {
+            var re = base.SaveTo();
+            re.SetAttributeValue("Value", Value);
+            return re;
+        }
 
         #endregion ...Methods...
 
@@ -692,18 +1079,34 @@ namespace Cdy.Ant
         /// </summary>
         public bool IsInRangeAlarm { get; set; }
 
-        /// <summary>
-        /// 延时
-        /// </summary>
-        public double Delay
-        {
-            get;
-            set;
-        }
 
         #endregion ...Properties...
 
         #region ... Methods    ...
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public override XElement SaveTo()
+        {
+            var re = base.SaveTo();
+            re.SetAttributeValue("MinValue", MinValue);
+            re.SetAttributeValue("MaxValue", MaxValue);
+            re.SetAttributeValue("IsInRangeAlarm", IsInRangeAlarm);
+            return re;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="xe"></param>
+        public override void LoadFrom(XElement xe)
+        {
+            base.LoadFrom(xe);
+            MaxValue = xe.Attribute("MaxValue") != null ? double.Parse(xe.Attribute("MaxValue").Value) : 0;
+            MinValue = xe.Attribute("MinValue") != null ? double.Parse(xe.Attribute("MinValue").Value) : 0;
+            IsInRangeAlarm = xe.Attribute("IsInRangeAlarm") != null ? bool.Parse(xe.Attribute("IsInRangeAlarm").Value) : true;
+        }
 
         #endregion ...Methods...
 
@@ -748,18 +1151,49 @@ namespace Cdy.Ant
         /// </summary>
         public bool IsInRangeAlarm { get; set; }
 
-        /// <summary>
-        /// 延时
-        /// </summary>
-        public double Delay
-        {
-            get;
-            set;
-        }
-
         #endregion ...Properties...
 
         #region ... Methods    ...
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public override XElement SaveTo()
+        {
+            var re = base.SaveTo();
+            re.SetAttributeValue("IsInRangeAlarm", IsInRangeAlarm);
+            StringBuilder sb = new StringBuilder();
+            foreach(var vv in AlarmDatas)
+            {
+                sb.Append(vv.X + "," + vv.Y + ";");
+            }
+            sb.Length = sb.Length > 0 ? sb.Length - 1 : sb.Length;
+            re.Add(sb.ToString());
+            return re;
+        }
+
+        public override void LoadFrom(XElement xe)
+        {
+            base.LoadFrom(xe);
+            if(xe.Attribute("IsInRangeAlarm") !=null)
+            {
+                IsInRangeAlarm = bool.Parse(xe.Attribute("IsInRangeAlarm").Value);
+            }
+            AlarmDatas = new List<Point>();
+            string[] ss = xe.Value.Split(new char[] { ';' });
+            if(ss.Length>0)
+            {
+                foreach(var vv in ss)
+                {
+                    string[] s1 = vv.Split(new char[] { ',' });
+                    double val1 = double.Parse(s1[0]);
+                    double val2 = double.Parse(s1[1]);
+                    AlarmDatas.Add(new Point() { X = val1, Y = val2 });
+                }
+            }
+        }
+        
 
         #endregion ...Methods...
 
@@ -803,19 +1237,49 @@ namespace Cdy.Ant
         /// </summary>
         public bool IsInRangeAlarm { get; set; }
 
-        /// <summary>
-        /// 延时
-        /// </summary>
-        public double Delay
-        {
-            get;
-            set;
-        }
-
         #endregion ...Properties...
 
         #region ... Methods    ...
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public override XElement SaveTo()
+        {
+            var re = base.SaveTo();
+            re.SetAttributeValue("IsInRangeAlarm", IsInRangeAlarm);
+            StringBuilder sb = new StringBuilder();
+            foreach (var vv in AlarmDatas)
+            {
+                sb.Append(vv.X + ","+vv.Y+"," + vv.Z + ";");
+            }
+            sb.Length = sb.Length > 0 ? sb.Length - 1 : sb.Length;
+            re.Add(sb.ToString());
+            return re;
+        }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="xe"></param>
+        public override void LoadFrom(XElement xe)
+        {
+            base.LoadFrom(xe);
+            if (xe.Attribute("IsInRangeAlarm") != null)
+            {
+                IsInRangeAlarm = bool.Parse(xe.Attribute("IsInRangeAlarm").Value);
+            }
+            AlarmDatas = new List<Point3D>();
+            string[] ss = xe.Value.Split(new char[] { ';' });
+            if (ss.Length > 0)
+            {
+                foreach (var vv in ss)
+                {
+                    string[] s1 = vv.Split(new char[] { ',' });
+                    AlarmDatas.Add(new Point3D() { X = double.Parse(s1[0]), Y = double.Parse(s1[1]),Z= double.Parse(s1[2]) });
+                }
+            }
+        }
         #endregion ...Methods...
 
         #region ... Interfaces ...
@@ -856,7 +1320,26 @@ namespace Cdy.Ant
         #endregion ...Properties...
 
         #region ... Methods    ...
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public override XElement SaveTo()
+        {
+            var re = base.SaveTo();
+            re.Add(new XCData(Expresse));
+            return re;
+        }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="xe"></param>
+        public override void LoadFrom(XElement xe)
+        {
+            base.LoadFrom(xe);
+            this.Expresse = xe.Value;
+        }
         #endregion ...Methods...
 
         #region ... Interfaces ...

@@ -8,6 +8,11 @@ namespace Cdy.Ant
 {
     public struct Point
     {
+        public Point(double dx,double dy)
+        {
+            X = dx;
+            Y = dy;
+        }
         public double X { get; set; }
         public double Y { get; set; }
     }

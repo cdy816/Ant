@@ -9,28 +9,50 @@ namespace Cdy.Ant
     /// <summary>
     /// 
     /// </summary>
+    public enum MessgeType
+    {
+        /// <summary>
+        /// 报警
+        /// </summary>
+        Alarm,
+        /// <summary>
+        /// 系统消息
+        /// </summary>
+        InfoMessage
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
     public abstract class Message
     {
         /// <summary>
         /// ID编号
         /// </summary>
-        public string Id { get; set; }
+        public long Id { get; set; }
 
         /// <summary>
-        /// 
+        /// 生产者
         /// </summary>
         public string Source { get; set; }
 
         /// <summary>
-        /// 
+        /// 消息产生时间
         /// </summary>
         public DateTime CreateTime { get; set; }
+
+
 
         /// <summary>
         /// 
         /// </summary>
         public string MessageBody
         { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public abstract MessgeType Type { get; }
 
 
         /// <summary>
@@ -45,11 +67,20 @@ namespace Cdy.Ant
     /// </summary>
     public class AlarmMessage : Message
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        public override MessgeType Type => MessgeType.Alarm;
 
         /// <summary>
         /// 报警级别
         /// </summary>
         public AlarmLevel AlarmLevel { get; set; }
+
+        /// <summary>
+        /// 报警值
+        /// </summary>
+        public string AlarmValue { get; set; }
 
         /// <summary>
         /// 关联变量
@@ -60,6 +91,11 @@ namespace Cdy.Ant
         /// 恢复时间
         /// </summary>
         public DateTime RestoreTime { get; set; }
+
+        /// <summary>
+        /// 恢复值
+        /// </summary>
+        public string RestoreValue { get; set; }
 
         /// <summary>
         /// 确认时间
