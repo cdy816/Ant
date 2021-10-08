@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace Cdy.Ant.MarsApi
+namespace DBDevelopService.Security
 {
     /// <summary>
     /// 
     /// </summary>
-    public class MarsApiData:ApiData
+    public class Security
     {
 
         #region ... Variables  ...
@@ -25,30 +24,16 @@ namespace Cdy.Ant.MarsApi
         #endregion ...Constructor...
 
         #region ... Properties ...
-        /// <summary>
-        /// 
-        /// </summary>
-        public string ServerIp { get; set; } = "127.0.0.1";
 
         /// <summary>
         /// 
         /// </summary>
-        public int Port { get; set; } = 14330;
+        public string Version { get; set; } = "0.1";
 
         /// <summary>
         /// 
         /// </summary>
-        public string UserName { get; set; } = "Admin";
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public string Password { get; set; } = "Admin";
-
-        /// <summary>
-        /// 扫描周期
-        /// </summary>
-        public int ScanCircle { get; set; } = 1000;
+        public UserDocument User { get; set; }
 
         #endregion ...Properties...
 

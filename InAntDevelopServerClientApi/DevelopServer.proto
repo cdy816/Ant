@@ -1,0 +1,405 @@
+syntax = "proto3";
+
+option csharp_namespace = "AntDevelopServer";
+
+package AntDevelopServer;
+
+// The greeting service definition.
+service DevelopServer {
+  // Sends a greeting
+ rpc Login(LoginRequest) returns (LoginReply);
+   //
+ rpc IsAdmin(GetRequest) returns (BoolResultReplay);
+
+   //Logout
+ rpc Logout(LogoutRequest) returns (BoolResultReplay);
+
+ //数据库操作
+
+ //检索Mars数据库列表
+ rpc QueryMarsDatabase(QueryDatabaseRequest) returns (QueryDatabaseReplay);
+
+ //枚举检索数据库
+ rpc QueryAntDatabase(QueryDatabaseRequest) returns (QueryDatabaseReplay);
+
+   //新建数据库
+  rpc NewAntDatabase(NewDatabaseRequest) returns (BoolResultReplay);
+
+ //打开数据库
+ rpc CheckOpenAntDatabase(DatabasesRequest) returns (BoolResultReplay);
+
+ //数据库是否变脏
+ rpc IsAntDatabaseDirty(DatabasesRequest) returns (BoolResultReplay);
+
+ //变量操作
+ //查询指定条件的变量
+ rpc QueryTag(QueryMessageRequest) returns (GetTagMessageReply);
+
+   //获取所有变量
+ rpc GetAllTag(GetTagByGroupRequest) returns (GetTagMessageReply);
+
+      //根据组获取变量
+ rpc GetTagByGroup(GetTagByGroupRequest) returns (GetTagMessageReply);
+
+ //添加
+ rpc AddTag(AddTagRequestMessage) returns (AddTagReplyMessage);
+
+//导入变量
+ rpc Import(ImportTagRequestMessage) returns (ImportTagRequestReplyMessage);
+
+//删除
+rpc RemoveTag(RemoveTagMessageRequest) returns (BoolResultReplay);
+
+      //修改实时变量
+rpc UpdateTag(UpdateTagRequestMessage) returns (BoolResultReplay);
+
+  //批量删除变量
+rpc ClearTag(ClearTagRequestMessage) returns (BoolResultReplay);
+
+  //清空整个数据库
+rpc ClearAllTag(GetRequest) returns (BoolResultReplay);
+
+ //重置变量ID
+rpc ResetTagId(ResetTagIdRequest) returns (ResetTagIdReplay);
+
+//变量组操作
+
+//获取变量组
+rpc GetTagGroup(GetRequest) returns (GetTagGroupMessageReply);
+
+//添加变量组
+rpc AddTagGroup(AddGroupRequest) returns (AddGroupReplay);
+
+  //粘贴组
+rpc PasteTagGroup(PasteGroupRequest) returns (PasteGroupReplay);
+
+  //删除变量组
+rpc RemoveTagGroup(RemoveGroupRequest) returns (BoolResultReplay);
+
+  //重命名变量组
+rpc RenameTagGroup(RenameGroupRequest) returns (BoolResultReplay);
+
+  //移动变量组
+rpc MoveTagGroup(MoveGroupRequest) returns (BoolResultReplay);
+
+  //更新变量组描述信息
+rpc UpdateGroupDescription(UpdateGroupDescriptionRequest) returns (BoolResultReplay);
+
+//数据库整体操作
+  //保存
+rpc Save(GetRequest) returns (BoolResultReplay);
+
+  //撤销
+rpc Cancel(GetRequest) returns (BoolResultReplay);
+
+   //启动数据库
+rpc Start(DatabasesRequest) returns (BoolResultReplay);
+
+   //停止数据库
+rpc Stop(DatabasesRequest) returns (BoolResultReplay);
+
+   //在运行不中断的情况下加载数据库
+rpc ReRun(DatabasesRequest) returns (BoolResultReplay);
+
+  //
+rpc IsAntDatabaseRunning(DatabasesRequest) returns (BoolResultReplay);
+
+   //
+rpc GetServerPort(DatabasesRequest) returns (IntResultReplay);
+
+   //
+rpc SetServerPort(SetServerPortRequest) returns  (BoolResultReplay);
+
+}
+
+message GetRequest
+{
+    string LoginId=1;
+    string Database=2;
+}
+
+//
+message BoolResultReplay
+{
+    bool Result =1;
+    string ErroMessage=2;
+}
+
+
+message IntResultReplay
+{
+    bool Result =1;
+    int32 value=2;
+    string ErroMessage=3;
+}
+
+
+message LoginRequest
+{
+    string userName=1;
+    string password=2;
+}
+
+message LoginReply
+{
+    string loginId=1;
+}
+
+message LogoutRequest
+{
+    string LoginId=1;
+}
+
+message DatabasesRequest
+{
+    string loginId=1;
+    string Database=2;
+}
+
+message QueryDatabaseRequest
+{
+   string loginId =1;
+}
+
+message QueryDatabaseReplay
+{
+    bool Result =1;
+    string ErroMessage=2;
+   repeated KeyValueMessage Database=3;
+}
+
+message QueryMessageRequest
+{
+    string LoginId=1;
+    string Database=2;
+    repeated KeyValueMessage conditions=3;
+}
+
+//获取变量配置
+message GetTagMessageReply
+{
+    bool Result =1;
+    string ErroMessage=2;
+    int32 Count=3;
+    int32 Index=4;
+    int32 TagCount=5;
+    repeated TagMessage Tags=6;
+}
+
+//
+message GetTagByGroupRequest
+{
+    string LoginId=1;
+    string Database=2;
+    string Group=3;
+    int32 Index=4;
+    repeated FilterMessageItem Filters=5;
+}
+
+message GetTagGroupMessageReply
+{
+    bool Result =1;
+    string ErroMessage=2;
+    repeated TagGroup Group=3;
+}
+
+//复制组
+message PasteGroupRequest
+{
+    string LoginId=1;
+    string Database=2;
+    string GroupFullName=3;
+    string TargetParentName=4;
+}
+
+message PasteGroupReplay
+{
+    bool Result =1;
+    string ErroMessage=2;
+    string Group=3;
+}
+
+//添加组
+message AddGroupRequest
+{
+    string LoginId=1;
+    string Database=2;
+    string Name=3;
+    string ParentName=4;
+}
+
+message AddGroupReplay
+{
+    bool Result =1;
+    string ErroMessage=2;
+    string Group=3;
+}
+
+
+//删除组
+message RemoveGroupRequest
+{
+    string LoginId=1;
+    string Database=2;
+    string Name=3;
+}
+
+//
+message RenameGroupRequest
+{
+    string LoginId=1;
+    string Database=2;
+    string OldFullName=3;
+    string NewName=4;
+}
+
+//
+message MoveGroupRequest
+{
+    string LoginId=1;
+    string Database=2;
+    string Name=3;
+    string OldParentName=4;
+    string NewParentName=5;
+}
+
+//更新组的描述
+message UpdateGroupDescriptionRequest
+{
+    string LoginId=1;
+    string Database=2;
+    string GroupName=3;
+    string Desc=4;
+}
+
+message KeyValueMessage
+{
+    string key=1;
+    string value=2;
+}
+
+//
+message AddTagRequestMessage
+{
+    string loginId =1;
+     string Database=2;
+    TagMessage realTag = 3;
+}
+
+//
+message AddTagReplyMessage
+{
+    int32 TagId = 1;
+    bool Result =2;
+    string ErroMessage=3;
+}
+
+message RemoveTagMessageRequest
+{
+    string LoginId=1;
+     string Database=2;
+    repeated int32 TagId=3;
+}
+
+message UpdateTagRequestMessage
+{
+    string loginId=1;
+    string Database=2;
+    TagMessage tag = 3;
+}
+
+
+message ImportTagRequestMessage
+{
+    string loginId=1;
+    string Database=2;
+    TagMessage realTag = 3;
+    int32 Mode=5;
+}
+
+
+message ImportTagRequestReplyMessage
+{
+    int32 TagId = 1;
+    bool Result =2;
+    string ErroMessage=3;
+}
+
+message UpdateRealTagRequestMessage
+{
+    string loginId=1;
+    string Database=2;
+    TagMessage tag = 3;
+}
+
+//重置变量ID
+message ResetTagIdRequest
+{
+    string LoginId=1;
+    string Database=2;
+    int32 StartId=3;
+    repeated int32 TagIds=4;
+}
+
+//重置变量返回
+message ResetTagIdReplay
+{
+    bool Result =1;
+    string ErroMessage=2;
+    repeated IntKeyValueMessage TagIds=3;
+}
+
+message IntKeyValueMessage
+{
+    int32 key=1;
+    int32 value=2;
+}
+
+//实时变量配置
+message TagMessage
+{
+  int32 Id=1;
+  uint32 TagType=2;
+  string Name = 3;
+  string Group = 4;
+  string Desc = 5;
+  bool IsEnable = 6;
+  string LinkTag=7;
+  int32 AlarmLevel=8;
+  string AlarmContent=9;
+}
+
+//变量组
+message TagGroup
+{
+    string Name=1;
+    string Parent=2;
+    string Description=3;
+}
+
+message FilterMessageItem
+{
+    string key=1;
+    string value=2;
+}
+
+message NewDatabaseRequest
+{
+    string loginId =1;
+    string Database=2;
+    string Desc=3;
+}
+
+message SetServerPortRequest
+{
+    string LoginId=1;
+    int32 Port=2;
+    string Database=3;
+}
+
+message ClearTagRequestMessage
+{
+    string LoginId=1;
+    string Database=2;
+    string GroupFullName=3;
+}

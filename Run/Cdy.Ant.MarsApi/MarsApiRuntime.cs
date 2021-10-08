@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Xml.Linq;
 
 namespace Cdy.Ant.MarsApi
@@ -12,6 +13,9 @@ namespace Cdy.Ant.MarsApi
         #region ... Variables  ...
         private ApiRunner mRunner;
         private MarsApiData mData;
+
+       
+
         #endregion ...Variables...
 
         #region ... Events     ...
@@ -77,7 +81,7 @@ namespace Cdy.Ant.MarsApi
         /// </summary>
         public override void Start()
         {
-            
+            mRunner.Start();
         }
 
         /// <summary>
@@ -85,7 +89,7 @@ namespace Cdy.Ant.MarsApi
         /// </summary>
         public override void Stop()
         {
-            
+            mRunner.Close();
         }
         #endregion ...Methods...
 

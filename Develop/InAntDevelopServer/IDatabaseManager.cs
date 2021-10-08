@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace Cdy.Ant.MarsApi
+namespace InAntDevelopServer
 {
     /// <summary>
     /// 
     /// </summary>
-    public class MarsApiData:ApiData
+    public interface IDatabaseManager
     {
 
         #region ... Variables  ...
@@ -25,34 +24,34 @@ namespace Cdy.Ant.MarsApi
         #endregion ...Constructor...
 
         #region ... Properties ...
-        /// <summary>
-        /// 
-        /// </summary>
-        public string ServerIp { get; set; } = "127.0.0.1";
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public int Port { get; set; } = 14330;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public string UserName { get; set; } = "Admin";
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public string Password { get; set; } = "Admin";
-
-        /// <summary>
-        /// 扫描周期
-        /// </summary>
-        public int ScanCircle { get; set; } = 1000;
 
         #endregion ...Properties...
 
         #region ... Methods    ...
+
+        /// <summary>
+        /// 启动
+        /// </summary>
+        /// <param name="name"></param>
+        bool Start(string name);
+
+        /// <summary>
+        /// 停止运行
+        /// </summary>
+        /// <param name="name"></param>
+        bool Stop(string name);
+
+        /// <summary>
+        /// 重新运行更改部分
+        /// </summary>
+        /// <param name="name"></param>
+        bool Rerun(string name);
+
+        /// <summary>
+        /// 是否处于运行中
+        /// </summary>
+        /// <param name="name"></param>
+        bool IsRunning(string name);
 
         #endregion ...Methods...
 

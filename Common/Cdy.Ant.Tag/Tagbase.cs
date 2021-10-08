@@ -260,6 +260,18 @@ namespace Cdy.Ant
         /// 
         /// </summary>
         /// <returns></returns>
+        public virtual Tagbase Clone()
+        {
+            var re = SaveTo();
+            var tag = TagManager.Manager.CreatTag(this.Type);
+            tag.LoadFrom(re);
+            return tag;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public virtual XElement SaveTo()
         {
             XElement xe = new XElement(Type.ToString());
@@ -415,7 +427,9 @@ namespace Cdy.Ant
         }
     }
 
-
+    /// <summary>
+    /// 
+    /// </summary>
     public class AnalogRangeAlarmItem
     {
         /// <summary>
@@ -477,6 +491,31 @@ namespace Cdy.Ant
             }
             return this;
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return (byte)AlarmLevel+","+MinValue+","+MaxValue+","+DeadArea;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sval"></param>
+        /// <returns></returns>
+        public AnalogRangeAlarmItem LoadFromString(string sval)
+        {
+            string[] ss = sval.Split(new char[] { ',' });
+            AlarmLevel = (AlarmLevel)(int.Parse(ss[0]));
+            MinValue = double.Parse(ss[1]);
+            MaxValue = double.Parse(ss[2]);
+            DeadArea = double.Parse(ss[3]);
+            return this;
+        }
+
     }
 
     /// <summary>
@@ -730,6 +769,28 @@ namespace Cdy.Ant
             }
             return this;
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return (int)AlarmLevel+","+Value+","+DeadArea;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="val"></param>
+        public AnalogAlarmItem LoadFromString(string val)
+        {
+            string[] ss = val.Split(new char[] { ',' });
+            AlarmLevel = (AlarmLevel)(int.Parse(ss[0]));
+            Value = double.Parse(ss[1]);
+            DeadArea = double.Parse(ss[2]);
+            return this;
+        }
     }
 
     /// <summary>
@@ -762,6 +823,9 @@ namespace Cdy.Ant
         /// </summary>
         public bool Value { get; set; }
 
+        /// <summary>
+        /// 恢复延时
+        /// </summary>
         public double Delay { get { return mDelay; } set { mDelay = value; } }
 
         #endregion ...Properties...
@@ -834,23 +898,23 @@ namespace Cdy.Ant
         /// </summary>
         public bool Value { get; set; }
 
-        /// <summary>
-        /// 复制延时
-        /// </summary>
-        public double Delay
-        {
-            get
-            {
-                return mDelay;
-            }
-            set
-            {
-                if (mDelay != value)
-                {
-                    mDelay = value;
-                }
-            }
-        }
+        ///// <summary>
+        ///// 恢复延时
+        ///// </summary>
+        //public double Delay
+        //{
+        //    get
+        //    {
+        //        return mDelay;
+        //    }
+        //    set
+        //    {
+        //        if (mDelay != value)
+        //        {
+        //            mDelay = value;
+        //        }
+        //    }
+        //}
 
         #endregion ...Properties...
 
@@ -867,10 +931,10 @@ namespace Cdy.Ant
                 Value = bool.Parse(xe.Attribute("Value").Value);
             }
 
-            if (xe.Attribute("Delay") != null)
-            {
-                Delay = double.Parse(xe.Attribute("Delay").Value);
-            }
+            //if (xe.Attribute("Delay") != null)
+            //{
+            //    Delay = double.Parse(xe.Attribute("Delay").Value);
+            //}
         }
 
         /// <summary>
@@ -881,7 +945,7 @@ namespace Cdy.Ant
         {
             var re = base.SaveTo();
             re.SetAttributeValue("IsReverse", Value);
-            re.SetAttributeValue("Delay", Delay);
+            //re.SetAttributeValue("Delay", Delay);
             return re;
         }
 

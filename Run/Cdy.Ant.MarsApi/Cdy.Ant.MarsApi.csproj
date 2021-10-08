@@ -9,6 +9,11 @@
   </Target>
 
   <ItemGroup>
+    <PackageReference Include="Cheetah" Version="0.7.0" />
+    <PackageReference Include="DBRunTime.ServiceApi" Version="1.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\Common\Cdy.Ant.Tag\Cdy.Ant.Tag.csproj" />
   </ItemGroup>
 

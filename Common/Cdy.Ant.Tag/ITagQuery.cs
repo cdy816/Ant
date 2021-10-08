@@ -63,11 +63,11 @@ namespace Cdy.Ant
         /// <returns></returns>
         IEnumerable<Tagbase> ListAllTags();
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        byte[] SeriseToStream();
+        ///// <summary>
+        ///// 
+        ///// </summary>
+        ///// <returns></returns>
+        //byte[] SeriseToStream();
 
     }
 }

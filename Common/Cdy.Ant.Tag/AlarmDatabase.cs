@@ -6,9 +6,12 @@ using System.Threading.Tasks;
 
 namespace Cdy.Ant
 {
-    /// <summary>
-    /// 
-    /// </summary>
+
+    public class Setting
+    {
+        public int WebServerPort { get; set; } = 18000;
+    }
+
     /// <summary>
     /// 
     /// </summary>
@@ -23,6 +26,11 @@ namespace Cdy.Ant
             NamedTags = new Dictionary<string, Tagbase>();
             Groups = new Dictionary<string, TagGroup>();
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public Setting Setting { get; set; }
 
         /// <summary>
         /// 名称
@@ -111,8 +119,6 @@ namespace Cdy.Ant
                 return null;
             }
         }
-
-
 
 
         #region ITagManager
@@ -740,20 +746,20 @@ namespace Cdy.Ant
             return MinId;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public byte[] SeriseToStream()
-        {
-            using (var ms = new System.IO.MemoryStream())
-            {
-                using (System.IO.Compression.GZipStream gs = new System.IO.Compression.GZipStream(ms, System.IO.Compression.CompressionLevel.Optimal))
-                {
-                    new AlarmDatabaseSerise() { Database = this }.Save(gs);
-                    return ms.GetBuffer();
-                }
-            }
-        }
+        ///// <summary>
+        ///// 
+        ///// </summary>
+        ///// <returns></returns>
+        //public byte[] SeriseToStream()
+        //{
+        //    using (var ms = new System.IO.MemoryStream())
+        //    {
+        //        using (System.IO.Compression.GZipStream gs = new System.IO.Compression.GZipStream(ms, System.IO.Compression.CompressionLevel.Optimal))
+        //        {
+        //            new AlarmDatabaseSerise() { Database = this }.Save(gs);
+        //            return ms.GetBuffer();
+        //        }
+        //    }
+        //}
     }
 }
