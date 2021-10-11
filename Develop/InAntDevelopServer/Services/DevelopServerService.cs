@@ -54,6 +54,8 @@ namespace InAntDevelopServer
             return Task.FromResult(new BoolResultReplay() { Result = true });
         }
 
+        
+
         /// <summary>
         /// 
         /// </summary>
@@ -169,6 +171,13 @@ namespace InAntDevelopServer
             {
                 DbManager.Instance.CheckAndContinueLoadDatabase(db);
             }
+            else
+            {
+                DbManager.Instance.NewDB(request.Database, request.Database);
+                var user = SecurityManager.Manager.GetUser(request.LoginId);
+
+                user.Databases.Add(request.Database);
+            }
             return Task.FromResult(new BoolResultReplay() { Result = true });
         }
 
@@ -229,25 +238,6 @@ namespace InAntDevelopServer
                     re.Database.Add(new KeyValueMessage() { Key = vv, Value = desc });
                 }
             }
-            return Task.FromResult(re);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="request"></param>
-        /// <param name="context"></param>
-        /// <returns></returns>
-        public override Task<QueryDatabaseReplay> QueryMarsDatabase(QueryDatabaseRequest request, ServerCallContext context)
-        {
-            if (!SecurityManager.Manager.CheckKeyAvaiable(request.LoginId))
-            {
-                return Task.FromResult(new QueryDatabaseReplay() { Result = false });
-            }
-
-            QueryDatabaseReplay re = new QueryDatabaseReplay() { Result = true };
-            var user = SecurityManager.Manager.GetUser(request.LoginId);
-            var dbs = user.Databases;
             foreach (var vv in DbManager.Instance.ListMarsDatabase())
             {
                 if (dbs.Contains(vv) || user.IsAdmin)
@@ -258,6 +248,33 @@ namespace InAntDevelopServer
             }
             return Task.FromResult(re);
         }
+
+        ///// <summary>
+        ///// 
+        ///// </summary>
+        ///// <param name="request"></param>
+        ///// <param name="context"></param>
+        ///// <returns></returns>
+        //public override Task<QueryDatabaseReplay> QueryMarsDatabase(QueryDatabaseRequest request, ServerCallContext context)
+        //{
+        //    if (!SecurityManager.Manager.CheckKeyAvaiable(request.LoginId))
+        //    {
+        //        return Task.FromResult(new QueryDatabaseReplay() { Result = false });
+        //    }
+
+        //    QueryDatabaseReplay re = new QueryDatabaseReplay() { Result = true };
+        //    var user = SecurityManager.Manager.GetUser(request.LoginId);
+        //    var dbs = user.Databases;
+        //    foreach (var vv in DbManager.Instance.ListMarsDatabase())
+        //    {
+        //        if (dbs.Contains(vv) || user.IsAdmin)
+        //        {
+        //            string desc = "";
+        //            re.Database.Add(new KeyValueMessage() { Key = vv, Value = desc });
+        //        }
+        //    }
+        //    return Task.FromResult(re);
+        //}
 
         /// <summary>
         /// 

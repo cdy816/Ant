@@ -260,6 +260,39 @@ namespace Cdy.Ant
         /// 
         /// </summary>
         /// <returns></returns>
+        public override string ToString()
+        {
+            return Type+","+Id+","+Name+","+Desc+","+Group + "," +IsEnable;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="val"></param>
+        public void LoadFromString(string val)
+        {
+            var ss = val.Split(new char[] { ',' });
+            LoadFrom(ss.AsSpan<string>(1));
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="vals"></param>
+        protected virtual Span<string> LoadFrom(Span<string> vals)
+        {
+            Id = int.Parse(vals[0]);
+            Name = vals[1];
+            Desc = vals[2];
+            Group = vals[3];
+            IsEnable = bool.Parse(vals[4]);
+            return vals.Slice(5);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public virtual Tagbase Clone()
         {
             var re = SaveTo();
@@ -363,6 +396,28 @@ namespace Cdy.Ant
         #endregion ...Properties...
 
         #region ... Methods    ...
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return base.ToString()+","+LinkTag.Replace(",","|");
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="vals"></param>
+        /// <returns></returns>
+        protected override Span<string> LoadFrom(Span<string> vals)
+        {
+            var re = base.LoadFrom(vals);
+            LinkTag = re[0].Replace("|", ",");
+            return vals.Length > 1 ? vals.Slice(1) : null;
+        }
+
         /// <summary>
         /// 
         /// </summary>
@@ -425,6 +480,28 @@ namespace Cdy.Ant
                 AlarmLevel = (AlarmLevel)int.Parse(xe.Attribute("AlarmLevel").Value);
             }
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return base.ToString()+","+(byte)AlarmLevel;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="vals"></param>
+        /// <returns></returns>
+        protected override Span<string> LoadFrom(Span<string> vals)
+        {
+            var re = base.LoadFrom(vals);
+            AlarmLevel = (AlarmLevel)(int.Parse(re[0]));
+            return re.Slice(1);
+        }
+
     }
 
     /// <summary>
@@ -516,6 +593,19 @@ namespace Cdy.Ant
             return this;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ss"></param>
+        public AnalogRangeAlarmItem LoadFromSpan(Span<string> ss)
+        {
+            AlarmLevel = (AlarmLevel)(int.Parse(ss[0]));
+            MinValue = double.Parse(ss[1]);
+            MaxValue = double.Parse(ss[2]);
+            DeadArea = double.Parse(ss[3]);
+            return this;
+        }
+
     }
 
     /// <summary>
@@ -549,6 +639,40 @@ namespace Cdy.Ant
                 Items.Add(new AnalogRangeAlarmItem().LoadFrom(vv));
             }
         }
+
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach(var vv in Items)
+            {
+                sb.Append("," + vv.ToString());
+            }
+            return base.ToString()+sb.ToString();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="vals"></param>
+        /// <returns></returns>
+        protected override Span<string> LoadFrom(Span<string> vals)
+        {
+            var re = base.LoadFrom(vals);
+            while (re.Length > 0)
+            {
+                this.Items.Add(new AnalogRangeAlarmItem().LoadFromSpan(re));
+                if (re.Length > 4)
+                {
+                    re = re.Slice(4);
+                }
+                else
+                {
+                    break;
+                }
+            }
+            return re;
+        }
+
     }
 
 
@@ -708,6 +832,55 @@ namespace Cdy.Ant
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            var re = base.ToString();
+            re += "," + HighHighValue!=null? HighHighValue.ToString():AnalogAlarmItem.Empty.ToString();
+            re += "," + HighValue != null ? HighValue.ToString():AnalogAlarmItem.Empty.ToString();
+            re += "," + LowValue != null ? LowValue.ToString():AnalogAlarmItem.Empty.ToString();
+            re += "," + LowLowValue != null ? LowLowValue.ToString():AnalogAlarmItem.Empty.ToString();
+            return re;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="vals"></param>
+        /// <returns></returns>
+        protected override Span<string> LoadFrom(Span<string> vals)
+        {
+            var re = base.LoadFrom(vals); 
+            HighHighValue = new AnalogAlarmItem().LoadFrom(re);
+            if(HighHighValue.IsEmpty())
+            {
+                HighHighValue = null;
+            }
+            re = re.Slice(4);
+            HighValue = new AnalogAlarmItem().LoadFrom(re);
+            if (HighValue.IsEmpty())
+            {
+                HighValue = null;
+            }
+            re = re.Slice(4);
+            LowValue = new AnalogAlarmItem().LoadFrom(re);
+            if (LowValue.IsEmpty())
+            {
+                LowValue = null;
+            }
+            re = re.Slice(4);
+            LowLowValue = new AnalogAlarmItem().LoadFrom(re);
+            if (LowLowValue.IsEmpty())
+            {
+                LowLowValue = null;
+            }
+            return re;
+
+        }
+
         #endregion ...Methods...
 
         #region ... Interfaces ...
@@ -722,6 +895,10 @@ namespace Cdy.Ant
     public class AnalogAlarmItem
     {
         /// <summary>
+        /// 
+        /// </summary>
+        public static AnalogAlarmItem Empty = new AnalogAlarmItem() { Value = 0.0000000001, DeadArea = 0, AlarmLevel = AlarmLevel.Info };
+        /// <summary>
         /// 值
         /// </summary>
         public double Value { get; set; }
@@ -735,6 +912,15 @@ namespace Cdy.Ant
         /// 报警级别
         /// </summary>
         public AlarmLevel AlarmLevel { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public bool IsEmpty()
+        {
+            return Value == 0.0000000001 && DeadArea == 0.0000000001 && AlarmLevel == AlarmLevel.Info;
+        }
 
         /// <summary>
         /// 
@@ -786,6 +972,19 @@ namespace Cdy.Ant
         public AnalogAlarmItem LoadFromString(string val)
         {
             string[] ss = val.Split(new char[] { ',' });
+            AlarmLevel = (AlarmLevel)(int.Parse(ss[0]));
+            Value = double.Parse(ss[1]);
+            DeadArea = double.Parse(ss[2]);
+            return this;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ss"></param>
+        /// <returns></returns>
+        public AnalogAlarmItem LoadFrom(Span<string> ss)
+        {
             AlarmLevel = (AlarmLevel)(int.Parse(ss[0]));
             Value = double.Parse(ss[1]);
             DeadArea = double.Parse(ss[2]);
@@ -848,6 +1047,8 @@ namespace Cdy.Ant
             }
         }
 
+        
+
         /// <summary>
         /// 
         /// </summary>
@@ -857,6 +1058,28 @@ namespace Cdy.Ant
             var re = base.SaveTo();
             re.SetAttributeValue("IsReverse", Value);
             re.SetAttributeValue("Delay", Delay);
+            return re;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return base.ToString() + "," + Delay + "," + Value;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="vals"></param>
+        /// <returns></returns>
+        protected override Span<string> LoadFrom(Span<string> vals)
+        {
+            var re = base.LoadFrom(vals);
+            Delay = double.Parse(re[0]);
+            Value = bool.Parse(re[1]);
             return re;
         }
 
@@ -875,7 +1098,6 @@ namespace Cdy.Ant
     {
 
         #region ... Variables  ...
-        private double mDelay = 0;
         #endregion ...Variables...
 
         #region ... Events     ...
@@ -894,27 +1116,10 @@ namespace Cdy.Ant
         public override TagType Type => TagType.DigitalAlarm;
 
         /// <summary>
-        /// 是否取反
+        /// 报警值
         /// </summary>
         public bool Value { get; set; }
 
-        ///// <summary>
-        ///// 恢复延时
-        ///// </summary>
-        //public double Delay
-        //{
-        //    get
-        //    {
-        //        return mDelay;
-        //    }
-        //    set
-        //    {
-        //        if (mDelay != value)
-        //        {
-        //            mDelay = value;
-        //        }
-        //    }
-        //}
 
         #endregion ...Properties...
 
@@ -930,11 +1135,6 @@ namespace Cdy.Ant
             {
                 Value = bool.Parse(xe.Attribute("Value").Value);
             }
-
-            //if (xe.Attribute("Delay") != null)
-            //{
-            //    Delay = double.Parse(xe.Attribute("Delay").Value);
-            //}
         }
 
         /// <summary>
@@ -944,8 +1144,28 @@ namespace Cdy.Ant
         public override XElement SaveTo()
         {
             var re = base.SaveTo();
-            re.SetAttributeValue("IsReverse", Value);
-            //re.SetAttributeValue("Delay", Delay);
+            re.SetAttributeValue("Value", Value);
+            return re;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return base.ToString()+","+Value;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="vals"></param>
+        /// <returns></returns>
+        protected override Span<string> LoadFrom(Span<string> vals)
+        {
+            var re = base.LoadFrom(vals);
+            Value = bool.Parse(re[0]);
             return re;
         }
 
@@ -1034,6 +1254,27 @@ namespace Cdy.Ant
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return base.ToString()+","+(int)PulseType;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="vals"></param>
+        /// <returns></returns>
+        protected override Span<string> LoadFrom(Span<string> vals)
+        {
+            var re= base.LoadFrom(vals);
+            PulseType = (PulseAlarmType)(int.Parse(re[0]));
+            return re;
+        }
+
         #endregion ...Methods...
 
         #region ... Interfaces ...
@@ -1093,6 +1334,27 @@ namespace Cdy.Ant
         {
             var re = base.SaveTo();
             re.SetAttributeValue("Value", Value);
+            return re;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return base.ToString()+","+Value;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="vals"></param>
+        /// <returns></returns>
+        protected override Span<string> LoadFrom(Span<string> vals)
+        {
+            var re = base.LoadFrom(vals);
+            Value = re[0];
             return re;
         }
 
@@ -1170,6 +1432,20 @@ namespace Cdy.Ant
             MaxValue = xe.Attribute("MaxValue") != null ? double.Parse(xe.Attribute("MaxValue").Value) : 0;
             MinValue = xe.Attribute("MinValue") != null ? double.Parse(xe.Attribute("MinValue").Value) : 0;
             IsInRangeAlarm = xe.Attribute("IsInRangeAlarm") != null ? bool.Parse(xe.Attribute("IsInRangeAlarm").Value) : true;
+        }
+
+        public override string ToString()
+        {
+            return base.ToString()+","+IsInRangeAlarm + ","+MaxValue + ","+MinValue;
+        }
+
+        protected override Span<string> LoadFrom(Span<string> vals)
+        {
+            var re = base.LoadFrom(vals);
+            IsInRangeAlarm = bool.Parse(re[0]);
+            MaxValue = double.Parse(re[1]);
+            MinValue = double.Parse(re[2]);
+            return re;
         }
 
         #endregion ...Methods...
@@ -1257,7 +1533,43 @@ namespace Cdy.Ant
                 }
             }
         }
-        
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (var vv in AlarmDatas)
+            {
+                sb.Append(vv.X + "|" + vv.Y +  ";");
+            }
+            sb.Length = sb.Length > 0 ? sb.Length - 1 : sb.Length;
+            return base.ToString() + "," + IsInRangeAlarm + "," + sb.ToString();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="vals"></param>
+        /// <returns></returns>
+        protected override Span<string> LoadFrom(Span<string> vals)
+        {
+            var re = base.LoadFrom(vals);
+            IsInRangeAlarm = bool.Parse(re[0]);
+            AlarmDatas = new List<Point>();
+            string[] ss = re[1].Split(new char[] { ';' });
+            if (ss.Length > 0)
+            {
+                foreach (var vv in ss)
+                {
+                    string[] s1 = vv.Split(new char[] { '|' });
+                    AlarmDatas.Add(new Point() { X = double.Parse(s1[0]), Y = double.Parse(s1[1]) });
+                }
+            }
+            return re;
+        }
 
         #endregion ...Methods...
 
@@ -1344,6 +1656,44 @@ namespace Cdy.Ant
                 }
             }
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (var vv in AlarmDatas)
+            {
+                sb.Append(vv.X + "|" + vv.Y + "|" + vv.Z + ";");
+            }
+            sb.Length = sb.Length > 0 ? sb.Length - 1 : sb.Length;
+            return base.ToString()+","+IsInRangeAlarm+","+sb.ToString();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="vals"></param>
+        /// <returns></returns>
+        protected override Span<string> LoadFrom(Span<string> vals)
+        {
+            var re = base.LoadFrom(vals);
+            IsInRangeAlarm = bool.Parse(re[0]);
+            AlarmDatas = new List<Point3D>();
+            string[] ss = re[1].Split(new char[] { ';' });
+            if (ss.Length > 0)
+            {
+                foreach (var vv in ss)
+                {
+                    string[] s1 = vv.Split(new char[] { '|' });
+                    AlarmDatas.Add(new Point3D() { X = double.Parse(s1[0]), Y = double.Parse(s1[1]), Z = double.Parse(s1[2]) });
+                }
+            }
+            return re;
+        }
+
         #endregion ...Methods...
 
         #region ... Interfaces ...
@@ -1404,6 +1754,28 @@ namespace Cdy.Ant
             base.LoadFrom(xe);
             this.Expresse = xe.Value;
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return base.ToString()+Expresse.Replace(",", "&#44");
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="vals"></param>
+        /// <returns></returns>
+        protected override Span<string> LoadFrom(Span<string> vals)
+        {
+            var re = base.LoadFrom(vals);
+            Expresse = re[0].Replace("&#44", ",");
+            return re;
+        }
+
         #endregion ...Methods...
 
         #region ... Interfaces ...

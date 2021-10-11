@@ -17,7 +17,7 @@ service DevelopServer {
  //数据库操作
 
  //检索Mars数据库列表
- rpc QueryMarsDatabase(QueryDatabaseRequest) returns (QueryDatabaseReplay);
+ //rpc QueryMarsDatabase(QueryDatabaseRequest) returns (QueryDatabaseReplay);
 
  //枚举检索数据库
  rpc QueryAntDatabase(QueryDatabaseRequest) returns (QueryDatabaseReplay);

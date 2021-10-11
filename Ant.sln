@@ -23,7 +23,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InAntStuidoServer", "Develo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InAntStudio", "Develop\InAntStudio\InAntStudio.csproj", "{1CB39C9F-DCC1-4538-B36E-CB083C1C6357}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InAntDevelopServerClientApi", "InAntDevelopServerClientApi\InAntDevelopServerClientApi.csproj", "{72765DC4-5C18-4822-A227-CD97931A4B14}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InAntDevelopServerClientApi", "Develop\InAntDevelopServerClientApi\InAntDevelopServerClientApi.csproj", "{72765DC4-5C18-4822-A227-CD97931A4B14}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -221,6 +221,26 @@ namespace DBDevelopClientApi
             return false;
         }
 
+        public bool IsAdmin()
+        {
+            if (mCurrentClient != null && !string.IsNullOrEmpty(mLoginId))
+            {
+                try
+                {
+                    var lres = mCurrentClient.IsAdmin(new AntDevelopServer.GetRequest() { LoginId = mLoginId });            //var sid = await client.LoginAsync(new DBDevelopService.LoginRequest() { UserName = "admin", Password = "12345", Database = "local" });
+                    if (lres != null)
+                    {
+                        return lres.Result;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    LoggerService.Service.Erro("DevelopService", ex.Message);
+                }
+            }
+            return false;
+        }
+
         /// <summary>
         /// 
         /// </summary>
@@ -299,45 +319,45 @@ namespace DBDevelopClientApi
             return re;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public Dictionary<string, string> ListMarsDatabase()
-        {
-            var re = new Dictionary<string, string>();
-            try
-            {
-                if (mCurrentClient != null && !string.IsNullOrEmpty(mLoginId))
-                {
-                    var vv = mCurrentClient.QueryMarsDatabase(new AntDevelopServer.QueryDatabaseRequest() { LoginId = mLoginId }).Database.ToList();
-                    foreach (var vvv in vv)
-                    {
-                        re.Add(vvv.Key, vvv.Value);
-                    }
-                }
-            }
-            catch
-            {
+        ///// <summary>
+        ///// 
+        ///// </summary>
+        ///// <returns></returns>
+        //public Dictionary<string, string> ListMarsDatabase()
+        //{
+        //    var re = new Dictionary<string, string>();
+        //    try
+        //    {
+        //        if (mCurrentClient != null && !string.IsNullOrEmpty(mLoginId))
+        //        {
+        //            var vv = mCurrentClient.QueryMarsDatabase(new AntDevelopServer.QueryDatabaseRequest() { LoginId = mLoginId }).Database.ToList();
+        //            foreach (var vvv in vv)
+        //            {
+        //                re.Add(vvv.Key, vvv.Value);
+        //            }
+        //        }
+        //    }
+        //    catch
+        //    {
 
-            }
-            return re;
-        }
+        //    }
+        //    return re;
+        //}
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="name"></param>
-        /// <param name="desc"></param>
-        /// <returns></returns>
-        public bool NewDatabase(string name,string desc)
-        {
-            if(mCurrentClient!=null&&!string.IsNullOrEmpty(mLoginId))
-            {
-               return mCurrentClient.NewAntDatabase(new AntDevelopServer.NewDatabaseRequest() { Database = name, LoginId = mLoginId,Desc=string.IsNullOrEmpty(desc)?"":desc }).Result;
-            }
-            return false;
-        }
+        ///// <summary>
+        ///// 
+        ///// </summary>
+        ///// <param name="name"></param>
+        ///// <param name="desc"></param>
+        ///// <returns></returns>
+        //public bool NewDatabase(string name,string desc)
+        //{
+        //    if(mCurrentClient!=null&&!string.IsNullOrEmpty(mLoginId))
+        //    {
+        //       return mCurrentClient.NewAntDatabase(new AntDevelopServer.NewDatabaseRequest() { Database = name, LoginId = mLoginId,Desc=string.IsNullOrEmpty(desc)?"":desc }).Result;
+        //    }
+        //    return false;
+        //}
 
         /// <summary>
         /// 

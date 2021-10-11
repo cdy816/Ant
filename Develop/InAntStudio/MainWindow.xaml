@@ -4,9 +4,405 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:InAntStudio"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+       ResizeMode="CanResizeWithGrip"
+        
+        mc:Ignorable="d"  Foreground="{DynamicResource Window.Forground}" Background="Transparent" AllowsTransparency="True" WindowStyle="None" 
+        Title="{Binding MainwindowTitle}" Height="768" Width="1024" WindowState="Maximized" WindowStartupLocation="Manual" Icon="/Image/Ant.ico">
+    <Window.Resources>
+        <local:IndexConverter x:Key="ic" />
+        <BooleanToVisibilityConverter x:Key="btv" />
+        <local:DoubleFormateConvert x:Key="dfc" />
 
-    </Grid>
+        <Style x:Key="FocusVisual">
+            <Setter Property="Control.Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Rectangle Margin="2" StrokeDashArray="1 2" SnapsToDevicePixels="true" StrokeThickness="1" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <SolidColorBrush x:Key="Button.Static.Background" Color="#FFDDDDDD"/>
+        <SolidColorBrush x:Key="Button.Static.Border" Color="#FF707070"/>
+        <SolidColorBrush x:Key="Button.MouseOver.Background" Color="#FFBEE6FD"/>
+        <SolidColorBrush x:Key="Button.MouseOver.Border" Color="#FF3C7FB1"/>
+        <SolidColorBrush x:Key="Button.Pressed.Background" Color="#FFC4E5F6"/>
+        <SolidColorBrush x:Key="Button.Pressed.Border" Color="#FF2C628B"/>
+        <SolidColorBrush x:Key="Button.Disabled.Background" Color="#FFF4F4F4"/>
+        <SolidColorBrush x:Key="Button.Disabled.Border" Color="#FFADB2B5"/>
+        <SolidColorBrush x:Key="Button.Disabled.Foreground" Color="#FF838383"/>
+        <Style TargetType="{x:Type Button}">
+            <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="{StaticResource Button.Static.Border}"/>
+            <Setter Property="Foreground" Value="{DynamicResource Window.Forground}" />
+
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="1"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Grid>
+                            <Border x:Name="border" Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" SnapsToDevicePixels="true">
+                                <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                            </Border>
+                            <Rectangle Visibility="Hidden" x:Name="vb" Fill="#2F000000" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+                        </Grid>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsDefaulted" Value="true">
+                                <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="Background" TargetName="border" Value="#1FFFFFFF"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.MouseOver.Border}"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter Property="Background" TargetName="border" Value="#3FFFFFFF"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Pressed.Border}"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <!--<Setter Property="Visibility" TargetName="vb" Value="Visible" />-->
+                                <Setter Property="Opacity" Value="0.5" />
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Disabled.Border}"/>
+                                <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="{StaticResource Button.Disabled.Foreground}"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="True">
+                                <Setter Property="Visibility" TargetName="vb" Value="Hidden" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Storyboard x:Key="WaitAnimate" RepeatBehavior="Forever">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="image" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[2].(RotateTransform.Angle)">
+                <EasingDoubleKeyFrame KeyTime="00:00:00" Value="0"/>
+                <EasingDoubleKeyFrame KeyTime="00:00:02" Value="180"/>
+                <EasingDoubleKeyFrame KeyTime="00:00:04" Value="360"/>
+            </DoubleAnimationUsingKeyFrames>
+            <ColorAnimationUsingKeyFrames Storyboard.TargetName="bg" Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)">
+                <EasingColorKeyFrame KeyTime="00:00:00" Value="#CF26282C">
+                    <!--<EasingColorKeyFrame.EasingFunction>
+                        <QuarticEase EasingMode="EaseOut"/>
+                    </EasingColorKeyFrame.EasingFunction>-->
+                </EasingColorKeyFrame>
+                <EasingColorKeyFrame KeyTime="00:00:02" Value="#0126282C">
+                    <EasingColorKeyFrame.EasingFunction>
+                        <QuarticEase EasingMode="EaseOut"/>
+                    </EasingColorKeyFrame.EasingFunction>
+                </EasingColorKeyFrame>
+                <EasingColorKeyFrame KeyTime="00:00:04" Value="#CF26282C">
+                    <EasingColorKeyFrame.EasingFunction>
+                        <QuinticEase EasingMode="EaseIn"/>
+                    </EasingColorKeyFrame.EasingFunction>
+                </EasingColorKeyFrame>
+            </ColorAnimationUsingKeyFrames>
+        </Storyboard>
+
+
+    </Window.Resources>
+    <Border  Margin="5" BorderThickness="1" BorderBrush="DarkGray">
+        <Border.Background>
+            <ImageBrush x:Name="bgi" ImageSource="/Image/AntBackground.png" Opacity="0.8" Stretch="None" TileMode="FlipXY"/>
+        </Border.Background>
+        <Grid x:Name="bg" Background="#CF26282C">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="32"/>
+                <RowDefinition Height="48"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid Background="#9F000000"  MouseMove="Grid_MouseMove" MouseLeftButtonUp="Grid_MouseLeftButtonUp" MouseLeftButtonDown="Grid_MouseLeftButtonDown">
+                <ProgressBar x:Name="pb" Maximum="100"  Minimum="0" Value="{Binding ProcessNotify}" Background="Transparent" VerticalAlignment="Top" Height="32" BorderThickness="0" BorderBrush="Transparent" />
+                <Label Content="{Binding Value,ElementName=pb,Converter={StaticResource dfc}}"  Foreground="{DynamicResource Window.Forground}"  Visibility="{Binding NotifyVisiblity}" HorizontalAlignment="Center" VerticalAlignment="Top" VerticalContentAlignment="Center"  FontSize="16"  Height="32"/>
+                
+                <Image Margin="5,0"  Source="{Binding Icon,RelativeSource={RelativeSource AncestorType=Window}}" Height="20" HorizontalAlignment="Left" Width="24" VerticalAlignment="Center" RenderOptions.BitmapScalingMode="HighQuality" Stretch="Uniform" />
+                <Label Margin="30,0,115,0" VerticalContentAlignment="Center" Content="{Binding Title,RelativeSource={RelativeSource AncestorType=Window}}" Foreground="{DynamicResource Window.Forground}"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button x:Name="minB" BorderThickness="0"  Click="minB_Click"   HorizontalAlignment="Left"  Margin="1,0,0,0"   VerticalAlignment="Stretch" Width="32"  >
+                        <Button.ContentTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="/Image/minus.png" Height="12" RenderOptions.BitmapScalingMode="HighQuality" Stretch="Fill"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </Button.ContentTemplate>
+                    </Button>
+
+                    <Button x:Name="maxB" BorderThickness="0"  Click="maxB_Click" HorizontalAlignment="Left"  Margin="0,0,0,0"   VerticalAlignment="Stretch" Width="32"  >
+                        <Button.ContentTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="/Image/max.png" Height="16" RenderOptions.BitmapScalingMode="HighQuality" Stretch="None" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </Button.ContentTemplate>
+                    </Button>
+
+                    <Button x:Name="closeB" BorderThickness="0"   Click="closeB_Click"   HorizontalAlignment="Left"  Margin="0,0,0,0"   VerticalAlignment="Stretch" Width="32"  >
+                        <Button.ContentTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="/Image/close.png" Height="16" RenderOptions.BitmapScalingMode="HighQuality" Stretch="None"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </Button.ContentTemplate>
+                    </Button>
+                </StackPanel>
+            </Grid>
+            <Border Grid.Row="1" BorderThickness="0,0,0,1" BorderBrush="LightGray" Background="#4F000000">
+                <Grid>
+                    <StackPanel Orientation="Horizontal">
+                        <Grid Margin="10,0,0,0">
+                            <Button BorderThickness="0" ToolTip="{local:ResMarker Login}" Visibility="{Binding IsLoginOut,Converter={StaticResource btv}}"  Command="{Binding LoginCommand}" HorizontalAlignment="Left"   Height="32"  VerticalAlignment="Center" Width="80"  >
+                                <Button.ContentTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Image Source="/Image/登录.png" Height="22" RenderOptions.BitmapScalingMode="HighQuality"/>
+                                            <TextBlock Text="{local:ResMarker Login}" FontWeight="Bold" VerticalAlignment="Center" Margin="5,0"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </Button.ContentTemplate>
+                            </Button>
+
+                            <Button BorderThickness="0" ToolTip="{local:ResMarker Logout}"  Visibility="{Binding IsLogin,Converter={StaticResource btv}}"  Command="{Binding LogoutCommand}" HorizontalAlignment="Left"   Height="32"  VerticalAlignment="Center" Width="80"  >
+                                <Button.ContentTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal"  VerticalAlignment="Stretch" >
+                                            <Image Source="/Image/log-out.png" Height="22" RenderOptions.BitmapScalingMode="HighQuality"/>
+                                            <TextBlock Text="{local:ResMarker Logout}"  FontWeight="Bold" Foreground="Red" VerticalAlignment="Center" Margin="5,0"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </Button.ContentTemplate>
+                            </Button>
+                        </Grid>
+
+                        <!--<Button BorderThickness="0"  ToolTip="{local:ResMarker NewDatabase}"  Command="{Binding NewDatabaseCommand}" HorizontalAlignment="Left"  Margin="10,0,0,0" Height="32"  VerticalAlignment="Center" Width="80" >
+                            <Button.ContentTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Source="/Image/database-add.png" Height="22" RenderOptions.BitmapScalingMode="HighQuality" />
+                                        <TextBlock Text="{local:ResMarker Add}"  FontWeight="Bold" VerticalAlignment="Center" Margin="5,0"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </Button.ContentTemplate>
+                        </Button>-->
+
+                        <Button BorderThickness="0"  ToolTip="{local:ResMarker Switch}"  Command="{Binding DatabaseSelectCommand}" HorizontalAlignment="Left"  Margin="10,0,0,0" Height="32"  VerticalAlignment="Center" Width="80" >
+                            <Button.ContentTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Source="/Image/switch.png" Height="24" RenderOptions.BitmapScalingMode="HighQuality" />
+                                        <TextBlock Text="{local:ResMarker Switch}"  FontWeight="Bold" VerticalAlignment="Center" Margin="5,0"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </Button.ContentTemplate>
+                        </Button>
+
+                        <Border BorderBrush="LightGray" BorderThickness="1,0,0,0" Width="2" VerticalAlignment="Stretch" Margin="2,4" />
+
+                        <Button BorderThickness="0" ToolTip="{local:ResMarker Save}"  Command="{Binding SaveCommand}" HorizontalAlignment="Left"  Margin="10,0,0,0" Height="32"  VerticalAlignment="Center" Width="80" >
+                            <Button.ContentTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Source="/Image/Save.png" Height="16" RenderOptions.BitmapScalingMode="HighQuality" />
+                                        <TextBlock Text="{local:ResMarker Save}"  FontWeight="Bold" VerticalAlignment="Center" Margin="5,0"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </Button.ContentTemplate>
+                        </Button>
+
+                        <Button BorderThickness="0"  ToolTip="{local:ResMarker CancelSave_Tooltip}"  Command="{Binding CancelCommand}" HorizontalAlignment="Left"  Margin="10,0,0,0" Height="32"  VerticalAlignment="Center" Width="80" >
+                            <Button.ContentTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Source="/Image/cancelSave.png" Height="16" RenderOptions.BitmapScalingMode="HighQuality" />
+                                        <TextBlock Text="{local:ResMarker CancelSave}"  FontWeight="Bold" VerticalAlignment="Center" Margin="5,0"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </Button.ContentTemplate>
+                        </Button>
+
+                        <Button BorderThickness="0" ToolTip="{local:ResMarker Start_Tooltip}"   Command="{Binding StartCommand}" HorizontalAlignment="Left"  Margin="10,0,0,0" Height="32"  VerticalAlignment="Center" Width="80" >
+                            <Button.ContentTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Source="/Image/start.png" Height="20" RenderOptions.BitmapScalingMode="HighQuality" />
+                                        <TextBlock Text="{local:ResMarker Start}"  FontWeight="Bold" VerticalAlignment="Center" Margin="5,0"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </Button.ContentTemplate>
+                        </Button>
+
+                        <Button BorderThickness="0"  ToolTip="{local:ResMarker Stop_Tooltip}"  Command="{Binding StopCommand}" HorizontalAlignment="Left"  Margin="10,0,0,0" Height="32"  VerticalAlignment="Center" Width="80" >
+                            <Button.ContentTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Source="/Image/stop.png" Height="20" RenderOptions.BitmapScalingMode="HighQuality" />
+                                        <TextBlock Text="{local:ResMarker Stop}"  FontWeight="Bold" VerticalAlignment="Center" Margin="5,0"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </Button.ContentTemplate>
+                        </Button>
+
+                        <Button BorderThickness="0"  ToolTip="{local:ResMarker HotReRun_Tooltip}"  Command="{Binding ReRunCommand}" HorizontalAlignment="Left"  Margin="10,0,0,0" Height="32"  VerticalAlignment="Center" Width="80" >
+                            <Button.ContentTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Source="/Image/rerun.png" Height="20" RenderOptions.BitmapScalingMode="HighQuality" />
+                                        <TextBlock Text="{local:ResMarker ReRun}"  FontWeight="Bold" VerticalAlignment="Center" Margin="5,0"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </Button.ContentTemplate>
+                        </Button>
+
+                        <Button BorderThickness="0"  ToolTip="{local:ResMarker Export}" Command="{Binding ExportCommand}" HorizontalAlignment="Left"  Margin="10,0,0,0" Height="32"  VerticalAlignment="Center" Width="80" >
+                            <Button.ContentTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Source="/Image/export.png" Height="17" RenderOptions.BitmapScalingMode="HighQuality" />
+                                        <TextBlock Text="{local:ResMarker Export}"  FontWeight="Bold" VerticalAlignment="Center" Margin="5,0"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </Button.ContentTemplate>
+                        </Button>
+                        <Button BorderThickness="0"  ToolTip="{local:ResMarker Import}"  Command="{Binding ImportCommand}" HorizontalAlignment="Left"  Margin="10,0,0,0" Height="32"  VerticalAlignment="Center" Width="80" >
+                            <Button.ContentTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Source="/Image/import.png" Height="24" RenderOptions.BitmapScalingMode="HighQuality" />
+                                        <TextBlock Text="{local:ResMarker Import}"  FontWeight="Bold" VerticalAlignment="Center" Margin="5,0"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </Button.ContentTemplate>
+                        </Button>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
+                        <Label Content="{Binding UserName}" Foreground="{DynamicResource Window.Forground}" />
+                    </StackPanel>
+                </Grid>
+            </Border>
+            <Grid Grid.Row="2" Background="#0FFFFFFF">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="180" MinWidth="30" MaxWidth="1000"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TreeView x:Name="tv" Foreground="{DynamicResource Window.Forground}" ItemContainerStyle="{DynamicResource TreeViewItemStyle1}" ItemsSource="{Binding TagGroup}"  SelectedItemChanged="TreeView_SelectedItemChanged" BorderThickness="0,0,1,1" Margin="0,0,0,32" Background="#7F000000">
+                    <TreeView.InputBindings>
+                        <KeyBinding Key="F2" Command="{Binding ReNameCommand}" />
+                        <KeyBinding Key="Delete" Command="{Binding RemoveCommand}" />
+                    </TreeView.InputBindings>
+                    <TreeView.Resources>
+
+                        <!--<Style TargetType="{x:Type TreeViewItem}" >
+                            <Setter Property="TreeViewItem.IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
+                            <Setter Property="TreeViewItem.IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
+                            <Setter Property="Control.FontWeight" Value="Normal" />
+                            <Setter Property="Background" Value="Transparent"/>
+                            <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
+                            <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
+                            <Setter Property="Padding" Value="1,0,0,0"/>
+                        </Style>-->
+
+                        <ContextMenu x:Key="groupMenu">
+                            <MenuItem Header="{local:ResMarker Add}"  Command="{Binding AddCommand}" />
+                            <MenuItem Header="{local:ResMarker Remove}"  Command="{Binding RemoveCommand}" />
+                            <MenuItem Header="{local:ResMarker ReName}"  Command="{Binding ReNameCommand}" />
+                            <MenuItem Header="{local:ResMarker SetDescription}"  Command="{Binding SetDescriptionCommand}" />
+                            <MenuItem Header="{local:ResMarker Copy}" Command="{Binding CopyCommand}" />
+                            <MenuItem Header="{local:ResMarker Paste}" Command="{Binding PasteCommand}" />
+                        </ContextMenu>
+
+                        <ContextMenu x:Key="rootgroupMenu">
+                            <MenuItem Header="{local:ResMarker Add}"  Command="{Binding AddCommand}" />
+                            <MenuItem Header="{local:ResMarker Paste}" Command="{Binding PasteCommand}" />
+                        </ContextMenu>
+
+                        <HierarchicalDataTemplate  DataType="{x:Type local:TagGroupViewModel}"  ItemsSource="{Binding Children}" >
+                            <StackPanel Orientation="Horizontal" Height="24"  Background="Transparent">
+                                <Image Focusable="False" Source="/Image/文件夹.png"  Margin="0,0,4,0" Height="18" VerticalAlignment="Center" RenderOptions.BitmapScalingMode="NearestNeighbor"/>
+                                <Grid ContextMenu="{StaticResource groupMenu}"  Background="{Binding Background}" VerticalAlignment="Center" Focusable="False"  Name="spanel"    >
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Foreground="{DynamicResource Window.Forground}" Text="{Binding Name}" VerticalAlignment="Center" />
+                                    <TextBlock Margin="5,0,0,0" Grid.Column="1" Foreground="{DynamicResource Window.Forground}" Text="{Binding Description}" VerticalAlignment="Center" />
+                                    <TextBox Background="#FF000000" Grid.ColumnSpan="2" Foreground="{DynamicResource Window.Forground}" LostFocus="TextBox_LostFocus" KeyDown="TextBox_KeyDown" IsVisibleChanged="TextBox_IsVisibleChanged" Loaded="TextBox_Loaded" Text="{Binding Name,Mode=TwoWay,NotifyOnTargetUpdated=True,UpdateSourceTrigger=LostFocus}" VerticalAlignment="Center" Visibility="{Binding IsEdit,Converter={StaticResource btv}}"  />
+                                    <TextBox Background="#FF000000" Grid.ColumnSpan="2" Foreground="{DynamicResource Window.Forground}" LostFocus="TextBox_LostFocus" KeyDown="TextBox_KeyDown" IsVisibleChanged="TextBox_IsVisibleChanged" Loaded="TextBox_Loaded" Text="{Binding Description,Mode=TwoWay,NotifyOnTargetUpdated=True,UpdateSourceTrigger=LostFocus}" VerticalAlignment="Center" Visibility="{Binding IsDescriptionEdit,Converter={StaticResource btv}}"  />
+                                </Grid>
+                            </StackPanel>
+                        </HierarchicalDataTemplate>
+
+                        <HierarchicalDataTemplate  DataType="{x:Type local:DatabaseViewModel}"  ItemsSource="{Binding Children}">
+                            <StackPanel Orientation="Horizontal" Height="24">
+                                <Image Focusable="False" Source="/Image/database.png" VerticalAlignment="Center" Margin="0,0,4,0" Height="16" RenderOptions.BitmapScalingMode="NearestNeighbor"/>
+                                <TextBlock Foreground="{DynamicResource Window.Forground}" Text="{Binding Name}" VerticalAlignment="Center" />
+                            </StackPanel>
+                        </HierarchicalDataTemplate>
+
+                       
+                        <DataTemplate  DataType="{x:Type local:DatabaseSettingViewModel}" >
+                            <StackPanel Orientation="Horizontal" Height="24" Background="Transparent">
+                                <Image Focusable="False" Source="/Image/setting.png" VerticalAlignment="Center" Margin="0,0,4,0" Height="16" RenderOptions.BitmapScalingMode="NearestNeighbor"/>
+                                <TextBlock Foreground="{DynamicResource Window.Forground}" Text="{local:ResMarker Setting}" VerticalAlignment="Center" />
+                            </StackPanel>
+                        </DataTemplate>
+
+                        <HierarchicalDataTemplate  DataType="{x:Type local:RootTagGroupViewModel}"  ItemsSource="{Binding Children}">
+                            <StackPanel ContextMenu="{StaticResource rootgroupMenu}" Orientation="Horizontal" Height="24"  Background="Transparent">
+                                <Image Focusable="False" Source="/Image/文件夹.png" VerticalAlignment="Center" Margin="0,0,4,0" Height="18" RenderOptions.BitmapScalingMode="NearestNeighbor"/>
+                                <TextBlock Foreground="{DynamicResource Window.Forground}" Text="{Binding Name}" VerticalAlignment="Center" />
+                            </StackPanel>
+                        </HierarchicalDataTemplate>
+                    </TreeView.Resources>
+                </TreeView>
+                <Border VerticalAlignment="Bottom" Background="#4F000000" Height="32" BorderBrush="Gray" BorderThickness="0,0,1,0">
+                    <StackPanel Orientation="Horizontal"   >
+                        <Button BorderThickness="0,0,0,2" BorderBrush="Green"  Content="{local:ResMarker Add}"    Foreground="{DynamicResource Window.Forground}" Command="{Binding AddGroupCommand}" Width="80" HorizontalAlignment="Left" VerticalAlignment="Center" Height="26" Margin="5,0" >
+                            <Button.ContentTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal" Margin="0">
+
+                                        <Image Source="/Image/Add.png" Height="12" RenderOptions.BitmapScalingMode="NearestNeighbor" Margin="0,0,4,0"/>
+                                        <TextBlock Text="{Binding}" Grid.Column="1" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </Button.ContentTemplate>
+                        </Button>
+                        <Button BorderThickness="0,0,0,2"  BorderBrush="IndianRed"   Content="{local:ResMarker Remove}" Foreground="{DynamicResource Window.Forground}" Command="{Binding RemoveGroupCommand}" Width="80" HorizontalAlignment="Left" VerticalAlignment="Center" Height="26" Margin="5,0" >
+                            <Button.ContentTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal" Margin="0">
+
+                                        <Image Source="/Image/Remove.png" Height="12" RenderOptions.BitmapScalingMode="NearestNeighbor" Margin="0,0,4,0"/>
+                                        <TextBlock Text="{Binding}" Grid.Column="1" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </Button.ContentTemplate>
+                        </Button>
+                    </StackPanel>
+                </Border>
+
+                <GridSplitter VerticalAlignment="Stretch" Width="5" HorizontalAlignment="Right" Background="Transparent" />
+                <ContentControl Grid.Column="1" Content="{Binding ContentViewModel}"/>
+
+            </Grid>
+            <Grid Visibility="{Binding NotifyVisiblity}" IsVisibleChanged="Grid_IsVisibleChanged" Grid.Row="1" HorizontalAlignment="Stretch" Grid.ColumnSpan="2" Grid.RowSpan="2" VerticalAlignment="Stretch" Background="#2F000000">
+                <Image x:Name="image"  Width="128" Height="128" Opacity="{Binding ProcessNotifyPercent}" Stretch="Fill"  HorizontalAlignment="Center" VerticalAlignment="Center" RenderOptions.BitmapScalingMode="HighQuality" RenderOptions.EdgeMode="Aliased" Source="/Image/wait.png" RenderTransformOrigin="0.5,0.5"   >
+                    <Image.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Image.RenderTransform>
+                </Image>
+            </Grid>
+
+        </Grid>
+    </Border>
 </Window>
