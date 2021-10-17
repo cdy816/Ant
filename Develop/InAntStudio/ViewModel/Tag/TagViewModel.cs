@@ -28,25 +28,10 @@ namespace InAntStudio
         private Cdy.Ant.Tagbase mRealTagMode;
 
         public static string[] mTagTypeList;
-        public static string[] mRecordTypeList;
-        public static string[] mCompressTypeList;
-        public static string[] mReadWriteModeList;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public static Dictionary<string, string[]> Drivers;
-
-        private string mDriverName;
-        private string mRegistorName;
-
-        private string[] mRegistorList;
-
-        private ICommand mConvertEditCommand;
-
-        private ICommand mConvertRemoveCommand;
 
         private bool mIsSelected;
+
+        private TagDetailConfigViewModelBase mTagDetailModel;
 
         #endregion ...Variables...
 
@@ -61,13 +46,6 @@ namespace InAntStudio
         static TagViewModel()
         {
             InitEnumType();
-            mCompressTypeList = new string[] 
-            {
-                Res.Get("NoneCompress"),
-                Res.Get("LosslessCompress"),
-                Res.Get("DeadAreaCompress"),
-                Res.Get("SlopeCompress")
-            };
         }
 
         public TagViewModel()
@@ -78,12 +56,42 @@ namespace InAntStudio
         public TagViewModel(Cdy.Ant.Tagbase realTag)
         {
             this.mRealTagMode = realTag;
-            CheckLinkAddress();
+            //CheckLinkAddress();
         }
 
         #endregion ...Constructor...
 
         #region ... Properties ...
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public TagDetailConfigViewModelBase TagDetailModel
+        {
+            get
+            {
+                return mTagDetailModel;
+            }
+            set
+            {
+                if (mTagDetailModel != value)
+                {
+                    if (mTagDetailModel != null)
+                    {
+                        mTagDetailModel.PropertyChanged -= MTagDetailModel_PropertyChanged;
+                    }
+                    mTagDetailModel = value;
+                    if(mTagDetailModel!=null)
+                    {
+                        mTagDetailModel.PropertyChanged += MTagDetailModel_PropertyChanged;
+                    }
+                    OnPropertyChanged("TagDetailModel");
+                }
+            }
+        }
+
+
+
 
         /// <summary>
         /// 
@@ -123,6 +131,7 @@ namespace InAntStudio
                 if (mRealTagMode != value)
                 {
                     mRealTagMode = value;
+                    InitTagDetailModel();
                 }
             }
         }
@@ -197,9 +206,6 @@ namespace InAntStudio
         }
 
 
-
-
-
         /// <summary>
         /// 类型
         /// </summary>
@@ -217,10 +223,6 @@ namespace InAntStudio
                     IsChanged = true;
                     OnPropertyChanged("Type");
                     OnPropertyChanged("TypeString");
-                    OnPropertyChanged("IsNumberTag");
-                    OnPropertyChanged("Precision");
-                    OnPropertyChanged("MaxValue");
-                    OnPropertyChanged("MinValue");
                 }
             }
         }
@@ -284,6 +286,62 @@ namespace InAntStudio
         /// <summary>
         /// 
         /// </summary>
+        private void InitTagDetailModel()
+        {
+            switch(mRealTagMode.Type)
+            {
+                case TagType.AnalogAlarm:
+                    TagDetailModel = new AnalogTagConfigViewModel() { Model = mRealTagMode };
+                    break;
+                case TagType.AnalogRangeAlarm:
+                    TagDetailModel = new AnalogRangTagConfigViewModel() { Model = mRealTagMode };
+                    break;
+                case TagType.DelayDigitalAlarm:
+                    TagDetailModel = new DigitalDelayTagConfigViewModel() { Model = mRealTagMode };
+                    break;
+                case TagType.DigitalAlarm:
+                    TagDetailModel = new DigitalTagConfigViewModel() { Model = mRealTagMode };
+                    break;
+                case TagType.OneRange:
+                    TagDetailModel = new OneRangeTagConfigViewModel() { Model = mRealTagMode };
+                    break;
+                case TagType.Pulse:
+                    TagDetailModel = new PulseTagConfigViewModel() { Model = mRealTagMode };
+                    break;
+                case TagType.Script:
+                    TagDetailModel = new ScriptTagConfigViewModel() { Model = mRealTagMode };
+                    break;
+                case TagType.StringAlarm:
+                    TagDetailModel = new StringTagConfigViewModel() { Model = mRealTagMode };
+                    break;
+                case TagType.ThreeRange:
+                    TagDetailModel = new ThreeRangeTagConfigViewModel() { Model = mRealTagMode };
+                    break;
+                case TagType.TwoRange:
+                    TagDetailModel = new TwoRangeTagConfigViewModel() { Model = mRealTagMode };
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void MTagDetailModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "IsChanged")
+            {
+                if (mTagDetailModel.IsChanged)
+                {
+                    IsChanged = true;
+                }
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
         private bool CheckAvaiableName(string name)
@@ -294,45 +352,9 @@ namespace InAntStudio
         /// <summary>
         /// 
         /// </summary>
-        public void RefreshHisTag()
-        {
-            OnPropertyChanged("CompressType");
-            OnPropertyChanged("CompressCircle");
-            OnPropertyChanged("RecordType");
-            OnPropertyChanged("RecordTypeString");
-            OnPropertyChanged("IsTimerRecord");
-            OnPropertyChanged("IsDriverRecord");
-            OnPropertyChanged("MaxValueCountPerSecond");
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        private void CheckLinkAddress()
-        {
-            if (string.IsNullOrEmpty(LinkAddress))
-            {
-                return;
-            }
-            else
-            {
-                string[] str = LinkAddress.Split(new char[] { ':' }, StringSplitOptions.RemoveEmptyEntries);
-                mDriverName = str[0];
-                if(str.Length>1)
-                {
-                    mRegistorName = LinkAddress.Substring(mDriverName.Length+1);
-                }
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
         private static void InitEnumType()
         {
             mTagTypeList = Enum.GetNames(typeof(Cdy.Ant.TagType));
-            //mRecordTypeList = Enum.GetNames(typeof(Cdy.Ant.RecordType)).Select(e => Res.Get(e)).ToArray();
-            //mReadWriteModeList = Enum.GetNames(typeof(Cdy.Ant.ReadWriteMode)).Select(e=>Res.Get(e)).ToArray();
         }
 
         /// <summary>
@@ -388,6 +410,7 @@ namespace InAntStudio
                 }
                 RealTagMode = ntag;
             }
+            InitTagDetailModel();
             IsChanged = true;
         }
 
@@ -431,8 +454,1570 @@ namespace InAntStudio
         #endregion ...Interfaces...
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    public abstract  class TagDetailConfigViewModelBase : ViewModelBase
+    {
+
+        #region ... Variables  ...
+        private Cdy.Ant.Tagbase mModel;
+        private bool mIsChanged = false;
+        #endregion ...Variables...
+
+        #region ... Events     ...
+
+        #endregion ...Events...
+
+        #region ... Constructor...
+
+        #endregion ...Constructor...
+
+        #region ... Properties ...
+        /// <summary>
+        /// 
+        /// </summary>
+        public Cdy.Ant.Tagbase Model
+        {
+            get
+            {
+                return mModel;
+            }
+            set
+            {
+                if (mModel != value)
+                {
+                    mModel = value;
+                    Init();
+                    OnPropertyChanged("Model");
+                }
+            }
+        }
+
+        /// <summary>
+            /// 
+            /// </summary>
+        public bool IsChanged
+        {
+            get
+            {
+                return mIsChanged;
+            }
+            set
+            {
+                if (mIsChanged != value)
+                {
+                    mIsChanged = value;
+                    OnPropertyChanged("IsChanged");
+                }
+            }
+        }
 
 
+        #endregion ...Properties...
+
+        #region ... Methods    ...
+
+        protected virtual void Init()
+        {
+
+        }
+
+        #endregion ...Methods...
+
+        #region ... Interfaces ...
+
+        #endregion ...Interfaces...
+    }
+
+    public abstract class AlarmTagConfigViewModel : TagDetailConfigViewModelBase
+    {
+
+        #region ... Variables  ...
+        Cdy.Ant.AlarmTag mTag;
+        private ICommand mTagBrowerCommand;
+        #endregion ...Variables...
+
+        #region ... Events     ...
+
+        #endregion ...Events...
+
+        #region ... Constructor...
+
+        #endregion ...Constructor...
+
+        #region ... Properties ...
+        /// <summary>
+        /// 
+        /// </summary>
+        public string LinkTag
+        {
+            get
+            {
+                return mTag.LinkTag;
+            }
+            set
+            {
+                if (mTag.LinkTag != value)
+                {
+                    mTag.LinkTag = value;
+                    OnPropertyChanged("LinkTag");
+                    IsChanged = true;
+                }
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public ICommand TagBrowerCommand
+        {
+            get
+            {
+                if(mTagBrowerCommand==null)
+                {
+                    mTagBrowerCommand = new RelayCommand(() => { 
+                    
+                    });
+                }
+                return mTagBrowerCommand;
+            }
+        }
+
+        #endregion ...Properties...
+
+        #region ... Methods    ...
+
+        /// <summary>
+        /// 
+        /// </summary>
+        protected override void Init()
+        {
+            mTag = Model as AlarmTag;
+        }
+        #endregion ...Methods...
+
+        #region ... Interfaces ...
+
+        #endregion ...Interfaces...
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public abstract class SimpleTagConfigViewModel:AlarmTagConfigViewModel
+    {
+
+        #region ... Variables  ...
+        private Cdy.Ant.SimpleAlarmTag mTag;
+        private static string[] mAlarmLevels;
+        #endregion ...Variables...
+
+        #region ... Events     ...
+
+        #endregion ...Events...
+
+        #region ... Constructor...
+        /// <summary>
+        /// 
+        /// </summary>
+        static SimpleTagConfigViewModel()
+        {
+            InitEnumType();
+        }
+        #endregion ...Constructor...
+
+        #region ... Properties ...
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string[] AlarmLevels
+        {
+            get
+            {
+                return mAlarmLevels;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public int AlarmLevel
+        {
+            get
+            {
+                return (byte)mTag.AlarmLevel;
+            }
+            set
+            {
+                if ((byte)mTag.AlarmLevel != value)
+                {
+                    mTag.AlarmLevel = (Cdy.Ant.AlarmLevel) value;
+                    OnPropertyChanged("AlarmLevel");
+                    IsChanged = true;
+                }
+            }
+        }
+
+
+        #endregion ...Properties...
+
+        #region ... Methods    ...
+
+        private static void InitEnumType()
+        {
+            mAlarmLevels = Enum.GetNames(typeof(Cdy.Ant.AlarmLevel));
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        protected override void Init()
+        {
+            base.Init();
+            mTag = Model as Cdy.Ant.SimpleAlarmTag;
+        }
+
+
+
+        #endregion ...Methods...
+
+        #region ... Interfaces ...
+
+        #endregion ...Interfaces...
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public class AnalogTagConfigViewModel : AlarmTagConfigViewModel
+    {
+
+        #region ... Variables  ...
+        private Cdy.Ant.AnalogAlarmTag mTag;
+        private static string[] mAlarmLevels;
+        #endregion ...Variables...
+
+        #region ... Events     ...
+
+        #endregion ...Events...
+
+        #region ... Constructor...
+        static AnalogTagConfigViewModel()
+        {
+            InitEnumType();
+        }
+        #endregion ...Constructor...
+
+        #region ... Properties ...
+        /// <summary>
+        /// 
+        /// </summary>
+        public string[] AlarmLevels
+        {
+            get
+            {
+                return mAlarmLevels;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public bool HasHighHighValue
+        {
+            get
+            {
+                return mTag.HighHighValue!=null;
+            }
+            set
+            {
+                if(mTag.HighHighValue==null)
+                {
+                    mTag.HighHighValue = new AnalogAlarmItem();
+                    IsChanged = true;
+                    OnPropertyChanged("HasHighHighValue");
+                }
+            }
+        }
+
+        /// <summary>
+            /// 
+            /// </summary>
+        public int HighHighAlarmLevel
+        {
+            get
+            {
+                return mTag.HighHighValue!=null? (int) mTag.HighHighValue.AlarmLevel:0;
+            }
+            set
+            {
+                
+                if ((byte)mTag.HighHighValue.AlarmLevel != value)
+                {
+                    mTag.HighHighValue.AlarmLevel = (AlarmLevel)value;
+                    IsChanged = true;
+                    OnPropertyChanged("HighHighAlarmLevel");
+                }
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public double HighHighValue
+        {
+            get
+            {
+                return mTag.HighHighValue != null ? mTag.HighHighValue.Value : 0;
+            }
+            set
+            {
+
+                if (mTag.HighHighValue.Value != value)
+                {
+                    mTag.HighHighValue.Value = value;
+                    IsChanged = true;
+                    OnPropertyChanged("HighHighValue");
+                }
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public double HighHighDeadArea
+        {
+            get
+            {
+                return mTag.HighHighValue != null ? mTag.HighHighValue.DeadArea : 0;
+            }
+            set
+            {
+
+                if (mTag.HighHighValue.DeadArea != value)
+                {
+                    mTag.HighHighValue.DeadArea = value;
+                    IsChanged = true;
+                    OnPropertyChanged("HighHighDeadArea");
+                }
+            }
+        }
+
+
+        public bool HasHighValue
+        {
+            get
+            {
+                return mTag.HighValue != null;
+            }
+            set
+            {
+                if (mTag.HighValue == null)
+                {
+                    mTag.HighValue = new AnalogAlarmItem();
+                    IsChanged = true;
+                    OnPropertyChanged("HasHighValue");
+                }
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public int HighAlarmLevel
+        {
+            get
+            {
+                return mTag.HighValue != null ? (int)mTag.HighValue.AlarmLevel : 0;
+            }
+            set
+            {
+
+                if ((byte)mTag.HighValue.AlarmLevel != value)
+                {
+                    mTag.HighValue.AlarmLevel = (AlarmLevel)value;
+                    IsChanged = true;
+                    OnPropertyChanged("HighAlarmLevel");
+                }
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public double HighValue
+        {
+            get
+            {
+                return mTag.HighValue != null ? mTag.HighValue.Value : 0;
+            }
+            set
+            {
+
+                if (mTag.HighValue.Value != value)
+                {
+                    mTag.HighValue.Value = value;
+                    IsChanged = true;
+                    OnPropertyChanged("HighValue");
+                }
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public double HighDeadArea
+        {
+            get
+            {
+                return mTag.HighValue != null ? mTag.HighValue.DeadArea : 0;
+            }
+            set
+            {
+
+                if (mTag.HighValue.DeadArea != value)
+                {
+                    mTag.HighValue.DeadArea = value;
+                    IsChanged = true;
+                    OnPropertyChanged("HighDeadArea");
+                }
+            }
+        }
+
+        public bool HasLowValue
+        {
+            get
+            {
+                return mTag.LowValue != null;
+            }
+            set
+            {
+                if (mTag.LowValue == null)
+                {
+                    mTag.LowValue = new AnalogAlarmItem();
+                    IsChanged = true;
+                    OnPropertyChanged("HasLowValue");
+                }
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public int LowAlarmLevel
+        {
+            get
+            {
+                return mTag.LowValue != null ? (int)mTag.LowValue.AlarmLevel : 0;
+            }
+            set
+            {
+
+                if ((byte)mTag.LowValue.AlarmLevel != value)
+                {
+                    mTag.LowValue.AlarmLevel = (AlarmLevel)value;
+                    IsChanged = true;
+                    OnPropertyChanged("LowAlarmLevel");
+                }
+            }
+        }
+
+        public double LowValue
+        {
+            get
+            {
+                return mTag.LowValue != null ? mTag.LowValue.Value : 0;
+            }
+            set
+            {
+
+                if (mTag.LowValue.Value != value)
+                {
+                    mTag.LowValue.Value = value;
+                    IsChanged = true;
+                    OnPropertyChanged("LowValue");
+                }
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public double LowDeadArea
+        {
+            get
+            {
+                return mTag.LowValue != null ? mTag.LowValue.DeadArea : 0;
+            }
+            set
+            {
+
+                if (mTag.LowValue.DeadArea != value)
+                {
+                    mTag.LowValue.DeadArea = value;
+                    IsChanged = true;
+                    OnPropertyChanged("LowDeadArea");
+                }
+            }
+        }
+
+
+        public bool HasLowLowValue
+        {
+            get
+            {
+                return mTag.LowLowValue != null;
+            }
+            set
+            {
+                if (mTag.LowLowValue == null)
+                {
+                    mTag.LowLowValue = new AnalogAlarmItem();
+                    IsChanged = true;
+                    OnPropertyChanged("HasLowLowValue");
+                }
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public int LowLowAlarmLevel
+        {
+            get
+            {
+                return mTag.LowLowValue != null ? (int)mTag.LowLowValue.AlarmLevel : 0;
+            }
+            set
+            {
+
+                if ((byte)mTag.LowLowValue.AlarmLevel != value)
+                {
+                    mTag.LowLowValue.AlarmLevel = (AlarmLevel)value;
+                    IsChanged = true;
+                    OnPropertyChanged("LowLowAlarmLevel");
+                }
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public double LowLowValue
+        {
+            get
+            {
+                return mTag.LowLowValue != null ? mTag.LowLowValue.Value : 0;
+            }
+            set
+            {
+
+                if (mTag.LowLowValue.Value != value)
+                {
+                    mTag.LowLowValue.Value = value;
+                    IsChanged = true;
+                    OnPropertyChanged("LowLowValue");
+                }
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public double LowLowDeadArea
+        {
+            get
+            {
+                return mTag.LowLowValue != null ? mTag.LowLowValue.DeadArea : 0;
+            }
+            set
+            {
+
+                if (mTag.LowLowValue.DeadArea != value)
+                {
+                    mTag.LowLowValue.DeadArea = value;
+                    IsChanged = true;
+                    OnPropertyChanged("LowLowDeadArea");
+                }
+            }
+        }
+
+        #endregion ...Properties...
+
+        #region ... Methods    ...
+
+        private static void InitEnumType()
+        {
+            mAlarmLevels = Enum.GetNames(typeof(Cdy.Ant.AlarmLevel));
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        protected override void Init()
+        {
+            base.Init();
+            mTag = Model as Cdy.Ant.AnalogAlarmTag;
+            
+        }
+        #endregion ...Methods...
+
+        #region ... Interfaces ...
+
+        #endregion ...Interfaces...
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public class AnalogRangTagConfigViewModel:AlarmTagConfigViewModel
+    {
+
+        #region ... Variables  ...
+        private Cdy.Ant.AnalogRangeAlarmTag mTag;
+        private System.Collections.ObjectModel.ObservableCollection<AnalogRangTagItemConfigViewModel> mItems = new System.Collections.ObjectModel.ObservableCollection<AnalogRangTagItemConfigViewModel>();
+        private ICommand mAddItemCommand;
+        private ICommand mRemoveItemCommand;
+
+        private AnalogRangTagItemConfigViewModel mCurrentItem;
+        #endregion ...Variables...
+
+        #region ... Events     ...
+
+        #endregion ...Events...
+
+        #region ... Constructor...
+
+        #endregion ...Constructor...
+
+        #region ... Properties ...
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public AnalogRangTagItemConfigViewModel CurrentItem
+        {
+            get
+            {
+                return mCurrentItem;
+            }
+            set
+            {
+                if (mCurrentItem != value)
+                {
+                    mCurrentItem = value;
+                    OnPropertyChanged("CurrentItem");
+                }
+            }
+        }
+
+
+        public ICommand AddItemCommand
+        {
+            get
+            {
+                if(mAddItemCommand==null)
+                {
+                    mAddItemCommand = new RelayCommand(() => {
+                        AddItem(new AnalogRangeAlarmItem() { MinValue = 0, MaxValue = 100 ,AlarmLevel = AlarmLevel.Normal,DeadArea=0});
+                        IsChanged = true;
+                    });
+                }
+                return mAddItemCommand;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public ICommand RemoveItemCommand
+        {
+            get
+            {
+                if(mRemoveItemCommand==null)
+                {
+                    mRemoveItemCommand = new RelayCommand(() => { 
+                        if(CurrentItem!=null)
+                        {
+                            CurrentItem.PropertyChanged += Mm_PropertyChanged;
+                            Items.Remove(CurrentItem);
+                        }
+                    },()=> { return CurrentItem != null; });
+                }
+                return mRemoveItemCommand;
+            }
+        }
+
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public System.Collections.ObjectModel.ObservableCollection<AnalogRangTagItemConfigViewModel> Items
+        {
+            get
+            {
+                return mItems;
+            }
+        }
+        #endregion ...Properties...
+
+        #region ... Methods    ...
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="item"></param>
+        private void AddItem(Cdy.Ant.AnalogRangeAlarmItem item)
+        {
+            AnalogRangTagItemConfigViewModel mm = new AnalogRangTagItemConfigViewModel() { Model = item };
+            mm.PropertyChanged += Mm_PropertyChanged;
+            mItems.Add(mm);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Mm_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            IsChanged = true;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        protected override void Init()
+        {
+            base.Init();
+            mTag = Model as Cdy.Ant.AnalogRangeAlarmTag;
+            foreach(var vv in mTag.Items)
+            {
+                AddItem(vv);
+            }
+        }
+
+        #endregion ...Methods...
+
+        #region ... Interfaces ...
+
+        #endregion ...Interfaces...
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public class AnalogRangTagItemConfigViewModel : ViewModelBase
+    {
+
+        #region ... Variables  ...
+        private Cdy.Ant.AnalogRangeAlarmItem mModel;
+        private static string[] mAlarmLevels;
+        #endregion ...Variables...
+
+        #region ... Events     ...
+
+        #endregion ...Events...
+
+        #region ... Constructor...
+        static AnalogRangTagItemConfigViewModel()
+        {
+            InitEnumType();
+        }
+        #endregion ...Constructor...
+
+        #region ... Properties ...
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string[] AlarmLevels
+        {
+            get
+            {
+                return mAlarmLevels;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public Cdy.Ant.AnalogRangeAlarmItem Model
+        {
+            get
+            {
+                return mModel;
+            }
+            set
+            {
+                if (mModel != value)
+                {
+                    mModel = value;
+                    OnPropertyChanged("Model");
+                }
+            }
+        }
+
+        /// <summary>
+            /// 
+            /// </summary>
+        public int AlarmLevel
+        {
+            get
+            {
+                return (byte)mModel.AlarmLevel;
+            }
+            set
+            {
+                if ((int)mModel.AlarmLevel != value)
+                {
+                    mModel.AlarmLevel = (Cdy.Ant.AlarmLevel) value;
+                    OnPropertyChanged("AlarmLevel");
+                }
+            }
+        }
+
+        /// <summary>
+            /// 
+            /// </summary>
+        public double MaxValue
+        {
+            get
+            {
+                return mModel.MaxValue;
+            }
+            set
+            {
+                if (mModel.MaxValue != value)
+                {
+                    mModel.MaxValue = value;
+                    OnPropertyChanged("MaxValue");
+                }
+            }
+        }
+
+        /// <summary>
+            /// 
+            /// </summary>
+        public double MinValue
+        {
+            get
+            {
+                return mModel.MinValue;
+            }
+            set
+            {
+                if (mModel.MinValue != value)
+                {
+                    mModel.MinValue = value;
+                    OnPropertyChanged("MinValue");
+                }
+            }
+        }
+
+
+        /// <summary>
+            /// 
+            /// </summary>
+        public double DeadArea
+        {
+            get
+            {
+                return mModel.DeadArea;
+            }
+            set
+            {
+                if (mModel.DeadArea != value)
+                {
+                    mModel.DeadArea = value;
+                    OnPropertyChanged("DeadArea");
+                }
+            }
+        }
+
+
+
+        #endregion ...Properties...
+
+        #region ... Methods    ...
+        private static void InitEnumType()
+        {
+            mAlarmLevels = Enum.GetNames(typeof(Cdy.Ant.AlarmLevel));
+        }
+        #endregion ...Methods...
+
+        #region ... Interfaces ...
+
+        #endregion ...Interfaces...
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public class DigitalTagConfigViewModel:SimpleTagConfigViewModel
+    {
+
+        #region ... Variables  ...
+        Cdy.Ant.DigitalAlarmTag mTag;
+        #endregion ...Variables...
+
+        #region ... Events     ...
+
+        #endregion ...Events...
+
+        #region ... Constructor...
+
+        #endregion ...Constructor...
+
+        #region ... Properties ...
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public bool[] Values
+        {
+            get
+            {
+                return new bool[] { true, false };
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public bool Value
+        {
+            get
+            {
+                return mTag.Value;
+            }
+            set
+            {
+                if (mTag.Value != value)
+                {
+                    mTag.Value = value;
+                    IsChanged = true;
+                    OnPropertyChanged("Value");
+                }
+            }
+        }
+
+
+        #endregion ...Properties...
+
+        #region ... Methods    ...
+        /// <summary>
+        /// 
+        /// </summary>
+        protected override void Init()
+        {
+            base.Init();
+            mTag = Model as Cdy.Ant.DigitalAlarmTag;
+        }
+        #endregion ...Methods...
+
+        #region ... Interfaces ...
+
+        #endregion ...Interfaces...
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public class DigitalDelayTagConfigViewModel:DigitalTagConfigViewModel
+    {
+
+        #region ... Variables  ...
+        Cdy.Ant.DelayDigitalAlarmTag mTag;
+        #endregion ...Variables...
+
+        #region ... Events     ...
+
+        #endregion ...Events...
+
+        #region ... Constructor...
+
+        #endregion ...Constructor...
+
+        #region ... Properties ...
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public double Delay
+        {
+            get
+            {
+                return mTag.Delay;
+            }
+            set
+            {
+                if (mTag.Delay != value)
+                {
+                    mTag.Delay = value;
+                    IsChanged = true;
+                    OnPropertyChanged("Delay");
+                }
+            }
+        }
+
+
+        #endregion ...Properties...
+
+        #region ... Methods    ...
+
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        protected override void Init()
+        {
+            base.Init();
+            mTag = Model as Cdy.Ant.DelayDigitalAlarmTag;
+            
+        }
+        #endregion ...Methods...
+
+        #region ... Interfaces ...
+
+        #endregion ...Interfaces...
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public class PulseTagConfigViewModel : SimpleTagConfigViewModel
+    {
+
+        #region ... Variables  ...
+        Cdy.Ant.PulseAlarmTag mTag;
+        static string[] mPulseTypes;
+        #endregion ...Variables...
+
+        #region ... Events     ...
+
+        #endregion ...Events...
+
+        #region ... Constructor...
+        static PulseTagConfigViewModel()
+        {
+
+        }
+        #endregion ...Constructor...
+
+        #region ... Properties ...
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string[] PulseTypes
+        {
+            get
+            {
+                return mPulseTypes;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public int Type
+        {
+            get
+            {
+                return (int)mTag.PulseType;
+            }
+            set
+            {
+                if ((int)mTag.PulseType != value)
+                {
+                    mTag.PulseType = (PulseAlarmType)value;
+                    IsChanged = true;
+                    OnPropertyChanged("Type");
+                }
+            }
+        }
+
+
+        #endregion ...Properties...
+
+        #region ... Methods    ...
+
+        private static void InitEnumType()
+        {
+            mPulseTypes = Enum.GetNames(typeof(Cdy.Ant.PulseAlarmType));
+        }
+
+        protected override void Init()
+        {
+            base.Init();
+            mTag = Model as Cdy.Ant.PulseAlarmTag;
+        }
+        #endregion ...Methods...
+
+        #region ... Interfaces ...
+
+        #endregion ...Interfaces...
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public class OneRangeTagConfigViewModel : SimpleTagConfigViewModel
+    {
+
+        #region ... Variables  ...
+        Cdy.Ant.OneRangeAlarmTag mTag;
+        #endregion ...Variables...
+
+        #region ... Events     ...
+
+        #endregion ...Events...
+
+        #region ... Constructor...
+
+        #endregion ...Constructor...
+
+        #region ... Properties ...
+
+        /// <summary>
+            /// 
+            /// </summary>
+        public double MaxValue
+        {
+            get
+            {
+                return mTag.MaxValue;
+            }
+            set
+            {
+                if (mTag.MaxValue != value)
+                {
+                    mTag.MaxValue = value;
+                    IsChanged = true;
+                    OnPropertyChanged("MaxValue");
+                }
+            }
+        }
+
+        /// <summary>
+            /// 
+            /// </summary>
+        public double MinValue
+        {
+            get
+            {
+                return mTag.MinValue;
+            }
+            set
+            {
+                if (mTag.MinValue != value)
+                {
+                    mTag.MinValue = value;
+                    IsChanged = true;
+                    OnPropertyChanged("MinValue");
+                }
+            }
+        }
+
+
+        /// <summary>
+            /// 
+            /// </summary>
+        public bool IsInRangeAlarm
+        {
+            get
+            {
+                return mTag.IsInRangeAlarm;
+            }
+            set
+            {
+                if (mTag.IsInRangeAlarm != value)
+                {
+                    mTag.IsInRangeAlarm = value;
+                    OnPropertyChanged("IsInRangeAlarm");
+                    IsChanged = true;
+                }
+            }
+        }
+
+
+
+        #endregion ...Properties...
+
+        #region ... Methods    ...
+        protected override void Init()
+        {
+            base.Init();
+            mTag = Model as Cdy.Ant.OneRangeAlarmTag;
+        }
+        #endregion ...Methods...
+
+        #region ... Interfaces ...
+
+        #endregion ...Interfaces...
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public class StringTagConfigViewModel : SimpleTagConfigViewModel
+    {
+
+        #region ... Variables  ...
+        Cdy.Ant.StringAlarmTag mTag;
+        #endregion ...Variables...
+
+        #region ... Events     ...
+
+        #endregion ...Events...
+
+        #region ... Constructor...
+
+        #endregion ...Constructor...
+
+        #region ... Properties ...
+
+        /// <summary>
+            /// 
+            /// </summary>
+        public string Value
+        {
+            get
+            {
+                return mTag.Value;
+            }
+            set
+            {
+                if (mTag.Value != value)
+                {
+                    mTag.Value = value;
+                    IsChanged = true;
+                    OnPropertyChanged("Value");
+                }
+            }
+        }
+
+
+        #endregion ...Properties...
+
+        #region ... Methods    ...
+        /// <summary>
+        /// 
+        /// </summary>
+        protected override void Init()
+        {
+            base.Init();
+            mTag = Model as Cdy.Ant.StringAlarmTag;
+        }
+        #endregion ...Methods...
+
+        #region ... Interfaces ...
+
+        #endregion ...Interfaces...
+    }
+
+    public class TwoRangeTagConfigViewModel : SimpleTagConfigViewModel
+    {
+
+        #region ... Variables  ...
+        Cdy.Ant.TwoRangeAlarmTag mTag;
+        private string mValue;
+        #endregion ...Variables...
+
+        #region ... Events     ...
+
+        #endregion ...Events...
+
+        #region ... Constructor...
+
+        #endregion ...Constructor...
+
+        #region ... Properties ...
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string Value
+        {
+            get
+            {
+                return mValue;
+            }
+            set
+            {
+                if (mValue != value)
+                {
+                    mValue = value;
+                    mTag.AlarmDatas = DeSeriseAlarmPoint(value);
+                    IsChanged = true;
+                    OnPropertyChanged("Value");
+                }
+            }
+        }
+
+        public bool IsInRangeAlarm
+        {
+            get
+            {
+                return mTag.IsInRangeAlarm;
+            }
+            set
+            {
+                if (mTag.IsInRangeAlarm != value)
+                {
+                    mTag.IsInRangeAlarm = value;
+                    OnPropertyChanged("IsInRangeAlarm");
+                    IsChanged = true;
+                }
+            }
+        }
+        #endregion ...Properties...
+
+        #region ... Methods    ...
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="points"></param>
+        /// <returns></returns>
+        public string ToStringAlarmPoint(List<Point> points)
+        {
+            StringBuilder sb = new StringBuilder();
+            if(points!=null)
+            foreach (var vv in points)
+            {
+                sb.Append(vv.X + "," + vv.Y + ";");
+            }
+            sb.Length = sb.Length > 0 ? sb.Length - 1 : sb.Length;
+            return sb.ToString();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public List<Point> DeSeriseAlarmPoint(string value)
+        {
+            var AlarmDatas = new List<Point>();
+            string[] ss = value.Split(new char[] { ';' });
+            if (ss.Length > 0)
+            {
+                foreach (var vv in ss)
+                {
+                    string[] s1 = vv.Split(new char[] { ',' });
+                    double val1 = double.Parse(s1[0]);
+                    double val2 = double.Parse(s1[1]);
+                    AlarmDatas.Add(new Point() { X = val1, Y = val2 });
+                }
+            }
+            return AlarmDatas;
+        }
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        protected override void Init()
+        {
+            base.Init();
+            mTag = Model as Cdy.Ant.TwoRangeAlarmTag;
+            mValue = ToStringAlarmPoint(mTag.AlarmDatas);
+        }
+        #endregion ...Methods...
+
+        #region ... Interfaces ...
+
+        #endregion ...Interfaces...
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public class ThreeRangeTagConfigViewModel : SimpleTagConfigViewModel
+    {
+
+        #region ... Variables  ...
+        Cdy.Ant.ThreeRangeAlarmTag mTag;
+        private string mValue;
+        #endregion ...Variables...
+
+        #region ... Events     ...
+
+        #endregion ...Events...
+
+        #region ... Constructor...
+
+        #endregion ...Constructor...
+
+        #region ... Properties ...
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string Value
+        {
+            get
+            {
+                return mValue;
+            }
+            set
+            {
+                if (mValue != value)
+                {
+                    mValue = value;
+                    mTag.AlarmDatas = DeSeriseAlarmPoint(value);
+                    IsChanged = true;
+                    OnPropertyChanged("Value");
+                }
+            }
+        }
+
+        public bool IsInRangeAlarm
+        {
+            get
+            {
+                return mTag.IsInRangeAlarm;
+            }
+            set
+            {
+                if (mTag.IsInRangeAlarm != value)
+                {
+                    mTag.IsInRangeAlarm = value;
+                    OnPropertyChanged("IsInRangeAlarm");
+                    IsChanged = true;
+                }
+            }
+        }
+        #endregion ...Properties...
+
+        #region ... Methods    ...
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="points"></param>
+        /// <returns></returns>
+        public string ToStringAlarmPoint(List<Point3D> points)
+        {
+            StringBuilder sb = new StringBuilder();
+            if (points != null)
+                foreach (var vv in points)
+                {
+                    sb.Append(vv.X + "," + vv.Y + "," + vv.Z + ";");
+                }
+            sb.Length = sb.Length > 0 ? sb.Length - 1 : sb.Length;
+            return sb.ToString();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public List<Point3D> DeSeriseAlarmPoint(string value)
+        {
+            var AlarmDatas = new List<Point3D>();
+            string[] ss = value.Split(new char[] { ';' });
+            if (ss.Length > 0)
+            {
+                foreach (var vv in ss)
+                {
+                    string[] s1 = vv.Split(new char[] { ',' });
+                    double val1 = double.Parse(s1[0]);
+                    double val2 = double.Parse(s1[1]);
+                    double val3 = double.Parse(s1[2]);
+                    AlarmDatas.Add(new Point3D() { X = val1, Y = val2,Z=val3 });
+                }
+            }
+            return AlarmDatas;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        protected override void Init()
+        {
+            base.Init();
+            mTag = Model as Cdy.Ant.ThreeRangeAlarmTag;
+            mValue = ToStringAlarmPoint(mTag.AlarmDatas);
+        }
+        #endregion ...Methods...
+
+        #region ... Interfaces ...
+
+        #endregion ...Interfaces...
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public class ScriptTagConfigViewModel : TagDetailConfigViewModelBase
+    {
+
+        #region ... Variables  ...
+        private Cdy.Ant.ScriptTag mTag;
+        #endregion ...Variables...
+
+        #region ... Events     ...
+
+        #endregion ...Events...
+
+        #region ... Constructor...
+
+        #endregion ...Constructor...
+
+        #region ... Properties ...
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string Express
+        {
+            get
+            {
+                return mTag.Expresse;
+            }
+            set
+            {
+                if (mTag.Expresse != value)
+                {
+                    mTag.Expresse = value;
+                    IsChanged = true;
+                    OnPropertyChanged("Express");
+                }
+            }
+        }
+
+
+        #endregion ...Properties...
+
+        #region ... Methods    ...
+
+        /// <summary>
+        /// 
+        /// </summary>
+        protected override void Init()
+        {
+            base.Init();
+            mTag = Model as Cdy.Ant.ScriptTag;
+        }
+
+        #endregion ...Methods...
+
+        #region ... Interfaces ...
+
+        #endregion ...Interfaces...
+    }
+
+
+    /// <summary>
+    /// 
+    /// </summary>
     public class DatabaseViewModel : HasChildrenTreeItemViewModel
     {
 

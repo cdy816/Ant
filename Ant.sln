@@ -17,13 +17,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InAntRun", "Run\InAntRun\In
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cdy.Ant.MarsApi", "Run\Cdy.Ant.MarsApi\Cdy.Ant.MarsApi.csproj", "{09CAA5DD-B446-4C3A-88C0-90CDFE5A62B3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InAntDevelopServer", "Develop\InAntDevelopServer\InAntDevelopServer.csproj", "{ED2D1C95-A895-4E2B-AA32-4D6EA33DC78F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InAntDevelopServer", "Develop\InAntDevelopServer\InAntDevelopServer.csproj", "{ED2D1C95-A895-4E2B-AA32-4D6EA33DC78F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InAntStuidoServer", "Develop\InAntStuidoServer\InAntStuidoServer.csproj", "{85A25F85-267C-4B2F-9C05-3792A651EE21}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InAntStuidoServer", "Develop\InAntStuidoServer\InAntStuidoServer.csproj", "{85A25F85-267C-4B2F-9C05-3792A651EE21}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InAntStudio", "Develop\InAntStudio\InAntStudio.csproj", "{1CB39C9F-DCC1-4538-B36E-CB083C1C6357}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InAntStudio", "Develop\InAntStudio\InAntStudio.csproj", "{1CB39C9F-DCC1-4538-B36E-CB083C1C6357}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InAntDevelopServerClientApi", "Develop\InAntDevelopServerClientApi\InAntDevelopServerClientApi.csproj", "{72765DC4-5C18-4822-A227-CD97931A4B14}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InAntDevelopServerClientApi", "Develop\InAntDevelopServerClientApi\InAntDevelopServerClientApi.csproj", "{72765DC4-5C18-4822-A227-CD97931A4B14}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

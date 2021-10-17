@@ -25,6 +25,7 @@ namespace Cdy.Ant
             Tags = new SortedDictionary<int, Tagbase>();
             NamedTags = new Dictionary<string, Tagbase>();
             Groups = new Dictionary<string, TagGroup>();
+            Setting = new Setting();
         }
 
         /// <summary>

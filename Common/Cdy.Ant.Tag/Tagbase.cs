@@ -154,6 +154,12 @@ namespace Cdy.Ant
 
         private string mGroup;
 
+        private string mCustomContent1 = "";
+
+        private string mCustomContent2 = "";
+
+        private string mCustomContent3 = "";
+
         private int mId = 0;
 
         #endregion ...Variables...
@@ -252,6 +258,62 @@ namespace Cdy.Ant
         /// </summary>
         public bool IsEnable { get; set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        public string CustomContent1
+        {
+            get
+            {
+                return mCustomContent1;
+            }
+            set
+            {
+                if (mCustomContent1 != value)
+                {
+                    mCustomContent1 = value;
+                }
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string CustomContent2
+        {
+            get
+            {
+                return mCustomContent2;
+            }
+            set
+            {
+                if (mCustomContent2 != value)
+                {
+                    mCustomContent2 = value;
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string CustomContent3
+        {
+            get
+            {
+                return mCustomContent3;
+            }
+            set
+            {
+                if (mCustomContent3 != value)
+                {
+                    mCustomContent3 = value;
+                }
+            }
+        }
+
+
         #endregion ...Properties...
 
         #region ... Methods    ...
@@ -262,7 +324,7 @@ namespace Cdy.Ant
         /// <returns></returns>
         public override string ToString()
         {
-            return Type+","+Id+","+Name+","+Desc+","+Group + "," +IsEnable;
+            return Type+","+Id+","+Name+","+Desc+","+Group + "," +IsEnable+","+CustomContent1 + "," + CustomContent2 + "," + CustomContent3;
         }
 
         /// <summary>
@@ -286,7 +348,10 @@ namespace Cdy.Ant
             Desc = vals[2];
             Group = vals[3];
             IsEnable = bool.Parse(vals[4]);
-            return vals.Slice(5);
+            CustomContent1 = vals[5];
+            CustomContent2 = vals[6];
+            CustomContent2 = vals[7];
+            return vals.Slice(8);
         }
 
         /// <summary>
@@ -314,6 +379,9 @@ namespace Cdy.Ant
             xe.SetAttributeValue("Group", Group);
             xe.SetAttributeValue("Desc", Desc);
             xe.SetAttributeValue("IsEnable", IsEnable);
+            xe.SetAttributeValue("CustomContent1", CustomContent1);
+            xe.SetAttributeValue("CustomContent2", CustomContent2);
+            xe.SetAttributeValue("CustomContent3", CustomContent3);
             return xe;
         }
 
@@ -328,6 +396,9 @@ namespace Cdy.Ant
             Group = xe.Attribute("Group").Value;
             Desc = xe.Attribute("Desc").Value;
             IsEnable = bool.Parse(xe.Attribute("IsEnable").Value);
+            CustomContent1 = xe.Attribute("CustomContent1").Value;
+            CustomContent2 = xe.Attribute("CustomContent2").Value;
+            CustomContent3 = xe.Attribute("CustomContent3").Value;
         }
 
         /// <summary>

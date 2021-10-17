@@ -126,6 +126,12 @@
   <data name="AddTagFail" xml:space="preserve">
     <value>添加变量 {0} 失败!</value>
   </data>
+  <data name="AlarmLevel" xml:space="preserve">
+    <value>等级</value>
+  </data>
+  <data name="AlarmTag" xml:space="preserve">
+    <value>关联变量</value>
+  </data>
   <data name="AllGroup" xml:space="preserve">
     <value>所有组</value>
   </data>
@@ -159,6 +165,15 @@
   <data name="Custom" xml:space="preserve">
     <value>自定义</value>
   </data>
+  <data name="CustomContent1" xml:space="preserve">
+    <value>自定义字段1</value>
+  </data>
+  <data name="CustomContent2" xml:space="preserve">
+    <value>自定义字段2</value>
+  </data>
+  <data name="CustomContent3" xml:space="preserve">
+    <value>自定义字段3</value>
+  </data>
   <data name="CustomDataPathTooltip" xml:space="preserve">
     <value>相对数据库目录的路径或者绝对路径</value>
   </data>
@@ -168,6 +183,9 @@
   <data name="databaseSelect" xml:space="preserve">
     <value>数据库选择</value>
     <comment>List database View Title</comment>
+  </data>
+  <data name="DeadAera" xml:space="preserve">
+    <value>死区</value>
   </data>
   <data name="DeadAreaCompress" xml:space="preserve">
     <value>死区压缩</value>
@@ -180,6 +198,9 @@
   </data>
   <data name="Default" xml:space="preserve">
     <value>默认</value>
+  </data>
+  <data name="Delay" xml:space="preserve">
+    <value>延时</value>
   </data>
   <data name="Desc" xml:space="preserve">
     <value>描述</value>
@@ -214,6 +235,12 @@
   <data name="Group" xml:space="preserve">
     <value>组</value>
   </data>
+  <data name="HighHighValue" xml:space="preserve">
+    <value>高高</value>
+  </data>
+  <data name="HighValue" xml:space="preserve">
+    <value>高</value>
+  </data>
   <data name="HisDataKeepTime" xml:space="preserve">
     <value>历史数据保留时间:</value>
   </data>
@@ -241,6 +268,9 @@
   <data name="IsAdmin" xml:space="preserve">
     <value>管理员</value>
   </data>
+  <data name="IsInRangeAlarm" xml:space="preserve">
+    <value>范围内报警</value>
+  </data>
   <data name="KeepTimeUnit" xml:space="preserve">
     <value>(天)</value>
   </data>
@@ -262,6 +292,12 @@
   </data>
   <data name="LosslessCompress" xml:space="preserve">
     <value>无损压缩</value>
+  </data>
+  <data name="LowLowValue" xml:space="preserve">
+    <value>低低</value>
+  </data>
+  <data name="LowValue" xml:space="preserve">
+    <value>低</value>
   </data>
   <data name="MainwindowTitle" xml:space="preserve">
     <value>Ant 数据分析报警平台</value>
@@ -326,6 +362,9 @@
   <data name="PermissionList" xml:space="preserve">
     <value>权限列表</value>
   </data>
+  <data name="Points" xml:space="preserve">
+    <value>点集合</value>
+  </data>
   <data name="Precision" xml:space="preserve">
     <value>精度</value>
   </data>
@@ -334,6 +373,9 @@
   </data>
   <data name="PropertyPaste" xml:space="preserve">
     <value>粘贴属性</value>
+  </data>
+  <data name="PulseType" xml:space="preserve">
+    <value>触发类型</value>
   </data>
   <data name="Read" xml:space="preserve">
     <value>读</value>
@@ -485,6 +527,9 @@
   </data>
   <data name="UseTls" xml:space="preserve">
     <value>加密传输</value>
+  </data>
+  <data name="Value" xml:space="preserve">
+    <value>值</value>
   </data>
   <data name="ValueChanged" xml:space="preserve">
     <value>值改变</value>

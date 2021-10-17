@@ -77,13 +77,13 @@ namespace DBDevelopClientApi
                 Grpc.Net.Client.GrpcChannel grpcChannel;
                 if (UseTls)
                 {
-                    grpcChannel = Grpc.Net.Client.GrpcChannel.ForAddress(@"https://" + ip + ":5001", new GrpcChannelOptions { HttpClient = httpClient });
+                    grpcChannel = Grpc.Net.Client.GrpcChannel.ForAddress(@"https://" + ip + ":15001", new GrpcChannelOptions { HttpClient = httpClient });
                 }
                 else
                 {
 
                     //AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
-                    grpcChannel = Grpc.Net.Client.GrpcChannel.ForAddress(@"http://" + ip + ":5001", new GrpcChannelOptions { HttpClient = httpClient });
+                    grpcChannel = Grpc.Net.Client.GrpcChannel.ForAddress(@"http://" + ip + ":15001", new GrpcChannelOptions { HttpClient = httpClient });
                     //grpcChannel = Grpc.Net.Client.GrpcChannel.ForAddress(@"http://" + ip + ":5001");
                 }
                 return new AntDevelopServer.DevelopServer.DevelopServerClient(grpcChannel);
@@ -404,6 +404,9 @@ namespace DBDevelopClientApi
                         tag.Desc = vv.Desc;
                         tag.Group = vv.Group;
                         tag.IsEnable = vv.IsEnable;
+                        tag.CustomContent1 = vv.CustomContent1;
+                        tag.CustomContent2 = vv.CustomContent2;
+                        tag.CustomContent3 = vv.CustomContent3;
                         if(tag is SimpleAlarmTag)
                         {
                             (tag as SimpleAlarmTag).AlarmLevel = (AlarmLevel)vv.AlarmLevel;
@@ -454,6 +457,9 @@ namespace DBDevelopClientApi
                         tag.Desc = vv.Desc;
                         tag.Group = vv.Group;
                         tag.IsEnable = vv.IsEnable;
+                        tag.CustomContent1 = vv.CustomContent1;
+                        tag.CustomContent2 = vv.CustomContent2;
+                        tag.CustomContent3 = vv.CustomContent3;
                         if (tag is SimpleAlarmTag)
                         {
                             (tag as SimpleAlarmTag).AlarmLevel = (AlarmLevel)vv.AlarmLevel;
@@ -533,6 +539,9 @@ namespace DBDevelopClientApi
                         tag.Desc = vv.Desc;
                         tag.Group = vv.Group;
                         tag.IsEnable = vv.IsEnable;
+                        tag.CustomContent1 = vv.CustomContent1;
+                        tag.CustomContent2 = vv.CustomContent2;
+                        tag.CustomContent3 = vv.CustomContent3;
                         if (tag is SimpleAlarmTag)
                         {
                             (tag as SimpleAlarmTag).AlarmLevel = (AlarmLevel)vv.AlarmLevel;
@@ -594,6 +603,9 @@ namespace DBDevelopClientApi
                         tag.Desc = vv.Desc;
                         tag.Group = vv.Group;
                         tag.IsEnable = vv.IsEnable;
+                        tag.CustomContent1 = vv.CustomContent1;
+                        tag.CustomContent2 = vv.CustomContent2;
+                        tag.CustomContent3 = vv.CustomContent3;
                         if (tag is SimpleAlarmTag)
                         {
                             (tag as SimpleAlarmTag).AlarmLevel = (AlarmLevel)vv.AlarmLevel;
@@ -821,9 +833,21 @@ namespace DBDevelopClientApi
             re.TagType = (uint)tag.Type;
             re.Group = tag.Group;
             re.Desc = tag.Desc;
-            re.AlarmLevel = (int)(tag as SimpleAlarmTag).AlarmLevel;
-            
-            //to do here
+            re.IsEnable = tag.IsEnable;
+
+            re.CustomContent1 = tag.CustomContent1;
+            re.CustomContent2 = tag.CustomContent2;
+            re.CustomContent3 = tag.CustomContent3;
+            if (tag is AlarmTag)
+            {
+                re.LinkTag = (tag as Cdy.Ant.SimpleAlarmTag).LinkTag;
+            }
+            if (tag is Cdy.Ant.SimpleAlarmTag)
+            {
+                re.AlarmLevel = (int)(tag as SimpleAlarmTag).AlarmLevel;
+
+            }
+            re.AlarmContent = SeriseAlarmContent(tag);
 
             return re;
         }

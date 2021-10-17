@@ -455,7 +455,7 @@ namespace InAntDevelopServer
                     List<TagMessage> re = new List<TagMessage>();
                     foreach (var vv in htags)
                     {
-                        var vtag = new TagMessage() { Id = vv.Id, Name = vv.Name, Desc = vv.Desc, Group = vv.Group, TagType = (uint)vv.Type,IsEnable=vv.IsEnable };
+                        var vtag = new TagMessage() { Id = vv.Id, Name = vv.Name, Desc = vv.Desc, Group = vv.Group, TagType = (uint)vv.Type,IsEnable=vv.IsEnable,CustomContent1 = vv.CustomContent1,CustomContent2=vv.CustomContent2,CustomContent3=vv.CustomContent3 };
                         vtag.LinkTag = (vv is Cdy.Ant.AlarmTag) ? (vv as Cdy.Ant.AlarmTag).LinkTag : string.Empty;
                         vtag.AlarmLevel = (vv is Cdy.Ant.SimpleAlarmTag) ? (int)((vv as Cdy.Ant.SimpleAlarmTag).AlarmLevel): 0;
                         vtag.AlarmContent = SeriseAlarmContent(vv);
@@ -491,7 +491,7 @@ namespace InAntDevelopServer
                     DbManager.Instance.CheckAndContinueLoadDatabase(db);
                     foreach (var vv in db.ListAllTags())
                     {
-                        var vtag = new TagMessage() { Id = vv.Id, Name = vv.Name, Desc = vv.Desc, Group = vv.Group, TagType = (uint)vv.Type, IsEnable = vv.IsEnable };
+                        var vtag = new TagMessage() { Id = vv.Id, Name = vv.Name, Desc = vv.Desc, Group = vv.Group, TagType = (uint)vv.Type, IsEnable = vv.IsEnable, CustomContent1 = vv.CustomContent1, CustomContent2 = vv.CustomContent2, CustomContent3 = vv.CustomContent3 };
                         vtag.LinkTag = (vv is Cdy.Ant.AlarmTag) ? (vv as Cdy.Ant.AlarmTag).LinkTag : string.Empty;
                         vtag.AlarmLevel = (vv is Cdy.Ant.SimpleAlarmTag) ? (int)((vv as Cdy.Ant.SimpleAlarmTag).AlarmLevel) : 0;
                         vtag.AlarmContent = SeriseAlarmContent(vv);
@@ -581,7 +581,7 @@ namespace InAntDevelopServer
                     {
                         if (cc >= from && cc < (from + PageCount))
                         {
-                            var vtag = new TagMessage() { Id = vv.Id, Name = vv.Name, Desc = vv.Desc, Group = vv.Group, TagType = (uint)vv.Type, IsEnable = vv.IsEnable };
+                            var vtag = new TagMessage() { Id = vv.Id, Name = vv.Name, Desc = vv.Desc, Group = vv.Group, TagType = (uint)vv.Type, IsEnable = vv.IsEnable, CustomContent1 = vv.CustomContent1, CustomContent2 = vv.CustomContent2, CustomContent3 = vv.CustomContent3 };
                             vtag.LinkTag = (vv is Cdy.Ant.AlarmTag) ? (vv as Cdy.Ant.AlarmTag).LinkTag : string.Empty;
                             vtag.AlarmLevel = (vv is Cdy.Ant.SimpleAlarmTag) ? (int)((vv as Cdy.Ant.SimpleAlarmTag).AlarmLevel) : 0;
                             vtag.AlarmContent = SeriseAlarmContent(vv);
@@ -1049,6 +1049,9 @@ namespace InAntDevelopServer
                 re.Desc = tmsg.Desc;
                 re.Id = (int)tmsg.Id;
                 re.IsEnable = tmsg.IsEnable;
+                re.CustomContent1 = tmsg.CustomContent1;
+                re.CustomContent2 = tmsg.CustomContent2;
+                re.CustomContent3 = tmsg.CustomContent3;
                 DeSeriseAlarmContent(re, tmsg.AlarmContent);
             }
 

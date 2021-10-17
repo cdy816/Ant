@@ -366,7 +366,10 @@ message TagMessage
   bool IsEnable = 6;
   string LinkTag=7;
   int32 AlarmLevel=8;
-  string AlarmContent=9;
+  string CustomContent1=9;
+  string CustomContent2=10;
+  string CustomContent3=11;
+  string AlarmContent=12;
 }
 
 //±äÁ¿×é

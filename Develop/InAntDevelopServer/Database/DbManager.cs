@@ -77,11 +77,14 @@ namespace DBDevelopService
                     string sname = new System.IO.DirectoryInfo(vv).Name;
 
                     Cdy.Ant.AlarmDatabase db = new Cdy.Ant.AlarmDatabaseSerise().QuickLoadByName(sname);
-                    if (!mDatabase.ContainsKey(db.Name))
-                        mDatabase.Add(db.Name, db);
-                    else
+                    if (db != null)
                     {
-                        mDatabase[db.Name] = db;
+                        if (!mDatabase.ContainsKey(db.Name))
+                            mDatabase.Add(db.Name, db);
+                        else
+                        {
+                            mDatabase[db.Name] = db;
+                        }
                     }
                 }
             }

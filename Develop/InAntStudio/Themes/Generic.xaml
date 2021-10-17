@@ -41,10 +41,43 @@
         <view:IdResetView />
     </DataTemplate>
 
-    <BooleanToVisibilityConverter x:Key="bvc" />
-    
-    
+    <DataTemplate DataType="{x:Type local:AnalogTagConfigViewModel}">
+        <local:AnalogTagConfigView />
+    </DataTemplate>
 
+    <DataTemplate DataType="{x:Type local:AnalogRangTagConfigViewModel}">
+        <local:AnalogRangTagConfigView />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type local:DigitalTagConfigViewModel}">
+        <local:DigitalTagConfigView />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type local:DigitalDelayTagConfigViewModel}">
+        <local:DelayDigitalTagConfigView />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type local:OneRangeTagConfigViewModel}">
+        <local:OneRangeTagConfigView />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type local:TwoRangeTagConfigViewModel}">
+        <local:TwoRangeTagConfigView />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type local:ThreeRangeTagConfigViewModel}">
+        <local:ThreeRangeTagConfigView />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type local:PulseTagConfigViewModel}">
+        <local:PulseTagConfigView />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type local:ScriptTagConfigViewModel}">
+        <local:ScriptTagConfigView />
+    </DataTemplate>
+
+    <BooleanToVisibilityConverter x:Key="bvc" />
 
     <SolidColorBrush x:Key="Button.Static.Background" Color="#FFDDDDDD"/>
     <SolidColorBrush x:Key="Button.Static.Border" Color="#FF707070"/>

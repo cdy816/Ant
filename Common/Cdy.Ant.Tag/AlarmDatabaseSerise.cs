@@ -154,20 +154,25 @@ namespace Cdy.Ant
                 db.Name = xe.Attribute("Name").Value;
                 db.Version = xe.Attribute("Version").Value;
                 db.Tags = null;
-            }
 
-            if(System.IO.File.Exists(path+"s"))
-            {
-                XElement xx = XElement.Load(path + "s");
-                db.Setting = new Setting();
-                if(xx.Attribute("WebServerPort")!=null)
+                if (System.IO.File.Exists(path + "s"))
                 {
-                    db.Setting.WebServerPort = int.Parse(xx.Attribute("WebServerPort").Value);
+                    XElement xx = XElement.Load(path + "s");
+                    db.Setting = new Setting();
+                    if (xx.Attribute("WebServerPort") != null)
+                    {
+                        db.Setting.WebServerPort = int.Parse(xx.Attribute("WebServerPort").Value);
+                    }
                 }
+                db.IsDirty = false;
+                this.Database = db;
             }
-
-            db.IsDirty = false;
-            this.Database = db;
+            else
+            {
+                db = null;
+            }
+         
+            
             return db;
         }
 

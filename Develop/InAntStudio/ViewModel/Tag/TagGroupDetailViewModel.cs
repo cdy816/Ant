@@ -220,14 +220,7 @@ namespace InAntStudio.ViewModel
                 {
                     mFilterDriver = value;
                     NewQueryTags();
-                    if (DriverList != null && TagViewModel.Drivers.ContainsKey(value))
-                    {
-                        RegistorList = TagViewModel.Drivers[value];
-                    }
-                    else
-                    {
-                        RegistorList = null;
-                    }
+
                     OnPropertyChanged("RegistorList");
                     OnPropertyChanged("FilterDriver");
                 }
@@ -757,19 +750,19 @@ namespace InAntStudio.ViewModel
         /// </summary>
         public string[] TagTypeList { get { return TagViewModel.mTagTypeList; } }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        public string[] ReadWriteModeList { get { return TagViewModel.mReadWriteModeList; } }
+        ///// <summary>
+        ///// 
+        ///// </summary>
+        //public string[] ReadWriteModeList { get { return TagViewModel.mReadWriteModeList; } }
 
-        public string[] CompressTypeList { get { return TagViewModel.mCompressTypeList; } }
+        //public string[] CompressTypeList { get { return TagViewModel.mCompressTypeList; } }
 
-        public string[] DriverList { get { return TagViewModel.Drivers.Keys.ToArray(); } }
+        //public string[] DriverList { get { return TagViewModel.Drivers.Keys.ToArray(); } }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        public string[] RegistorList { get; set; }
+        ///// <summary>
+        ///// 
+        ///// </summary>
+        //public string[] RegistorList { get; set; }
 
         /// <summary>
         /// 

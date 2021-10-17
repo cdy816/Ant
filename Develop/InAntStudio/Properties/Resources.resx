@@ -126,6 +126,12 @@
   <data name="AddTagFail" xml:space="preserve">
     <value>Add tag {0} failed!</value>
   </data>
+  <data name="AlarmLevel" xml:space="preserve">
+    <value>AlarmLevel</value>
+  </data>
+  <data name="AlarmTag" xml:space="preserve">
+    <value>Alarm Link Tag</value>
+  </data>
   <data name="AllGroup" xml:space="preserve">
     <value>All group</value>
   </data>
@@ -159,6 +165,15 @@
   <data name="Custom" xml:space="preserve">
     <value>Custom</value>
   </data>
+  <data name="CustomContent1" xml:space="preserve">
+    <value>CustomContent1</value>
+  </data>
+  <data name="CustomContent2" xml:space="preserve">
+    <value>CustomContent2</value>
+  </data>
+  <data name="CustomContent3" xml:space="preserve">
+    <value>CustomContent3</value>
+  </data>
   <data name="CustomDataPathTooltip" xml:space="preserve">
     <value>Relative database path or absolute path</value>
   </data>
@@ -168,6 +183,9 @@
   <data name="databaseSelect" xml:space="preserve">
     <value>Database select</value>
     <comment>List database View Title</comment>
+  </data>
+  <data name="DeadAera" xml:space="preserve">
+    <value>DeadAera</value>
   </data>
   <data name="DeadAreaCompress" xml:space="preserve">
     <value>Dead zone</value>
@@ -180,6 +198,9 @@
   </data>
   <data name="Default" xml:space="preserve">
     <value>Default</value>
+  </data>
+  <data name="Delay" xml:space="preserve">
+    <value>Delay</value>
   </data>
   <data name="Desc" xml:space="preserve">
     <value>Description</value>
@@ -214,6 +235,12 @@
   <data name="Group" xml:space="preserve">
     <value>Group</value>
   </data>
+  <data name="HighHighValue" xml:space="preserve">
+    <value>HighHigh</value>
+  </data>
+  <data name="HighValue" xml:space="preserve">
+    <value>High</value>
+  </data>
   <data name="HisDataKeepTime" xml:space="preserve">
     <value>Historical data retention time</value>
   </data>
@@ -241,6 +268,9 @@
   <data name="IsAdmin" xml:space="preserve">
     <value>Admin</value>
   </data>
+  <data name="IsInRangeAlarm" xml:space="preserve">
+    <value>Alarm in value range</value>
+  </data>
   <data name="KeepTimeUnit" xml:space="preserve">
     <value>(Day)</value>
   </data>
@@ -262,6 +292,12 @@
   </data>
   <data name="LosslessCompress" xml:space="preserve">
     <value>Lossless</value>
+  </data>
+  <data name="LowLowValue" xml:space="preserve">
+    <value>LowLow</value>
+  </data>
+  <data name="LowValue" xml:space="preserve">
+    <value>Low</value>
   </data>
   <data name="MainwindowTitle" xml:space="preserve">
     <value>Mars database developer</value>
@@ -326,6 +362,9 @@
   <data name="PermissionList" xml:space="preserve">
     <value>Permission list</value>
   </data>
+  <data name="Points" xml:space="preserve">
+    <value>Points</value>
+  </data>
   <data name="Precision" xml:space="preserve">
     <value>Precision</value>
   </data>
@@ -334,6 +373,9 @@
   </data>
   <data name="PropertyPaste" xml:space="preserve">
     <value>PropertyPaste</value>
+  </data>
+  <data name="PulseType" xml:space="preserve">
+    <value>PulseType</value>
   </data>
   <data name="Read" xml:space="preserve">
     <value>Read</value>
@@ -485,6 +527,9 @@
   </data>
   <data name="UseTls" xml:space="preserve">
     <value>UseTls</value>
+  </data>
+  <data name="Value" xml:space="preserve">
+    <value>Value</value>
   </data>
   <data name="ValueChanged" xml:space="preserve">
     <value>ValueChanged</value>
