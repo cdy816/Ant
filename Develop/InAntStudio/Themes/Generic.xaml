@@ -77,6 +77,11 @@
         <local:ScriptTagConfigView />
     </DataTemplate>
 
+
+    <DataTemplate DataType="{x:Type local:MarsTagBrowserViewModel}">
+        <local:MarsTagBrowserView />
+    </DataTemplate>
+
     <BooleanToVisibilityConverter x:Key="bvc" />
 
     <SolidColorBrush x:Key="Button.Static.Background" Color="#FFDDDDDD"/>
@@ -100,7 +105,7 @@
                     <Border x:Name="border" Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" SnapsToDevicePixels="true">
                         <Grid>
                             <!--<ContentPresenter  x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>-->
-                            <Image  x:Name="contentPresenter" Source="/DBInStudio;component/Image/hidden.png" Width="16" Height="8" Stretch="Fill" HorizontalAlignment="Center" VerticalAlignment="Center"   RenderOptions.BitmapScalingMode="NearestNeighbor"/>
+                            <Image  x:Name="contentPresenter" Source="/InAntStudio;component/Image/hidden.png" Width="16" Height="8" Stretch="Fill" HorizontalAlignment="Center" VerticalAlignment="Center"   RenderOptions.BitmapScalingMode="NearestNeighbor"/>
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
@@ -116,7 +121,7 @@
                             <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Pressed.Border}"/>
                         </Trigger>
                         <Trigger Property="IsChecked" Value="true">
-                            <Setter Property="Source" TargetName="contentPresenter" Value="/DBInStudio;component/Image/show.png"/>
+                            <Setter Property="Source" TargetName="contentPresenter" Value="/InAntStudio;component/Image/show.png"/>
                             <Setter Property="Height" TargetName="contentPresenter" Value="16"/>
                             <Setter Property="Width" TargetName="contentPresenter" Value="24"/>
                         </Trigger>

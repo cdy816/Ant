@@ -231,7 +231,13 @@ namespace Cdy.Ant
                     NamedTags.Remove(sname);
                     NamedTags.Add(tag.FullName, tag);
                 }
+                else if (NamedTags.ContainsKey(tag.FullName))
+                {
+                    NamedTags[tag.FullName] = tag;
+                }
+
                 Tags[id] = tag;
+                
                 IsDirty = true;
             }
         }

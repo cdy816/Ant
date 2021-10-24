@@ -123,8 +123,17 @@
   <data name="Add" xml:space="preserve">
     <value>添加</value>
   </data>
+  <data name="AddFromMarsExport" xml:space="preserve">
+    <value>从Mars数据库导出文件添加</value>
+  </data>
+  <data name="AddFromMarsOnline" xml:space="preserve">
+    <value>从Mars数据库在线选择添加</value>
+  </data>
   <data name="AddTagFail" xml:space="preserve">
     <value>添加变量 {0} 失败!</value>
+  </data>
+  <data name="AlarmEnable" xml:space="preserve">
+    <value>使能</value>
   </data>
   <data name="AlarmLevel" xml:space="preserve">
     <value>等级</value>
@@ -155,6 +164,9 @@
   </data>
   <data name="CompressType" xml:space="preserve">
     <value>压缩类型</value>
+  </data>
+  <data name="Connect" xml:space="preserve">
+    <value>连接</value>
   </data>
   <data name="Convert" xml:space="preserve">
     <value>转换</value>
@@ -204,6 +216,9 @@
   </data>
   <data name="Desc" xml:space="preserve">
     <value>描述</value>
+  </data>
+  <data name="DisConnect" xml:space="preserve">
+    <value>断开连接</value>
   </data>
   <data name="Driver" xml:space="preserve">
     <value>驱动</value>
@@ -280,6 +295,12 @@
   <data name="Link" xml:space="preserve">
     <value>链接</value>
   </data>
+  <data name="LinkAddress" xml:space="preserve">
+    <value>关联变量</value>
+  </data>
+  <data name="Local" xml:space="preserve">
+    <value>本地</value>
+  </data>
   <data name="Login" xml:space="preserve">
     <value>登录</value>
     <comment>登录</comment>
@@ -304,6 +325,9 @@
   </data>
   <data name="Manual" xml:space="preserve">
     <value>手动</value>
+  </data>
+  <data name="MarsTagBrowser" xml:space="preserve">
+    <value>Mars数据库变量浏览</value>
   </data>
   <data name="MarsTitle" xml:space="preserve">
     <value>欢迎来到Ant 数据分析报警平台</value>
@@ -365,6 +389,9 @@
   <data name="Points" xml:space="preserve">
     <value>点集合</value>
   </data>
+  <data name="Port" xml:space="preserve">
+    <value>端口</value>
+  </data>
   <data name="Precision" xml:space="preserve">
     <value>精度</value>
   </data>
@@ -394,6 +421,9 @@
   </data>
   <data name="Registor" xml:space="preserve">
     <value>寄存器</value>
+  </data>
+  <data name="Remote" xml:space="preserve">
+    <value>远程</value>
   </data>
   <data name="Remove" xml:space="preserve">
     <value>删除</value>
@@ -438,11 +468,17 @@
   <data name="SelectGroup" xml:space="preserve">
     <value>选择组</value>
   </data>
+  <data name="Server" xml:space="preserve">
+    <value>服务器</value>
+  </data>
   <data name="ServerBackupDataPath" xml:space="preserve">
     <value>历史数据备份路径</value>
   </data>
   <data name="ServerIp" xml:space="preserve">
     <value>服务器IP</value>
+  </data>
+  <data name="ServerModel" xml:space="preserve">
+    <value>服务器模式</value>
   </data>
   <data name="ServerPort" xml:space="preserve">
     <value>服务端口</value>
@@ -494,6 +530,9 @@
   </data>
   <data name="Tag" xml:space="preserve">
     <value>变量</value>
+  </data>
+  <data name="TagBrowser" xml:space="preserve">
+    <value>变量浏览</value>
   </data>
   <data name="TagCount" xml:space="preserve">
     <value>变量个数</value>

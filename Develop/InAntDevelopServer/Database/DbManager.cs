@@ -99,7 +99,7 @@ namespace DBDevelopService
         {
             lock (db)
             {
-                if (db.Tags == null)
+                if (db.Tags == null || db.Tags.Count==0)
                 {
                    new AlarmDatabaseSerise() { Database = db }.ContinueLoad();
                 }

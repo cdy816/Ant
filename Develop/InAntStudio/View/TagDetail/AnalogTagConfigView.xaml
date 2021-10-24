@@ -6,14 +6,14 @@
              xmlns:local="clr-namespace:InAntStudio"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="1000">
-    <Grid>
+    <Grid Margin="36,0">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="28"/>
-            <RowDefinition Height="28"/>
+            <RowDefinition Height="36"/>
+            <RowDefinition Height="36"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid>
@@ -21,8 +21,8 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <CheckBox IsChecked="{Binding HasHighHighValue}" Foreground="{DynamicResource Window.Forground}" VerticalAlignment="Center"  HorizontalAlignment="Left" Margin="5,0" Content="{local:ResMarker HighHighValue}"/>
-            <Grid Grid.Column="1" IsEnabled="{Binding HasHighHighValue}">
+            <CheckBox Background="Transparent" VerticalContentAlignment="Center" IsChecked="{Binding HasHighHighValue}" Foreground="{DynamicResource Window.Forground}" VerticalAlignment="Center"  HorizontalAlignment="Left" Margin="5,0" Content="{local:ResMarker HighHighValue}"/>
+            <Grid Grid.Column="1" IsEnabled="{Binding HasHighHighValue}" Margin="0,0,20,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
@@ -30,17 +30,17 @@
                 </Grid.ColumnDefinitions>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="{local:ResMarker Value}" Foreground="{DynamicResource Window.Forground}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,0" />
-                    <TextBox Grid.Column="1"  Background="#1FFFFFFF" Foreground="{DynamicResource Window.Forground}" CaretBrush="White" Text="{Binding HighHighValue,Mode=TwoWay}" VerticalAlignment="Center" Width="60" />
+                    <TextBox Grid.Column="1" Height="22" VerticalContentAlignment="Center" Background="#1FFFFFFF" Foreground="{DynamicResource Window.Forground}" CaretBrush="White" Text="{Binding HighHighValue,Mode=TwoWay}" VerticalAlignment="Center" Width="60" />
                 </StackPanel>
 
-                <StackPanel Orientation="Horizontal" Grid.Column="1">
+                <StackPanel Orientation="Horizontal" Grid.Column="1" Margin="5,0">
                     <TextBlock Text="{local:ResMarker DeadAera}" Foreground="{DynamicResource Window.Forground}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,0" />
-                    <TextBox Grid.Column="1" Background="#1FFFFFFF" Foreground="{DynamicResource Window.Forground}" CaretBrush="White" Text="{Binding HighHighDeadArea,Mode=TwoWay}" VerticalAlignment="Center" Width="60" />
+                    <TextBox Grid.Column="1" Height="22" VerticalContentAlignment="Center" Background="#1FFFFFFF" Foreground="{DynamicResource Window.Forground}" CaretBrush="White" Text="{Binding HighHighDeadArea,Mode=TwoWay}" VerticalAlignment="Center" Width="60" />
                 </StackPanel>
 
-                <StackPanel Orientation="Horizontal" Grid.Column="2">
+                <StackPanel Orientation="Horizontal" Grid.Column="2"  Margin="5,0">
                     <TextBlock Text="{local:ResMarker AlarmLevel}"  Foreground="{DynamicResource Window.Forground}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,0" />
-                    <ComboBox VerticalAlignment="Center" ItemsSource="{Binding AlarmLevels}" Width="100" SelectedItem="{Binding HighHighAlarmLevel}" />
+                    <ComboBox VerticalAlignment="Center" ItemsSource="{Binding AlarmLevels}" Width="100" SelectedIndex="{Binding HighHighAlarmLevel}" />
                 </StackPanel>
 
             </Grid>
@@ -53,8 +53,8 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <CheckBox IsChecked="{Binding HasHighValue}" Foreground="{DynamicResource Window.Forground}" VerticalAlignment="Center"  HorizontalAlignment="Left" Margin="5,0" Content="{local:ResMarker HighValue}"/>
-            <Grid Grid.Column="1" IsEnabled="{Binding HasHighHighValue}">
+            <CheckBox Background="Transparent" VerticalContentAlignment="Center" IsChecked="{Binding HasHighValue}" Foreground="{DynamicResource Window.Forground}" VerticalAlignment="Center"  HorizontalAlignment="Left" Margin="5,0" Content="{local:ResMarker HighValue}"/>
+            <Grid Grid.Column="1" IsEnabled="{Binding HasHighValue}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
@@ -62,17 +62,17 @@
                 </Grid.ColumnDefinitions>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="{local:ResMarker Value}"  Foreground="{DynamicResource Window.Forground}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,0" />
-                    <TextBox Grid.Column="1" Background="#1FFFFFFF" Foreground="{DynamicResource Window.Forground}" CaretBrush="White" Text="{Binding HighValue,Mode=TwoWay}" VerticalAlignment="Center" Width="60" />
+                    <TextBox Grid.Column="1"  Height="22" VerticalContentAlignment="Center" Background="#1FFFFFFF" Foreground="{DynamicResource Window.Forground}" CaretBrush="White" Text="{Binding HighValue,Mode=TwoWay}" VerticalAlignment="Center" Width="60" />
                 </StackPanel>
 
-                <StackPanel Orientation="Horizontal" Grid.Column="1">
+                <StackPanel Orientation="Horizontal" Grid.Column="1"  Margin="5,0">
                     <TextBlock Text="{local:ResMarker DeadAera}"  Foreground="{DynamicResource Window.Forground}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,0" />
-                    <TextBox Grid.Column="1" Background="#1FFFFFFF" Foreground="{DynamicResource Window.Forground}" CaretBrush="White" Text="{Binding HighDeadArea,Mode=TwoWay}" VerticalAlignment="Center" Width="60" />
+                    <TextBox Grid.Column="1"  Height="22" VerticalContentAlignment="Center" Background="#1FFFFFFF" Foreground="{DynamicResource Window.Forground}" CaretBrush="White" Text="{Binding HighDeadArea,Mode=TwoWay}" VerticalAlignment="Center" Width="60" />
                 </StackPanel>
 
-                <StackPanel Orientation="Horizontal" Grid.Column="2">
+                <StackPanel Orientation="Horizontal" Grid.Column="2"  Margin="5,0">
                     <TextBlock Text="{local:ResMarker AlarmLevel}"  Foreground="{DynamicResource Window.Forground}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,0" />
-                    <ComboBox VerticalAlignment="Center" ItemsSource="{Binding AlarmLevels}" Width="100"  SelectedItem="{Binding HighAlarmLevel}" />
+                    <ComboBox VerticalAlignment="Center" ItemsSource="{Binding AlarmLevels}" Width="100"  SelectedIndex="{Binding HighAlarmLevel}" />
                 </StackPanel>
 
             </Grid>
@@ -86,8 +86,8 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <CheckBox IsChecked="{Binding HasLowLowValue}" Foreground="{DynamicResource Window.Forground}" VerticalAlignment="Center"  HorizontalAlignment="Left" Margin="5,0" Content="{local:ResMarker LowLowValue}"/>
-            <Grid Grid.Column="1" IsEnabled="{Binding HasHighHighValue}">
+            <CheckBox Background="Transparent" VerticalContentAlignment="Center" IsChecked="{Binding HasLowLowValue}" Foreground="{DynamicResource Window.Forground}" VerticalAlignment="Center"  HorizontalAlignment="Left" Margin="5,0" Content="{local:ResMarker LowLowValue}"/>
+            <Grid Grid.Column="1" IsEnabled="{Binding HasLowLowValue}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
@@ -95,17 +95,17 @@
                 </Grid.ColumnDefinitions>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="{local:ResMarker Value}" Foreground="{DynamicResource Window.Forground}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,0" />
-                    <TextBox Grid.Column="1"  Background="#1FFFFFFF" Foreground="{DynamicResource Window.Forground}" CaretBrush="White" Text="{Binding LowLowValue,Mode=TwoWay}" VerticalAlignment="Center" Width="60" />
+                    <TextBox Grid.Column="1"  Height="22" VerticalContentAlignment="Center"  Background="#1FFFFFFF" Foreground="{DynamicResource Window.Forground}" CaretBrush="White" Text="{Binding LowLowValue,Mode=TwoWay}" VerticalAlignment="Center" Width="60" />
                 </StackPanel>
 
-                <StackPanel Orientation="Horizontal" Grid.Column="1">
+                <StackPanel Orientation="Horizontal" Grid.Column="1"  Margin="5,0">
                     <TextBlock Text="{local:ResMarker DeadAera}" Foreground="{DynamicResource Window.Forground}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,0" />
-                    <TextBox Grid.Column="1" Background="#1FFFFFFF" Foreground="{DynamicResource Window.Forground}" CaretBrush="White" Text="{Binding LowLowDeadArea,Mode=TwoWay}" VerticalAlignment="Center" Width="60" />
+                    <TextBox Grid.Column="1"  Height="22" VerticalContentAlignment="Center" Background="#1FFFFFFF" Foreground="{DynamicResource Window.Forground}" CaretBrush="White" Text="{Binding LowLowDeadArea,Mode=TwoWay}" VerticalAlignment="Center" Width="60" />
                 </StackPanel>
 
-                <StackPanel Orientation="Horizontal" Grid.Column="2">
+                <StackPanel Orientation="Horizontal" Grid.Column="2"  Margin="5,0">
                     <TextBlock Text="{local:ResMarker AlarmLevel}"  Foreground="{DynamicResource Window.Forground}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,0" />
-                    <ComboBox VerticalAlignment="Center" ItemsSource="{Binding AlarmLevels}" Width="100" SelectedItem="{Binding LowLowAlarmLevel}" />
+                    <ComboBox VerticalAlignment="Center" ItemsSource="{Binding AlarmLevels}" Width="100" SelectedIndex="{Binding LowLowAlarmLevel}" />
                 </StackPanel>
 
             </Grid>
@@ -118,8 +118,8 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <CheckBox IsChecked="{Binding HasLowValue}" Foreground="{DynamicResource Window.Forground}" VerticalAlignment="Center"  HorizontalAlignment="Left" Margin="5,0" Content="{local:ResMarker LowValue}"/>
-            <Grid Grid.Column="1" IsEnabled="{Binding HasHighHighValue}">
+            <CheckBox Background="Transparent" VerticalContentAlignment="Center" IsChecked="{Binding HasLowValue}" Foreground="{DynamicResource Window.Forground}" VerticalAlignment="Center"  HorizontalAlignment="Left" Margin="5,0" Content="{local:ResMarker LowValue}"/>
+            <Grid Grid.Column="1" IsEnabled="{Binding HasLowValue}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
@@ -127,17 +127,17 @@
                 </Grid.ColumnDefinitions>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="{local:ResMarker Value}" Foreground="{DynamicResource Window.Forground}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,0" />
-                    <TextBox Grid.Column="1"  Background="#1FFFFFFF" Foreground="{DynamicResource Window.Forground}" CaretBrush="White" Text="{Binding LowValue,Mode=TwoWay}" VerticalAlignment="Center" Width="60" />
+                    <TextBox Grid.Column="1"  Height="22" VerticalContentAlignment="Center"  Background="#1FFFFFFF" Foreground="{DynamicResource Window.Forground}" CaretBrush="White" Text="{Binding LowValue,Mode=TwoWay}" VerticalAlignment="Center" Width="60" />
                 </StackPanel>
 
-                <StackPanel Orientation="Horizontal" Grid.Column="1">
+                <StackPanel Orientation="Horizontal" Grid.Column="1"  Margin="5,0">
                     <TextBlock Text="{local:ResMarker DeadAera}" Foreground="{DynamicResource Window.Forground}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,0" />
-                    <TextBox Grid.Column="1" Background="#1FFFFFFF" Foreground="{DynamicResource Window.Forground}" CaretBrush="White" Text="{Binding LowDeadArea,Mode=TwoWay}" VerticalAlignment="Center" Width="60" />
+                    <TextBox Grid.Column="1"  Height="22" VerticalContentAlignment="Center" Background="#1FFFFFFF" Foreground="{DynamicResource Window.Forground}" CaretBrush="White" Text="{Binding LowDeadArea,Mode=TwoWay}" VerticalAlignment="Center" Width="60" />
                 </StackPanel>
 
-                <StackPanel Orientation="Horizontal" Grid.Column="2">
+                <StackPanel Orientation="Horizontal" Grid.Column="2"  Margin="5,0">
                     <TextBlock Text="{local:ResMarker AlarmLevel}"  Foreground="{DynamicResource Window.Forground}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,0" />
-                    <ComboBox VerticalAlignment="Center" ItemsSource="{Binding AlarmLevels}" Width="100" SelectedItem="{Binding LowAlarmLevel}" />
+                    <ComboBox VerticalAlignment="Center" ItemsSource="{Binding AlarmLevels}" Width="100" SelectedIndex="{Binding LowAlarmLevel}" />
                 </StackPanel>
 
             </Grid>

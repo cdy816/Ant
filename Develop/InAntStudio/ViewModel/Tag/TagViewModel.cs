@@ -33,6 +33,12 @@ namespace InAntStudio
 
         private TagDetailConfigViewModelBase mTagDetailModel;
 
+        private bool mIsChanged = false;
+
+        private ICommand mTagBrowseCommand;
+
+        private ICommand mClearLinkTagsCommand;
+
         #endregion ...Variables...
 
         #region ... Events     ...
@@ -55,13 +61,70 @@ namespace InAntStudio
 
         public TagViewModel(Cdy.Ant.Tagbase realTag)
         {
-            this.mRealTagMode = realTag;
+            this.RealTagMode = realTag;
             //CheckLinkAddress();
         }
 
         #endregion ...Constructor...
 
         #region ... Properties ...
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public ICommand ClearLinkTagsCommand
+        {
+            get
+            {
+                if(mClearLinkTagsCommand==null)
+                {
+                    mClearLinkTagsCommand = new RelayCommand(() => {
+                        LinkAddress = string.Empty;
+                    });
+                }
+                return mClearLinkTagsCommand;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public ICommand TagBrowseCommand
+        {
+            get
+            {
+                if(mTagBrowseCommand==null)
+                {
+                    mTagBrowseCommand = new RelayCommand(() => {
+                        MarsTagBrowserViewModel mm = new MarsTagBrowserViewModel();
+                        mm.ServerAddress = ServiceHelper.Helper.Server;
+                        mm.ServerPassword = ServiceHelper.Helper.Password;
+                        mm.ServerUserName = ServiceHelper.Helper.UserName;
+                        mm.PreLoadDatabase = ServiceHelper.Helper.Database;
+                        List<TagViewModel> ltmp = new List<TagViewModel>();
+                        if (mm.ShowDialog().Value)
+                        {
+                            foreach (var vv in mm.GetSelectTags())
+                            {
+                                string sname = vv.FullName;
+                                if (!string.IsNullOrEmpty(LinkAddress))
+                                {
+                                    if (!LinkAddress.Contains(sname))
+                                    {
+                                        LinkAddress += "," + sname;
+                                    }
+                                }
+                                else
+                                {
+                                    LinkAddress = sname;
+                                }
+                            }
+                        }
+                    });
+                }
+                return mTagBrowseCommand;
+            }
+        }
 
         /// <summary>
         /// 
@@ -90,13 +153,10 @@ namespace InAntStudio
             }
         }
 
-
-
-
         /// <summary>
         /// 
         /// </summary>
-        public bool IsChanged { get; set; }
+        public bool IsChanged { get { return mIsChanged; } set { mIsChanged = value; if (!value && mTagDetailModel!=null) mTagDetailModel.IsChanged = false; } }
 
         /// <summary>
         /// 
@@ -278,6 +338,83 @@ namespace InAntStudio
             }
         }
 
+        /// <summary>
+            /// 
+            /// </summary>
+        public bool IsEnable
+        {
+            get
+            {
+                return mRealTagMode.IsEnable;
+            }
+            set
+            {
+                if (mRealTagMode.IsEnable != value)
+                {
+                    mRealTagMode.IsEnable = value;
+                    IsChanged = true;
+                    OnPropertyChanged("IsEnable");
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string CustomContent1
+        {
+            get
+            {
+                return mRealTagMode.CustomContent1;
+            }
+            set
+            {
+                if (mRealTagMode.CustomContent1 != value)
+                {
+                    mRealTagMode.CustomContent1 = value;
+                    OnPropertyChanged("CustomContent1");
+                }
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string CustomContent2
+        {
+            get
+            {
+                return mRealTagMode.CustomContent2;
+            }
+            set
+            {
+                if (mRealTagMode.CustomContent2 != value)
+                {
+                    mRealTagMode.CustomContent2 = value;
+                    OnPropertyChanged("CustomContent2");
+                }
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string CustomContent3
+        {
+            get
+            {
+                return mRealTagMode.CustomContent3;
+            }
+            set
+            {
+                if (mRealTagMode.CustomContent3 != value)
+                {
+                    mRealTagMode.CustomContent3 = value;
+                    OnPropertyChanged("CustomContent3");
+                }
+            }
+        }
 
         #endregion ...Properties....
 
@@ -446,6 +583,58 @@ namespace InAntStudio
             re.LoadFromString(val);
             return new TagViewModel(re);
         }
+       
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="val"></param>
+        /// <returns></returns>
+        public static TagViewModel LoadFromMarsCSVString(string val)
+        {
+            string[] stmp = val.Split(new char[] { ',' });
+            MarsTagType tp = (MarsTagType)Enum.Parse(typeof(MarsTagType), stmp[4]);
+
+            string sname = stmp[1];
+            string group = stmp[3];
+            string fullname = string.IsNullOrEmpty(group) ? sname : group + "." + sname;
+            string desc = stmp[2];
+
+            Tagbase tb=null;
+            switch (tp)
+            {
+                case MarsTagType.Bool:
+                    tb = new Cdy.Ant.DigitalAlarmTag();
+                    break;
+                case MarsTagType.Byte:
+                case MarsTagType.Short:
+                case MarsTagType.UShort:
+                case MarsTagType.Int:
+                case MarsTagType.Long:
+                case MarsTagType.UInt:
+                case MarsTagType.ULong:
+                case MarsTagType.Float:
+                case MarsTagType.Double:
+                    tb = new Cdy.Ant.AnalogAlarmTag();
+                    break;
+                case MarsTagType.String:
+                    tb = new Cdy.Ant.StringAlarmTag();
+                    break;
+            }
+
+            if (tb != null)
+            {
+                tb.Name = sname;
+                tb.Desc = desc;
+                if(tb is AlarmTag)
+                {
+                    (tb as AlarmTag).LinkTag = fullname;
+                }
+                return new TagViewModel(tb);
+            }
+            return null;
+
+        }
 
         #endregion ...Methods...
 
@@ -602,6 +791,90 @@ namespace InAntStudio
         #endregion ...Interfaces...
     }
 
+    public enum MarsTagType
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        Bool,
+        /// <summary>
+        /// 
+        /// </summary>
+        Byte,
+        /// <summary>
+        /// 
+        /// </summary>
+        Short,
+        /// <summary>
+        /// 
+        /// </summary>
+        UShort,
+        /// <summary>
+        /// 
+        /// </summary>
+        Int,
+        /// <summary>
+        /// 
+        /// </summary>
+        UInt,
+        /// <summary>
+        /// 
+        /// </summary>
+        Long,
+        /// <summary>
+        /// 
+        /// </summary>
+        ULong,
+        /// <summary>
+        /// 
+        /// </summary>
+        Double,
+        /// <summary>
+        /// 
+        /// </summary>
+        Float,
+        /// <summary>
+        /// 
+        /// </summary>
+        DateTime,
+        /// <summary>
+        /// 
+        /// </summary>
+        String,
+        /// <summary>
+        /// 
+        /// </summary>
+        IntPoint,
+        /// <summary>
+        /// 
+        /// </summary>
+        UIntPoint,
+        /// <summary>
+        /// 
+        /// </summary>
+        LongPoint,
+        /// <summary>
+        /// 
+        /// </summary>
+        ULongPoint,
+        /// <summary>
+        /// 
+        /// </summary>
+        IntPoint3,
+        /// <summary>
+        /// 
+        /// </summary>
+        UIntPoint3,
+        /// <summary>
+        /// 
+        /// </summary>
+        LongPoint3,
+        /// <summary>
+        /// 
+        /// </summary>
+        ULongPoint3
+    }
+
     /// <summary>
     /// 
     /// </summary>
@@ -733,12 +1006,18 @@ namespace InAntStudio
             }
             set
             {
-                if(mTag.HighHighValue==null)
+                if (value && mTag.HighHighValue == null)
                 {
-                    mTag.HighHighValue = new AnalogAlarmItem();
+                    mTag.HighHighValue = new AnalogAlarmItem() { AlarmLevel = AlarmLevel.Urgency };
                     IsChanged = true;
-                    OnPropertyChanged("HasHighHighValue");
                 }
+                else if (!value)
+                {
+                    mTag.HighHighValue = null;
+                }
+                OnPropertyChanged("HasHighHighValue");
+                OnPropertyChanged("HighHighAlarmLevel");
+                OnPropertyChanged("HighHighValue");
             }
         }
 
@@ -805,7 +1084,9 @@ namespace InAntStudio
             }
         }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
         public bool HasHighValue
         {
             get
@@ -814,12 +1095,19 @@ namespace InAntStudio
             }
             set
             {
-                if (mTag.HighValue == null)
+                if (value && mTag.HighValue == null)
                 {
-                    mTag.HighValue = new AnalogAlarmItem();
+                    mTag.HighValue = new AnalogAlarmItem() { AlarmLevel = AlarmLevel.Critical };
                     IsChanged = true;
-                    OnPropertyChanged("HasHighValue");
+                    
                 }
+                else if(!value)
+                {
+                    mTag.HighValue = null;
+                }
+                OnPropertyChanged("HasHighValue");
+                OnPropertyChanged("HighAlarmLevel");
+                OnPropertyChanged("HighValue");
             }
         }
 
@@ -894,12 +1182,18 @@ namespace InAntStudio
             }
             set
             {
-                if (mTag.LowValue == null)
+                if (value && mTag.LowValue == null)
                 {
-                    mTag.LowValue = new AnalogAlarmItem();
+                    mTag.LowValue = new AnalogAlarmItem() { AlarmLevel = AlarmLevel.Critical };
                     IsChanged = true;
-                    OnPropertyChanged("HasLowValue");
                 }
+                else if(!value)
+                {
+                    mTag.LowValue = null;
+                }
+                OnPropertyChanged("HasLowValue");
+                OnPropertyChanged("LowAlarmLevel");
+                OnPropertyChanged("LowValue");
             }
         }
 
@@ -972,12 +1266,19 @@ namespace InAntStudio
             }
             set
             {
-                if (mTag.LowLowValue == null)
+                if (value && mTag.LowLowValue == null)
                 {
-                    mTag.LowLowValue = new AnalogAlarmItem();
+                    mTag.LowLowValue = new AnalogAlarmItem() { AlarmLevel = AlarmLevel.Urgency };
                     IsChanged = true;
-                    OnPropertyChanged("HasLowLowValue");
+                    
                 }
+                else if (!value)
+                {
+                    mTag.LowLowValue = null;
+                }
+                OnPropertyChanged("HasLowLowValue");
+                OnPropertyChanged("LowLowAlarmLevel");
+                OnPropertyChanged("LowLowValue");
             }
         }
 
@@ -1194,9 +1495,12 @@ namespace InAntStudio
         {
             base.Init();
             mTag = Model as Cdy.Ant.AnalogRangeAlarmTag;
-            foreach(var vv in mTag.Items)
+            if (mTag.Items != null)
             {
-                AddItem(vv);
+                foreach (var vv in mTag.Items)
+                {
+                    AddItem(vv);
+                }
             }
         }
 
@@ -1388,7 +1692,7 @@ namespace InAntStudio
         /// <summary>
         /// 
         /// </summary>
-        public bool Value
+        public virtual bool Value
         {
             get
             {
@@ -1463,6 +1767,11 @@ namespace InAntStudio
                 }
             }
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public override bool Value { get => mTag.Value; set { mTag.Value = value; OnPropertyChanged("Value"); } }
 
 
         #endregion ...Properties...

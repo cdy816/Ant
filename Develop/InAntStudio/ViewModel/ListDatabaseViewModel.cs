@@ -134,6 +134,21 @@ namespace InAntStudio.ViewModel
         /// 
         /// </summary>
         /// <returns></returns>
+        public bool AutoOpenDatabse()
+        {
+            SelectDatabase = new DatabaseItem() { Name = AutoLoginHelper.Helper.Database };
+            if (!DevelopServiceHelper.Helper.CheckOpenDatabase(AutoLoginHelper.Helper.Database))
+            {
+                MessageBox.Show(string.Format(Res.Get("opendatabasefailed"), SelectDatabase.Name));
+                return false;
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         protected override bool OKCommandProcess()
         {
             if (!DevelopServiceHelper.Helper.CheckOpenDatabase(SelectDatabase.Name))

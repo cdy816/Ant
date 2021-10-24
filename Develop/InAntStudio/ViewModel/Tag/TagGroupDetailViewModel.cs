@@ -40,6 +40,9 @@ namespace InAntStudio.ViewModel
         private ICommand mImportCommand;
         private ICommand mExportCommand;
 
+        private ICommand mImportFromMarsCommand;
+        private ICommand mAddFromMarsOnlineCommand;
+
         private ICommand mCopyCommand;
         private ICommand mCellCopyCommand;
         private ICommand mPasteCommand;
@@ -94,6 +97,8 @@ namespace InAntStudio.ViewModel
 
         private DataGridSelectionUnit mSelectMode = DataGridSelectionUnit.FullRow;
 
+        private bool mIsPopup = false;
+
         #endregion ...Variables...
 
         #region ... Events     ...
@@ -106,6 +111,29 @@ namespace InAntStudio.ViewModel
 
         #region ... Properties ...
 
+        /// <summary>
+        /// 
+        /// </summary>
+        public bool IsPopup
+        {
+            get
+            {
+                return mIsPopup;
+            }
+            set
+            {
+                if (mIsPopup != value)
+                {
+                    mIsPopup = value;
+                    OnPropertyChanged("IsPopup");
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
         public bool RowSelectMode
         {
             get
@@ -489,6 +517,9 @@ namespace InAntStudio.ViewModel
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public ICommand CopyCommand
         {
             get
@@ -570,6 +601,46 @@ namespace InAntStudio.ViewModel
                     });
                 }
                 return mAddCommand;
+            }
+        }
+
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public ICommand ImportFromMarsDatabseCommand
+        {
+            get
+            {
+                if(mImportFromMarsCommand==null)
+                {
+                    mImportFromMarsCommand = new RelayCommand(() => {
+                        IsPopup = false;
+                        ImportFromMarsDatabase();
+                    });
+                }
+                return mImportFromMarsCommand;
+            }
+        }
+
+       
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public ICommand AddFromMarsOnlineCommand
+        {
+            get
+            {
+                if(mAddFromMarsOnlineCommand==null)
+                {
+                    mAddFromMarsOnlineCommand = new RelayCommand(() => {
+                        IsPopup = false;
+                        AddFromMarsTag();
+                    });
+                }
+                return mAddFromMarsOnlineCommand;
             }
         }
 
@@ -750,20 +821,6 @@ namespace InAntStudio.ViewModel
         /// </summary>
         public string[] TagTypeList { get { return TagViewModel.mTagTypeList; } }
 
-        ///// <summary>
-        ///// 
-        ///// </summary>
-        //public string[] ReadWriteModeList { get { return TagViewModel.mReadWriteModeList; } }
-
-        //public string[] CompressTypeList { get { return TagViewModel.mCompressTypeList; } }
-
-        //public string[] DriverList { get { return TagViewModel.Drivers.Keys.ToArray(); } }
-
-        ///// <summary>
-        ///// 
-        ///// </summary>
-        //public string[] RegistorList { get; set; }
-
         /// <summary>
         /// 
         /// </summary>
@@ -777,6 +834,82 @@ namespace InAntStudio.ViewModel
         #endregion ...Properties...
 
         #region ... Methods    ...
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void ImportFromMarsDatabase()
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Filter = "csv|*.csv";
+            List<TagViewModel> ltmp = new List<TagViewModel>();
+
+            if (ofd.ShowDialog().Value)
+            {
+                var stream = new StreamReader(File.Open(ofd.FileName, FileMode.OpenOrCreate, FileAccess.ReadWrite));
+                while (!stream.EndOfStream)
+                {
+                    string sval = stream.ReadLine();
+                    if (!string.IsNullOrEmpty(sval))
+                    {
+                        TagViewModel tm = TagViewModel.LoadFromMarsCSVString(sval);
+                        if(tm!=null)
+                        ltmp.Add(tm);
+                    }
+                }
+                stream.Close();
+            }
+
+            foreach(var tm in ltmp)
+            {
+                if (tm != null)
+                {
+                    tm.IsNew = true;
+                    tm.RealTagMode.Name = GetNewName(tm.RealTagMode.Name);
+                    if (this.GroupModel != null && GroupModel is TagGroupViewModel)
+                    {
+                        tm.RealTagMode.Group = (GroupModel as TagGroupViewModel).FullName;
+                    }
+                    if (UpdateTag(tm))
+                    {
+                        this.SelectGroupTags.Add(tm);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public void AddFromMarsTag()
+        {
+            MarsTagBrowserViewModel mm = new MarsTagBrowserViewModel();
+            mm.ServerAddress = ServiceHelper.Helper.Server;
+            mm.ServerPassword = ServiceHelper.Helper.Password;
+            mm.ServerUserName = ServiceHelper.Helper.UserName;
+            mm.PreLoadDatabase = ServiceHelper.Helper.Database;
+            List<TagViewModel> ltmp = new List<TagViewModel>();
+            if (mm.ShowDialog().Value)
+            {
+                foreach(var vv in mm.GetSelectTags())
+                {
+                    var tm = vv.ConvertTo();
+                    if(tm!=null)
+                    {
+                        tm.IsNew = true;
+                        tm.RealTagMode.Name = GetNewName(tm.RealTagMode.Name);
+                        if (this.GroupModel != null && GroupModel is TagGroupViewModel)
+                        {
+                            tm.RealTagMode.Group = (GroupModel as TagGroupViewModel).FullName;
+                        }
+                        if (UpdateTag(tm))
+                        {
+                            this.SelectGroupTags.Add(tm);
+                        }
+                    }
+                }
+            }
+        }
 
         /// <summary>
         /// 
@@ -1099,26 +1232,6 @@ namespace InAntStudio.ViewModel
             mIsBusy = false;
         }
 
-        ///// <summary>
-        ///// 
-        ///// </summary>
-        //private void QueryTags()
-        //{
-        //    var vtags = new System.Collections.ObjectModel.ObservableCollection<TagViewModel>();
-        //    var vv = DevelopServiceHelper.Helper.QueryTagByGroup(this.GroupModel.Database, this.GroupModel.FullName);
-        //    if (vv != null)
-        //    {
-        //        foreach (var vvv in vv)
-        //        {
-        //            Application.Current.Dispatcher.BeginInvoke(new Action(() => {
-        //                TagViewModel model = new TagViewModel(vvv.Value.Item1, vvv.Value.Item2);
-        //                vtags.Add(model);
-        //            }));
-        //        }
-        //    }
-        //    SelectGroupTags = vtags;
-        //}
-
 
         /// <summary>
         /// 
@@ -1187,6 +1300,9 @@ namespace InAntStudio.ViewModel
 
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         private void CopyTag()
         {
             mCopyTags.Clear();
@@ -1195,11 +1311,6 @@ namespace InAntStudio.ViewModel
             {
                 mCopyTags.Add(vv as TagViewModel);
             }
-
-            //foreach (var vv in mSelectGroupTags.Where(e=>e.IsSelected))
-            //{
-            //    mCopyTags.Add(vv);
-            //}
         }
 
         /// <summary>
@@ -1260,38 +1371,28 @@ namespace InAntStudio.ViewModel
                         TagViewModel tm = vv.Item as TagViewModel;
                         switch (mPropertyCopy.Item2)
                         {
-                            case 1:
+                            case 2:
                                 tm.Type = mPropertyCopy.Item1.Type;
                                 break;
-                            //case 2:
-                            //    tm.ReadWriteMode = mPropertyCopy.Item1.ReadWriteMode;
-                            //    break;
-                            //case 3:
-                            //    tm.Convert = mPropertyCopy.Item1.Convert.Clone();
-                            //    break;
-                            //case 4:
-                            //    tm.MaxValue = mPropertyCopy.Item1.MaxValue;
-                            //    break;
-                            //case 5:
-                            //    tm.MinValue = mPropertyCopy.Item1.MinValue;
-                            //    break;
-                            //case 6:
-                            //    tm.Precision = mPropertyCopy.Item1.Precision;
-                            //    break;
-                            //case 7:
-                            //    tm.HisTagMode = mPropertyCopy.Item1.HisTagMode.Clone();
-                            //    tm.RefreshHisTag();
-                            //    break;
-                            //case 8:
-                            //    tm.DriverName = mPropertyCopy.Item1.DriverName;
-                            //    break;
-                            //case 9:
-                            //    tm.RegistorName = mPropertyCopy.Item1.RegistorName;
-                            //    break;
-                            case 10:
+                            case 3:
+                                tm.LinkAddress = mPropertyCopy.Item1.LinkAddress;
+                                break;
+                            case 4:
                                 tm.Desc = mPropertyCopy.Item1.Desc;
                                 break;
-
+                            case 5:
+                                tm.CustomContent1 = mPropertyCopy.Item1.CustomContent1;
+                                break;
+                            case 6:
+                                tm.CustomContent2 = mPropertyCopy.Item1.CustomContent2;
+                                break;
+                            case 7:
+                                tm.CustomContent3 = mPropertyCopy.Item1.CustomContent3;
+                                break;
+                            case 8:
+                                tm.IsEnable = mPropertyCopy.Item1.IsEnable;
+                                break;
+                            
                         }
 
                     }
@@ -1321,7 +1422,7 @@ namespace InAntStudio.ViewModel
             {
                 var vtag = CurrentSelectTag.Clone();
                 vtag.RealTagMode.Id = -1;
-                               vtag.Name = GetNewName();
+                vtag.Name = GetNewName();
                 vtag.IsNew = true;
                 if (UpdateTag(vtag))
                 {

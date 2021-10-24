@@ -165,6 +165,29 @@ namespace InAntStudio.ViewModel
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public bool AutoLogin()
+        {
+            mServer = AutoLoginHelper.Helper.Server;
+            try
+            {
+                CheckLocalServerRun();
+                LoginUserId = DevelopServiceHelper.Helper.Login(AutoLoginHelper.Helper.Server, AutoLoginHelper.Helper.UserName, AutoLoginHelper.Helper.Password);
+                ServiceHelper.Helper.Server = AutoLoginHelper.Helper.Server;
+                ServiceHelper.Helper.UserName = AutoLoginHelper.Helper.UserName;
+                ServiceHelper.Helper.Password = AutoLoginHelper.Helper.Password;
+                return true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return false;
+            }
+            //return !string.IsNullOrEmpty(LoginUserId);
+        }
 
         /// <summary>
         /// 
@@ -180,6 +203,9 @@ namespace InAntStudio.ViewModel
                 }
                 CheckLocalServerRun();
                 LoginUserId = DevelopServiceHelper.Helper.Login(Server, UserName, Password);
+                ServiceHelper.Helper.Server = Server;
+                ServiceHelper.Helper.UserName = UserName;
+                ServiceHelper.Helper.Password = Password;
             }
             catch(Exception ex)
             {

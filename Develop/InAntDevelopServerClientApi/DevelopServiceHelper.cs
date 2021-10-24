@@ -840,7 +840,7 @@ namespace DBDevelopClientApi
             re.CustomContent3 = tag.CustomContent3;
             if (tag is AlarmTag)
             {
-                re.LinkTag = (tag as Cdy.Ant.SimpleAlarmTag).LinkTag;
+                re.LinkTag = (tag as Cdy.Ant.AlarmTag).LinkTag;
             }
             if (tag is Cdy.Ant.SimpleAlarmTag)
             {

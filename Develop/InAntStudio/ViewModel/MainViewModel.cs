@@ -239,6 +239,7 @@ namespace InAntStudio
                 if (mDatabase != value)
                 {
                     mDatabase = value;
+                    ServiceHelper.Helper.Database = mDatabase;
                     OnPropertyChanged("Database");
                 }
             }
@@ -924,6 +925,43 @@ namespace InAntStudio
         /// <summary>
         /// 
         /// </summary>
+        public void AutoLogin()
+        {
+            LoginViewModel login = new LoginViewModel();
+            if(login.AutoLogin())
+            {
+                CurrentUserManager.Manager.UserName = login.UserName;
+                ListDatabaseViewModel ldm = new ListDatabaseViewModel();
+                if(ldm.AutoOpenDatabse())
+                {
+                    this.TagGroup.Clear();
+
+                    CurrentUserManager.Manager.UserName = login.UserName;
+                    Database = ldm.SelectDatabase.Name;
+                    OnPropertyChanged("MainwindowTitle");
+                    OnPropertyChanged("UserName");
+                    IsLogin = true;
+
+                    var dbitem = new DatabaseViewModel() { Name = mDatabase, IsSelected = true, IsExpanded = true };
+                    this.TagGroup.Add(dbitem);
+
+                    dbitem.Children.Add(mRootTagGroupModel);
+                    mRootTagGroupModel.Database = mDatabase;
+
+                    dbitem.Children.Add(new DatabaseSettingViewModel() { Database = this.Database });
+
+                    Task.Run(() => {
+                        QueryGroups();
+                    });
+
+                    StartCheckDatabaseRunning();
+                }
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         private void Login()
         {
             LoginViewModel login = new LoginViewModel();
@@ -945,26 +983,11 @@ namespace InAntStudio
 
                     var dbitem = new DatabaseViewModel() { Name = mDatabase,IsSelected=true,IsExpanded=true };
                     this.TagGroup.Add(dbitem);
-
-                    //var sec = new ServerSecurityTreeViewModel();
-                    //sec.Children.Add(new ServerUserEditorTreeViewModel());
-
-                    //if (DevelopServiceHelper.Helper.IsAdmin())
-                    //{
-                    //    sec.Children.Add(new ServerUserManagerTreeViewModel());
-                    //}
-
-                    //this.TagGroup.Add(sec);
                     dbitem.Children.Add(mRootTagGroupModel);
                     mRootTagGroupModel.Database = mDatabase;
-                    //dbitem.Children.Add(securityModel);
-                    //securityModel.Database = mDatabase;
-                    //securityModel.Init();
-
                     dbitem.Children.Add(new DatabaseSettingViewModel() { Database = this.Database });
 
                     Task.Run(() => {
-                        //TagViewModel.Drivers = DevelopServiceHelper.Helper.GetRegistorDrivers(mDatabase);
                         QueryGroups();
                     });
 

@@ -31,16 +31,25 @@ namespace InAntStudio
         {
             InitializeComponent();
             this.DataContext = new MainViewModel();
-            this.StateChanged += MainWindow_StateChanged;
+            //this.StateChanged += MainWindow_StateChanged;
+            this.Loaded += MainWindow_Loaded;
         }
 
-        private void MainWindow_StateChanged(object sender, EventArgs e)
+        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            if(this.WindowState == WindowState.Normal)
+            if (!string.IsNullOrEmpty(AutoLoginHelper.Helper.Server))
             {
-                
+                (this.DataContext as MainViewModel).AutoLogin();
             }
         }
+
+        //private void MainWindow_StateChanged(object sender, EventArgs e)
+        //{
+        //    if(this.WindowState == WindowState.Normal)
+        //    {
+                
+        //    }
+        //}
 
         private void closeB_Click(object sender, RoutedEventArgs e)
         {

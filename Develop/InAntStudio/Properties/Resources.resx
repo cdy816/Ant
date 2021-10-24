@@ -123,8 +123,17 @@
   <data name="Add" xml:space="preserve">
     <value>Add</value>
   </data>
+  <data name="AddFromMarsExport" xml:space="preserve">
+    <value>AddFromMarsExport</value>
+  </data>
+  <data name="AddFromMarsOnline" xml:space="preserve">
+    <value>AddFromMarsOnline</value>
+  </data>
   <data name="AddTagFail" xml:space="preserve">
     <value>Add tag {0} failed!</value>
+  </data>
+  <data name="AlarmEnable" xml:space="preserve">
+    <value>Enable</value>
   </data>
   <data name="AlarmLevel" xml:space="preserve">
     <value>AlarmLevel</value>
@@ -155,6 +164,9 @@
   </data>
   <data name="CompressType" xml:space="preserve">
     <value>CompressType</value>
+  </data>
+  <data name="Connect" xml:space="preserve">
+    <value>Connect</value>
   </data>
   <data name="Convert" xml:space="preserve">
     <value>Convert</value>
@@ -204,6 +216,9 @@
   </data>
   <data name="Desc" xml:space="preserve">
     <value>Description</value>
+  </data>
+  <data name="DisConnect" xml:space="preserve">
+    <value>DisConnect</value>
   </data>
   <data name="Driver" xml:space="preserve">
     <value>Driver</value>
@@ -280,6 +295,12 @@
   <data name="Link" xml:space="preserve">
     <value>Link</value>
   </data>
+  <data name="LinkAddress" xml:space="preserve">
+    <value>LinkedTag</value>
+  </data>
+  <data name="Local" xml:space="preserve">
+    <value>Local</value>
+  </data>
   <data name="Login" xml:space="preserve">
     <value>Login</value>
     <comment>登录</comment>
@@ -304,6 +325,9 @@
   </data>
   <data name="Manual" xml:space="preserve">
     <value>Manual</value>
+  </data>
+  <data name="MarsTagBrowser" xml:space="preserve">
+    <value>MarsTagBrowser</value>
   </data>
   <data name="MarsTitle" xml:space="preserve">
     <value>Welcome to Mars realtime iot database</value>
@@ -365,6 +389,9 @@
   <data name="Points" xml:space="preserve">
     <value>Points</value>
   </data>
+  <data name="Port" xml:space="preserve">
+    <value>Port</value>
+  </data>
   <data name="Precision" xml:space="preserve">
     <value>Precision</value>
   </data>
@@ -394,6 +421,9 @@
   </data>
   <data name="Registor" xml:space="preserve">
     <value>Registor</value>
+  </data>
+  <data name="Remote" xml:space="preserve">
+    <value>Remote</value>
   </data>
   <data name="Remove" xml:space="preserve">
     <value>Remove</value>
@@ -438,11 +468,17 @@
   <data name="SelectGroup" xml:space="preserve">
     <value>Selected group</value>
   </data>
+  <data name="Server" xml:space="preserve">
+    <value>Server</value>
+  </data>
   <data name="ServerBackupDataPath" xml:space="preserve">
     <value>History backup path</value>
   </data>
   <data name="ServerIp" xml:space="preserve">
     <value>Server Ip</value>
+  </data>
+  <data name="ServerModel" xml:space="preserve">
+    <value>ServerModel</value>
   </data>
   <data name="ServerPort" xml:space="preserve">
     <value>ServerPort</value>
@@ -494,6 +530,9 @@
   </data>
   <data name="Tag" xml:space="preserve">
     <value>Tag</value>
+  </data>
+  <data name="TagBrowser" xml:space="preserve">
+    <value>TagBrowser</value>
   </data>
   <data name="TagCount" xml:space="preserve">
     <value>Tag count</value>

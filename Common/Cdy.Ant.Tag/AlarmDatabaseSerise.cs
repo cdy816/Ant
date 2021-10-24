@@ -153,8 +153,7 @@ namespace Cdy.Ant
 
                 db.Name = xe.Attribute("Name").Value;
                 db.Version = xe.Attribute("Version").Value;
-                db.Tags = null;
-
+              
                 if (System.IO.File.Exists(path + "s"))
                 {
                     XElement xx = XElement.Load(path + "s");
@@ -220,7 +219,7 @@ namespace Cdy.Ant
                         vv.Key.Parent = db.Groups[vv.Value];
                     }
                 }
-
+                 
                 if (xe.Element("Tags") != null)
                 {
                     foreach (var vv in xe.Element("Tags").Elements())
@@ -398,7 +397,7 @@ namespace Cdy.Ant
 
             XElement xx = new XElement("AlarmDatabaseSetting");
             xx.SetAttributeValue("WebServerPort", Database.Setting.WebServerPort);
-            xx.Save(sfile + ".s");
+            xx.Save(sfile + "s");
             Database.IsDirty = false;
         }
 

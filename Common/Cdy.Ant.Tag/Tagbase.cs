@@ -256,7 +256,7 @@ namespace Cdy.Ant
         /// <summary>
         /// 使能报警
         /// </summary>
-        public bool IsEnable { get; set; }
+        public bool IsEnable { get; set; } = true;
 
         /// <summary>
         /// 
@@ -910,10 +910,10 @@ namespace Cdy.Ant
         public override string ToString()
         {
             var re = base.ToString();
-            re += "," + HighHighValue!=null? HighHighValue.ToString():AnalogAlarmItem.Empty.ToString();
-            re += "," + HighValue != null ? HighValue.ToString():AnalogAlarmItem.Empty.ToString();
-            re += "," + LowValue != null ? LowValue.ToString():AnalogAlarmItem.Empty.ToString();
-            re += "," + LowLowValue != null ? LowLowValue.ToString():AnalogAlarmItem.Empty.ToString();
+            re += "," + (HighHighValue!=null? HighHighValue.ToString():AnalogAlarmItem.Empty.ToString());
+            re += "," + (HighValue != null ? HighValue.ToString():AnalogAlarmItem.Empty.ToString());
+            re += "," + (LowValue != null ? LowValue.ToString():AnalogAlarmItem.Empty.ToString());
+            re += "," + (LowLowValue != null ? LowLowValue.ToString():AnalogAlarmItem.Empty.ToString());
             return re;
         }
 
@@ -1086,7 +1086,7 @@ namespace Cdy.Ant
         /// <summary>
         /// 
         /// </summary>
-        public override TagType Type => TagType.DigitalAlarm;
+        public override TagType Type => TagType.DelayDigitalAlarm;
 
         /// <summary>
         /// 值
