@@ -50,7 +50,7 @@ namespace AntRuntime.Enginer
                 {
                     if (CurrentStatue == AlarmStatue.None)
                     {
-                        Alarm(Source, mTag.AlarmLevel, mTag.Desc, dval.ToString());
+                        Alarm(Source, mTag.AlarmLevel, mTag.Desc, dval.ToString(),"["+mTag.MinValue+","+mTag.MaxValue+"]");
                     }
                 }
                 else
@@ -67,7 +67,7 @@ namespace AntRuntime.Enginer
                 {
                     if (CurrentStatue == AlarmStatue.None)
                     {
-                        Alarm(Source, mTag.AlarmLevel, mTag.Desc, dval.ToString());
+                        Alarm(Source, mTag.AlarmLevel, mTag.Desc, dval.ToString(), "[" + mTag.MinValue + "," + mTag.MaxValue + "]");
                     }
                 }
                 else

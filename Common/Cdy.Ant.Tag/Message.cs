@@ -32,9 +32,14 @@ namespace Cdy.Ant
         public long Id { get; set; }
 
         /// <summary>
-        /// 生产者
+        /// 服务器
         /// </summary>
-        public string Source { get; set; }
+        public string Server { get; set; }
+
+        /// <summary>
+        /// 生产者变量
+        /// </summary>
+        public string SourceTag { get; set; }
 
         /// <summary>
         /// 消息产生时间
@@ -83,6 +88,11 @@ namespace Cdy.Ant
         public string AlarmValue { get; set; }
 
         /// <summary>
+        /// 报警时的报警条件
+        /// </summary>
+        public string AlarmCondition { get; set; }
+
+        /// <summary>
         /// 关联变量
         /// </summary>
         public string LinkTag { get; set; }
@@ -112,7 +122,23 @@ namespace Cdy.Ant
         /// </summary>
         public string AckUser { get; set; }
 
-        
+        /// <summary>
+        /// 附加字段1
+        /// </summary>
+        public string AppendContent1 { get; set; }
+
+        /// <summary>
+        /// 附加字段2
+        /// </summary>
+        public string AppendContent2 { get; set; }
+
+
+        /// <summary>
+        /// 附加字段3
+        /// </summary>
+        public string AppendContent3 { get; set; }
+
+
     }
 
     /// <summary>

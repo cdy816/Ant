@@ -21,6 +21,7 @@ namespace AntRuntime.Enginer
         public static MessageService Service = new MessageService();
 
         private long mLastId = 0;
+
         private int mCount = 0;
 
         #endregion ...Variables...

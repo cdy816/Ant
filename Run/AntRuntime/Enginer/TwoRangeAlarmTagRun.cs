@@ -54,7 +54,7 @@ namespace AntRuntime.Enginer
                 {
                     if (CurrentStatue == AlarmStatue.None)
                     {
-                        Alarm(Source, mTag.AlarmLevel, mTag.Desc, Value.ToString());
+                        Alarm(Source, mTag.AlarmLevel, mTag.Desc, Value.ToString(),"in range");
                     }
                 }
                 else
@@ -71,7 +71,7 @@ namespace AntRuntime.Enginer
                 {
                     if (CurrentStatue == AlarmStatue.None)
                     {
-                        Alarm(Source, mTag.AlarmLevel, mTag.Desc, Value.ToString());
+                        Alarm(Source, mTag.AlarmLevel, mTag.Desc, Value.ToString(),"out of range");
                     }
                 }
                 else

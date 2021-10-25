@@ -54,7 +54,7 @@ namespace AntRuntime.Enginer
                 {
                     if (CurrentStatue == AlarmStatue.None)
                     {
-                        Alarm(Source, mDTag.AlarmLevel, mDTag.Desc, bval.ToString());
+                        Alarm(Source, mDTag.AlarmLevel, mDTag.Desc, bval.ToString(),"=="+mDTag.Value);
                         CurrentStatue = (AlarmStatue)((byte)mDTag.AlarmLevel);
                     }
                 }
@@ -70,7 +70,7 @@ namespace AntRuntime.Enginer
                 {
                     if (CurrentStatue == AlarmStatue.None)
                     {
-                        Alarm(Source, mDTag.AlarmLevel, mDTag.Desc, bval.ToString());
+                        Alarm(Source, mDTag.AlarmLevel, mDTag.Desc, bval.ToString(),"==" + mDTag.Value);
                         CurrentStatue = (AlarmStatue)((byte)mDTag.AlarmLevel);
                     }
                 }
@@ -136,7 +136,7 @@ namespace AntRuntime.Enginer
 
         private void AlarmTimeDelay(object value)
         {
-            Alarm(Source, mDTag.AlarmLevel, mDTag.Desc, value.ToString());
+            Alarm(Source, mDTag.AlarmLevel, mDTag.Desc, value.ToString(),"==" + mDTag.Value);
             CurrentStatue = (AlarmStatue)((byte)mDTag.AlarmLevel);
         }
 
@@ -173,7 +173,7 @@ namespace AntRuntime.Enginer
                 {
                     if (CurrentStatue == AlarmStatue.None && !IsInPreAlarm)
                     {
-                        Alarm(Source, mDTag.AlarmLevel, mDTag.Desc, bval.ToString());
+                        Alarm(Source, mDTag.AlarmLevel, mDTag.Desc, bval.ToString(), "==" + mDTag.Value);
                         CurrentStatue = (AlarmStatue)((byte)mDTag.AlarmLevel);
                     }
                 }

@@ -100,19 +100,34 @@ namespace AntRuntime.Enginer
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="source"></param>
+        /// <param name="level"></param>
         /// <param name="messageBody"></param>
-        public void Alarm(string source,Cdy.Ant.AlarmLevel level,string messageBody,string value)
+        /// <param name="value"></param>
+        /// <param name="alarmCondition"></param>
+        public void Alarm(string source,Cdy.Ant.AlarmLevel level,string messageBody,string value,string alarmCondition)
         {
             DateTime dt = DateTime.Now;
             Cdy.Ant.AlarmMessage msg = new Cdy.Ant.AlarmMessage();
             msg.CreateTime = dt;
-            msg.Source = source;
-            msg.LinkTag = TagName;
+            msg.Server = source;
+            msg.SourceTag = TagName;
+            if ((LinkedTag is AlarmTag)&&(!string.IsNullOrEmpty((LinkedTag as AlarmTag).LinkTag)))
+            {
+                msg.LinkTag = (LinkedTag as AlarmTag).LinkTag;
+            }
+            else
+            {
+                msg.LinkTag = "";
+            }
             msg.MessageBody = messageBody;
             msg.AlarmLevel = level;
             msg.AlarmValue = value;
             msg.Id = MessageService.Service.GetId(dt.Ticks);
-
+            msg.AppendContent1 = LinkedTag.CustomContent1;
+            msg.AppendContent2 = LinkedTag.CustomContent2;
+            msg.AppendContent3 = LinkedTag.CustomContent3;
+            msg.AlarmCondition = alarmCondition;
             mCurrentMessageId = msg.Id;
 
             MessageService.Service.RaiseMessage(msg);

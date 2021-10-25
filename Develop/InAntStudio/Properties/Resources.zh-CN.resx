@@ -238,6 +238,9 @@
   <data name="Export" xml:space="preserve">
     <value>导出</value>
   </data>
+  <data name="FindAndReplace" xml:space="preserve">
+    <value>查找替换</value>
+  </data>
   <data name="FindAvaiableId" xml:space="preserve">
     <value>重置Id</value>
   </data>
@@ -433,9 +436,6 @@
   </data>
   <data name="ReName" xml:space="preserve">
     <value>重命名</value>
-  </data>
-  <data name="Replace" xml:space="preserve">
-    <value>替换</value>
   </data>
   <data name="ReplaceAll" xml:space="preserve">
     <value>替换全部</value>

@@ -524,7 +524,7 @@ namespace InAntDevelopServer
                             string[] ss = vv.Value.Split(" ", StringSplitOptions.RemoveEmptyEntries);
                             foreach (var vvv in ss)
                             {
-                                btmp |= (tag.Name.Contains(vvv) || tag.Desc.Contains(vvv));
+                                btmp |= (tag.Name.Contains(vvv) || tag.Desc.Contains(vvv)||tag.CustomContent1.Contains(vvv)||tag.CustomContent2.Contains(vvv)||tag.CustomContent3.Contains(vvv));
                             }
                             re = re && btmp;
                             break;

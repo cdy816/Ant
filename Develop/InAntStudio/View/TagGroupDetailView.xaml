@@ -27,7 +27,7 @@
             <MenuItem Header="{local:ResMarker Export}" Command="{Binding ExportCommand}" />
             <Separator/>
             <MenuItem Header="{local:ResMarker FindAvaiableId}" Command="{Binding FindAvaiableIdCommand}" ToolTip="{local:ResMarker FindAvaiableIdTooltip}" />
-            <MenuItem Header="{local:ResMarker Replace}" Command="{Binding ReplaceCommand}"  />
+            <MenuItem Header="{local:ResMarker FindAndReplace}" Command="{Binding ReplaceCommand}"  />
             
         </ContextMenu>
 
@@ -64,13 +64,13 @@
                     <RowDefinition Height="30"/>
                 </Grid.RowDefinitions>
                 <TextBlock Text="{local:ResMarker Keyword,:}"  VerticalAlignment="Center" Margin="5,0" />
-                <TextBox x:Name="kwinput" VerticalContentAlignment="Center" CaretBrush="White" Margin="10,0"  Foreground="{DynamicResource Window.Forground}" Background="#1FFFFFFF" Grid.Column="1" Text="{Binding FilterKeyName,Mode=TwoWay,UpdateSourceTrigger=LostFocus}" Width="160" HorizontalAlignment="Left" VerticalAlignment="Center" Height="20" KeyDown="kwinput_KeyDown" />
+                <TextBox x:Name="kwinput" VerticalContentAlignment="Center" CaretBrush="White" Margin="10,0"  Foreground="{DynamicResource Window.Forground}" Background="#1FFFFFFF" Grid.Column="1" Text="{Binding FilterKeyName,Mode=TwoWay,UpdateSourceTrigger=LostFocus}" Width="260" HorizontalAlignment="Left" VerticalAlignment="Center" Height="20" KeyDown="kwinput_KeyDown" />
 
                 <CheckBox Background="Transparent" HorizontalAlignment="Right" Foreground="{DynamicResource Window.Forground}" Grid.Column="2" IsChecked="{Binding TagTypeFilterEnable}" Content="{local:ResMarker Type,:}" VerticalAlignment="Center" Margin="10,0" />
                 <ComboBox VerticalAlignment="Center"   Grid.Column="3" Margin="10,0" Width="100"  BorderThickness="1" IsEnabled="{Binding TagTypeFilterEnable}" ItemsSource="{Binding TagTypeList}" SelectedIndex="{Binding FilterType}" />
 
-                <TextBlock Text="{local:ResMarker AlarmTag,:}"  Grid.Column="4" VerticalAlignment="Center" Margin="5,0" />
-                <ComboBox  VerticalAlignment="Center"  Grid.Column="5" Margin="10,0" Width="100"  BorderThickness="1" IsEnabled="{Binding ReadWriteModeFilterEnable}" ItemsSource="{Binding ReadWriteModeList}" SelectedIndex="{Binding FilterReadWriteMode}" />
+                <CheckBox  Background="Transparent" Content="{local:ResMarker AlarmTag,:}" IsChecked="{Binding LinkedTagFilterEnable,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Foreground="{StaticResource Window.Forground}"  Grid.Column="4" VerticalAlignment="Center" Margin="5,0" />
+                <TextBox  Height="20" VerticalAlignment="Center"  Grid.Column="5" Margin="10,0" Width="160"  BorderThickness="1" IsEnabled="{Binding LinkedTagFilterEnable}" Text="{Binding LinkedTagFilter,UpdateSourceTrigger=LostFocus}" Background="#1FFFFFFF" Foreground="{StaticResource Window.Forground}" CaretBrush="{StaticResource Window.Forground}"/>
 
                 <StackPanel  Orientation="Horizontal" Grid.Column="10" HorizontalAlignment="Right" VerticalAlignment="Center">
                     <ToggleButton Style="{DynamicResource ToggleButtonStyle1}" Width="24" Margin="5,0" BorderThickness="0" Background="Transparent" IsChecked="{Binding RowSelectMode,Mode=TwoWay}" Grid.Row="1" VerticalAlignment="Center">

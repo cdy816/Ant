@@ -49,7 +49,7 @@ namespace AntRuntime.Enginer
             {
                 if(CurrentStatue == AlarmStatue.None)
                 {
-                    Alarm(Source, mDTag.AlarmLevel, mDTag.Desc, sval);
+                    Alarm(Source, mDTag.AlarmLevel, mDTag.Desc, sval,"=="+mDTag.Value);
                     CurrentStatue = (AlarmStatue)((byte)mDTag.AlarmLevel);
                 }
             }

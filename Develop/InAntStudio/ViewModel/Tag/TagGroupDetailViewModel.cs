@@ -48,6 +48,8 @@ namespace InAntStudio.ViewModel
         private ICommand mPasteCommand;
         private ICommand mCellPasteCommand;
 
+        private ICommand mReplaceCommand;
+
         private ICommand mFindAvaiableIdCommand;
 
         private TagViewModel mCurrentSelectTag;
@@ -67,27 +69,6 @@ namespace InAntStudio.ViewModel
 
         private int mFilterType = -1;
 
-        private bool mReadWriteModeFilterEnable;
-
-        private int mFilterReadWriteMode = -1;
-
-        private bool mRecordFilterEnable;
-
-        private bool mTimerRecordFilterEnable=true;
-
-        private bool mValueChangedRecordFilterEnable;
-
-        private bool mCompressFilterEnable;
-
-        private int mFilterCompressType;
-
-        private bool mDriverFilterEnable;
-
-        private string mFilterDriver;
-
-        private bool mRegistorFilterEnable;
-
-        private string mFilterRegistorName = string.Empty;
 
         private Dictionary<string, string> mFilters = new Dictionary<string, string>();
 
@@ -190,245 +171,7 @@ namespace InAntStudio.ViewModel
 
 
 
-        /// <summary>
-        /// 
-        /// </summary>
-        public string FilterRegistorName
-        {
-            get
-            {
-                return mFilterRegistorName;
-            }
-            set
-            {
-                if (mFilterRegistorName != value)
-                {
-                    mFilterRegistorName = value;
-                    NewQueryTags();
-                    OnPropertyChanged("FilterRegistorName");
-                }
-            }
-        }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public bool RegistorFilterEnable
-        {
-            get
-            {
-                return mRegistorFilterEnable;
-            }
-            set
-            {
-                if (mRegistorFilterEnable != value)
-                {
-                    mRegistorFilterEnable = value;
-                    NewQueryTags();
-                    if (!value) mFilterRegistorName = string.Empty;
-                    OnPropertyChanged("RegistorFilterEnable");
-                }
-            }
-        }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public string FilterDriver
-        {
-            get
-            {
-                return mFilterDriver;
-            }
-            set
-            {
-                if (mFilterDriver != value)
-                {
-                    mFilterDriver = value;
-                    NewQueryTags();
-
-                    OnPropertyChanged("RegistorList");
-                    OnPropertyChanged("FilterDriver");
-                }
-            }
-        }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public bool DriverFilterEnable
-        {
-            get
-            {
-                return mDriverFilterEnable;
-            }
-            set
-            {
-                if (mDriverFilterEnable != value)
-                {
-                    mDriverFilterEnable = value;
-                    NewQueryTags();
-                    if (!value) mFilterDriver = string.Empty;
-                    OnPropertyChanged("DriverFilterEnable");
-                }
-            }
-        }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public int FilterCompressType
-        {
-            get
-            {
-                return mFilterCompressType;
-            }
-            set
-            {
-                if (mFilterCompressType != value)
-                {
-                    mFilterCompressType = value;
-                    NewQueryTags();
-                    OnPropertyChanged("FilterCompressType");
-                }
-            }
-        }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public bool CompressFilterEnable
-        {
-            get
-            {
-                return mCompressFilterEnable;
-            }
-            set
-            {
-                if (mCompressFilterEnable != value)
-                {
-                    mCompressFilterEnable = value;
-                    NewQueryTags();
-                    OnPropertyChanged("CompressFilterEnable");
-                }
-            }
-        }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public bool ValueChangedRecordFilterEnable
-        {
-            get
-            {
-                return mValueChangedRecordFilterEnable;
-            }
-            set
-            {
-                if (mValueChangedRecordFilterEnable != value)
-                {
-                    mValueChangedRecordFilterEnable = value;
-                    mTimerRecordFilterEnable = !value;
-                    if (value) NewQueryTags();
-                }
-                OnPropertyChanged("ValueChangedRecordFilterEnable");
-            }
-        }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public bool TimerRecordFilterEnable
-        {
-            get
-            {
-                return mTimerRecordFilterEnable;
-            }
-            set
-            {
-                if (mTimerRecordFilterEnable != value)
-                {
-                    mTimerRecordFilterEnable = value;
-                    mValueChangedRecordFilterEnable = !value;
-                    if (value) NewQueryTags();
-                }
-                OnPropertyChanged("TimerRecordFilterEnable");
-            }
-        }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public bool RecordFilterEnable
-        {
-            get
-            {
-                return mRecordFilterEnable;
-            }
-            set
-            {
-                if (mRecordFilterEnable != value)
-                {
-                    mRecordFilterEnable = value;
-                    NewQueryTags();
-                    OnPropertyChanged("RecordFilterEnable");
-                }
-            }
-        }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public int FilterReadWriteMode
-        {
-            get
-            {
-                return mFilterReadWriteMode;
-            }
-            set
-            {
-                if (mFilterReadWriteMode != value)
-                {
-                    mFilterReadWriteMode = value;
-                    NewQueryTags();
-                }
-                OnPropertyChanged("FilterReadWriteMode");
-            }
-        }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public bool ReadWriteModeFilterEnable
-        {
-            get
-            {
-                return mReadWriteModeFilterEnable;
-            }
-            set
-            {
-                if (mReadWriteModeFilterEnable != value)
-                {
-                    mReadWriteModeFilterEnable = value;
-                    if (!value)
-                    {
-                        mFilterReadWriteMode = -1;
-                        NewQueryTags();
-                    }
-                    OnPropertyChanged("ReadWriteModeFilterEnable");
-                }
-            }
-        }
+        
 
 
         /// <summary>
@@ -495,6 +238,56 @@ namespace InAntStudio.ViewModel
                 OnPropertyChanged("TagTypeFilterEnable");
             }
         }
+
+        private bool mLinkedTagFilterEnable = false;
+        private string mLinkedTagFilter = "";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public bool LinkedTagFilterEnable
+        {
+            get
+            {
+                return mLinkedTagFilterEnable;
+            }
+            set
+            {
+                if (mLinkedTagFilterEnable != value)
+                {
+                    mLinkedTagFilterEnable = value;
+                    if (!value)
+                    {
+                        mLinkedTagFilter = "";
+                        NewQueryTags();
+                    }
+                    OnPropertyChanged("LinkedTagFilterEnable");
+                }
+            }
+        }
+
+        
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string LinkedTagFilter
+        {
+            get
+            {
+                return mLinkedTagFilter;
+            }
+            set
+            {
+                if (mLinkedTagFilter != value)
+                {
+                    mLinkedTagFilter = value;
+                    NewQueryTags();
+                    OnPropertyChanged("LinkedTagFilter");
+                }
+            }
+        }
+
 
 
 
@@ -716,6 +509,23 @@ namespace InAntStudio.ViewModel
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        public ICommand ReplaceCommand
+        {
+            get
+            {
+                if(mReplaceCommand==null)
+                {
+                    mReplaceCommand = new RelayCommand(() =>
+                    {
+
+                    }, () => { return CellSelectMode && SelectedCells != null && SelectedCells.Count() > 0; });
+                }
+                return mReplaceCommand;
+            }
+        }
 
         /// <summary>
         /// 
@@ -971,48 +781,16 @@ namespace InAntStudio.ViewModel
             {
                 mFilters.Add("type", this.FilterType.ToString());
             }
-            if(this.ReadWriteModeFilterEnable)
-            {
-                mFilters.Add("readwritetype", FilterReadWriteMode.ToString());
-            }
-
-            if (this.RecordFilterEnable)
-            {
-                if (this.TimerRecordFilterEnable && this.ValueChangedRecordFilterEnable)
-                {
-                    mFilters.Add("recordtype", "3");
-                }
-                else if (this.TimerRecordFilterEnable)
-                {
-                    mFilters.Add("recordtype", "0");
-                }
-                else if (this.ValueChangedRecordFilterEnable)
-                {
-                    mFilters.Add("recordtype", "1");
-                }
-                else
-                {
-                    mFilters.Add("recordtype", "3");
-                }
-            }
-
-            if(this.CompressFilterEnable)
-            {
-                mFilters.Add("compresstype", FilterCompressType.ToString());
-            }
 
             string stmp = "";
-            if(this.DriverFilterEnable)
+            if (this.LinkedTagFilterEnable)
             {
-                stmp = this.FilterDriver;
+                stmp = this.LinkedTagFilter;
             }
-            if(this.RegistorFilterEnable)
+
+            if (!string.IsNullOrEmpty(stmp))
             {
-                stmp += "." + this.FilterRegistorName;
-            }
-            if(!string.IsNullOrEmpty(stmp))
-            {
-                mFilters.Add("linkaddress", stmp);
+                mFilters.Add("linktag", stmp);
             }
 
         }

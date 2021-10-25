@@ -238,6 +238,9 @@
   <data name="Export" xml:space="preserve">
     <value>Export</value>
   </data>
+  <data name="FindAndReplace" xml:space="preserve">
+    <value>Find&amp;Replace</value>
+  </data>
   <data name="FindAvaiableId" xml:space="preserve">
     <value>Reset id</value>
   </data>
@@ -321,13 +324,13 @@
     <value>Low</value>
   </data>
   <data name="MainwindowTitle" xml:space="preserve">
-    <value>Mars database developer</value>
+    <value>Ant data alarm&amp;analysis platform</value>
   </data>
   <data name="Manual" xml:space="preserve">
     <value>Manual</value>
   </data>
   <data name="MarsTagBrowser" xml:space="preserve">
-    <value>MarsTagBrowser</value>
+    <value>Mars tag browser</value>
   </data>
   <data name="MarsTitle" xml:space="preserve">
     <value>Welcome to Mars realtime iot database</value>
@@ -433,9 +436,6 @@
   </data>
   <data name="ReName" xml:space="preserve">
     <value>Rename</value>
-  </data>
-  <data name="Replace" xml:space="preserve">
-    <value>Replace</value>
   </data>
   <data name="ReplaceAll" xml:space="preserve">
     <value>Replace all</value>

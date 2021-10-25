@@ -87,7 +87,7 @@ namespace AntRuntime.Enginer
 
                 if (item != null)
                 {
-                    Alarm(Source, item.AlarmLevel, mATag.Desc, dval.ToString());
+                    Alarm(Source, item.AlarmLevel, mATag.Desc, dval.ToString(),"["+item.MinValue+","+item.MaxValue+"]");
                     CurrentStatue = (AlarmStatue)((byte)item.AlarmLevel);
                 }
 
@@ -225,7 +225,7 @@ namespace AntRuntime.Enginer
 
                 if (item != null)
                 {
-                    Alarm(Source, item.AlarmLevel, mAtag.Desc, dval.ToString());
+                    Alarm(Source, item.AlarmLevel, mAtag.Desc, dval.ToString(), "[" + (item.MinValue==double.MinValue?"-∞":item.MinValue.ToString()) + "," + (item.MaxValue==double.MaxValue?"∞":item.MaxValue.ToString()) + "]");
                     CurrentStatue = (AlarmStatue)((byte)item.AlarmLevel);
                 }
 

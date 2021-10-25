@@ -56,7 +56,7 @@ namespace AntRuntime.Enginer
                 {
                     if (bval)
                     {
-                        Alarm(Source, mDTag.AlarmLevel, mDTag.Desc, bval.ToString());
+                        Alarm(Source, mDTag.AlarmLevel, mDTag.Desc, bval.ToString(),mDTag.PulseType.ToString());
                         CurrentStatue = (AlarmStatue)((byte)mDTag.AlarmLevel);
                     }
                 }
@@ -64,7 +64,7 @@ namespace AntRuntime.Enginer
                 {
                     if (!bval)
                     {
-                        Alarm(Source, mDTag.AlarmLevel, mDTag.Desc, bval.ToString());
+                        Alarm(Source, mDTag.AlarmLevel, mDTag.Desc, bval.ToString(),mDTag.PulseType.ToString());
                         CurrentStatue = (AlarmStatue)((byte)mDTag.AlarmLevel);
                     }
                 }

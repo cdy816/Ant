@@ -649,6 +649,8 @@ namespace Cdy.Ant
             return (byte)AlarmLevel+","+MinValue+","+MaxValue+","+DeadArea;
         }
 
+        
+
         /// <summary>
         /// 
         /// </summary>

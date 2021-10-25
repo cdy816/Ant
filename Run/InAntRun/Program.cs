@@ -107,8 +107,8 @@ namespace InAntRun
             re.AppendLine();
             re.AppendLine("exit                 // stop ant and exit application");
             re.AppendLine("start  project       // start ant project");
-            re.AppendLine("stop                 // stop ant ");
-            re.AppendLine("h                    // print help message ");
+            re.AppendLine("stop                 // stop ant");
+            re.AppendLine("h                    // print help message");
             return re.ToString();
         }
 
