@@ -1,11 +1,12 @@
-﻿using System;
+﻿using AntRuntime.Message;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace AntRuntime.Enginer
+namespace AntRuntime
 {
     /// <summary>
     /// 
@@ -23,6 +24,10 @@ namespace AntRuntime.Enginer
         private long mLastId = 0;
 
         private int mCount = 0;
+
+        private object mLockObj = new object();
+
+        private MemoryMessageBuffer mMemoryBuffer = new MemoryMessageBuffer();
 
         #endregion ...Variables...
 
@@ -68,13 +73,22 @@ namespace AntRuntime.Enginer
             }
         }
 
+        private DateTime RestoreTimeFromId(long lid)
+        {
+            var vid = lid / 10;
+            return DateTime.FromBinary(vid);
+        }
+
         /// <summary>
         /// 
         /// </summary>
         /// <param name="msg"></param>
         public void RaiseMessage(Cdy.Ant.Message msg)
         {
-           
+            lock (mMemoryBuffer)
+            {
+                mMemoryBuffer.Add(msg.Id, msg);
+            }
         }
 
         /// <summary>
@@ -84,7 +98,14 @@ namespace AntRuntime.Enginer
         /// <returns></returns>
         public Cdy.Ant.Message GetMessage(long id)
         {
-            return null;
+            if(mMemoryBuffer.ContainsKey(id))
+            {
+                return mMemoryBuffer[id];
+            }
+            else
+            {
+                return HisMessageService.Service.Query(id);
+            }
         }
 
         #endregion ...Methods...

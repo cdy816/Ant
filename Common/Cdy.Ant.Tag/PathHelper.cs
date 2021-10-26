@@ -120,6 +120,16 @@ namespace Cdy.Ant
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="databaseName"></param>
+        /// <returns></returns>
+        public string GetAlarmDataPath(string databaseName)
+        {
+            return System.IO.Path.Combine(mDataPath, databaseName,"alarm");
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="database"></param>
         /// <returns></returns>
         public string GetDatabasePath(string database)

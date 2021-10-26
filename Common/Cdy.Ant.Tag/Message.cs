@@ -65,6 +65,23 @@ namespace Cdy.Ant
         /// </summary>
         public List<DisposalItem> DisposalMessages { get; set; }
 
+
+        /// <summary>
+        /// 附加字段1
+        /// </summary>
+        public string AppendContent1 { get; set; }
+
+        /// <summary>
+        /// 附加字段2
+        /// </summary>
+        public string AppendContent2 { get; set; }
+
+
+        /// <summary>
+        /// 附加字段3
+        /// </summary>
+        public string AppendContent3 { get; set; }
+
     }
 
     /// <summary>
@@ -122,21 +139,7 @@ namespace Cdy.Ant
         /// </summary>
         public string AckUser { get; set; }
 
-        /// <summary>
-        /// 附加字段1
-        /// </summary>
-        public string AppendContent1 { get; set; }
 
-        /// <summary>
-        /// 附加字段2
-        /// </summary>
-        public string AppendContent2 { get; set; }
-
-
-        /// <summary>
-        /// 附加字段3
-        /// </summary>
-        public string AppendContent3 { get; set; }
 
 
     }
@@ -146,6 +149,11 @@ namespace Cdy.Ant
     /// </summary>
     public class DisposalItem
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        public long MessageId { get; set; }
+
         /// <summary>
         /// 处置时间
         /// </summary>
