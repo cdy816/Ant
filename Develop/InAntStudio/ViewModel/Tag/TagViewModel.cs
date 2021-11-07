@@ -523,7 +523,7 @@ namespace InAntStudio
                     ntag = new Cdy.Ant.PulseAlarmTag() { Id = this.mRealTagMode.Id, Name = mRealTagMode.Name, Desc = mRealTagMode.Desc,  Group = mRealTagMode.Group };
                     break;
                 case Cdy.Ant.TagType.Script:
-                    ntag = new Cdy.Ant.StringAlarmTag() { Id = this.mRealTagMode.Id, Name = mRealTagMode.Name, Desc = mRealTagMode.Desc, Group = mRealTagMode.Group };
+                    ntag = new Cdy.Ant.ScriptTag() { Id = this.mRealTagMode.Id, Name = mRealTagMode.Name, Desc = mRealTagMode.Desc, Group = mRealTagMode.Group };
                     break;
                 case Cdy.Ant.TagType.StringAlarm:
                     ntag = new Cdy.Ant.StringAlarmTag() { Id = this.mRealTagMode.Id, Name = mRealTagMode.Name, Desc = mRealTagMode.Desc, Group = mRealTagMode.Group };
@@ -2030,6 +2030,9 @@ namespace InAntStudio
         #endregion ...Interfaces...
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public class TwoRangeTagConfigViewModel : SimpleTagConfigViewModel
     {
 
@@ -2270,6 +2273,8 @@ namespace InAntStudio
 
         #region ... Variables  ...
         private Cdy.Ant.ScriptTag mTag;
+        private ICommand mExpressEditCommand;
+        private ICommand mExpressClearCommand;
         #endregion ...Variables...
 
         #region ... Events     ...
@@ -2306,6 +2311,46 @@ namespace InAntStudio
         #endregion ...Properties...
 
         #region ... Methods    ...
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public ICommand ExpressEditCommand
+        {
+            get
+            {
+                if(mExpressEditCommand==null)
+                {
+                    mExpressEditCommand = new RelayCommand(() => {
+                        ExpressionEditViewModel mm = new ExpressionEditViewModel();
+                        mm.Expresse = this.Express;
+                        if (mm.ShowDialog().Value)
+                        {
+                            Express = mm.GetExpressResult();
+                        }
+                    });
+                }
+                return mExpressEditCommand;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public ICommand ExpressClearCommand
+        {
+            get
+            {
+                if(mExpressClearCommand==null)
+                {
+                    mExpressClearCommand = new RelayCommand(() => {
+                        Express = string.Empty;
+                    });
+                }
+                return mExpressClearCommand;
+            }
+        }
+
 
         /// <summary>
         /// 

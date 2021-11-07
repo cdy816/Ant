@@ -162,6 +162,9 @@
   <data name="Circle" xml:space="preserve">
     <value>Circle</value>
   </data>
+  <data name="Command" xml:space="preserve">
+    <value>Command</value>
+  </data>
   <data name="CompressType" xml:space="preserve">
     <value>CompressType</value>
   </data>
@@ -188,6 +191,9 @@
   </data>
   <data name="CustomDataPathTooltip" xml:space="preserve">
     <value>Relative database path or absolute path</value>
+  </data>
+  <data name="DataAccessApi" xml:space="preserve">
+    <value>Database api</value>
   </data>
   <data name="Database" xml:space="preserve">
     <value>Database</value>
@@ -237,6 +243,9 @@
   </data>
   <data name="Export" xml:space="preserve">
     <value>Export</value>
+  </data>
+  <data name="Expresse" xml:space="preserve">
+    <value>Expresse</value>
   </data>
   <data name="FindAndReplace" xml:space="preserve">
     <value>Find&amp;Replace</value>
@@ -341,6 +350,9 @@
   <data name="MaxValueCountPersecond" xml:space="preserve">
     <value>MaxValueCountPersecond</value>
   </data>
+  <data name="MessageService" xml:space="preserve">
+    <value>Message service</value>
+  </data>
   <data name="MinValue" xml:space="preserve">
     <value>MinValue</value>
   </data>
@@ -367,6 +379,9 @@
   </data>
   <data name="opendatabasefailed" xml:space="preserve">
     <value>Open database {0} failed!</value>
+  </data>
+  <data name="Parameter" xml:space="preserve">
+    <value>Parameter</value>
   </data>
   <data name="Password" xml:space="preserve">
     <value>Password</value>
@@ -454,6 +469,9 @@
   </data>
   <data name="SaveSucessful" xml:space="preserve">
     <value>save sucessfull!</value>
+  </data>
+  <data name="Script" xml:space="preserve">
+    <value>Script</value>
   </data>
   <data name="Security" xml:space="preserve">
     <value>Security</value>

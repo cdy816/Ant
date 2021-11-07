@@ -50,7 +50,7 @@ service DevelopServer {
 //删除
 rpc RemoveTag(RemoveTagMessageRequest) returns (BoolResultReplay);
 
-      //修改实时变量
+//修改实时变量
 rpc UpdateTag(UpdateTagRequestMessage) returns (BoolResultReplay);
 
   //批量删除变量
@@ -105,10 +105,10 @@ rpc ReRun(DatabasesRequest) returns (BoolResultReplay);
 rpc IsAntDatabaseRunning(DatabasesRequest) returns (BoolResultReplay);
 
    //
-rpc GetServerPort(DatabasesRequest) returns (IntResultReplay);
+rpc GetServerSetting(DatabasesRequest) returns (GetSettingReplay);
 
    //
-rpc SetServerPort(SetServerPortRequest) returns  (BoolResultReplay);
+rpc SetServerSetting(SetSettingRequest) returns  (BoolResultReplay);
 
 }
 
@@ -131,6 +131,20 @@ message IntResultReplay
     bool Result =1;
     int32 value=2;
     string ErroMessage=3;
+}
+
+message GetSettingReplay
+{
+    bool Result =1;
+    SettingMessage Value=2;
+    string ErroMessage=3;
+}
+
+message SetSettingRequest
+{
+    string LoginId=1;
+    string Database=2;
+    SettingMessage Value=3;
 }
 
 
@@ -353,6 +367,14 @@ message IntKeyValueMessage
 {
     int32 key=1;
     int32 value=2;
+}
+
+message SettingMessage
+{
+    string ApiKey=1;
+    string ApiValue=2;
+    string ProxyKey=3;
+    string ProxyValue=4;
 }
 
 //实时变量配置

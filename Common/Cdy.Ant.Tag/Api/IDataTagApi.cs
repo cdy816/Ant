@@ -89,6 +89,12 @@ namespace Cdy.Ant
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="xe"></param>
+        void Load(XElement xe);
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <returns></returns>
         IDataTagApi NewApi();
 

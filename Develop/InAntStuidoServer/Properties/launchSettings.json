@@ -2,7 +2,8 @@
   "profiles": {
     "InAntStuidoServer": {
       "commandName": "Executable",
-      "executablePath": "C:\\Users\\cdy81\\source\\repos\\cdy816\\Ant\\Output\\InAntStuidoServer.exe"
+      "executablePath": "C:\\Users\\cdy81\\source\\repos\\cdy816\\Ant\\Output\\InAntStuidoServer.exe",
+      "commandLineArgs": "/m"
     }
   }
 }

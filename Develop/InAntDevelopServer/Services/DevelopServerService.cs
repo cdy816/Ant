@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace InAntDevelopServer
 {
@@ -77,26 +78,24 @@ namespace InAntDevelopServer
             return Task.FromResult(new BoolResultReplay() { Result = SecurityManager.Manager.IsAdmin(request.LoginId) });
         }
 
-        
-
         /// <summary>
         /// 
         /// </summary>
         /// <param name="request"></param>
         /// <param name="context"></param>
         /// <returns></returns>
-        public override Task<IntResultReplay> GetServerPort(DatabasesRequest request, ServerCallContext context)
+        public override Task<GetSettingReplay> GetServerSetting(DatabasesRequest request, ServerCallContext context)
         {
             if (!CheckLoginId(request.LoginId, request.Database))
             {
-                return Task.FromResult(new IntResultReplay() { Result = false });
+                return Task.FromResult(new GetSettingReplay() { Result = false });
             }
             var db = DbManager.Instance.GetDatabase(request.Database);
             if (db != null)
             {
-                return Task.FromResult(new IntResultReplay() { Result = true, Value = db.Setting.WebServerPort });
+                return Task.FromResult(new GetSettingReplay() { Result = true, Value = new SettingMessage() { ApiKey = db.Setting.ApiType, ApiValue = db.Setting.ApiData!=null? db.Setting.ApiData.ToString():"", ProxyKey = db.Setting.ProxyType, ProxyValue = db.Setting.ProxyData!=null? db.Setting.ProxyData.ToString():"" } });
             }
-            return Task.FromResult(new IntResultReplay() { Result = false });
+            return Task.FromResult(new GetSettingReplay() { Result = false });
         }
 
         /// <summary>
@@ -105,7 +104,7 @@ namespace InAntDevelopServer
         /// <param name="request"></param>
         /// <param name="context"></param>
         /// <returns></returns>
-        public override Task<BoolResultReplay> SetServerPort(SetServerPortRequest request, ServerCallContext context)
+        public override Task<BoolResultReplay> SetServerSetting(SetSettingRequest request, ServerCallContext context)
         {
             if (!CheckLoginId(request.LoginId, request.Database))
             {
@@ -114,11 +113,23 @@ namespace InAntDevelopServer
             var db = DbManager.Instance.GetDatabase(request.Database);
             if (db != null)
             {
-                db.Setting.WebServerPort = request.Port;
+                db.Setting = new Setting() { ApiType = request.Value.ApiKey, ProxyType = request.Value.ProxyKey };
+                if(!string.IsNullOrEmpty(request.Value.ApiValue))
+                {
+                    db.Setting.ApiData = XElement.Parse(request.Value.ApiValue);
+                }
+
+                if (!string.IsNullOrEmpty(request.Value.ProxyValue))
+                {
+                    db.Setting.ProxyData = XElement.Parse(request.Value.ProxyValue);
+                }
+
                 return Task.FromResult(new BoolResultReplay() { Result = true });
             }
             return Task.FromResult(new BoolResultReplay() { Result = false });
         }
+
+        
 
         #endregion
 

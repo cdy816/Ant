@@ -55,7 +55,7 @@ namespace InAntStudio
 
         private ICommand mDatabaseSelectCommand;
 
-        private ICommand mNewDatabaseCommand;
+        //private ICommand mNewDatabaseCommand;
 
         private ICommand mCancelCommand;
 
@@ -99,9 +99,11 @@ namespace InAntStudio
         {
             //ValueConvertManager.manager.Init();
 
+            ApiFactory.Factory.LoadForDevelop();
+
             ServiceLocator.Locator.Registor<IProcessNotify>(this);
             CurrentUserManager.Manager.RefreshNameEvent += Manager_RefreshNameEvent;
-            mCheckRunningTimer = new System.Timers.Timer(1000);
+            mCheckRunningTimer = new System.Timers.Timer(3000);
             mCheckRunningTimer.Elapsed += MCheckRunningTimer_Elapsed;
             infoModel = new MarInfoViewModel();
 
@@ -628,10 +630,18 @@ namespace InAntStudio
         {
             if (!string.IsNullOrEmpty(mDatabase))
             {
-                var isrunning = DevelopServiceHelper.Helper.IsDatabaseRunning(mDatabase);
-                Application.Current?.Dispatcher.BeginInvoke(new Action(() => {
-                    IsDatabaseRunning = isrunning;
-                }), null);
+                try
+                {
+                    var isrunning = DevelopServiceHelper.Helper.IsDatabaseRunning(mDatabase);
+                    Application.Current?.Dispatcher.BeginInvoke(new Action(() =>
+                    {
+                        IsDatabaseRunning = isrunning;
+                    }), null);
+                }
+                catch
+                {
+
+                }
             }
         }
 
@@ -1029,8 +1039,10 @@ namespace InAntStudio
                 (ContentViewModel as IModeSwitch).DeActive();
             }
 
-            if(mCurrentSelectTreeItem!=null)
-            ContentViewModel = mCurrentSelectTreeItem.GetModel(ContentViewModel);
+            if (mCurrentSelectTreeItem != null)
+                ContentViewModel = mCurrentSelectTreeItem.GetModel(ContentViewModel);
+            else
+                ContentViewModel = null;
 
             if (ContentViewModel == null) ContentViewModel = infoModel;
 

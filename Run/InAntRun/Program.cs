@@ -1,7 +1,9 @@
 ﻿using Cdy.Ant;
 using System;
+using System.IO.Pipes;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace InAntRun
 {
@@ -26,6 +28,10 @@ namespace InAntRun
                 mRunner.Name = args[0];
                 mRunner.Init();
                 mRunner.Start();
+
+                Task.Run(() => {
+                    StartMonitor(args[1]);
+                });
             }
 
             Console.WriteLine(Res.Get("HelpMsg"));
@@ -78,6 +84,10 @@ namespace InAntRun
                                     mRunner.Init();
                                     mRunner.Start();
                                 }
+
+                                Task.Run(() => {
+                                    StartMonitor(cmd[1]);
+                                });
                             }
                             else
                             {
@@ -139,6 +149,75 @@ namespace InAntRun
             }
             mIsClosed = true;
             e.Cancel = true;
+        }
+
+        private static void StartMonitor(string name)
+        {
+            try
+            {
+                while (!mIsClosed)
+                {
+                    try
+                    {
+                        using (var server = new NamedPipeServerStream("Ant"+name, PipeDirection.InOut))
+                        {
+                            server.WaitForConnection();
+                            while (!mIsClosed)
+                            {
+                                try
+                                {
+                                    if (!server.IsConnected) break;
+                                    var cmd = server.ReadByte();
+                                    if (cmd == 0)
+                                    {
+                                        if (mRunner.IsStarted)
+                                        {
+                                            mRunner.Stop();
+                                        }
+                                        mIsClosed = true;
+                                        server.WriteByte(1);
+                                        server.FlushAsync();
+                                        //server.WaitForPipeDrain();
+                                        Console.WriteLine(Res.Get("AnyKeyToExit") + ".....");
+                                        break;
+                                        //退出系统
+                                    }
+                                    else if (cmd == 1)
+                                    {
+                                        Console.WriteLine("Start to restart database.......");
+                                        Task.Run(() =>
+                                        {
+                                            mRunner.ReStartDatabase();
+                                        });
+                                        server.WriteByte(1);
+                                        server.FlushAsync();
+                                        // server.WaitForPipeDrain();
+                                    }
+                                    else
+                                    {
+
+                                    }
+                                }
+                                catch (Exception eex)
+                                {
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                LoggerService.Service.Info("Programe", ex.Message);
+                //Console.WriteLine(ex.Message);
+            }
         }
     }
 }

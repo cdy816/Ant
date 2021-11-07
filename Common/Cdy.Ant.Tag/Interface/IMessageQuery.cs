@@ -57,6 +57,15 @@ namespace Cdy.Ant.Tag
         /// <returns></returns>
         IEnumerable<Cdy.Ant.Message> Query(DateTime stime, DateTime etime);
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="stime"></param>
+        /// <param name="etime"></param>
+        /// <param name="Filters"></param>
+        /// <returns></returns>
+
         IEnumerable<Cdy.Ant.Message> Query(DateTime stime, DateTime etime,IEnumerable<QueryFilter> Filters);
 
     }

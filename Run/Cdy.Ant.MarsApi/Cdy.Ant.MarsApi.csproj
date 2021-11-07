@@ -10,7 +10,7 @@
 
   <ItemGroup>
     <PackageReference Include="Cheetah" Version="0.7.0" />
-    <PackageReference Include="DBRunTime.ServiceApi" Version="1.0.1" />
+    <PackageReference Include="DBRunTime.ServiceApi" Version="1.0.2" />
   </ItemGroup>
 
   <ItemGroup>

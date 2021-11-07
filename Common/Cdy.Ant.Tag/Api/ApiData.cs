@@ -32,7 +32,7 @@ namespace Cdy.Ant
         /// 
         /// </summary>
         /// <param name="xe"></param>
-        public void LoadFromXML(XElement xe)
+        public virtual void LoadFromXML(XElement xe)
         {
             
         }
@@ -41,9 +41,10 @@ namespace Cdy.Ant
         /// 
         /// </summary>
         /// <returns></returns>
-        public XElement SaveToXML()
+        public virtual XElement SaveToXML()
         {
-            return new XElement("AntApi");
+            var re = new XElement("AntApi");
+            return re;
         }
         #endregion ...Methods...
 

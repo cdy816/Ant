@@ -104,9 +104,9 @@
 
 
     </Window.Resources>
-    <Border  Margin="5" BorderThickness="1" BorderBrush="DarkGray">
+    <Border  Margin="5" BorderThickness="1" BorderBrush="DarkGray" >
         <Border.Background>
-            <ImageBrush x:Name="bgi" ImageSource="/Image/AntBackground.png" Opacity="0.8" Stretch="None" TileMode="FlipXY"/>
+            <ImageBrush x:Name="bgi" ImageSource="/Image/AntBackground.png" Opacity="0.6" Stretch="None" TileMode="FlipXY"/>
         </Border.Background>
         <Grid x:Name="bg" Background="#CF26282C">
             <Grid.RowDefinitions>

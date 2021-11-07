@@ -27,7 +27,7 @@
 
         <TextBlock Text="{local:ResMarker Points}"  Grid.Row="1" Foreground="{DynamicResource Window.Forground}" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5,0" />
         <Grid  Grid.Row="1"   HorizontalAlignment="Stretch" Grid.Column="1"  Margin="5,0" >
-            <TextBox Text="{Binding Value}" Background="#1FFFFFFF" Margin="5" BorderThickness="1"/>
+            <TextBox Text="{Binding Value}" CaretBrush="White" Background="#0FFFFFFF" Margin="5" BorderThickness="1"/>
         </Grid>
     </Grid>
 </UserControl>

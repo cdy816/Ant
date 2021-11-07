@@ -46,6 +46,9 @@ namespace AntRuntime
 
         #region ... Properties ...
 
+        /// <summary>
+        /// 
+        /// </summary>
         public string Name { get; set; }
 
         /// <summary>

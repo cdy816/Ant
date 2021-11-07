@@ -14,7 +14,9 @@ namespace AntRuntime
 
         private Cdy.Ant.AlarmDatabase mCurrentDatabase;
         private AlarmEnginer alarmEnginer;
-        private APIManager mApi;
+        private IDataTagApi mDataApi;
+        private Cdy.Ant.Tag.IMessageServiceProxy mServiceProxy;
+        //private APIManager mApi;
 
         #endregion ...Variables...
 
@@ -31,6 +33,7 @@ namespace AntRuntime
             ServiceLocator.Locator.Registor<ILog>(new ConsoleLogger());
             ApiFactory.Factory.LoadForRun();
             ServiceLocator.Locator.Registor<IApiFactory>(ApiFactory.Factory);
+            ServiceLocator.Locator.Registor<Cdy.Ant.Tag.IMessageQuery>(MessageService.Service);
         }
 
         #endregion ...Constructor...
@@ -65,9 +68,10 @@ namespace AntRuntime
         /// </summary>
         public void Init()
         {
-            LoadApi();
             PathHelper.helper.CheckDataPathExist();
             LoadDatabase();
+            LoadServerProxy();
+            LoadApi();
         }
 
         /// <summary>
@@ -78,6 +82,8 @@ namespace AntRuntime
             this.mCurrentDatabase = new Cdy.Ant.AlarmDatabaseSerise().Load(Name);
             alarmEnginer = new AlarmEnginer() { Database = mCurrentDatabase };
             alarmEnginer.Init();
+            HisMessageService.Service.DatabaseName = mCurrentDatabase.Name;
+            MessageService.Service.DatabaseName = mCurrentDatabase.Name;
         }
 
         /// <summary>
@@ -85,10 +91,29 @@ namespace AntRuntime
         /// </summary>
         private void LoadApi()
         {
-            mApi = new APIManager() { Name = Name };
-            mApi.Load();
-            mApi.Apis.Init();
-            ServiceLocator.Locator.Registor<IDataTagApi>(mApi.Apis);
+            if (!string.IsNullOrEmpty(mCurrentDatabase.Setting.ApiType))
+            {
+                var api = ApiFactory.Factory.GetRuntimeInstance(mCurrentDatabase.Setting.ApiType);
+                api.Load(mCurrentDatabase.Setting.ApiData);
+                api.Init();
+                ServiceLocator.Locator.Registor<IDataTagApi>(api);
+                mDataApi = api;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void LoadServerProxy()
+        {
+            if(!string.IsNullOrEmpty(mCurrentDatabase.Setting.ProxyType))
+            {
+                var ss = ProxyServiceFactory.Factory.LoadForRun(mCurrentDatabase.Setting.ProxyType);
+                ss.Load(mCurrentDatabase.Setting.ProxyData);
+                ss.Init(ServiceLocator.Locator.Resolve<Cdy.Ant.Tag.IMessageQuery>());
+                mServiceProxy = ss;
+                ServiceLocator.Locator.Registor<Cdy.Ant.Tag.IMessageServiceProxy>(ss);
+            }
         }
 
         /// <summary>
@@ -97,7 +122,16 @@ namespace AntRuntime
         public void Start()
         {
             alarmEnginer.Start();
-            mApi.Apis.Start();
+            mDataApi?.Start();
+            mServiceProxy?.Start();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public void ReStartDatabase()
+        {
+
         }
 
         /// <summary>
@@ -105,7 +139,8 @@ namespace AntRuntime
         /// </summary>
         public void Stop()
         {
-            mApi.Apis.Stop();
+            mDataApi?.Stop();
+            mServiceProxy?.Stop();
             alarmEnginer.Stop();
         }
 

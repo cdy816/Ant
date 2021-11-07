@@ -51,7 +51,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Mars.DBDevelopClientWebApi" Version="1.0.1" />
+    <PackageReference Include="Cdy.Spider.CalculateExpressEditor" Version="1.0.0" />
+    <PackageReference Include="Mars.DBDevelopClientWebApi" Version="1.0.3" />
   </ItemGroup>
 
   <ItemGroup>
@@ -101,7 +102,7 @@
     <Resource Include="Image\登录.png" />
   </ItemGroup>
 
-  <ItemGroup>
+  <!--<ItemGroup>
     <Compile Update="View\TagDetail\DigitalTagConfigView - 复制.xaml.cs">
       <SubType>Code</SubType>
       <DependentUpon>DigitalTagConfigView.xaml.cs</DependentUpon>
@@ -113,7 +114,7 @@
     <Compile Update="View\TagDetail\TwoRangeTagConfigView - 复制.xaml.cs">
       <DependentUpon>TwoRangeTagConfigView.xaml.cs</DependentUpon>
     </Compile>
-  </ItemGroup>
+  </ItemGroup>-->
 
   <ItemGroup>
     <Page Update="View\TagDetail\DelayDigitalTagConfigView.xaml">
@@ -134,8 +135,23 @@
     </Page>
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Config\ApiDevelop.cfg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Config\MessageServerDevelop.cfg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Template\AntCommand.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Template\AntScript.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="copy &quot;$(TargetPath)&quot; &quot;$(SolutionDir)\Output&quot; /y&#xD;&#xA;copy &quot;$(TargetDir)$(TargetName).exe&quot; &quot;$(SolutionDir)\Output&quot; /y&#xD;&#xA;if exist  &quot;$(TargetDir)$(TargetName).XML&quot; copy &quot;$(TargetDir)$(TargetName).XML&quot; &quot;$(SolutionDir)\Output\Xml&quot; /y&#xD;&#xA;if exist  &quot;$(TargetDir)$(TargetName).pdb&quot;  copy &quot;$(TargetDir)$(TargetName).pdb&quot; &quot;$(SolutionDir)\Output&quot; /y&#xD;&#xA;copy &quot;$(TargetDir)$(TargetName).runtimeconfig.json&quot; &quot;$(SolutionDir)\Output&quot; /y&#xD;&#xA;if exist  &quot;$(TargetDir)zh-CN&quot;  copy &quot;$(TargetDir)zh-CN\*.dll&quot; &quot;$(SolutionDir)\Output\zh-CN&quot; /y&#xD;&#xA;copy &quot;$(TargetDir)Google.Protobuf.dll&quot; &quot;$(SolutionDir)\Output&quot; /y&#xD;&#xA;copy &quot;$(TargetDir)Cdy.Tag.dll&quot; &quot;$(SolutionDir)\Output&quot; /y&#xD;&#xA;copy &quot;$(TargetDir)DBDevelopClientWebApi.dll&quot; &quot;$(SolutionDir)\Output&quot; /y&#xD;&#xA;copy &quot;$(TargetDir)Newtonsoft.Json.dll&quot; &quot;$(SolutionDir)\Output&quot; /y&#xD;&#xA;copy &quot;$(TargetDir)Microsoft.Extensions.Logging.Abstractions.dll&quot; &quot;$(SolutionDir)\Output&quot; /y&#xD;&#xA;" />
+    <Exec Command="copy &quot;$(TargetPath)&quot; &quot;$(SolutionDir)\Output&quot; /y&#xD;&#xA;copy &quot;$(TargetDir)$(TargetName).exe&quot; &quot;$(SolutionDir)\Output&quot; /y&#xD;&#xA;if exist  &quot;$(TargetDir)$(TargetName).XML&quot; copy &quot;$(TargetDir)$(TargetName).XML&quot; &quot;$(SolutionDir)\Output\Xml&quot; /y&#xD;&#xA;if exist  &quot;$(TargetDir)$(TargetName).pdb&quot;  copy &quot;$(TargetDir)$(TargetName).pdb&quot; &quot;$(SolutionDir)\Output&quot; /y&#xD;&#xA;if exist  &quot;$(TargetDir)zh-CN&quot;  copy &quot;$(TargetDir)zh-CN\*.dll&quot; &quot;$(SolutionDir)\Output\zh-CN&quot; /y&#xD;&#xA;if exist  &quot;$(TargetDir)Config&quot;  copy &quot;$(TargetDir)Config\*.*&quot; &quot;$(SolutionDir)\Output\Config&quot; /y&#xD;&#xA;&#xD;&#xA;copy &quot;$(TargetDir)$(TargetName).runtimeconfig.json&quot; &quot;$(SolutionDir)\Output&quot; /y&#xD;&#xA;copy &quot;$(TargetDir)Google.Protobuf.dll&quot; &quot;$(SolutionDir)\Output&quot; /y&#xD;&#xA;copy &quot;$(TargetDir)Cdy.Tag.dll&quot; &quot;$(SolutionDir)\Output&quot; /y&#xD;&#xA;copy &quot;$(TargetDir)DBDevelopClientWebApi.dll&quot; &quot;$(SolutionDir)\Output&quot; /y&#xD;&#xA;copy &quot;$(TargetDir)Newtonsoft.Json.dll&quot; &quot;$(SolutionDir)\Output&quot; /y&#xD;&#xA;copy &quot;$(TargetDir)Microsoft.*.dll&quot; &quot;$(SolutionDir)\Output&quot; /y&#xD;&#xA;&#xD;&#xA;copy &quot;$(TargetDir)Template\AntCommand.xml&quot; &quot;$(SolutionDir)\Output&quot; /y&#xD;&#xA;copy &quot;$(TargetDir)Template\AntScript.xml&quot; &quot;$(SolutionDir)\Output&quot; /y&#xD;&#xA;&#xD;&#xA;copy &quot;$(TargetDir)Message*.dll&quot; &quot;$(SolutionDir)\Output&quot; /y&#xD;&#xA;&#xD;&#xA;copy &quot;$(TargetDir)RoslynPad*.dll&quot; &quot;$(SolutionDir)\Output&quot; /y&#xD;&#xA;copy &quot;$(TargetDir)System*.dll&quot; &quot;$(SolutionDir)\Output&quot; /y&#xD;&#xA;copy &quot;$(TargetDir)ICSharpCode.AvalonEdit.dll&quot; &quot;$(SolutionDir)\Output&quot; /y&#xD;&#xA;copy &quot;$(TargetDir)Cdy.Spider.CalculateExpressEditor.dll&quot; &quot;$(SolutionDir)\Output&quot; /y&#xD;&#xA;copy &quot;$(TargetDir)Humanizer.dll&quot; &quot;$(SolutionDir)\Output&quot; /y&#xD;&#xA;&#xD;&#xA;" />
   </Target>
 
 </Project>

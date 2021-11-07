@@ -77,9 +77,24 @@
         <local:ScriptTagConfigView />
     </DataTemplate>
 
+    <DataTemplate DataType="{x:Type local:StringTagConfigViewModel}">
+        <local:StringTagConfigView />
+    </DataTemplate>
 
     <DataTemplate DataType="{x:Type local:MarsTagBrowserViewModel}">
         <local:MarsTagBrowserView />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type local:MarsApiDevelopViewModel}">
+        <local:MarsApiDevelopView />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type viewmodel:ExpressionEditViewModel}">
+        <local:ExpressionEditView />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type viewmodel:ParametersViewModel}">
+        <local:ParametersView />
     </DataTemplate>
 
     <BooleanToVisibilityConverter x:Key="bvc" />
@@ -153,7 +168,7 @@
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
                         <PasswordBox  CaretBrush="White" x:Name="pb" Foreground="{TemplateBinding Foreground}"  Background="{TemplateBinding Background}" VerticalContentAlignment="Center" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"  />
-                        <TextBox  CaretBrush="White" Foreground="{TemplateBinding Foreground}"  Background="{TemplateBinding Background}" x:Name="tb" VerticalContentAlignment="Center"  Text="{Binding Password,Mode=TwoWay,RelativeSource={RelativeSource Mode=TemplatedParent}}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" />
+                        <TextBox  CaretBrush="White" Foreground="{TemplateBinding Foreground}"  Background="{TemplateBinding Background}" x:Name="tb" VerticalContentAlignment="Center"  Text="{Binding Password,Mode=TwoWay,RelativeSource={RelativeSource Mode=TemplatedParent}}" Height="24" BorderThickness="1" />
                         <ToggleButton Style="{StaticResource ToggleButtonStyle1}"  Background="Transparent" BorderThickness="0" Margin="10,0,0,0"  Grid.Column="1"   IsChecked="{Binding IsShowPassword,Mode=TwoWay,RelativeSource={RelativeSource Mode=TemplatedParent},UpdateSourceTrigger=PropertyChanged}" Width="30" Height="24" >
                             <Image Source="/Image/show.png" />
                         </ToggleButton>
@@ -191,7 +206,7 @@
                             <RowDefinition Height="*" />
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
-                          <Grid Background="#9F000000">
+                        <Grid Background="#AF000000">
                             <Image Margin="5,0"  Source="{Binding Icon,RelativeSource={RelativeSource AncestorType=Window}}" Height="16" HorizontalAlignment="Left" Width="24" VerticalAlignment="Center" RenderOptions.BitmapScalingMode="HighQuality" Stretch="Fill" />
                             <Label Margin="30,0,115,0" VerticalContentAlignment="Center" Content="{Binding Title,RelativeSource={RelativeSource AncestorType=Window}}" Foreground="{Binding Foreground,RelativeSource={RelativeSource AncestorType=Window}}"/>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
@@ -225,12 +240,12 @@
                                     </Button.ContentTemplate>
                                 </Button>
                             </StackPanel>
-                        </Grid>
-                            <Grid Background="#0FFFFFFF" Grid.Row="1">
+                        </Grid >
+                            <Grid Background="#1FFFFFFF" Grid.Row="1">
                                 <ContentControl  x:Name="content_host" Content="{Binding}" Margin="0" />
                             </Grid>
-                            
-                        <Border   Height="32"  Grid.Row="2" BorderBrush="Gray" BorderThickness="0,1,0,0"  Visibility="{Binding IsOkCancel,Converter={StaticResource bvc}}">
+
+                            <Border  Background="#AF000000"  Height="32"  Grid.Row="2" BorderBrush="Gray" BorderThickness="0,1,0,0"  Visibility="{Binding IsOkCancel,Converter={StaticResource bvc}}">
                             <Grid  Margin="0" >
                                 <Label  Content="{Binding Message}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,0,200,0" />
                                     <Button  Style="{DynamicResource ButtonStyle1}" Name="btn_Cancel" BorderBrush="IndianRed" BorderThickness="0,0,0,2" IsCancel="{Binding IsEnableDefault}" Content="{local:ResMarker Cancel}" Height="22" Width="75" Margin="0,0,10,0" Command="{Binding CancelCommand}" HorizontalAlignment="Right" VerticalAlignment="Center"   >

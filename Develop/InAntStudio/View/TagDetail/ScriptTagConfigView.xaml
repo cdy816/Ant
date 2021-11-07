@@ -7,6 +7,14 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-            
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="32" />
+        </Grid.ColumnDefinitions>
+        <TextBox Text="{Binding Express,Mode=TwoWay,UpdateSourceTrigger=LostFocus}" CaretBrush="White" Margin="2" Height="60" HorizontalAlignment="Stretch" Background="#0FFFFFFF" Foreground="White"  AcceptsReturn="True" VerticalScrollBarVisibility="Auto"/>
+        <StackPanel Grid.Column="1" Margin="2">
+            <Button Content="..." VerticalContentAlignment="Top" Command="{Binding ExpressEditCommand}" />
+            <Button Content="X" Command="{Binding ExpressClearCommand}"  Margin="0,2"/>
+        </StackPanel>
     </Grid>
 </UserControl>

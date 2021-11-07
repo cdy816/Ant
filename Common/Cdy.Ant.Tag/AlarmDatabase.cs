@@ -3,13 +3,35 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace Cdy.Ant
 {
 
     public class Setting
     {
-        public int WebServerPort { get; set; } = 18000;
+        //public int WebServerPort { get; set; } = 18000;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string ApiType { get; set; } = "";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public XElement ApiData { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string ProxyType { get; set; } = "";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public XElement ProxyData { get; set; }
+
     }
 
     /// <summary>

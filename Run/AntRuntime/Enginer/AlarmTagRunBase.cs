@@ -139,12 +139,7 @@ namespace AntRuntime.Enginer
         /// <param name="value"></param>
         public void Restore(string value)
         {
-            var vmsg = MessageService.Service.GetMessage(mCurrentMessageId) as AlarmMessage;
-            if(vmsg!=null)
-            {
-                vmsg.RestoreTime = DateTime.Now;
-                vmsg.RestoreValue = value;
-            }
+            MessageService.Service.RestoreMessage(mCurrentMessageId, value);
         }
 
         /// <summary>

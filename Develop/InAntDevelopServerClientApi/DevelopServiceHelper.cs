@@ -15,6 +15,7 @@ using System.Text;
 using System.Linq;
 using System.Data.Common;
 using Cdy.Ant;
+using System.Xml.Linq;
 
 namespace DBDevelopClientApi
 {
@@ -861,16 +862,16 @@ namespace DBDevelopClientApi
         /// </summary>
         /// <param name="database"></param>
         /// <returns></returns>
-        public int GetServerPort(string database)
+        public Setting GetServerSetting(string database)
         {
             if (mCurrentClient != null && !string.IsNullOrEmpty(mLoginId))
             {
-                var res = mCurrentClient.GetServerPort(new AntDevelopServer.DatabasesRequest() { Database = database, LoginId = mLoginId });
-                return res.Value;
+                var res = mCurrentClient.GetServerSetting(new AntDevelopServer.DatabasesRequest() { Database = database, LoginId = mLoginId });
+                return new Setting() { ApiType = res.Value.ApiKey, ApiData = !string.IsNullOrEmpty(res.Value.ApiValue) ? XElement.Parse(res.Value.ApiValue):null,ProxyType = res.Value.ProxyKey, ProxyData = !string.IsNullOrEmpty(res.Value.ProxyValue) ? XElement.Parse(res.Value.ProxyValue) : null };
             }
             else
             {
-                return -1;
+                return null;
             }
         }
 
@@ -880,11 +881,16 @@ namespace DBDevelopClientApi
         /// <param name="database"></param>
         /// <param name="port"></param>
         /// <returns></returns>
-        public bool SetServerPort(string database,int port)
+        public bool SetServerSetting(string database, Setting port)
         {
             if (mCurrentClient != null && !string.IsNullOrEmpty(mLoginId))
             {
-                var res = mCurrentClient.SetServerPort(new AntDevelopServer.SetServerPortRequest() { Database = database, LoginId = mLoginId,Port=port });
+                var setting = new AntDevelopServer.SetSettingRequest() { Database = database, LoginId = mLoginId,Value = new AntDevelopServer.SettingMessage()};
+                setting.Value.ApiKey = port.ApiType;
+                setting.Value.ApiValue = port.ApiData != null ? port.ApiData.ToString() : "";
+                setting.Value.ProxyKey = port.ProxyType;
+                setting.Value.ProxyValue = port.ProxyData != null ? port.ProxyData.ToString() : "";
+                var res = mCurrentClient.SetServerSetting(setting);
                 return res.Result;
             }
             else

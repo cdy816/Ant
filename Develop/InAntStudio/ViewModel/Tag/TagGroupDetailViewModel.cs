@@ -1053,7 +1053,12 @@ namespace InAntStudio.ViewModel
                 }
                 else
                 {
+                    if(mSelectGroupTags.Count>0)
                     CurrentSelectTag = mSelectGroupTags.Last();
+                    else
+                    {
+                        CurrentSelectTag = null;
+                    }
                 }
 
                 //if (DevelopServiceHelper.Helper.Remove(GroupModel.Database, CurrentSelectTag.RealTagMode.Id))

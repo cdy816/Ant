@@ -25,6 +25,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InAntStudio", "Develop\InAn
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InAntDevelopServerClientApi", "Develop\InAntDevelopServerClientApi\InAntDevelopServerClientApi.csproj", "{72765DC4-5C18-4822-A227-CD97931A4B14}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AntRutime.WebApi", "Run\AntRutime.WebApi\AntRutime.WebApi.csproj", "{7058FA5E-AD37-4B59-9E52-8A04FCF9874F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AntApiAndProxyConfigDevelop", "Develop\AntApiAndProxyConfigDevelop\AntApiAndProxyConfigDevelop.csproj", "{AF5F921F-3305-4FA2-BDD2-FEFD88747D7E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +67,14 @@ Global
 		{72765DC4-5C18-4822-A227-CD97931A4B14}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{72765DC4-5C18-4822-A227-CD97931A4B14}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{72765DC4-5C18-4822-A227-CD97931A4B14}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7058FA5E-AD37-4B59-9E52-8A04FCF9874F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7058FA5E-AD37-4B59-9E52-8A04FCF9874F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7058FA5E-AD37-4B59-9E52-8A04FCF9874F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7058FA5E-AD37-4B59-9E52-8A04FCF9874F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF5F921F-3305-4FA2-BDD2-FEFD88747D7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF5F921F-3305-4FA2-BDD2-FEFD88747D7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF5F921F-3305-4FA2-BDD2-FEFD88747D7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF5F921F-3305-4FA2-BDD2-FEFD88747D7E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -76,6 +88,8 @@ Global
 		{85A25F85-267C-4B2F-9C05-3792A651EE21} = {D0FD1ABD-FC41-4C7B-B465-EDD657120D4A}
 		{1CB39C9F-DCC1-4538-B36E-CB083C1C6357} = {D0FD1ABD-FC41-4C7B-B465-EDD657120D4A}
 		{72765DC4-5C18-4822-A227-CD97931A4B14} = {D0FD1ABD-FC41-4C7B-B465-EDD657120D4A}
+		{7058FA5E-AD37-4B59-9E52-8A04FCF9874F} = {2DAF4C7E-14B0-4A5C-87E9-F2BE612EDEC5}
+		{AF5F921F-3305-4FA2-BDD2-FEFD88747D7E} = {D0FD1ABD-FC41-4C7B-B465-EDD657120D4A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D298DE71-994E-4E0F-94CD-1FD0C85FE2DD}

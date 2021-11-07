@@ -106,6 +106,8 @@ namespace InAntStuidoServer
 
         static void Main(string[] args)
         {
+            Console.Title = "AntDevelopServer";
+
             LogoHelper.Print();
 
             //注册日志
@@ -120,16 +122,33 @@ namespace InAntStuidoServer
 
             int port = Config.Instance.GrpcPort;
             int webPort = Config.Instance.WebApiPort;
+
+            bool isNeedMinMode = false;
             if (args.Length > 0)
             {
-                port = int.Parse(args[0]);
+                if (args[0] == "/m")
+                {
+                    isNeedMinMode = true;
+                }
+                else
+                {
+                    port = int.Parse(args[0]);
+                }
             }
 
             if (args.Length > 1)
             {
                 webPort = int.Parse(args[1]);
             }
+
+          
+
             WindowConsolHelper.DisbleQuickEditMode();
+
+            if (isNeedMinMode)
+            {
+                WindowConsolHelper.MinWindow("AntDevelopServer");
+            }
 
             Console.CancelKeyPress += Console_CancelKeyPress;
 
@@ -896,7 +915,7 @@ namespace InAntStuidoServer
         {
             lock (mLockObj)
             {
-                using (var client = new NamedPipeClientStream(".", name, PipeDirection.InOut))
+                using (var client = new NamedPipeClientStream(".", "Ant"+ name, PipeDirection.InOut))
                 {
                     try
                     {

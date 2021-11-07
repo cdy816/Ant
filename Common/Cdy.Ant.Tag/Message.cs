@@ -87,6 +87,14 @@ namespace Cdy.Ant
     /// <summary>
     /// 
     /// </summary>
+    public class InfoMessage : Message
+    {
+        public override MessgeType Type => MessgeType.InfoMessage;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
     public class AlarmMessage : Message
     {
         /// <summary>

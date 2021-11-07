@@ -8,6 +8,8 @@
 //==============================================================
 
 
+using Cdy.Ant;
+using Cdy.Ant.Tag;
 using DBDevelopClientApi;
 using System;
 using System.Collections.Generic;
@@ -27,18 +29,19 @@ namespace InAntStudio.ViewModel
 
         private ObservableCollection<DriverSetViewModel> mChildren = new ObservableCollection<DriverSetViewModel>();
 
+        private string mApiKey;
 
-        private string mDataPath;
+        private string mProxyKey;
 
-        private string mDataBackupPath;
+        private Setting mSetting;
 
-        private bool mHisDataPathIsCustom;
+        private IDataTagApiDevelop mApiConfig;
 
-        private bool mHisDataPathIsDefault;
+        private object mApiConfigModel;
 
-        private int mKeepTime;
+        private IMessageServiceProxyDevelop mMessageConfig;
 
-        private int mKeepNoZipFileDays = -1;
+        private object mMessageConfigModel;
 
         #endregion ...Variables...
 
@@ -52,47 +55,81 @@ namespace InAntStudio.ViewModel
 
         #region ... Properties ...
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        public List<string> ApiKeys
+        {
+            get
+            {
+                return ApiFactory.Factory.ListDevelopApis();
+            }
+        }
 
         /// <summary>
         /// 
         /// </summary>
-        public int KeepTime
+        public List<string> ProxyKeys
         {
             get
             {
-                return mKeepTime;
+                return ProxyServiceFactory.Factory.ListDevelopApis();
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string ApiKey
+        {
+            get
+            {
+                return mApiKey;
             }
             set
             {
-                if (mKeepTime != value)
+                if (mApiKey != value && value!=null)
                 {
-                    mKeepTime = value;
-                    OnPropertyChanged("KeepTime");
+                    
+                    mApiConfig = ApiFactory.Factory.GetDevelopInstance(value);
+
+                    if (string.IsNullOrEmpty(mApiKey) && mApiConfig != null)
+                    {
+                        mApiConfig.Load(mSetting.ApiData);
+
+                        ApiConfigModel = mApiConfig.Config();
+                    }
+                    mApiKey = value;
+                    
                 }
+                OnPropertyChanged("ApiKey");
             }
         }
 
         /// <summary>
             /// 
             /// </summary>
-        public bool IsEnableZipFile
+        public string ProxyKey
         {
             get
             {
-                return mKeepNoZipFileDays>=0;
+                return mProxyKey;
             }
             set
             {
-                if (value)
+                if (mProxyKey != value && value != null)
                 {
-                    KeepNoZipFileDays = 7;
+                
+                    mMessageConfig = ProxyServiceFactory.Factory.GetDevelopInstance(value);
+                    if (string.IsNullOrEmpty(mProxyKey) && mMessageConfig != null)
+                    {
+                        mMessageConfig.Load(mSetting.ProxyData);
+                        MessageConfigModel = mMessageConfig.Config();
+                    }
+                    mProxyKey = value;
+                    
                 }
-                else
-                {
-                    KeepNoZipFileDays = -1;
-                }
-                OnPropertyChanged("IsEnableZipFile");
+                OnPropertyChanged("ProxyKey");
             }
         }
 
@@ -100,143 +137,48 @@ namespace InAntStudio.ViewModel
         /// <summary>
         /// 
         /// </summary>
-        public int KeepNoZipFileDays
+        public object ApiConfigModel
         {
             get
             {
-                return mKeepNoZipFileDays;
+                return mApiConfigModel;
             }
             set
             {
-                if (mKeepNoZipFileDays != value)
+                if (mApiConfigModel != value)
                 {
-                    mKeepNoZipFileDays = value;
-                    OnPropertyChanged("KeepNoZipFileDays");
+                    mApiConfigModel = value;
+                    OnPropertyChanged("ApiConfigModel");
                 }
             }
         }
-
-
-
 
         /// <summary>
         /// 
         /// </summary>
-        public string DataPath
+        public object MessageConfigModel
         {
             get
             {
-                return mDataPath;
+                return mMessageConfigModel;
             }
             set
             {
-                if (mDataPath != value)
+                if (mMessageConfigModel != value)
                 {
-                    mDataPath = value;
-                    OnPropertyChanged("DataPath");
+                    mMessageConfigModel = value;
+                    OnPropertyChanged("MessageConfigModel");
                 }
             }
         }
 
-        /// <summary>
-            /// 
-            /// </summary>
-        public string DataBackupPath
-        {
-            get
-            {
-                return mDataBackupPath;
-            }
-            set
-            {
-                if (mDataBackupPath != value)
-                {
-                    mDataBackupPath = value;
-                    OnPropertyChanged("DataBackupPath");
-                }
-            }
-        }
-
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public ObservableCollection<DriverSetViewModel> Children
-        {
-            get
-            {
-                return mChildren;
-            }
-        }
 
         /// <summary>
         /// 
         /// </summary>
         public string Database { get; set; }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        public int ServerPort
-        {
-            get
-            {
-                return mServerPort;
-            }
-            set
-            {
-                if (mServerPort != value)
-                {
-                    if (DevelopServiceHelper.Helper.SetServerPort(this.Database, value))
-                    {
-                        mServerPort = value;
-                    }
-                    OnPropertyChanged("ServerPort");
-                }
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public bool HisDataPathIsDefault
-        {
-            get
-            {
-                return mHisDataPathIsDefault;
-            }
-            set
-            {
-                if(value)
-                {
-                    DataPath = string.Empty;
-                }
-                mHisDataPathIsDefault = value;
-                OnPropertyChanged("HisDataPathIsDefault");
-            }
-        }
-
-        /// <summary>
-            /// 
-            /// </summary>
-        public bool HisDataPathIsCustom
-        {
-            get
-            {
-                return mHisDataPathIsCustom;
-            }
-            set
-            {
-                if (mHisDataPathIsCustom != value)
-                {
-                    mHisDataPathIsCustom = value;
-                }
-                OnPropertyChanged("HisDataPathIsCustom");
-            }
-        }
-
-
+       
 
         #endregion ...Properties...
 
@@ -247,7 +189,26 @@ namespace InAntStudio.ViewModel
         /// </summary>
         private void Init()
         {
-            mServerPort = DevelopServiceHelper.Helper.GetServerPort(this.Database);
+            mSetting = DevelopServiceHelper.Helper.GetServerSetting(this.Database);
+            mApiKey = mSetting.ApiType;
+            mApiConfig = ApiFactory.Factory.GetDevelopInstance(mApiKey);
+
+            if (mApiConfig != null)
+            {
+                mApiConfig.Load(mSetting.ApiData);
+
+                ApiConfigModel = mApiConfig.Config();
+            }
+
+            mProxyKey = mSetting.ProxyType;
+
+            mMessageConfig = ProxyServiceFactory.Factory.GetDevelopInstance(mProxyKey);
+            if (mMessageConfig != null)
+            {
+                mMessageConfig.Load(mSetting.ProxyData);
+                MessageConfigModel = mMessageConfig.Config();
+            }
+
             OnPropertyChanged("ServerPort");
         }
 
@@ -270,13 +231,17 @@ namespace InAntStudio.ViewModel
         /// </summary>
         public void DeActive()
         {
-            //foreach (var vv in mChildren)
-            //{
-            //    var item = vv.ToDictionary();
-            //    DevelopServiceHelper.Helper.UpdateDriverSetting(this.Database, vv.Name, item);
-            //}
-
-            //DevelopServiceHelper.Helper.UpdateHisSetting(this.Database, DataPath, DataBackupPath, KeepTime,KeepNoZipFileDays);
+            if(ApiConfigModel!=null)
+            {
+                mSetting.ApiData = mApiConfig.Save();
+                mSetting.ApiType = ApiKey;
+            }
+            if(MessageConfigModel!=null)
+            {
+                mSetting.ProxyData = mMessageConfig.Save();
+                mSetting.ProxyType = ProxyKey;
+            }
+            DevelopServiceHelper.Helper.SetServerSetting(this.Database,mSetting);
         }
     }
 

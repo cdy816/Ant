@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:InAntStudio"
-           
+             Background="#9F000000"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="1020">
     <UserControl.Resources>
@@ -161,7 +161,7 @@
                 <ColumnDefinition Width="200"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <TreeView x:Name="tv" Foreground="{DynamicResource Window.Forground}" ItemContainerStyle="{StaticResource TreeViewItemStyle1}" ItemsSource="{Binding TagGroups}"   SelectedItemChanged="tv_SelectedItemChanged" MouseLeftButtonUp="tv_MouseLeftButtonUp"  BorderThickness="0,1,1,0" Background="#0F000000" Grid.Row="1">
+            <TreeView x:Name="tv" Foreground="{DynamicResource Window.Forground}" ItemContainerStyle="{StaticResource TreeViewItemStyle1}" ItemsSource="{Binding TagGroups}"   SelectedItemChanged="tv_SelectedItemChanged" MouseLeftButtonUp="tv_MouseLeftButtonUp"  BorderThickness="0,1,1,0" Background="Transparent" Grid.Row="1">
                 <TreeView.Resources>
                     <HierarchicalDataTemplate  DataType="{x:Type local:MarsTagGroupViewModel}"  ItemsSource="{Binding Children}">
                         <StackPanel Orientation="Horizontal" Height="24">

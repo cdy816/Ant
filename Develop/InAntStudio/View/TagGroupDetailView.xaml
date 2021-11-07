@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:InAntStudio"
              mc:Ignorable="d"  Foreground="{DynamicResource Window.Forground}"
-             d:DesignHeight="450" d:DesignWidth="1024" x:Name="tgd" Background="#7F000000">
+             d:DesignHeight="450" d:DesignWidth="1024" x:Name="tgd" Background="#AF000000">
     <UserControl.Resources>
         <local:IndexConverter x:Key="ic" />
         <BooleanToVisibilityConverter x:Key="btv" />
@@ -36,17 +36,17 @@
     <Grid Background="Transparent">
         
         <Grid.RowDefinitions>
-            <RowDefinition Height="57" MaxHeight="89" />
+            <RowDefinition Height="64" />
             <RowDefinition Height="*" />
             <RowDefinition Height="32" />
         </Grid.RowDefinitions>
         <Grid  VerticalAlignment="Stretch" Background="#0FFFFFFF">
             <Grid.RowDefinitions>
-                <RowDefinition Height="24"/>
+                <RowDefinition Height="26"/>
                 <RowDefinition Height="Auto" x:Name="row2"/>
             </Grid.RowDefinitions>
-            <Label Background="#1FFFFFFF"  Foreground="{DynamicResource Window.Forground}" Content="{local:ResMarker TagFilter}" VerticalContentAlignment="Center"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
-            <Grid Grid.Row="1"  TextElement.FontSize="12" Name="fg" Height="60" >
+            <Label Background="#0FFFFFFF"  FontSize="14" Foreground="{DynamicResource Window.Forground}" Content="{local:ResMarker TagFilter}" VerticalContentAlignment="Center"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+            <Grid Grid.Row="1"  TextElement.FontSize="12" Name="fg" Height="38" >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />
@@ -84,7 +84,7 @@
 
             </Grid>
         </Grid>
-        <GridSplitter HorizontalAlignment="Stretch" Height="5" VerticalAlignment="Bottom" Background="Transparent" />
+        <!--<GridSplitter HorizontalAlignment="Stretch" Height="5" VerticalAlignment="Bottom" Background="Transparent" />-->
         <DataGrid x:Name="dg" Grid.Row="1"  SelectedCellsChanged="DataGrid_SelectedCellsChanged"  RowHeaderWidth="36" SelectionUnit="{Binding SelectMode}" Style="{DynamicResource DataGridStyle1}" ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}" CellStyle="{DynamicResource DataGridCellStyle1}" RowHeaderStyle="{DynamicResource DataGridRowHeaderStyle1}" RowStyle="{DynamicResource DataGridRowStyle1}" ScrollViewer.CanContentScroll="True" ContextMenu="{StaticResource ctxmenu}" VerticalScrollBarVisibility="Auto" ScrollViewer.ScrollChanged="DataGrid_ScrollChanged"  VirtualizingPanel.IsVirtualizing="True" RowDetailsVisibilityMode="VisibleWhenSelected" MinRowHeight="24" Margin="0,0,0,0" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" ItemsSource="{Binding SelectGroupTags}" SelectedItem="{Binding CurrentSelectTag,Mode=TwoWay}"   BorderThickness="0,1,0,1" Background="Transparent" >
             <DataGrid.InputBindings>
                 <KeyBinding Command="{Binding CopyCommand}" Key="C" Modifiers="Ctrl" />

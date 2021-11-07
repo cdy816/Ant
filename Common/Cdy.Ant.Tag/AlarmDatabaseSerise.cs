@@ -158,9 +158,16 @@ namespace Cdy.Ant
                 {
                     XElement xx = XElement.Load(path + "s");
                     db.Setting = new Setting();
-                    if (xx.Attribute("WebServerPort") != null)
+                    if(xx.Element("Api")!=null)
                     {
-                        db.Setting.WebServerPort = int.Parse(xx.Attribute("WebServerPort").Value);
+                        db.Setting.ApiType = xx.Element("Api").Attribute("Type").Value;
+                        db.Setting.ApiData = xx.Element("Api").Elements().First();
+                    }
+
+                    if(xx.Element("Proxy")!=null)
+                    {
+                        db.Setting.ProxyType = xx.Element("Proxy").Attribute("Type").Value;
+                        db.Setting.ProxyData = xx.Element("Proxy").Elements().First();
                     }
                 }
                 db.IsDirty = false;
@@ -333,10 +340,22 @@ namespace Cdy.Ant
             {
                 XElement xx = XElement.Load(path + "s");
                 db.Setting = new Setting();
-                if (xx.Attribute("WebServerPort") != null)
+                if (xx.Element("Api") != null)
                 {
-                    db.Setting.WebServerPort = int.Parse(xx.Attribute("WebServerPort").Value);
+                    db.Setting.ApiType = xx.Element("Api").Attribute("Type").Value;
+                    db.Setting.ApiData = xx.Element("Api").Elements().First();
                 }
+
+                if (xx.Element("Proxy") != null)
+                {
+                    db.Setting.ProxyType = xx.Element("Proxy").Attribute("Type").Value;
+                    db.Setting.ProxyData = xx.Element("Proxy").Elements().First();
+                }
+
+                //if (xx.Attribute("WebServerPort") != null)
+                //{
+                //    db.Setting.WebServerPort = int.Parse(xx.Attribute("WebServerPort").Value);
+                //}
             }
             db.IsDirty = false;
             this.Database = db;
@@ -396,37 +415,24 @@ namespace Cdy.Ant
             doc.Save(sfile);
 
             XElement xx = new XElement("AlarmDatabaseSetting");
-            xx.SetAttributeValue("WebServerPort", Database.Setting.WebServerPort);
+            if(!string.IsNullOrEmpty(Database.Setting.ApiType))
+            {
+                XElement xxx = new XElement("Api");
+                xxx.SetAttributeValue("Type", Database.Setting.ApiType);
+                xxx.Add(Database.Setting.ApiData);
+                xx.Add(xxx);
+            }
+            if(!string.IsNullOrEmpty(Database.Setting.ProxyType))
+            {
+                XElement xxx = new XElement("Proxy");
+                xxx.SetAttributeValue("Type", Database.Setting.ProxyType);
+                xxx.Add(Database.Setting.ProxyData);
+                xx.Add(xxx);
+            }
+            //xx.SetAttributeValue("WebServerPort", Database.Setting.WebServerPort);
             xx.Save(sfile + "s");
             Database.IsDirty = false;
         }
-
-        ///// <summary>
-        ///// 
-        ///// </summary>
-        ///// <param name="stream"></param>
-        //public void Save(System.IO.Stream stream)
-        //{
-        //    XElement doc = new XElement("AlarmDatabase");
-        //    doc.SetAttributeValue("Name", Database.Name);
-        //    doc.SetAttributeValue("Version", Database.Version);
-        //    doc.SetAttributeValue("Auther", "cdy");
-        //    doc.SetAttributeValue("MaxId", Database.MaxId);
-        //    doc.SetAttributeValue("TagCount", Database.Tags.Count);
-        //    XElement xe = new XElement("Tags");
-        //    foreach (var vv in Database.Tags.Values)
-        //    {
-        //        xe.Add(vv.SaveTo());
-        //    }
-        //    doc.Add(xe);
-        //    xe = new XElement("Groups");
-        //    foreach (var vv in Database.Groups.Values)
-        //    {
-        //        xe.Add(vv.SaveToXML());
-        //    }
-        //    doc.Add(xe);
-        //    doc.Save(stream);
-        //}
 
         #endregion ...Methods...
 

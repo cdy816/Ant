@@ -253,7 +253,7 @@ namespace InAntStudio
         private void CustomWindowBase_Loaded(object sender, RoutedEventArgs e)
         {
             this.Loaded -= (CustomWindowBase_Loaded);
-            EnableBlur();
+            //EnableBlur();
             if (!string.IsNullOrEmpty(IconString))
             {
                 this.Icon = new BitmapImage(new Uri(IconString));

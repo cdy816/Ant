@@ -229,7 +229,11 @@ namespace InAntStudio.ViewModel
                     try
                     {
                         var vfile = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(this.GetType().Assembly.Location), "InAntStuidoServer.exe");
-                        Process.Start(vfile).WaitForExit(5000);
+                        ProcessStartInfo pinfo = new ProcessStartInfo();
+                        pinfo.FileName = vfile;
+                        pinfo.Arguments = "/m";
+                      
+                        Process.Start(pinfo).WaitForInputIdle(50000);
                     }
                     catch
                     {
