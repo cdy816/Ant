@@ -125,4 +125,49 @@ namespace Cdy.Ant.Tag
         }
 
     }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public class Message
+    {
+        /// <summary>
+        /// 产生报警
+        /// </summary>
+        /// <param name="messageBody">消息体</param>
+        /// <param name="value">报警值</param>
+        /// <param name="level">报警级别</param>
+        public static void Alarm(string messageBody,string value,Cdy.Ant.AlarmLevel level)
+        {
+            
+        }
+
+        /// <summary>
+        /// 产生报警
+        /// </summary>
+        /// <param name="value">报警值</param>
+        /// <param name="level">报警级别</param>
+        public static void Alarm(string value,Cdy.Ant.AlarmLevel level)
+        {
+
+        }
+
+        /// <summary>
+        /// 产生一条消息
+        /// </summary>
+        /// <param name="message"></param>
+        public static void Info(string message)
+        {
+
+        }
+
+        /// <summary>
+        /// 恢复报警
+        /// </summary>
+        /// <param name="value">恢复值</param>
+        public static void Resorce(string value)
+        {
+
+        }
+    }
 }

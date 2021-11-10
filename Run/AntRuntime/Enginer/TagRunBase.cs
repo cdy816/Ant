@@ -19,7 +19,7 @@ namespace AntRuntime.Enginer
 
         private object mValue;
 
-        private bool mNeedCal;
+        protected bool mNeedCal;
 
         private object mLockObj = new object();
 

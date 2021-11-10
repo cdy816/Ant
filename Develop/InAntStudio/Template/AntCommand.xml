@@ -73,4 +73,36 @@
     </Function>
   </Command>
   </CommandGroup>
+
+  <CommandGroup Name="Message">
+
+    <Command Name="Alarm" Desc="产生报警">
+      <Function Body="Message.Alarm" ReturnType="void">
+        <Parameter Name="value" Type="string"  Desc="报警值" Value="" />
+        <Parameter Name="level" Type="object"  Desc="报警级别" Value="Cdy.Ant.AlarmLevel.Normal" />
+      </Function>
+    </Command>
+    
+    <Command Name="Alarm" Desc="产生报警2">
+      <Function Body="Message.Alarm" ReturnType="void">
+        <Parameter Name="messageBody" Type="string" Desc="报警内容" Value="" />
+        <Parameter Name="value" Type="string"  Desc="报警值" Value="" />
+        <Parameter Name="level" Type="object"  Desc="报警级别" Value="Cdy.Ant.AlarmLevel.Normal" />
+      </Function>
+    </Command>
+
+    <Command Name="Info" Desc="产生一条消息">
+      <Function Body="Message.Info"  ReturnType="object">
+        <Parameter Name="message" Type="string"  Desc="变量名称" Value="Tag." />
+      </Function>
+    </Command>
+
+    <Command Name="Resorce" Desc="恢复报警">
+      <Function Body="Message.Resorce"  ReturnType="object">
+        <Parameter Name="value" Type="string"  Desc="恢复值" Value="" />
+      </Function>
+    </Command>
+
+   
+  </CommandGroup>
 </CommandDocument>
