@@ -93,7 +93,7 @@
 
     <Command Name="Info" Desc="产生一条消息">
       <Function Body="Message.Info"  ReturnType="object">
-        <Parameter Name="message" Type="string"  Desc="变量名称" Value="Tag." />
+        <Parameter Name="messageBody" Type="string"  Desc="消息内容" Value="Tag." />
       </Function>
     </Command>
 

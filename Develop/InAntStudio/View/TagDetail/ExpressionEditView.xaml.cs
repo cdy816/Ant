@@ -86,7 +86,9 @@ namespace InAntStudio
             colors.KeywordBrush.Foreground = new ICSharpCode.AvalonEdit.Highlighting.SimpleHighlightingBrush(Colors.LightBlue);
             colors.StringBrush.Foreground = new ICSharpCode.AvalonEdit.Highlighting.SimpleHighlightingBrush(Colors.OrangeRed);
 
-            rc.Initialize(mHost, colors, AppDomain.CurrentDomain.BaseDirectory, (this.DataContext as ExpressionEditViewModel).Expresse);
+            string sval = (this.DataContext as ExpressionEditViewModel).Expresse;
+
+            rc.Initialize(mHost, colors, AppDomain.CurrentDomain.BaseDirectory, sval==null?"":sval);
         }
 
         private void ss_Click(object sender, RoutedEventArgs e)

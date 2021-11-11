@@ -72,8 +72,11 @@ namespace InAntRun
                             mRunner.Stop();
                         }
                         break;
+                    case "list":
+                        //to do here
+                        break;
                     case "start":
-                        if (cmd.Length > 0)
+                        if (cmd.Length > 1)
                         {
                             if (AntRuntime.Runner.CheckNameExit(cmd[1]))
                             {

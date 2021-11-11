@@ -327,6 +327,51 @@ namespace Cdy.Ant.MarsApi
             mChangedCallBack.Add(callback);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="tagName"></param>
+        /// <returns></returns>
+        public object GetTagValue(string tagName)
+        {
+            if(mTags.ContainsKey(tagName))
+            {
+                return mTags[tagName].Value;
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="tagName"></param>
+        /// <returns></returns>
+        public int GetTagValueQuality(string tagName)
+        {
+            if(mTags.ContainsKey(tagName))
+            {
+                return mTags[tagName].Quality;
+            }
+            return -1;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="tagname"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public bool SetTagValue(string tagname, object value)
+        {
+            if(client.IsLogin)
+            {
+                var vtag = mTags[tagname];
+
+                return client.SetTagValue(vtag.Id, vtag.ValueType,value);
+            }
+            return false;
+        }
+
 
         #endregion ...Methods...
 

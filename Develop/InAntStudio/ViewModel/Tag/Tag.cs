@@ -165,7 +165,7 @@ namespace Cdy.Ant.Tag
         /// 恢复报警
         /// </summary>
         /// <param name="value">恢复值</param>
-        public static void Resorce(string value)
+        public static void Restore(string value)
         {
 
         }

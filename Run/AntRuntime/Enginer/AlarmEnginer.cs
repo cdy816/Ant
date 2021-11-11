@@ -54,7 +54,7 @@ namespace AntRuntime.Enginer
                 if (mDatabase != value)
                 {
                     mDatabase = value;
-                    Init();
+                    //Init();
                 }
             }
         }

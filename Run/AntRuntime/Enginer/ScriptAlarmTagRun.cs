@@ -21,6 +21,9 @@ namespace AntRuntime.Enginer
         ScriptTag mDTag;
         private Script<object> mScript;
         private bool mIsNeedCallAlways = false;
+
+        private long mCurrentMessageId = -1;
+
         #endregion ...Variables...
 
         #region ... Events     ...
@@ -37,9 +40,16 @@ namespace AntRuntime.Enginer
             InitGlobel();
         }
 
+
+
         #endregion ...Constructor...
 
         #region ... Properties ...
+
+        /// <summary>
+        /// 
+        /// </summary>
+       public IDataTagService TagService { get { return ServiceLocator.Locator.Resolve<IDataTagApi>().TagService; } }
 
         /// <summary>
         /// 
@@ -176,6 +186,105 @@ namespace AntRuntime.Enginer
 
             return ltmp;
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="level"></param>
+        /// <param name="messageBody"></param>
+        /// <param name="value"></param>
+        /// <param name="alarmCondition"></param>
+        public void Alarm(string source, Cdy.Ant.AlarmLevel level, string messageBody, string value, string alarmCondition)
+        {
+            DateTime dt = DateTime.Now;
+            Cdy.Ant.AlarmMessage msg = new Cdy.Ant.AlarmMessage();
+            msg.CreateTime = dt;
+            msg.Server = source;
+            msg.SourceTag = TagName;
+            if ((LinkedTag is AlarmTag) && (!string.IsNullOrEmpty((LinkedTag as AlarmTag).LinkTag)))
+            {
+                msg.LinkTag = (LinkedTag as AlarmTag).LinkTag;
+            }
+            else
+            {
+                msg.LinkTag = "";
+            }
+            msg.MessageBody = messageBody;
+            msg.AlarmLevel = level;
+            msg.AlarmValue = value;
+            msg.Id = MessageService.Service.GetId(dt.Ticks);
+            msg.AppendContent1 = LinkedTag.CustomContent1;
+            msg.AppendContent2 = LinkedTag.CustomContent2;
+            msg.AppendContent3 = LinkedTag.CustomContent3;
+            msg.AlarmCondition = alarmCondition;
+            mCurrentMessageId = msg.Id;
+
+            MessageService.Service.RaiseMessage(msg);
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="level"></param>
+        /// <param name="messageBody"></param>
+        /// <param name="value"></param>
+        /// <param name="alarmCondition"></param>
+        /// <param name="linktag"></param>
+        public void Alarm(string source, Cdy.Ant.AlarmLevel level, string messageBody, string value, string alarmCondition,string linktag)
+        {
+            DateTime dt = DateTime.Now;
+            Cdy.Ant.AlarmMessage msg = new Cdy.Ant.AlarmMessage();
+            msg.CreateTime = dt;
+            msg.Server = source;
+            msg.SourceTag = TagName;
+            msg.LinkTag = linktag;
+            msg.MessageBody = messageBody;
+            msg.AlarmLevel = level;
+            msg.AlarmValue = value;
+            msg.Id = MessageService.Service.GetId(dt.Ticks);
+            msg.AppendContent1 = LinkedTag.CustomContent1;
+            msg.AppendContent2 = LinkedTag.CustomContent2;
+            msg.AppendContent3 = LinkedTag.CustomContent3;
+            msg.AlarmCondition = alarmCondition;
+            mCurrentMessageId = msg.Id;
+
+            MessageService.Service.RaiseMessage(msg);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="message"></param>
+        public void Info(string message)
+        {
+            DateTime dt = DateTime.Now;
+            Cdy.Ant.InfoMessage msg = new InfoMessage();
+            msg.CreateTime = dt;
+            msg.Server = this.Source;
+            msg.SourceTag = TagName;
+            msg.MessageBody = message;
+            msg.Id = MessageService.Service.GetId(dt.Ticks);
+            
+            msg.AppendContent1 = LinkedTag.CustomContent1;
+            msg.AppendContent2 = LinkedTag.CustomContent2;
+            msg.AppendContent3 = LinkedTag.CustomContent3;
+
+            MessageService.Service.RaiseMessage(msg);
+
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="value"></param>
+        public void Restore(string value)
+        {
+            MessageService.Service.RestoreMessage(mCurrentMessageId, value);
+        }
+
         #endregion ...Methods...
 
         #region ... Interfaces ...
@@ -189,7 +298,216 @@ namespace AntRuntime.Enginer
     /// </summary>
     public class TagScriptImp
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public ScriptAlarmTagRun Owner { get; set; }
+
+        /// <summary>
+        /// 获取变量的值
+        /// </summary>
+        /// <param name="tag">格式:"Tag.设备名.点名"</param>
+        /// <returns></returns>
+        public object GetTagValue(string tag)
+        {
+            return Owner.TagService?.GetTagValue(tag);
+        }
+
+        /// <summary>
+        /// 设置变量的值
+        /// </summary>
+        /// <param name="tag">格式:"Tag.设备名.点名"</param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public bool SetTagValue(string tag, object value)
+        {
+            Owner.TagService?.SetTagValue(tag, value);
+            return true;
+        }
+
+        /// <summary>
+        /// 变量的质量戳是否为有效值
+        /// </summary>
+        /// <param name="tag">格式:"Tag.设备名.点名"</param>
+        /// <returns></returns>
+        public bool IsTagQualityGood(string tag)
+        {
+            return Owner.TagService?.GetTagValueQuality(tag) == 0;
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="tags"></param>
+        /// <returns></returns>
+        public double TagValueSum(params string[] tags)
+        {
+            try
+            {
+                double[] dtmps = new double[tags.Length];
+                for (int i = 0; i < tags.Length; i++)
+                {
+                    dtmps[i] = Convert.ToDouble(GetTagValue(tags[i]));
+                }
+                return dtmps.Sum();
+            }
+            catch (Exception ex)
+            {
+                LoggerService.Service.Erro("Calculate", ex.StackTrace);
+            }
+            return 0;
+        }
+
+        /// <summary>
+        /// 对变量的值求平局
+        /// </summary>
+        /// <param name="tags">变量名</param>
+        /// <returns></returns>
+        public double TagValueAvg(params string[] tags)
+        {
+            try
+            {
+                double[] dtmps = new double[tags.Length];
+                for (int i = 0; i < tags.Length; i++)
+                {
+                    dtmps[i] = Convert.ToDouble(GetTagValue(tags[i]));
+                }
+                return dtmps.Average();
+            }
+            catch (Exception ex)
+            {
+                LoggerService.Service.Erro("Calculate", ex.StackTrace);
+            }
+            return 0;
+        }
+
+        /// <summary>
+        /// 对变量的值取最大
+        /// </summary>
+        /// <param name="tags">变量名</param>
+        /// <returns></returns>
+        public double TagValueMax(params string[] tags)
+        {
+            try
+            {
+                double[] dtmps = new double[tags.Length];
+                for (int i = 0; i < tags.Length; i++)
+                {
+                    dtmps[i] = Convert.ToDouble(GetTagValue(tags[i]));
+                }
+                return dtmps.Max();
+            }
+            catch (Exception ex)
+            {
+                LoggerService.Service.Erro("Calculate", ex.StackTrace);
+            }
+            return 0;
+        }
+
+        /// <summary>
+        /// 对变量的值取最小
+        /// </summary>
+        /// <param name="tags">变量名</param>
+        /// <returns></returns>
+        public double TagValueMin(params string[] tags)
+        {
+            try
+            {
+                double[] dtmps = new double[tags.Length];
+                for (int i = 0; i < tags.Length; i++)
+                {
+                    dtmps[i] = Convert.ToDouble(GetTagValue(tags[i]));
+                }
+                return dtmps.Min();
+            }
+            catch (Exception ex)
+            {
+                LoggerService.Service.Erro("Calculate", ex.StackTrace);
+            }
+            return 0;
+        }
+
+        /// <summary>
+        /// 对数值进行请平均值
+        /// </summary>
+        /// <param name="values"></param>
+        /// <returns></returns>
+        public double Avg(params object[] values)
+        {
+            try
+            {
+                double[] dtmps = new double[values.Length];
+                for (int i = 0; i < values.Length; i++)
+                {
+                    dtmps[i] = Convert.ToDouble(values[i]);
+                }
+                return dtmps.Average();
+            }
+            catch (Exception ex)
+            {
+                LoggerService.Service.Erro("Calculate", ex.StackTrace);
+            }
+            return 0;
+        }
+
+        /// <summary>
+        /// 对数值进行取最大值
+        /// </summary>
+        /// <param name="values"></param>
+        /// <returns></returns>
+        public double Max(params object[] values)
+        {
+            try
+            {
+                double[] dtmps = new double[values.Length];
+                for (int i = 0; i < values.Length; i++)
+                {
+                    dtmps[i] = Convert.ToDouble(values[i]);
+                }
+                return dtmps.Max();
+            }
+            catch (Exception ex)
+            {
+                LoggerService.Service.Erro("Calculate", ex.StackTrace);
+            }
+            return 0;
+        }
+
+        /// <summary>
+        /// 对数值进行取最小值
+        /// </summary>
+        /// <param name="values"></param>
+        /// <returns></returns>
+        public double Min(params object[] values)
+        {
+            try
+            {
+                double[] dtmps = new double[values.Length];
+                for (int i = 0; i < values.Length; i++)
+                {
+                    dtmps[i] = Convert.ToDouble(values[i]);
+                }
+                return dtmps.Min();
+            }
+            catch (Exception ex)
+            {
+                LoggerService.Service.Erro("Calculate", ex.StackTrace);
+            }
+            return 0;
+        }
+
+        /// <summary>
+        /// 对值进行取位
+        /// </summary>
+        /// <param name="value">值</param>
+        /// <param name="index">要取位的序号，从0开始</param>
+        /// <returns></returns>
+        public byte Bit(object value, byte index)
+        {
+            var val = Convert.ToInt64(value);
+            return (byte)(val >> index & 0x01);
+        }
     }
 
     /// <summary>
@@ -197,7 +515,62 @@ namespace AntRuntime.Enginer
     /// </summary>
     public class MessageScriptImp
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public ScriptAlarmTagRun Owner { get; set; }
+
+        /// <summary>
+        /// 产生报警
+        /// </summary>
+        /// <param name="messageBody">消息体</param>
+        /// <param name="value">报警值</param>
+        /// <param name="level">报警级别</param>
+        public void Alarm(string messageBody, string value, Cdy.Ant.AlarmLevel level)
+        {
+            Owner?.Alarm(Owner.Source, level, messageBody, value, "");
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="messageBody"></param>
+        /// <param name="value"></param>
+        /// <param name="level"></param>
+        /// <param name="linkTag"></param>
+        public void Alarm(string messageBody, string value, Cdy.Ant.AlarmLevel level,string linkTag)
+        {
+            Owner?.Alarm(Owner.Source, level, messageBody, value, "",linkTag);
+        }
+
+        /// <summary>
+        /// 产生报警
+        /// </summary>
+        /// <param name="value">报警值</param>
+        /// <param name="level">报警级别</param>
+        public void Alarm(string value, Cdy.Ant.AlarmLevel level)
+        {
+            Owner?.Alarm(Owner.Source, level, Owner.LinkedTag.Desc, value, "");
+        }
+
+        /// <summary>
+        /// 产生一条消息
+        /// </summary>
+        /// <param name="message"></param>
+        public void Info(string message)
+        {
+
+        }
+
+        /// <summary>
+        /// 恢复报警
+        /// </summary>
+        /// <param name="value">恢复值</param>
+        public void Restore(string value)
+        {
+            Owner?.Restore(value);
+        }
     }
 
 

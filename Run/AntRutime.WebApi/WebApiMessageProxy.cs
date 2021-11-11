@@ -101,7 +101,7 @@ namespace AntRutime.WebApi
             {
                 UseHttps = bool.Parse(xe.Attribute("UseHttps").Value);
             }
-            Port = int.Parse(xe.Attribute("ServerPort")?.Value);
+            Port = int.Parse(xe.Attribute("Port").Value);
         }
 
         /// <summary>

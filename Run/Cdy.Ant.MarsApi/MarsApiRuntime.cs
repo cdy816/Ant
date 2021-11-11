@@ -66,6 +66,7 @@ namespace Cdy.Ant.MarsApi
         {
             mData = new MarsApiData();
             mData.LoadFromXML(xe);
+            mRunner.Data = mData;
         }
 
         /// <summary>

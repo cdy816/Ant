@@ -1586,6 +1586,10 @@ namespace Cdy.Ant
             return re;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="xe"></param>
         public override void LoadFrom(XElement xe)
         {
             base.LoadFrom(xe);
@@ -1777,7 +1781,7 @@ namespace Cdy.Ant
     /// <summary>
     /// 
     /// </summary>
-    public class ScriptTag : Tagbase
+    public class ScriptTag : AlarmTag
     {
 
         #region ... Variables  ...

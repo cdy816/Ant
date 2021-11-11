@@ -69,9 +69,11 @@ namespace AntRuntime
         public void Init()
         {
             PathHelper.helper.CheckDataPathExist();
+           
             LoadDatabase();
             LoadServerProxy();
             LoadApi();
+            alarmEnginer.Init();
         }
 
         /// <summary>
@@ -79,9 +81,9 @@ namespace AntRuntime
         /// </summary>
         private void LoadDatabase()
         {
-            this.mCurrentDatabase = new Cdy.Ant.AlarmDatabaseSerise().Load(Name);
+            this.mCurrentDatabase = new Cdy.Ant.AlarmDatabaseSerise().LoadByName(Name);
             alarmEnginer = new AlarmEnginer() { Database = mCurrentDatabase };
-            alarmEnginer.Init();
+          
             HisMessageService.Service.DatabaseName = mCurrentDatabase.Name;
             MessageService.Service.DatabaseName = mCurrentDatabase.Name;
         }
