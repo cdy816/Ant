@@ -7,6 +7,10 @@
     <StartupObject />
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>C:\Users\cdy81\source\repos\cdy816\Ant\Run\AntRutime.WebApi\AntRutime.WebApi.xml</DocumentationFile>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="NSwag.AspNetCore" Version="13.11.1" />
   </ItemGroup>

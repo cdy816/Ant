@@ -147,7 +147,7 @@
                 <TextBlock Margin="10,0" Grid.Column="2" Text="{local:ResMarker UserName,:}"  VerticalAlignment="Center"/>
                 <TextBox VerticalContentAlignment="Center" Height="24" Foreground="{DynamicResource Window.Forground}" Background="#1FFFFFFF" CaretBrush="White" Grid.Column="3" Text="{Binding ServerUserName,Mode=TwoWay,UpdateSourceTrigger=LostFocus}" Width="120"  VerticalAlignment="Center"/>
                 <TextBlock Margin="10,0" Grid.Column="4" Text="{local:ResMarker Password,:}"  VerticalAlignment="Center"/>
-                <local:PasswordControl Grid.Column="5" Password="{Binding ServerPassword,Mode=TwoWay,UpdateSourceTrigger=LostFocus}" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                <local:PasswordControl Grid.Column="5" Password="{Binding ServerPassword,Mode=TwoWay,UpdateSourceTrigger=LostFocus}" BorderBrush="LightGray" BorderThickness="1" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                 <Button Margin="20,0" Style="{DynamicResource ButtonStyle1}"  BorderBrush="Green"  BorderThickness="0,0,0,2" Command="{Binding ConnectCommand}" Content="{Binding ConnectString,Mode=OneWay}"  Grid.Column="6" HorizontalAlignment="Left" VerticalAlignment="Center" Height="24" MinWidth="60" />
             </Grid>
         </Grid>

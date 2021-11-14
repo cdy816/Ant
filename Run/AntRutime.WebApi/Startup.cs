@@ -48,8 +48,8 @@ namespace AntRutime.WebApi
                     document.Info.Title = "Ant Web api";
                     document.Info.Description = "Ant Web api";
                     document.Info.Version = "v1";
-                    document.Info.TermsOfService = "None";
-                    document.Info.Contact = new NSwag.OpenApiContact() { Url = "https://github.com/cdy816/mars", Email = "cdy816@hotmail.com" };
+                    document.Info.TermsOfService = "https://github.com/cdy816/ant";
+                    document.Info.Contact = new NSwag.OpenApiContact() { Url = "https://github.com/cdy816/ant", Email = "cdy816@hotmail.com" };
                 };
 
             });
@@ -60,7 +60,11 @@ namespace AntRutime.WebApi
             //});
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="app"></param>
+        /// <param name="env"></param>
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -79,15 +83,21 @@ namespace AntRutime.WebApi
 
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
-
             app.UseOpenApi();
             app.UseSwaggerUi3((setting0 => {
                 setting0.DocumentTitle = "Ant web api access document";
             }));
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+
+                endpoints.MapDefaultControllerRoute();
+
+                //endpoints.MapControllerRoute(
+                //   name: "default",
+                //  pattern: "{controller=Doc}/{action=Index}");
+            });
         }
     }
 

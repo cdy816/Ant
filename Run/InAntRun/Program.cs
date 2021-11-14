@@ -73,7 +73,7 @@ namespace InAntRun
                         }
                         break;
                     case "list":
-                        //to do here
+                        ListDatabase();
                         break;
                     case "start":
                         if (cmd.Length > 1)
@@ -109,6 +109,25 @@ namespace InAntRun
 
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        private static void ListDatabase()
+        {
+            string spath = System.IO.Path.GetDirectoryName(typeof(Program).Assembly.Location);
+            spath = System.IO.Path.Combine(spath, "Data");
+            StringBuilder sb = new StringBuilder();
+            string stemp = "{0} {1}";
+            foreach (var vv in System.IO.Directory.EnumerateDirectories(spath))
+            {
+                var vvn = new System.IO.DirectoryInfo(vv).Name;
+                string sdb = System.IO.Path.Combine(vv, vvn + ".adb");
+                if(System.IO.File.Exists(sdb))
+                sb.AppendLine(string.Format(stemp, vvn, System.IO.File.GetLastWriteTime(sdb)));
+            }
+            Console.WriteLine(sb.ToString());
+        }
+
         private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
             Console.WriteLine(e.ExceptionObject.ToString());
@@ -116,12 +135,20 @@ namespace InAntRun
 
         private static string GetHelpString()
         {
+            string str = "{0,-10} {1,-16} {2}";
             StringBuilder re = new StringBuilder();
             re.AppendLine();
-            re.AppendLine("exit                 // stop ant and exit application");
-            re.AppendLine("start  project       // start ant project");
-            re.AppendLine("stop                 // stop ant");
-            re.AppendLine("h                    // print help message");
+            //re.AppendLine("start  project        // " + Res.Get("StartMsg"));
+            //re.AppendLine("stop                    // " + Res.Get("StopMsg"));
+            //re.AppendLine("restart                 // " + Res.Get("RestartMsg"));
+            re.AppendLine(string.Format(str, "start", "project", "// " + Res.Get("StartMsg")));
+            re.AppendLine(string.Format(str, "stop", "", "// " + Res.Get("StopMsg")));
+            re.AppendLine(string.Format(str, "list", "", "// " + Res.Get("ListMsg")));
+            re.AppendLine(string.Format(str, "exit", "", "// " + Res.Get("ExitMsg")));
+            re.AppendLine(string.Format(str, "h", "", "// " + Res.Get("HMsg")));
+            //re.AppendLine("list                    // " + Res.Get("ListMsg"));
+            //re.AppendLine("exit                 // "+ Res.Get("ExitMsg"));
+            //re.AppendLine("h                       // " + Res.Get("HMsg"));
             return re.ToString();
         }
 

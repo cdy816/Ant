@@ -62,13 +62,14 @@ namespace AntRuntime
         public void RestoreMessage(long id, string value)
         {
             DateTime dt = RestoreTimeFromId(id);
-            if(mBufferedFiles.ContainsKey(dt))
+            var dtt = dt.Date;
+            if(mBufferedFiles.ContainsKey(dtt))
             {
-                mBufferedFiles[dt].RestoreMessage(id, value, dt.Hour);
+                mBufferedFiles[dtt].RestoreMessage(id, value, dt.Hour);
             }
             else
             {
-                var vv = new HisFileMessageBuffer() { Starttime = dt, Endtime = dt.AddHours(1), DatabaseName = DatabaseName, AlarmDate = dt.Date };
+                var vv = new HisFileMessageBuffer() { Starttime = dt, Endtime = dt.AddHours(1), DatabaseName = DatabaseName, AlarmDate = dtt };
                 mBufferedFiles.Add(vv.AlarmDate, vv);
                 vv.RestoreMessage(id, value, dt.Hour);
             }
@@ -83,13 +84,14 @@ namespace AntRuntime
         public void AckMessage(long id, string content, string user)
         {
             DateTime dt = RestoreTimeFromId(id);
-            if (mBufferedFiles.ContainsKey(dt))
+            var dtt = dt.Date;
+            if (mBufferedFiles.ContainsKey(dtt))
             {
-                mBufferedFiles[dt].AckMessage(id, user, content, dt.Hour);
+                mBufferedFiles[dtt].AckMessage(id, user, content, dt.Hour);
             }
             else
             {
-                var vv = new HisFileMessageBuffer() { Starttime = dt, Endtime = dt.AddHours(1), DatabaseName = DatabaseName, AlarmDate = dt.Date };
+                var vv = new HisFileMessageBuffer() { Starttime = dt, Endtime = dt.AddHours(1), DatabaseName = DatabaseName, AlarmDate = dtt };
                 mBufferedFiles.Add(vv.AlarmDate, vv);
                 vv.AckMessage(id, user, content, dt.Hour);
             }
@@ -128,7 +130,10 @@ namespace AntRuntime
         public IEnumerable<Cdy.Ant.Message> Query(DateTime stime,DateTime etime, IEnumerable<QueryFilter> Filters)
         {
             var re = Query(stime, etime);
-            return re.Filter(Filters);
+            if (Filters != null && Filters.Count() > 0)
+                return re.Filter(Filters);
+            else
+                return re;
         }
 
         /// <summary>
@@ -160,8 +165,6 @@ namespace AntRuntime
                         mBufferedFiles.Add(vv.AlarmDate, vv);
                         mReaders.Add(vv);
                     }
-                   
-                    st = dt;
                 }
                 else if(dt>etime)
                 {
@@ -180,6 +183,7 @@ namespace AntRuntime
                     }
                    // mReaders.Add(new FileMessageBuffer() { Starttime = st, Endtime = dt, DatabaseName = DatabaseName, AlarmDate = st.Date });
                 }
+                st = dt;
             }
             while (dt < etime);
 

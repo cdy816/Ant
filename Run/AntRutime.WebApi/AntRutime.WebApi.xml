@@ -1,0 +1,296 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>AntRutime.WebApi</name>
+    </assembly>
+    <members>
+        <member name="T:AntRutime.WebApi.Controllers.MessageController">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:AntRutime.WebApi.Controllers.MessageController.GetMessage(AntRutime.WebApi.Controllers.GetMessageRequest)">
+            <summary>
+            获取指定时间段的消息
+            包括报警消息、提示消息
+            </summary>
+            <param name="request"></param>
+            <returns>报警消息、提示消息集合</returns>
+        </member>
+        <member name="M:AntRutime.WebApi.Controllers.MessageController.GetAlarmMessage(AntRutime.WebApi.Controllers.GetMessageRequest)">
+            <summary>
+            获取指定时间段的报警消息
+            </summary>
+            <param name="request"></param>
+            <returns>报警消息集合</returns>
+        </member>
+        <member name="M:AntRutime.WebApi.Controllers.MessageController.GetInfoMessage(AntRutime.WebApi.Controllers.GetMessageRequest)">
+            <summary>
+            获取指定时间段的通知消息
+            </summary>
+            <param name="request"></param>
+            <returns>提示消息集合</returns>
+        </member>
+        <member name="M:AntRutime.WebApi.Controllers.MessageController.GetRecentMessage(AntRutime.WebApi.Controllers.GetRecentMessageRequest)">
+            <summary>
+            获取从某时间起，到现在的所有消息
+            包括报警消息、提示消息
+            </summary>
+            <param name="request"></param>
+            <returns>报警消息、提示消息集合</returns>
+        </member>
+        <member name="M:AntRutime.WebApi.Controllers.MessageController.GetRecentAlarmMessage(AntRutime.WebApi.Controllers.GetRecentMessageRequest)">
+            <summary>
+            获取从某时间起，到现在的所有报警消息
+            </summary>
+            <param name="request"></param>
+            <returns>报警消息集合</returns>
+        </member>
+        <member name="M:AntRutime.WebApi.Controllers.MessageController.GetRecentInfoMessage(AntRutime.WebApi.Controllers.GetRecentMessageRequest)">
+            <summary>
+            获取从某时间起，到现在的所有提示消息
+            </summary>
+            <param name="request"></param>
+            <returns>提示消息集合</returns>
+        </member>
+        <member name="M:AntRutime.WebApi.Controllers.MessageController.AckMessage(AntRutime.WebApi.Controllers.AckMessageRequest)">
+            <summary>
+            确认消息
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="T:AntRutime.WebApi.Controllers.AckMessageRequest">
+            <summary>
+            消息确认
+            </summary>
+        </member>
+        <member name="P:AntRutime.WebApi.Controllers.AckMessageRequest.Id">
+            <summary>
+            消息Id
+            </summary>
+        </member>
+        <member name="P:AntRutime.WebApi.Controllers.AckMessageRequest.AckContent">
+            <summary>
+            确认内容
+            </summary>
+        </member>
+        <member name="P:AntRutime.WebApi.Controllers.AckMessageRequest.User">
+            <summary>
+            确认人
+            </summary>
+        </member>
+        <member name="T:AntRutime.WebApi.Controllers.GetMessageRequest">
+            <summary>
+            获取指定时间段的消息 查询定义
+            </summary>
+        </member>
+        <member name="P:AntRutime.WebApi.Controllers.GetMessageRequest.EndTime">
+            <summary>
+            结束时间
+            </summary>
+        </member>
+        <member name="T:AntRutime.WebApi.Controllers.GetRecentMessageRequest">
+            <summary>
+            获取从某时间起，到现在的所有报警消息 查询定义
+            </summary>
+        </member>
+        <member name="P:AntRutime.WebApi.Controllers.GetRecentMessageRequest.StartTime">
+            <summary>
+            开始时间
+            </summary>
+        </member>
+        <member name="P:AntRutime.WebApi.Controllers.GetRecentMessageRequest.Filter">
+            <summary>
+            过滤条件
+            </summary>
+        </member>
+        <member name="T:AntRutime.WebApi.Controllers.HomeController">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:AntRutime.WebApi.Controllers.HomeController.Index">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:AntRutime.WebApi.Controllers.HomeController.OnActionExecuting(Microsoft.AspNetCore.Mvc.Filters.ActionExecutingContext)">
+            <summary>
+            
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="T:AntRutime.WebApi.Controllers.LoginController">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:AntRutime.WebApi.Controllers.LoginController.Login(AntRutime.WebApi.LoginUser)">
+            <summary>
+            登录
+            </summary>
+            <param name="user"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AntRutime.WebApi.Controllers.LoginController.Hart(AntRutime.WebApi.RequestBase)">
+            <summary>
+            心跳，维持用户在线
+            </summary>
+            <param name="token"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AntRutime.WebApi.Controllers.LoginController.Logout(AntRutime.WebApi.RequestBase)">
+            <summary>
+            登出
+            </summary>
+            <param name="token"></param>
+            <returns></returns>
+        </member>
+        <member name="T:AntRutime.WebApi.LoginUser">
+            <summary>
+            登录信息
+            </summary>
+        </member>
+        <member name="P:AntRutime.WebApi.LoginUser.UserName">
+            <summary>
+            用户名
+            </summary>
+        </member>
+        <member name="P:AntRutime.WebApi.LoginUser.Password">
+            <summary>
+            密码
+            </summary>
+        </member>
+        <member name="T:AntRutime.WebApi.RequestBase">
+            <summary>
+            带登录令牌的请求
+            </summary>
+        </member>
+        <member name="P:AntRutime.WebApi.RequestBase.Token">
+            <summary>
+            登录令牌
+            </summary>
+        </member>
+        <member name="T:AntRutime.WebApi.ResponseBase">
+            <summary>
+            返回结果基类
+            </summary>
+        </member>
+        <member name="P:AntRutime.WebApi.ResponseBase.Result">
+            <summary>
+            操作结果，True 成功,False失败
+            </summary>
+        </member>
+        <member name="P:AntRutime.WebApi.ResponseBase.ErroMessage">
+            <summary>
+            错误内容
+            </summary>
+        </member>
+        <member name="T:AntRutime.WebApi.LoginResponse">
+            <summary>
+            登录结果
+            </summary>
+        </member>
+        <member name="P:AntRutime.WebApi.LoginResponse.LoginTime">
+            <summary>
+            登录时间
+            </summary>
+        </member>
+        <member name="P:AntRutime.WebApi.LoginResponse.TimeOut">
+            <summary>
+            超时时间
+            </summary>
+        </member>
+        <member name="P:AntRutime.WebApi.LoginResponse.Token">
+            <summary>
+            登录令牌
+            </summary>
+        </member>
+        <member name="T:AntRutime.WebApi.Program">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:AntRutime.WebApi.Program.Main(System.String[])">
+            <summary>
+            
+            </summary>
+            <param name="args"></param>
+        </member>
+        <member name="M:AntRutime.WebApi.Program.CreateHostBuilder(System.String[])">
+            <summary>
+            
+            </summary>
+            <param name="args"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AntRutime.WebApi.DatetimeJsonConverter.Read(System.Text.Json.Utf8JsonReader@,System.Type,System.Text.Json.JsonSerializerOptions)">
+            <summary>
+            
+            </summary>
+            <param name="reader"></param>
+            <param name="typeToConvert"></param>
+            <param name="options"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AntRutime.WebApi.DatetimeJsonConverter.Write(System.Text.Json.Utf8JsonWriter,System.DateTime,System.Text.Json.JsonSerializerOptions)">
+            <summary>
+            
+            </summary>
+            <param name="writer"></param>
+            <param name="value"></param>
+            <param name="options"></param>
+        </member>
+        <member name="P:AntRutime.WebApi.WebApiMessageProxy.Port">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:AntRutime.WebApi.WebApiMessageProxy.UseHttps">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:AntRutime.WebApi.WebApiMessageProxy.TypeName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:AntRutime.WebApi.WebApiMessageProxy.CreateHostBuilder(System.String[])">
+            <summary>
+            
+            </summary>
+            <param name="args"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AntRutime.WebApi.WebApiMessageProxy.Init(Cdy.Ant.Tag.IMessageQuery)">
+            <summary>
+            
+            </summary>
+            <param name="messageQuery"></param>
+        </member>
+        <member name="M:AntRutime.WebApi.WebApiMessageProxy.Start">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:AntRutime.WebApi.WebApiMessageProxy.NewApi">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:AntRutime.WebApi.WebApiMessageProxy.Load(System.Xml.Linq.XElement)">
+            <summary>
+            
+            </summary>
+            <param name="xe"></param>
+        </member>
+        <member name="M:AntRutime.WebApi.WebApiMessageProxy.Stop">
+            <summary>
+            
+            </summary>
+        </member>
+    </members>
+</doc>

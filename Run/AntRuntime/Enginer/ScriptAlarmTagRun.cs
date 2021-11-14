@@ -100,6 +100,9 @@ namespace AntRuntime.Enginer
         /// </summary>
         public override void Init()
         {
+            Message = new MessageScriptImp() { Owner = this };
+            Tag = new TagScriptImp() { Owner = this };
+
             var vsp = Microsoft.CodeAnalysis.CSharp.Scripting.CSharpScript.Create(mDTag.Expresse, sop, typeof(ScriptAlarmTagRun));
             try
             {
@@ -127,6 +130,7 @@ namespace AntRuntime.Enginer
                 LoggerService.Service.Erro("ScriptAlarmTagRun", ex.Message);
             }
             base.Init();
+            mNeedCal = true;
         }
 
         
@@ -560,7 +564,7 @@ namespace AntRuntime.Enginer
         /// <param name="message"></param>
         public void Info(string message)
         {
-
+            Owner?.Info(message);
         }
 
         /// <summary>

@@ -177,6 +177,9 @@
   <data name="Copy" xml:space="preserve">
     <value>拷贝</value>
   </data>
+  <data name="Critical" xml:space="preserve">
+    <value>重要</value>
+  </data>
   <data name="Custom" xml:space="preserve">
     <value>自定义</value>
   </data>
@@ -228,6 +231,9 @@
   </data>
   <data name="Driver" xml:space="preserve">
     <value>驱动</value>
+  </data>
+  <data name="EarlyWarning" xml:space="preserve">
+    <value>预警</value>
   </data>
   <data name="EnableWrite" xml:space="preserve">
     <value>写可用</value>
@@ -291,6 +297,9 @@
   </data>
   <data name="ImportMode" xml:space="preserve">
     <value>导入模式</value>
+  </data>
+  <data name="Info" xml:space="preserve">
+    <value>提示</value>
   </data>
   <data name="IsAdmin" xml:space="preserve">
     <value>管理员</value>
@@ -373,6 +382,9 @@
   </data>
   <data name="NoneCompress" xml:space="preserve">
     <value>无</value>
+  </data>
+  <data name="Normal" xml:space="preserve">
+    <value>一般</value>
   </data>
   <data name="OK" xml:space="preserve">
     <value>确定</value>
@@ -573,6 +585,9 @@
   <data name="UpdateTagFail" xml:space="preserve">
     <value>更新变量 {0} 失败!</value>
   </data>
+  <data name="Urgency" xml:space="preserve">
+    <value>紧急</value>
+  </data>
   <data name="User" xml:space="preserve">
     <value>用户</value>
   </data>
@@ -590,6 +605,9 @@
   </data>
   <data name="ValueChanged" xml:space="preserve">
     <value>值改变</value>
+  </data>
+  <data name="VeryUrgency" xml:space="preserve">
+    <value>非常紧急</value>
   </data>
   <data name="Write" xml:space="preserve">
     <value>写</value>

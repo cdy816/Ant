@@ -61,11 +61,65 @@ namespace InAntRun.Properties {
         }
         
         /// <summary>
+        ///   查找类似 stop ant project and exit application 的本地化字符串。
+        /// </summary>
+        internal static string ExitMsg {
+            get {
+                return ResourceManager.GetString("ExitMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Enter h for command help information 的本地化字符串。
         /// </summary>
         internal static string HelpMsg {
             get {
                 return ResourceManager.GetString("HelpMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 display command list 的本地化字符串。
+        /// </summary>
+        internal static string HMsg {
+            get {
+                return ResourceManager.GetString("HMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 List all ant databse 的本地化字符串。
+        /// </summary>
+        internal static string ListMsg {
+            get {
+                return ResourceManager.GetString("ListMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Qucik restarted a a ant project without pause it. 的本地化字符串。
+        /// </summary>
+        internal static string RestartMsg {
+            get {
+                return ResourceManager.GetString("RestartMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 start to run a ant project,ignor project name to run default &apos;local&apos; project 的本地化字符串。
+        /// </summary>
+        internal static string StartMsg {
+            get {
+                return ResourceManager.GetString("StartMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 stop ant project 的本地化字符串。
+        /// </summary>
+        internal static string StopMsg {
+            get {
+                return ResourceManager.GetString("StopMsg", resourceCulture);
             }
         }
         

@@ -189,7 +189,7 @@ namespace AntRuntime.Enginer
         {
             double dval = Convert.ToDouble(Value);
 
-            if (CurrentStatue != AlarmStatue.None)
+            if (CurrentStatue != AlarmStatue.None && mLastAlarmItem!=null)
             {
                 var maxval = mLastAlarmItem.MaxValue + mLastAlarmItem.DeadArea;
                 var minval = mLastAlarmItem.MinValue - mLastAlarmItem.DeadArea;

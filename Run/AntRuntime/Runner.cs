@@ -16,6 +16,9 @@ namespace AntRuntime
         private AlarmEnginer alarmEnginer;
         private IDataTagApi mDataApi;
         private Cdy.Ant.Tag.IMessageServiceProxy mServiceProxy;
+
+        private SecurityRunner mSecurityRunner;
+
         //private APIManager mApi;
 
         #endregion ...Variables...
@@ -86,6 +89,9 @@ namespace AntRuntime
           
             HisMessageService.Service.DatabaseName = mCurrentDatabase.Name;
             MessageService.Service.DatabaseName = mCurrentDatabase.Name;
+
+            mSecurityRunner = new SecurityRunner() { Document = new SecuritySerise().LoadByName(mCurrentDatabase.Name) };
+            ServiceLocator.Locator.Registor<Cdy.Ant.Tag.IRuntimeSecurity>(mSecurityRunner);
         }
 
         /// <summary>
@@ -126,6 +132,7 @@ namespace AntRuntime
             alarmEnginer.Start();
             mDataApi?.Start();
             mServiceProxy?.Start();
+            mSecurityRunner?.Start();
         }
 
         /// <summary>
@@ -144,6 +151,7 @@ namespace AntRuntime
             mDataApi?.Stop();
             mServiceProxy?.Stop();
             alarmEnginer.Stop();
+            mSecurityRunner?.Stop();
         }
 
         #endregion ...Methods...

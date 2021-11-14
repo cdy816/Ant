@@ -63,7 +63,13 @@ namespace AntRuntime.Enginer
         #endregion ...Events...
 
         #region ... Constructor...
-
+        /// <summary>
+        /// 
+        /// </summary>
+        public AlarmTagRunBase()
+        {
+            CurrentStatue = AlarmStatue.None;
+        }
         #endregion ...Constructor...
 
         #region ... Properties ...
@@ -140,6 +146,16 @@ namespace AntRuntime.Enginer
         public void Restore(string value)
         {
             MessageService.Service.RestoreMessage(mCurrentMessageId, value);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public override void LinkExecute()
+        {
+            var tapi = ServiceLocator.Locator.Resolve<IDataTagApi>();
+            if (tapi != null && tapi.TagService != null && !string.IsNullOrEmpty(mTagModel.LinkTag))
+                this.Value = tapi.TagService.GetTagValue(mTagModel.LinkTag);
         }
 
         /// <summary>

@@ -61,6 +61,15 @@ namespace AntApiAndProxyConfigDevelop.Properties {
         }
         
         /// <summary>
+        ///   查找类似 EnableHttps 的本地化字符串。
+        /// </summary>
+        internal static string EnableHttps {
+            get {
+                return ResourceManager.GetString("EnableHttps", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Port 的本地化字符串。
         /// </summary>
         internal static string Port {

@@ -105,7 +105,7 @@ namespace Cdy.Ant
     }
 
     /// <summary>
-    /// 
+    /// 0:提示信息,1:预警,2:一般,3:重要,4:紧急,5:非常紧急
     /// </summary>
     public enum AlarmLevel
     {

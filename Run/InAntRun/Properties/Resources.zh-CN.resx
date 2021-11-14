@@ -117,8 +117,26 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ExitMsg" xml:space="preserve">
+    <value>停止Ant工程并退出</value>
+  </data>
   <data name="HelpMsg" xml:space="preserve">
     <value>输入h获取命令帮助信息</value>
+  </data>
+  <data name="HMsg" xml:space="preserve">
+    <value>显示命令列表</value>
+  </data>
+  <data name="ListMsg" xml:space="preserve">
+    <value>列出所有的Ant工程</value>
+  </data>
+  <data name="RestartMsg" xml:space="preserve">
+    <value>在不中断的情况下快速启动工程</value>
+  </data>
+  <data name="StartMsg" xml:space="preserve">
+    <value>运行指定Ant工程，如果忽略工程名称则启动默认'local'工程</value>
+  </data>
+  <data name="StopMsg" xml:space="preserve">
+    <value>停止正在运行的Ant工程</value>
   </data>
   <data name="WelcomeMsg" xml:space="preserve">
     <value>*************** 欢迎来到 Ant 数据分析报警平台 ***************</value>

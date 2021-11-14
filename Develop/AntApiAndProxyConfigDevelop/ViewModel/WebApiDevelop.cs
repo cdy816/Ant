@@ -12,8 +12,11 @@ namespace AntApiAndProxyConfigDevelop
     {
 
         #region ... Variables  ...
-        private int mPort = 14331;
 
+        private int mPort = 15331;
+        
+        private bool mEnableHttps = false;
+        
         #endregion ...Variables...
 
         #region ... Events     ...
@@ -50,6 +53,25 @@ namespace AntApiAndProxyConfigDevelop
             }
         }
 
+        /// <summary>
+            /// 
+            /// </summary>
+        public bool EnableHttps
+        {
+            get
+            {
+                return mEnableHttps;
+            }
+            set
+            {
+                if (mEnableHttps != value)
+                {
+                    mEnableHttps = value;
+                    OnPropertyChanged("EnableHttps");
+                }
+            }
+        }
+
 
         #endregion ...Properties...
 
@@ -81,6 +103,11 @@ namespace AntApiAndProxyConfigDevelop
             {
                 Port = int.Parse(xe.Attribute("Port").Value);
             }
+
+            if (xe.Attribute("UseHttps") != null)
+            {
+                EnableHttps = bool.Parse(xe.Attribute("UseHttps").Value);
+            }
         }
 
         /// <summary>
@@ -91,6 +118,7 @@ namespace AntApiAndProxyConfigDevelop
         {
             XElement xe = new XElement("WebApi");
             xe.SetAttributeValue("Port", Port);
+            xe.SetAttributeValue("UseHttps", EnableHttps);
             return xe;
         }
     }

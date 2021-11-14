@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Cdy.Ant
 {
     /// <summary>
-    /// 
+    /// 消息类型，0:报警,1:通知消息
     /// </summary>
     public enum MessgeType
     {
@@ -16,7 +16,7 @@ namespace Cdy.Ant
         /// </summary>
         Alarm,
         /// <summary>
-        /// 系统消息
+        /// 通知消息
         /// </summary>
         InfoMessage
     }
@@ -55,7 +55,7 @@ namespace Cdy.Ant
         { get; set; }
 
         /// <summary>
-        /// 
+        /// 消息类型，0:报警,1:通知消息
         /// </summary>
         public abstract MessgeType Type { get; }
 
@@ -85,25 +85,28 @@ namespace Cdy.Ant
     }
 
     /// <summary>
-    /// 
+    /// 提示消息
     /// </summary>
     public class InfoMessage : Message
     {
+        /// <summary>
+        /// 消息类型，0:报警,1:通知消息
+        /// </summary>
         public override MessgeType Type => MessgeType.InfoMessage;
     }
 
     /// <summary>
-    /// 
+    /// 报警消息
     /// </summary>
     public class AlarmMessage : Message
     {
         /// <summary>
-        /// 
+        /// 消息类型，0:报警,1:通知消息
         /// </summary>
         public override MessgeType Type => MessgeType.Alarm;
 
         /// <summary>
-        /// 报警级别
+        /// 报警级别,0:提示信息,1:预警,2:一般,3:重要,4:紧急,5:非常紧急
         /// </summary>
         public AlarmLevel AlarmLevel { get; set; }
 
@@ -146,10 +149,6 @@ namespace Cdy.Ant
         /// 确认人
         /// </summary>
         public string AckUser { get; set; }
-
-
-
-
     }
 
     /// <summary>
@@ -158,7 +157,7 @@ namespace Cdy.Ant
     public class DisposalItem
     {
         /// <summary>
-        /// 
+        /// 消息ID
         /// </summary>
         public long MessageId { get; set; }
 
@@ -171,7 +170,7 @@ namespace Cdy.Ant
         /// </summary>
         public string User { get; set; }
         /// <summary>
-        /// 消息
+        /// 消息内容
         /// </summary>
         public string Message { get; set; }
     }

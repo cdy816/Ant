@@ -106,7 +106,7 @@ namespace InAntStudio
                         {
                             foreach (var vv in mm.GetSelectTags())
                             {
-                                string sname = vv.FullName;
+                                string sname = vv.FullName.Replace(mm.CurrentDatabase+".","");
                                 if (!string.IsNullOrEmpty(LinkAddress))
                                 {
                                     if (!LinkAddress.Contains(sname))
@@ -1351,7 +1351,7 @@ namespace InAntStudio
 
         private static void InitEnumType()
         {
-            mAlarmLevels = Enum.GetNames(typeof(Cdy.Ant.AlarmLevel));
+            mAlarmLevels = Enum.GetNames(typeof(Cdy.Ant.AlarmLevel)).Select(e=>Res.Get(e)).ToArray();
         }
 
         /// <summary>

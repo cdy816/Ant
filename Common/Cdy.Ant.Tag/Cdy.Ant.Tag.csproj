@@ -4,6 +4,10 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>C:\Users\cdy81\source\repos\cdy816\Ant\Common\Cdy.Ant.Tag\Cdy.Ant.Tag.xml</DocumentationFile>
+  </PropertyGroup>
+
   <ItemGroup>
     <None Remove="Logo\Author.txt" />
     <None Remove="Logo\Logo.txt" />

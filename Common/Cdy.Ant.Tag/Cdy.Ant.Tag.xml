@@ -1,0 +1,2415 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Cdy.Ant.Tag</name>
+    </assembly>
+    <members>
+        <member name="P:Cdy.Ant.Setting.ApiType">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.Setting.ApiData">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.Setting.ProxyType">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.Setting.ProxyData">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Cdy.Ant.AlarmDatabase">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cdy.Ant.AlarmDatabase.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.AlarmDatabase.Setting">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.AlarmDatabase.Name">
+            <summary>
+            名称
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.AlarmDatabase.UpdateTime">
+            <summary>
+            最后生成时间
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.AlarmDatabase.Version">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.AlarmDatabase.MaxId">
+            <summary>
+            当前最大ID
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.AlarmDatabase.MinId">
+            <summary>
+            最小ID
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.AlarmDatabase.NamedTags">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.AlarmDatabase.Tags">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.AlarmDatabase.Groups">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.AlarmDatabase.IsDirty">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cdy.Ant.AlarmDatabase.BuildNameMap">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cdy.Ant.AlarmDatabase.BuildGroupMap">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cdy.Ant.AlarmDatabase.GetTagIdByName(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.AlarmDatabase.GetTagsById(System.Collections.Generic.List{System.Int32})">
+            <summary>
+            
+            </summary>
+            <param name="ids"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.AlarmDatabase.GetTagByName(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.AlarmDatabase.GetTagById(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.AlarmDatabase.Add(Cdy.Ant.Tagbase)">
+            <summary>
+            添加
+            </summary>
+            <param name="tag"></param>
+        </member>
+        <member name="M:Cdy.Ant.AlarmDatabase.UpdateById(System.Int32,Cdy.Ant.Tagbase)">
+            <summary>
+            
+            </summary>
+            <param name="id"></param>
+            <param name="tag"></param>
+        </member>
+        <member name="M:Cdy.Ant.AlarmDatabase.Update(System.String,Cdy.Ant.Tagbase)">
+            <summary>
+            
+            </summary>
+            <param name="sname"></param>
+            <param name="tag"></param>
+        </member>
+        <member name="M:Cdy.Ant.AlarmDatabase.Update(Cdy.Ant.Tagbase)">
+            <summary>
+            
+            </summary>
+            <param name="tag"></param>
+        </member>
+        <member name="M:Cdy.Ant.AlarmDatabase.AddOrUpdate(Cdy.Ant.Tagbase)">
+            <summary>
+            添加或更新
+            </summary>
+            <param name="id"></param>
+        </member>
+        <member name="M:Cdy.Ant.AlarmDatabase.ChangedTagGroup(Cdy.Ant.Tagbase,System.String)">
+            <summary>
+            更改变量所在的组
+            </summary>
+            <param name="tag"></param>
+            <param name="group"></param>
+        </member>
+        <member name="M:Cdy.Ant.AlarmDatabase.Append(Cdy.Ant.Tagbase)">
+            <summary>
+            追加新的变量
+            </summary>
+            <param name="tag"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.AlarmDatabase.Remove(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.AlarmDatabase.RemoveWithoutGroupProcess(Cdy.Ant.Tagbase)">
+            <summary>
+            
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.AlarmDatabase.GetTagsByGroup(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="group"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.AlarmDatabase.RemoveByGroup(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="group"></param>
+        </member>
+        <member name="M:Cdy.Ant.AlarmDatabase.RemoveGroup(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="group"></param>
+        </member>
+        <member name="M:Cdy.Ant.AlarmDatabase.GetGroups(Cdy.Ant.TagGroup)">
+            <summary>
+            
+            </summary>
+            <param name="parent"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.AlarmDatabase.GetGroup(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="groupName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.AlarmDatabase.HasChildGroup(Cdy.Ant.TagGroup,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="parent"></param>
+            <param name="chileGroupName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.AlarmDatabase.GetAllChildGroups(Cdy.Ant.TagGroup)">
+            <summary>
+            
+            </summary>
+            <param name="parent"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.AlarmDatabase.ChangeGroupParent(System.String,System.String,System.String)">
+            <summary>
+            改变变量组的父类
+            </summary>
+            <param name="group"></param>
+            <param name="oldParentName"></param>
+            <param name="newParentName"></param>
+        </member>
+        <member name="M:Cdy.Ant.AlarmDatabase.ChangeGroupName(System.String,System.String)">
+            <summary>
+            变量组改名
+            </summary>
+            <param name="group"></param>
+            <param name="newName"></param>
+        </member>
+        <member name="M:Cdy.Ant.AlarmDatabase.CheckAndAddGroup(System.String)">
+            <summary>
+            检查并添加组
+            </summary>
+            <param name="groupName">组名称,多级组之间通过"."分割</param>
+        </member>
+        <member name="M:Cdy.Ant.AlarmDatabase.ListAllTags">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.AlarmDatabase.GetTagIdByName(System.Collections.Generic.List{System.String})">
+            <summary>
+            
+            </summary>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.AlarmDatabase.MaxTagId">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.AlarmDatabase.MinTagId">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Cdy.Ant.AlarmDatabaseSerise">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:Cdy.Ant.AlarmDatabaseSerise.Manager">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.AlarmDatabaseSerise.Database">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cdy.Ant.AlarmDatabaseSerise.Load">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cdy.Ant.AlarmDatabaseSerise.LoadByName(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="name"></param>
+        </member>
+        <member name="M:Cdy.Ant.AlarmDatabaseSerise.QuickLoadByName(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.AlarmDatabaseSerise.ContinueLoad">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cdy.Ant.AlarmDatabaseSerise.LoadDifferenceByName(System.String,Cdy.Ant.AlarmDatabase)">
+            <summary>
+            加载差异部分
+            </summary>
+            <param name="name"></param>
+            <param name="target"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.AlarmDatabaseSerise.LoadDifference(System.String,Cdy.Ant.AlarmDatabase)">
+            <summary>
+            加载差异部分
+            </summary>
+            <param name="path"></param>
+            <param name="target"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.AlarmDatabaseSerise.LoadQuickly(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="path"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.AlarmDatabaseSerise.ContinueLoad(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="path"></param>
+        </member>
+        <member name="M:Cdy.Ant.AlarmDatabaseSerise.Load(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="path"></param>
+        </member>
+        <member name="M:Cdy.Ant.AlarmDatabaseSerise.SaveAs(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="name"></param>
+        </member>
+        <member name="M:Cdy.Ant.AlarmDatabaseSerise.Save">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cdy.Ant.AlarmDatabaseSerise.Save(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="sfile"></param>
+        </member>
+        <member name="T:Cdy.Ant.ApiBase">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.ApiBase.Data">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.ApiBase.TypeName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cdy.Ant.ApiBase.Init">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cdy.Ant.ApiBase.Start">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cdy.Ant.ApiBase.Stop">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cdy.Ant.ApiBase.NewApi">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.ApiBase.Load(System.Xml.Linq.XElement)">
+            <summary>
+            
+            </summary>
+            <param name="xe"></param>
+        </member>
+        <member name="M:Cdy.Ant.ApiData.LoadFromXML(System.Xml.Linq.XElement)">
+            <summary>
+            
+            </summary>
+            <param name="xe"></param>
+        </member>
+        <member name="M:Cdy.Ant.ApiData.SaveToXML">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Cdy.Ant.ApiDevelopBase">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.ApiDevelopBase.Data">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.ApiDevelopBase.TypeName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cdy.Ant.ApiDevelopBase.Config">
+            <summary>
+            通过界面配置
+            </summary>
+        </member>
+        <member name="M:Cdy.Ant.ApiDevelopBase.CreatNewData">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.ApiDevelopBase.Load(System.Xml.Linq.XElement)">
+            <summary>
+            
+            </summary>
+            <param name="xe"></param>
+        </member>
+        <member name="M:Cdy.Ant.ApiDevelopBase.Save">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.ApiDevelopBase.NewApi">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.ApiDevelopBase.ConfigTags">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Cdy.Ant.ApiFactory">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:Cdy.Ant.ApiFactory.mRuntimeManagers">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:Cdy.Ant.ApiFactory.mDevelopManagers">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:Cdy.Ant.ApiFactory.Factory">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cdy.Ant.ApiFactory.GetDevelopInstance(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="type"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.ApiFactory.GetDevelopInstance">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.ApiFactory.GetRuntimeInstance(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="type"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.ApiFactory.GetAssemblyPath(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="file"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.ApiFactory.LoadForRun">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cdy.Ant.ApiFactory.LoadForDevelop">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cdy.Ant.ApiFactory.ListDevelopApis">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Cdy.Ant.IApiFactory">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cdy.Ant.IApiFactory.GetRuntimeInstance(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="type"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.IApiFactory.GetDevelopInstance(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="type"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.IApiFactory.GetDevelopInstance">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.IApiFactory.ListDevelopApis">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Cdy.Ant.IDataTagApi">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.IDataTagApi.TagService">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cdy.Ant.IDataTagApi.Start">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cdy.Ant.IDataTagApi.Stop">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cdy.Ant.IDataTagApi.Load(System.Xml.Linq.XElement)">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.IApiForFactory.TypeName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cdy.Ant.IApiForFactory.Load(System.Xml.Linq.XElement)">
+            <summary>
+            
+            </summary>
+            <param name="xe"></param>
+        </member>
+        <member name="M:Cdy.Ant.IApiForFactory.NewApi">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Cdy.Ant.IDataTagApiDevelop">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cdy.Ant.IDataTagApiDevelop.Config">
+            <summary>
+            通过界面配置
+            </summary>
+        </member>
+        <member name="M:Cdy.Ant.IDataTagApiDevelop.Load(System.Xml.Linq.XElement)">
+            <summary>
+            
+            </summary>
+            <param name="xe"></param>
+        </member>
+        <member name="M:Cdy.Ant.IDataTagApiDevelop.Save">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.IDataTagApiDevelop.NewApi">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Cdy.Ant.IApiDevelopForFactory.TypeName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cdy.Ant.IApiDevelopForFactory.NewApi">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Cdy.Ant.IDataTagService">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cdy.Ant.IDataTagService.GetTagValue(System.String)">
+            <summary>
+            获取变量值
+            </summary>
+            <param name="tagName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.IDataTagService.SetTagValue(System.String,System.Object)">
+            <summary>
+            设置变量值
+            </summary>
+            <param name="tagname"></param>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.IDataTagService.GetTagValueQuality(System.String)">
+            <summary>
+            获取当前值的质量戳
+            </summary>
+            <param name="tagName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.IDataTagService.RegistorMonitorTag(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            注册要监视的变量
+            </summary>
+            <param name="tag"></param>
+        </member>
+        <member name="M:Cdy.Ant.IDataTagService.RegistorTagChangeCallBack(System.Action{System.String,System.Object})">
+            <summary>
+            变量值改变时，回调
+            </summary>
+            <param name="callback"></param>
+        </member>
+        <member name="T:Cdy.Ant.Point3D">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.Point3D.X">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.Point3D.Y">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.Point3D.Z">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Cdy.Ant.Tag.ScriptExtend">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cdy.Ant.Tag.ScriptExtend.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.Tag.ScriptExtend.ExtendDlls">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cdy.Ant.Tag.ScriptExtend.Init">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Cdy.Ant.Tag.FilterOperate">
+            <summary>
+            过滤操作类型，0:大于,1:小于,2:等于,3:字符串包含
+            </summary>
+        </member>
+        <member name="F:Cdy.Ant.Tag.FilterOperate.Great">
+            <summary>
+            大于
+            </summary>
+        </member>
+        <member name="F:Cdy.Ant.Tag.FilterOperate.Low">
+            <summary>
+            小于
+            </summary>
+        </member>
+        <member name="F:Cdy.Ant.Tag.FilterOperate.Equals">
+            <summary>
+            等于
+            </summary>
+        </member>
+        <member name="F:Cdy.Ant.Tag.FilterOperate.Contains">
+            <summary>
+            包含
+            </summary>
+        </member>
+        <member name="T:Cdy.Ant.Tag.QueryFilter">
+            <summary>
+            过滤条件
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.Tag.QueryFilter.PropertyName">
+            <summary>
+            属性名称
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.Tag.QueryFilter.Opetate">
+            <summary>
+            类型，0:大于,1:小于,2:等于,3:字符串包含
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.Tag.QueryFilter.Value">
+            <summary>
+            值
+            </summary>
+        </member>
+        <member name="T:Cdy.Ant.Tag.IMessageQuery">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cdy.Ant.Tag.IMessageQuery.Query(System.Int64)">
+            <summary>
+            
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.Tag.IMessageQuery.AckMessage(System.Int64,System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="id"></param>
+            <param name="content"></param>
+            <param name="username"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.Tag.IMessageQuery.Query(System.DateTime,System.DateTime)">
+            <summary>
+            
+            </summary>
+            <param name="stime"></param>
+            <param name="etime"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.Tag.IMessageQuery.Query(System.DateTime,System.DateTime,System.Collections.Generic.IEnumerable{Cdy.Ant.Tag.QueryFilter})">
+            <summary>
+            
+            </summary>
+            <param name="stime"></param>
+            <param name="etime"></param>
+            <param name="Filters"></param>
+            <returns></returns>
+        </member>
+        <member name="P:Cdy.Ant.Tag.IMessageServiceProxy.TypeName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cdy.Ant.Tag.IMessageServiceProxy.Load(System.Xml.Linq.XElement)">
+            <summary>
+            
+            </summary>
+            <param name="xe"></param>
+        </member>
+        <member name="M:Cdy.Ant.Tag.IMessageServiceProxy.Init(Cdy.Ant.Tag.IMessageQuery)">
+            <summary>
+            
+            </summary>
+            <param name="messageQuery"></param>
+        </member>
+        <member name="M:Cdy.Ant.Tag.IMessageServiceProxy.Start">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cdy.Ant.Tag.IMessageServiceProxy.Stop">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Cdy.Ant.Tag.IMessageServiceProxyDevelop">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.Tag.IMessageServiceProxyDevelop.TypeName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cdy.Ant.Tag.IMessageServiceProxyDevelop.Config">
+            <summary>
+            开始时配置
+            </summary>
+        </member>
+        <member name="M:Cdy.Ant.Tag.IMessageServiceProxyDevelop.Load(System.Xml.Linq.XElement)">
+            <summary>
+            
+            </summary>
+            <param name="xe"></param>
+        </member>
+        <member name="M:Cdy.Ant.Tag.IMessageServiceProxyDevelop.Save">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Cdy.Ant.Tag.IRuntimeSecurity">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.Tag.IRuntimeSecurity.TimeOut">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cdy.Ant.Tag.IRuntimeSecurity.CheckLogin(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.Tag.IRuntimeSecurity.CheckLogin(System.Int64)">
+            <summary>
+            
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.Tag.IRuntimeSecurity.FreshUserId(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.Tag.IRuntimeSecurity.GetLastAccessTime(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.Tag.IRuntimeSecurity.Login(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="user"></param>
+            <param name="pass"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.Tag.IRuntimeSecurity.LoginOnce(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="user"></param>
+            <param name="pass"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.Tag.IRuntimeSecurity.Login(System.String,System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="user"></param>
+            <param name="pass"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.Tag.IRuntimeSecurity.Logout(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.Tag.IRuntimeSecurity.Logout(System.Int64)">
+            <summary>
+            
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.Tag.IRuntimeSecurity.LogoutByClientId(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.Tag.IRuntimeSecurity.GetUserByLoginId(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Cdy.Ant.ITagManager">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cdy.Ant.ITagManager.GetTagIdByName(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.ITagManager.GetTagIdByName(System.Collections.Generic.List{System.String})">
+            <summary>
+            
+            </summary>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.ITagManager.GetTagByName(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.ITagManager.GetTagById(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.ITagManager.MaxTagId">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.ITagManager.MinTagId">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.ITagManager.ListAllTags">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.ConsoleLogger.Debug(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="name"></param>
+            <param name="msg"></param>
+        </member>
+        <member name="M:Cdy.Ant.ConsoleLogger.Erro(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="name"></param>
+            <param name="msg"></param>
+        </member>
+        <member name="M:Cdy.Ant.ConsoleLogger.Info(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="name"></param>
+            <param name="msg"></param>
+        </member>
+        <member name="M:Cdy.Ant.ConsoleLogger.Info(System.String,System.String,System.Object)">
+            <summary>
+            
+            </summary>
+            <param name="name"></param>
+            <param name="msg"></param>
+            <param name="parameter"></param>
+        </member>
+        <member name="M:Cdy.Ant.ConsoleLogger.Warn(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="name"></param>
+            <param name="msg"></param>
+        </member>
+        <member name="T:Cdy.Ant.ILog">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cdy.Ant.ILog.Debug(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="name"></param>
+            <param name="msg"></param>
+        </member>
+        <member name="M:Cdy.Ant.ILog.Debug(System.String,System.String,System.Object)">
+            <summary>
+            
+            </summary>
+            <param name="name"></param>
+            <param name="msg"></param>
+            <param name="parameter"></param>
+        </member>
+        <member name="M:Cdy.Ant.ILog.Info(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="name"></param>
+            <param name="msg"></param>
+        </member>
+        <member name="M:Cdy.Ant.ILog.Info(System.String,System.String,System.Object)">
+            <summary>
+            
+            </summary>
+            <param name="name"></param>
+            <param name="msg"></param>
+            <param name="parameter"></param>
+        </member>
+        <member name="M:Cdy.Ant.ILog.Warn(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="name"></param>
+            <param name="msg"></param>
+        </member>
+        <member name="M:Cdy.Ant.ILog.Erro(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="name"></param>
+            <param name="msg"></param>
+        </member>
+        <member name="T:Cdy.Ant.LoggerService">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:Cdy.Ant.LoggerService.Service">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.LoggerService.EnableLogger">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cdy.Ant.LoggerService.GetLogger">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cdy.Ant.LoggerService.Debug(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="name"></param>
+            <param name="msg"></param>
+        </member>
+        <member name="M:Cdy.Ant.LoggerService.Warn(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="name"></param>
+            <param name="msg"></param>
+        </member>
+        <member name="M:Cdy.Ant.LoggerService.Erro(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="name"></param>
+            <param name="msg"></param>
+        </member>
+        <member name="M:Cdy.Ant.LoggerService.Info(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="name"></param>
+            <param name="msg"></param>
+        </member>
+        <member name="M:Cdy.Ant.LoggerService.Info(System.String,System.String,System.Object)">
+            <summary>
+            
+            </summary>
+            <param name="name"></param>
+            <param name="msg"></param>
+            <param name="parameter"></param>
+        </member>
+        <member name="M:Cdy.Ant.LogoHelper.Print">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cdy.Ant.LogoHelper.PrintAuthor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cdy.Ant.Md5Helper.Encode(System.String,System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="data"></param>
+            <param name="Key_64"></param>
+            <param name="Iv_64"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.Md5Helper.Decode(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.Md5Helper.Decode(System.String,System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="data"></param>
+            <param name="Key_64"></param>
+            <param name="Iv_64"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Cdy.Ant.MessgeType">
+            <summary>
+            消息类型，0:报警,1:通知消息
+            </summary>
+        </member>
+        <member name="F:Cdy.Ant.MessgeType.Alarm">
+            <summary>
+            报警
+            </summary>
+        </member>
+        <member name="F:Cdy.Ant.MessgeType.InfoMessage">
+            <summary>
+            通知消息
+            </summary>
+        </member>
+        <member name="T:Cdy.Ant.Message">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.Message.Id">
+            <summary>
+            ID编号
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.Message.Server">
+            <summary>
+            服务器
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.Message.SourceTag">
+            <summary>
+            生产者变量
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.Message.CreateTime">
+            <summary>
+            消息产生时间
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.Message.MessageBody">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.Message.Type">
+            <summary>
+            消息类型，0:报警,1:通知消息
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.Message.DisposalMessages">
+            <summary>
+            消息处置内容
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.Message.AppendContent1">
+            <summary>
+            附加字段1
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.Message.AppendContent2">
+            <summary>
+            附加字段2
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.Message.AppendContent3">
+            <summary>
+            附加字段3
+            </summary>
+        </member>
+        <member name="T:Cdy.Ant.InfoMessage">
+            <summary>
+            提示消息
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.InfoMessage.Type">
+            <summary>
+            消息类型，0:报警,1:通知消息
+            </summary>
+        </member>
+        <member name="T:Cdy.Ant.AlarmMessage">
+            <summary>
+            报警消息
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.AlarmMessage.Type">
+            <summary>
+            消息类型，0:报警,1:通知消息
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.AlarmMessage.AlarmLevel">
+            <summary>
+            报警级别,0:提示信息,1:预警,2:一般,3:重要,4:紧急,5:非常紧急
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.AlarmMessage.AlarmValue">
+            <summary>
+            报警值
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.AlarmMessage.AlarmCondition">
+            <summary>
+            报警时的报警条件
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.AlarmMessage.LinkTag">
+            <summary>
+            关联变量
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.AlarmMessage.RestoreTime">
+            <summary>
+            恢复时间
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.AlarmMessage.RestoreValue">
+            <summary>
+            恢复值
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.AlarmMessage.AckTime">
+            <summary>
+            确认时间
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.AlarmMessage.AckMessage">
+            <summary>
+            确认内容,允许确认者备注内容
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.AlarmMessage.AckUser">
+            <summary>
+            确认人
+            </summary>
+        </member>
+        <member name="T:Cdy.Ant.DisposalItem">
+            <summary>
+            处置内容
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.DisposalItem.MessageId">
+            <summary>
+            消息ID
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.DisposalItem.Time">
+            <summary>
+            处置时间
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.DisposalItem.User">
+            <summary>
+            用户
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.DisposalItem.Message">
+            <summary>
+            消息内容
+            </summary>
+        </member>
+        <member name="T:Cdy.Ant.PathHelper">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cdy.Ant.PathHelper.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.PathHelper.AppPath">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.PathHelper.DataPath">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cdy.Ant.PathHelper.CheckDataPathExist">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cdy.Ant.PathHelper.GetDataPath(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="path"></param>
+        </member>
+        <member name="M:Cdy.Ant.PathHelper.GetAlarmDataPath(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="databaseName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.PathHelper.GetDatabasePath(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="database"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.PathHelper.GetApplicationFilePath(System.String[])">
+            <summary>
+            
+            </summary>
+            <param name="file"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Cdy.Ant.IProxyServiceFactory">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cdy.Ant.IProxyServiceFactory.GetRuntimeInstance(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="type"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.IProxyServiceFactory.GetDevelopInstance(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="type"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.IProxyServiceFactory.GetDevelopInstance">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.IProxyServiceFactory.ListDevelopApis">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Cdy.Ant.ProxyServiceFactory">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:Cdy.Ant.ProxyServiceFactory.mRuntimeManagers">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:Cdy.Ant.ProxyServiceFactory.mProxyService">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:Cdy.Ant.ProxyServiceFactory.Factory">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cdy.Ant.ProxyServiceFactory.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cdy.Ant.ProxyServiceFactory.GetDevelopInstance(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="type"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.ProxyServiceFactory.GetDevelopInstance">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.ProxyServiceFactory.GetRuntimeInstance(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="type"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.ProxyServiceFactory.GetAssemblyPath(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="file"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.ProxyServiceFactory.LoadForRun(System.String)">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cdy.Ant.ProxyServiceFactory.LoadForDevelop(System.String)">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cdy.Ant.ProxyServiceFactory.ListDevelopApis">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="F:Cdy.Ant.ServiceLocator.Locator">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:Cdy.Ant.ServiceLocator.mNamedService">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:Cdy.Ant.ServiceLocator.mTypeRegistores">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cdy.Ant.ServiceLocator.Registor(System.String,System.Object)">
+            <summary>
+            
+            </summary>
+            <param name="name"></param>
+            <param name="service"></param>
+        </member>
+        <member name="M:Cdy.Ant.ServiceLocator.Clear">
+            <summary>
+            清空
+            </summary>
+        </member>
+        <member name="M:Cdy.Ant.ServiceLocator.Registor(System.Type,System.Object)">
+            <summary>
+            注册
+            </summary>
+            <param name="tp"></param>
+            <param name="value"></param>
+        </member>
+        <member name="M:Cdy.Ant.ServiceLocator.Registor``1(System.Object)">
+            <summary>
+            注册
+            </summary>
+            <param name="value"></param>
+        </member>
+        <member name="M:Cdy.Ant.ServiceLocator.Resolve(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.ServiceLocator.Resolve``1(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.ServiceLocator.Resolve(System.Type)">
+            <summary>
+            获取
+            </summary>
+            <param name="tp"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.ServiceLocator.Resolve``1(System.Type)">
+            <summary>
+            获取
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="tp"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.ServiceLocator.Resolve``1">
+            <summary>
+            
+            </summary>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="T:Cdy.Ant.TagType">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:Cdy.Ant.TagType.AnalogAlarm">
+            <summary>
+            模拟量
+            </summary>
+        </member>
+        <member name="F:Cdy.Ant.TagType.AnalogRangeAlarm">
+            <summary>
+            模拟量范围报警
+            </summary>
+        </member>
+        <member name="F:Cdy.Ant.TagType.DigitalAlarm">
+            <summary>
+            数字量
+            </summary>
+        </member>
+        <member name="F:Cdy.Ant.TagType.DelayDigitalAlarm">
+            <summary>
+            延迟类型数字变量
+            </summary>
+        </member>
+        <member name="F:Cdy.Ant.TagType.StringAlarm">
+            <summary>
+            字符串
+            </summary>
+        </member>
+        <member name="F:Cdy.Ant.TagType.Script">
+            <summary>
+            脚本
+            </summary>
+        </member>
+        <member name="F:Cdy.Ant.TagType.Pulse">
+            <summary>
+            脉冲
+            </summary>
+        </member>
+        <member name="F:Cdy.Ant.TagType.OneRange">
+            <summary>
+            一维区域报警
+            </summary>
+        </member>
+        <member name="F:Cdy.Ant.TagType.TwoRange">
+            <summary>
+            二维区域报警
+            </summary>
+        </member>
+        <member name="F:Cdy.Ant.TagType.ThreeRange">
+            <summary>
+            三维区域报警
+            </summary>
+        </member>
+        <member name="T:Cdy.Ant.TagManager">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:Cdy.Ant.TagManager.Manager">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cdy.Ant.TagManager.CreatTag(Cdy.Ant.TagType)">
+            <summary>
+            
+            </summary>
+            <param name="typ"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Cdy.Ant.AlarmLevel">
+            <summary>
+            0:提示信息,1:预警,2:一般,3:重要,4:紧急,5:非常紧急
+            </summary>
+        </member>
+        <member name="F:Cdy.Ant.AlarmLevel.Info">
+            <summary>
+            提示信息
+            </summary>
+        </member>
+        <member name="F:Cdy.Ant.AlarmLevel.EarlyWarning">
+            <summary>
+            预警
+            </summary>
+        </member>
+        <member name="F:Cdy.Ant.AlarmLevel.Normal">
+            <summary>
+            一般
+            </summary>
+        </member>
+        <member name="F:Cdy.Ant.AlarmLevel.Critical">
+            <summary>
+            重要
+            </summary>
+        </member>
+        <member name="F:Cdy.Ant.AlarmLevel.Urgency">
+            <summary>
+            紧急
+            </summary>
+        </member>
+        <member name="F:Cdy.Ant.AlarmLevel.VeryUrgency">
+            <summary>
+            非常紧急
+            </summary>
+        </member>
+        <member name="T:Cdy.Ant.Tagbase">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.Tagbase.Id">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.Tagbase.Name">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.Tagbase.Desc">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.Tagbase.Type">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.Tagbase.FullName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.Tagbase.Group">
+            <summary>
+            组
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.Tagbase.IsEnable">
+            <summary>
+            使能报警
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.Tagbase.CustomContent1">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.Tagbase.CustomContent2">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.Tagbase.CustomContent3">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cdy.Ant.Tagbase.ToString">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.Tagbase.LoadFromString(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="val"></param>
+        </member>
+        <member name="M:Cdy.Ant.Tagbase.LoadFrom(System.Span{System.String})">
+            <summary>
+            
+            </summary>
+            <param name="vals"></param>
+        </member>
+        <member name="M:Cdy.Ant.Tagbase.Clone">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.Tagbase.SaveTo">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.Tagbase.LoadFrom(System.Xml.Linq.XElement)">
+            <summary>
+            
+            </summary>
+            <param name="xe"></param>
+        </member>
+        <member name="M:Cdy.Ant.Tagbase.UpdateFullName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Cdy.Ant.AlarmTag">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.AlarmTag.LinkTag">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cdy.Ant.AlarmTag.ToString">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.AlarmTag.LoadFrom(System.Span{System.String})">
+            <summary>
+            
+            </summary>
+            <param name="vals"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.AlarmTag.SaveTo">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.AlarmTag.LoadFrom(System.Xml.Linq.XElement)">
+            <summary>
+            
+            </summary>
+            <param name="xe"></param>
+        </member>
+        <member name="T:Cdy.Ant.SimpleAlarmTag">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.SimpleAlarmTag.AlarmLevel">
+            <summary>
+            报警级别
+            </summary>
+        </member>
+        <member name="M:Cdy.Ant.SimpleAlarmTag.SaveTo">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.SimpleAlarmTag.LoadFrom(System.Xml.Linq.XElement)">
+            <summary>
+            
+            </summary>
+            <param name="xe"></param>
+        </member>
+        <member name="M:Cdy.Ant.SimpleAlarmTag.ToString">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.SimpleAlarmTag.LoadFrom(System.Span{System.String})">
+            <summary>
+            
+            </summary>
+            <param name="vals"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Cdy.Ant.AnalogRangeAlarmItem">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.AnalogRangeAlarmItem.MinValue">
+            <summary>
+            最小值
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.AnalogRangeAlarmItem.MaxValue">
+            <summary>
+            最大值
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.AnalogRangeAlarmItem.AlarmLevel">
+            <summary>
+            报警级别
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.AnalogRangeAlarmItem.DeadArea">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cdy.Ant.AnalogRangeAlarmItem.SaveTo">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.AnalogRangeAlarmItem.LoadFrom(System.Xml.Linq.XElement)">
+            <summary>
+            
+            </summary>
+            <param name="xe"></param>
+        </member>
+        <member name="M:Cdy.Ant.AnalogRangeAlarmItem.ToString">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.AnalogRangeAlarmItem.LoadFromString(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="sval"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.AnalogRangeAlarmItem.LoadFromSpan(System.Span{System.String})">
+            <summary>
+            
+            </summary>
+            <param name="ss"></param>
+        </member>
+        <member name="T:Cdy.Ant.AnalogRangeAlarmTag">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cdy.Ant.AnalogRangeAlarmTag.LoadFrom(System.Span{System.String})">
+            <summary>
+            
+            </summary>
+            <param name="vals"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Cdy.Ant.AnalogAlarmTag">
+            <summary>
+            模拟量报警
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.AnalogAlarmTag.Type">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.AnalogAlarmTag.HighHighValue">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.AnalogAlarmTag.HighValue">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.AnalogAlarmTag.LowValue">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.AnalogAlarmTag.LowLowValue">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cdy.Ant.AnalogAlarmTag.SaveTo">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.AnalogAlarmTag.LoadFrom(System.Xml.Linq.XElement)">
+            <summary>
+            
+            </summary>
+            <param name="xe"></param>
+        </member>
+        <member name="M:Cdy.Ant.AnalogAlarmTag.ToString">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.AnalogAlarmTag.LoadFrom(System.Span{System.String})">
+            <summary>
+            
+            </summary>
+            <param name="vals"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Cdy.Ant.AnalogAlarmItem">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:Cdy.Ant.AnalogAlarmItem.Empty">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.AnalogAlarmItem.Value">
+            <summary>
+            值
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.AnalogAlarmItem.DeadArea">
+            <summary>
+            死区
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.AnalogAlarmItem.AlarmLevel">
+            <summary>
+            报警级别
+            </summary>
+        </member>
+        <member name="M:Cdy.Ant.AnalogAlarmItem.IsEmpty">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.AnalogAlarmItem.SaveTo">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.AnalogAlarmItem.LoadFrom(System.Xml.Linq.XElement)">
+            <summary>
+            
+            </summary>
+            <param name="xe"></param>
+        </member>
+        <member name="M:Cdy.Ant.AnalogAlarmItem.ToString">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.AnalogAlarmItem.LoadFromString(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="val"></param>
+        </member>
+        <member name="M:Cdy.Ant.AnalogAlarmItem.LoadFrom(System.Span{System.String})">
+            <summary>
+            
+            </summary>
+            <param name="ss"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Cdy.Ant.DelayDigitalAlarmTag">
+            <summary>
+            延时数字量报警
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.DelayDigitalAlarmTag.Type">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.DelayDigitalAlarmTag.Value">
+            <summary>
+            值
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.DelayDigitalAlarmTag.Delay">
+            <summary>
+            恢复延时
+            </summary>
+        </member>
+        <member name="M:Cdy.Ant.DelayDigitalAlarmTag.LoadFrom(System.Xml.Linq.XElement)">
+            <summary>
+            
+            </summary>
+            <param name="xe"></param>
+        </member>
+        <member name="M:Cdy.Ant.DelayDigitalAlarmTag.SaveTo">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.DelayDigitalAlarmTag.ToString">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.DelayDigitalAlarmTag.LoadFrom(System.Span{System.String})">
+            <summary>
+            
+            </summary>
+            <param name="vals"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Cdy.Ant.DigitalAlarmTag">
+            <summary>
+            数字量报警
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.DigitalAlarmTag.Type">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.DigitalAlarmTag.Value">
+            <summary>
+            报警值
+            </summary>
+        </member>
+        <member name="M:Cdy.Ant.DigitalAlarmTag.LoadFrom(System.Xml.Linq.XElement)">
+            <summary>
+            
+            </summary>
+            <param name="xe"></param>
+        </member>
+        <member name="M:Cdy.Ant.DigitalAlarmTag.SaveTo">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.DigitalAlarmTag.ToString">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.DigitalAlarmTag.LoadFrom(System.Span{System.String})">
+            <summary>
+            
+            </summary>
+            <param name="vals"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Cdy.Ant.PulseAlarmType">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:Cdy.Ant.PulseAlarmType.Rise">
+            <summary>
+            上升沿
+            </summary>
+        </member>
+        <member name="F:Cdy.Ant.PulseAlarmType.Fall">
+            <summary>
+            下降沿
+            </summary>
+        </member>
+        <member name="F:Cdy.Ant.PulseAlarmType.All">
+            <summary>
+            所有
+            </summary>
+        </member>
+        <member name="T:Cdy.Ant.PulseAlarmTag">
+            <summary>
+            跳变报警
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.PulseAlarmTag.PulseType">
+            <summary>
+            跳变类型
+            </summary>
+        </member>
+        <member name="M:Cdy.Ant.PulseAlarmTag.SaveTo">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.PulseAlarmTag.LoadFrom(System.Xml.Linq.XElement)">
+            <summary>
+            
+            </summary>
+            <param name="xe"></param>
+        </member>
+        <member name="M:Cdy.Ant.PulseAlarmTag.ToString">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.PulseAlarmTag.LoadFrom(System.Span{System.String})">
+            <summary>
+            
+            </summary>
+            <param name="vals"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Cdy.Ant.StringAlarmTag">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.StringAlarmTag.Type">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.StringAlarmTag.Value">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cdy.Ant.StringAlarmTag.LoadFrom(System.Xml.Linq.XElement)">
+            <summary>
+            
+            </summary>
+            <param name="xe"></param>
+        </member>
+        <member name="M:Cdy.Ant.StringAlarmTag.SaveTo">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.StringAlarmTag.ToString">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.StringAlarmTag.LoadFrom(System.Span{System.String})">
+            <summary>
+            
+            </summary>
+            <param name="vals"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Cdy.Ant.OneRangeAlarmTag">
+            <summary>
+            一维区域报警
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.OneRangeAlarmTag.Type">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.OneRangeAlarmTag.MinValue">
+            <summary>
+            最小值
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.OneRangeAlarmTag.MaxValue">
+            <summary>
+            最大值
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.OneRangeAlarmTag.IsInRangeAlarm">
+            <summary>
+            在范围内报警
+            </summary>
+        </member>
+        <member name="M:Cdy.Ant.OneRangeAlarmTag.SaveTo">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.OneRangeAlarmTag.LoadFrom(System.Xml.Linq.XElement)">
+            <summary>
+            
+            </summary>
+            <param name="xe"></param>
+        </member>
+        <member name="T:Cdy.Ant.TwoRangeAlarmTag">
+            <summary>
+            二维区域报警
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.TwoRangeAlarmTag.Type">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.TwoRangeAlarmTag.AlarmDatas">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.TwoRangeAlarmTag.IsInRangeAlarm">
+            <summary>
+            在范围内报警
+            </summary>
+        </member>
+        <member name="M:Cdy.Ant.TwoRangeAlarmTag.SaveTo">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.TwoRangeAlarmTag.LoadFrom(System.Xml.Linq.XElement)">
+            <summary>
+            
+            </summary>
+            <param name="xe"></param>
+        </member>
+        <member name="M:Cdy.Ant.TwoRangeAlarmTag.ToString">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.TwoRangeAlarmTag.LoadFrom(System.Span{System.String})">
+            <summary>
+            
+            </summary>
+            <param name="vals"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Cdy.Ant.ThreeRangeAlarmTag">
+            <summary>
+            三维区域报警
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.ThreeRangeAlarmTag.Type">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.ThreeRangeAlarmTag.AlarmDatas">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.ThreeRangeAlarmTag.IsInRangeAlarm">
+            <summary>
+            在范围内报警
+            </summary>
+        </member>
+        <member name="M:Cdy.Ant.ThreeRangeAlarmTag.SaveTo">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.ThreeRangeAlarmTag.LoadFrom(System.Xml.Linq.XElement)">
+            <summary>
+            
+            </summary>
+            <param name="xe"></param>
+        </member>
+        <member name="M:Cdy.Ant.ThreeRangeAlarmTag.ToString">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.ThreeRangeAlarmTag.LoadFrom(System.Span{System.String})">
+            <summary>
+            
+            </summary>
+            <param name="vals"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Cdy.Ant.ScriptTag">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.ScriptTag.Type">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.ScriptTag.Expresse">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cdy.Ant.ScriptTag.SaveTo">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.ScriptTag.LoadFrom(System.Xml.Linq.XElement)">
+            <summary>
+            
+            </summary>
+            <param name="xe"></param>
+        </member>
+        <member name="M:Cdy.Ant.ScriptTag.ToString">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.ScriptTag.LoadFrom(System.Span{System.String})">
+            <summary>
+            
+            </summary>
+            <param name="vals"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Cdy.Ant.TagGroup">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.TagGroup.Name">
+            <summary>
+            名称
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.TagGroup.Parent">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.TagGroup.Description">
+            <summary>
+            描述
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.TagGroup.FullName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.TagGroup.Tags">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cdy.Ant.TagGroup.SaveToXML">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.WindowConsolHelper.MinWindow(System.String)">
+            <summary>
+            
+            </summary>
+        </member>
+    </members>
+</doc>

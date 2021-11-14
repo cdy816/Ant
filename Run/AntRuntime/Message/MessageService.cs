@@ -132,7 +132,7 @@ namespace AntRuntime
         public void RestoreMessage(long id,string value)
         {
             var vtime = RestoreTimeFromId(id);
-            if (vtime > mMemoryBuffer.OldestMessageTime)
+            if (vtime >= mMemoryBuffer.OldestMessageTime)
             {
                 mMemoryBuffer.RestoreMessage(id,value);
             }
@@ -151,7 +151,7 @@ namespace AntRuntime
         public void AckMessage(long id, string content, string user)
         {
             var vtime = RestoreTimeFromId(id);
-            if (vtime > mMemoryBuffer.OldestMessageTime)
+            if (vtime >= mMemoryBuffer.OldestMessageTime)
             {
                 mMemoryBuffer.AckMessage(id, content, user);
             }

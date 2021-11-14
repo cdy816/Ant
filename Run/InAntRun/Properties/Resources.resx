@@ -117,8 +117,26 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ExitMsg" xml:space="preserve">
+    <value>stop ant project and exit application</value>
+  </data>
   <data name="HelpMsg" xml:space="preserve">
     <value>Enter h for command help information</value>
+  </data>
+  <data name="HMsg" xml:space="preserve">
+    <value>display command list</value>
+  </data>
+  <data name="ListMsg" xml:space="preserve">
+    <value>List all ant databse</value>
+  </data>
+  <data name="RestartMsg" xml:space="preserve">
+    <value>Qucik restarted a a ant project without pause it.</value>
+  </data>
+  <data name="StartMsg" xml:space="preserve">
+    <value>start to run a ant project,ignor project name to run default 'local' project</value>
+  </data>
+  <data name="StopMsg" xml:space="preserve">
+    <value>stop ant project</value>
   </data>
   <data name="WelcomeMsg" xml:space="preserve">
     <value>*************** Welcome to Ant ***************</value>

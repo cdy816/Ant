@@ -45,7 +45,7 @@ namespace AntRutime.WebApi.Controllers
         /// <param name="token"></param>
         /// <returns></returns>
         [HttpPost("Hart")]
-        public ResponseBase Hart([FromBody] ResponseBase token)
+        public ResponseBase Hart([FromBody] RequestBase token)
         {
             return new ResponseBase() { Result = ServiceLocator.Locator.Resolve<IRuntimeSecurity>().FreshUserId(token.Token) };
         }
@@ -56,7 +56,7 @@ namespace AntRutime.WebApi.Controllers
         /// <param name="token"></param>
         /// <returns></returns>
         [HttpPost("Logout")]
-        public ResponseBase Logout([FromBody] ResponseBase token)
+        public ResponseBase Logout([FromBody] RequestBase token)
         {
             return new ResponseBase() { Result = ServiceLocator.Locator.Resolve<IRuntimeSecurity>().Logout(token.Token) };
         }

@@ -21,6 +21,8 @@ namespace AntRuntime.Enginer
         private AlarmDatabase mDatabase;
 
         //private Dictionary<string,List<TagRunBase>> mRunTags = new Dictionary<string, List<TagRunBase>>();
+        private Dictionary<string, TagRunBase> mRunTags = new Dictionary<string, TagRunBase>();
+
         private IDataTagService mDataTagService;
 
         //private Thread mScanThread;
@@ -54,7 +56,6 @@ namespace AntRuntime.Enginer
                 if (mDatabase != value)
                 {
                     mDatabase = value;
-                    //Init();
                 }
             }
         }
@@ -79,7 +80,12 @@ namespace AntRuntime.Enginer
             {
                 mDataTagService.RegistorTagChangeCallBack(DataTagValueChanged);
                 foreach(var vv in mExecuter)
-                mDataTagService.RegistorMonitorTag(vv.RunTags.Keys);
+                mDataTagService.RegistorMonitorTag(vv.ListLinkTags());
+            }
+
+            foreach(var vv in mRunTags)
+            {
+                vv.Value.Init();
             }
         }
 
@@ -90,13 +96,6 @@ namespace AntRuntime.Enginer
         /// <param name="value"></param>
         private void DataTagValueChanged(string tagname, object value)
         {
-            //lock (mRunTags)
-            //    if (mRunTags.ContainsKey(tagname))
-            //    {
-
-            //        mRunTags[tagname].ForEach(e => e.NeedCal = true);
-            //    }
-
             foreach(var vv in mExecuter)
             {
                 vv.NotifyTagToExecute(tagname);
@@ -131,8 +130,9 @@ namespace AntRuntime.Enginer
                             }
                             else
                             {
-                                exe.RunTags.Add(skey, new List<TagRunBase>() { at });
+                                exe.RunTags.Add(vvv, new List<TagRunBase>() { at });
                             }
+                            mRunTags.Add(skey, at);
                         }
                         break;
                     case TagType.AnalogRangeAlarm:
@@ -147,8 +147,9 @@ namespace AntRuntime.Enginer
                             }
                             else
                             {
-                                exe.RunTags.Add(skey, new List<TagRunBase>() { at });
+                                exe.RunTags.Add(vvv, new List<TagRunBase>() { at });
                             }
+                            mRunTags.Add(skey, at);
                         }
                         break;
                     case TagType.DelayDigitalAlarm:
@@ -163,8 +164,9 @@ namespace AntRuntime.Enginer
                             }
                             else
                             {
-                                exe.RunTags.Add(skey, new List<TagRunBase>() { at });
+                                exe.RunTags.Add(vvv, new List<TagRunBase>() { at });
                             }
+                            mRunTags.Add(skey, at);
                         }
                         break;
                     case TagType.DigitalAlarm:
@@ -179,8 +181,9 @@ namespace AntRuntime.Enginer
                             }
                             else
                             {
-                                exe.RunTags.Add(skey, new List<TagRunBase>() { at });
+                                exe.RunTags.Add(vvv, new List<TagRunBase>() { at });
                             }
+                            mRunTags.Add(skey, at);
                         }
                         break;
                     case TagType.OneRange:
@@ -195,8 +198,9 @@ namespace AntRuntime.Enginer
                             }
                             else
                             {
-                                exe.RunTags.Add(skey, new List<TagRunBase>() { at });
+                                exe.RunTags.Add(vvv, new List<TagRunBase>() { at });
                             }
+                            mRunTags.Add(skey, at);
                         }
                         break;
                     case TagType.TwoRange:
@@ -211,8 +215,9 @@ namespace AntRuntime.Enginer
                             }
                             else
                             {
-                                exe.RunTags.Add(skey, new List<TagRunBase>() { at });
+                                exe.RunTags.Add(vvv, new List<TagRunBase>() { at });
                             }
+                            mRunTags.Add(skey, at);
                         }
                         break;
                     case TagType.StringAlarm:
@@ -227,8 +232,9 @@ namespace AntRuntime.Enginer
                             }
                             else
                             {
-                                exe.RunTags.Add(skey, new List<TagRunBase>() { at });
+                                exe.RunTags.Add(vvv, new List<TagRunBase>() { at });
                             }
+                            mRunTags.Add(skey, at);
                         }
                         break;
                     case TagType.ThreeRange:
@@ -243,8 +249,9 @@ namespace AntRuntime.Enginer
                             }
                             else
                             {
-                                exe.RunTags.Add(skey, new List<TagRunBase>() { at });
+                                exe.RunTags.Add(vvv, new List<TagRunBase>() { at });
                             }
+                            mRunTags.Add(skey, at);
                         }
                         break;
                     case TagType.Pulse:
@@ -259,15 +266,18 @@ namespace AntRuntime.Enginer
                             }
                             else
                             {
-                                exe.RunTags.Add(skey, new List<TagRunBase>() { at });
+                                exe.RunTags.Add(vvv, new List<TagRunBase>() { at });
                             }
+                            mRunTags.Add(skey, at);
                         }
                         break;
                     case TagType.Script:
                          var  skey1 = vv.Id.ToString();
                         ScriptAlarmTagRun stag = new ScriptAlarmTagRun() { Source = mDatabase.Name, LinkedTag = vv,Id=vv.Id };
+                        bool ishas = false;
                         foreach(var vvv in stag.ListLinkTag())
                         {
+                            string skey = vvv + vv.Id;
                             if (exe.RunTags.ContainsKey(vvv))
                             {
                                 exe.RunTags[vvv].Add(stag);
@@ -276,7 +286,21 @@ namespace AntRuntime.Enginer
                             {
                                 exe.RunTags.Add(vvv, new List<TagRunBase>() { stag });
                             }
+                            ishas = true;
                         }
+                        if(!ishas)
+                        {
+                            string skey = "notags";
+                            if (exe.RunTags.ContainsKey(skey))
+                            {
+                                exe.RunTags[skey].Add(stag);
+                            }
+                            else
+                            {
+                                exe.RunTags.Add(skey, new List<TagRunBase>() { stag });
+                            }
+                        }
+                        mRunTags.Add(skey1, stag);
                         break;
                 }
             }
@@ -345,6 +369,9 @@ namespace AntRuntime.Enginer
         #endregion ...Interfaces...
     }
 
+    /// <summary>
+    /// 一组报警变量执行者
+    /// </summary>
     public class AlarmEnginerExecuter
     {
 
@@ -380,9 +407,27 @@ namespace AntRuntime.Enginer
         #region ... Methods    ...
 
         /// <summary>
-        /// 
+        /// 枚举出关联的数据库变量
         /// </summary>
-        /// <param name="tag"></param>
+        /// <returns></returns>
+        public List<string> ListLinkTags()
+        {
+            List<string> re = new List<string>();
+            foreach(var vv in this.mRunTags)
+            {
+                foreach(var vvv in vv.Value)
+                {
+                    re.AddRange(vvv.ListLinkTag());
+                }
+            }
+            re.Distinct();
+            return re;
+        }
+
+        /// <summary>
+        /// 通知和数据库管理的报警变量可以执行报警逻辑
+        /// </summary>
+        /// <param name="tag">数据库变量</param>
         public void NotifyTagToExecute(string tagname)
         {
             lock (mRunTags)
@@ -394,7 +439,7 @@ namespace AntRuntime.Enginer
         }
 
         /// <summary>
-        /// 
+        /// 扫描线程
         /// </summary>
         private void ThreadScan()
         {
@@ -417,7 +462,7 @@ namespace AntRuntime.Enginer
         }
 
         /// <summary>
-        /// 
+        /// 启动
         /// </summary>
         public void Start()
         {
@@ -427,7 +472,7 @@ namespace AntRuntime.Enginer
         }
 
         /// <summary>
-        /// 
+        /// 停止
         /// </summary>
         public void Stop()
         {

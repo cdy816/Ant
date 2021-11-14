@@ -7,7 +7,10 @@ using System.Threading.Tasks;
 
 namespace Cdy.Ant.MarsApi
 {
-
+    /// <summary>
+    /// Mars Tag 简化定义
+    /// 用于缓存采集到的值
+    /// </summary>
     public class ApiTag
     {
         private object mValue;
@@ -44,6 +47,9 @@ namespace Cdy.Ant.MarsApi
         public byte Quality { get; set; }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public class ApiRunner : Cdy.Ant.IDataTagService
     {
 
@@ -52,18 +58,16 @@ namespace Cdy.Ant.MarsApi
         private Dictionary<string, ApiTag> mTags = new Dictionary<string, ApiTag>();
         private Dictionary<int, ApiTag> mIdMapTags = new Dictionary<int, ApiTag>();
 
-
-        //private Dictionary<string, object> mValues = new Dictionary<string, object>();
-        
-        //private Dictionary<string, int> mNameIdMaps = new Dictionary<string, int>();
-        //private Dictionary<int, string> mIdNameMaps = new Dictionary<int, string>();
-
         private List<Action<string, object>> mChangedCallBack = new List<Action<string, object>>();
 
         private DBRunTime.ServiceApi.ApiClient client;
         private Thread mScanThread;
 
         private List<string> mNeedInitTags = new List<string>();
+
+        private List<int> mAvaiableIds = new List<int>();
+
+        private List<ApiTag> mChangedApi;
 
         #endregion ...Variables...
 
@@ -78,7 +82,7 @@ namespace Cdy.Ant.MarsApi
         #region ... Properties ...
 
         /// <summary>
-        /// 
+        /// 配置数据
         /// </summary>
         public MarsApiData Data { get; set; }
 
@@ -113,6 +117,7 @@ namespace Cdy.Ant.MarsApi
         /// </summary>
         private void ScanThread()
         {
+            int lcount = 20;
             while(true)
             {
                 if(client.IsConnected)
@@ -120,6 +125,11 @@ namespace Cdy.Ant.MarsApi
                     if(!client.IsLogin)
                     {
                         client.Login(Data.UserName, Data.Password);
+
+                        if (client.IsLogin)
+                        {
+                            LoggerService.Service.Info("Mars Api", "Login " + client.ServerIp + " " + client.Port + " Successful!");
+                        }
                         Thread.Sleep(2000);
                     }
                     else
@@ -128,9 +138,28 @@ namespace Cdy.Ant.MarsApi
                         NotifyValueChanged();
                         Thread.Sleep(Data.ScanCircle);
                     }
+                    if(!client.IsLogin)
+                    {
+                        lcount++;
+                        if (lcount > 20)
+                        {
+                            lcount = 0;
+                            LoggerService.Service.Warn("Mars Api", "Login " + client.ServerIp + " " + client.Port + " failed!");
+                        }
+                    }
                 }
                 else
                 {
+                    if (!client.IsConnected)
+                    {
+                        lcount++;
+                        if (lcount > 20)
+                        {
+                            lcount = 0;
+                            LoggerService.Service.Warn("Mars Api", "Connect " + client.ServerIp + " " + client.Port + " failed!");
+                           
+                        }
+                    }
                     Thread.Sleep(100);
                 }
             }
@@ -141,34 +170,38 @@ namespace Cdy.Ant.MarsApi
         /// </summary>
         private void ScanData()
         {
-            if(mNeedInitTags.Count>0)
+            if (mNeedInitTags.Count > 0)
             {
-               if(client.IsConnected)
+                if (client.IsConnected)
                 {
                     List<string> ll;
-                    lock(mNeedInitTags)
-                    ll = mNeedInitTags.ToList();
+                    lock (mNeedInitTags)
+                        ll = mNeedInitTags.ToList();
 
                     var ids = client.GetTagIds(mNeedInitTags.ToList());
-                    if(ids!=null)
+                    if (ids != null)
                     {
-                        lock(mNeedInitTags)
-                        mNeedInitTags.Clear();
+                        lock (mNeedInitTags)
+                            mNeedInitTags.Clear();
 
-                        foreach(var vv in ids)
+                        foreach (var vv in ids)
                         {
+                            if (vv.Value == -1) continue;
+                            mAvaiableIds.Add(vv.Value);
+
                             var vtag = mTags[vv.Key];
                             vtag.Id = vv.Value;
 
-                            mIdMapTags.Add(vv.Value, vtag);                           
+                            mIdMapTags.Add(vv.Value, vtag);
                         }
                     }
+                    mChangedApi = new List<ApiTag>(mIdMapTags.Count);
                 }
             }
             else
             {
-                var vals = client.GetRealData(mIdMapTags.Keys.ToList());
-                if(vals!=null)
+                var vals = client.GetRealData(mAvaiableIds);
+                if (vals != null)
                 {
                     ProcessRealDataResult(vals);
                 }
@@ -178,10 +211,28 @@ namespace Cdy.Ant.MarsApi
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="tags"></param>
+        private void NotifyValueChanged(IEnumerable<ApiTag> tags)
+        {
+            if (mChangedCallBack != null)
+            {
+                foreach (var vv in tags.Where(e => e.IsValueChanged))
+                {
+                    //mchangedvals.Add(vv.Name, vv.Value);
+                    foreach (var vvc in mChangedCallBack)
+                    {
+                        vvc(vv.Name, vv.Value);
+                    }
+                    vv.IsValueChanged = false;
+                }
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         private void NotifyValueChanged()
         {
-            //Dictionary<string, object> mchangedvals = new Dictionary<string, object>();
-            
             if(mChangedCallBack!=null)
             {
                 foreach (var vv in mTags.Values.Where(e => e.IsValueChanged))
@@ -198,6 +249,7 @@ namespace Cdy.Ant.MarsApi
 
         private void ProcessRealDataResult(Cheetah.ByteBuffer datas)
         {
+            mChangedApi.Clear();
             int count = datas.ReadInt();
             for(int i=0;i<count;i++)
             {
@@ -292,8 +344,10 @@ namespace Cdy.Ant.MarsApi
                     vtag.Time = time;
                     vtag.Quality = qu;
                     vtag.ValueType = typ;
+                    mChangedApi.Add(vtag);
                 }
             }
+            NotifyValueChanged(mChangedApi);
         }
 
         /// <summary>

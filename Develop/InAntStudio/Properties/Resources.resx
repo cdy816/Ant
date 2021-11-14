@@ -177,6 +177,9 @@
   <data name="Copy" xml:space="preserve">
     <value>Copy</value>
   </data>
+  <data name="Critical" xml:space="preserve">
+    <value>Critical</value>
+  </data>
   <data name="Custom" xml:space="preserve">
     <value>Custom</value>
   </data>
@@ -228,6 +231,9 @@
   </data>
   <data name="Driver" xml:space="preserve">
     <value>Driver</value>
+  </data>
+  <data name="EarlyWarning" xml:space="preserve">
+    <value>EarlyWarning</value>
   </data>
   <data name="EnableWrite" xml:space="preserve">
     <value>EnableWrite</value>
@@ -291,6 +297,9 @@
   </data>
   <data name="ImportMode" xml:space="preserve">
     <value>Import mode</value>
+  </data>
+  <data name="Info" xml:space="preserve">
+    <value>Info</value>
   </data>
   <data name="IsAdmin" xml:space="preserve">
     <value>Admin</value>
@@ -373,6 +382,9 @@
   </data>
   <data name="NoneCompress" xml:space="preserve">
     <value>None</value>
+  </data>
+  <data name="Normal" xml:space="preserve">
+    <value>Normal</value>
   </data>
   <data name="OK" xml:space="preserve">
     <value>OK</value>
@@ -573,6 +585,9 @@
   <data name="UpdateTagFail" xml:space="preserve">
     <value>Update tag {0} failed!</value>
   </data>
+  <data name="Urgency" xml:space="preserve">
+    <value>Urgency</value>
+  </data>
   <data name="User" xml:space="preserve">
     <value>User</value>
   </data>
@@ -590,6 +605,9 @@
   </data>
   <data name="ValueChanged" xml:space="preserve">
     <value>ValueChanged</value>
+  </data>
+  <data name="VeryUrgency" xml:space="preserve">
+    <value>VeryUrgency</value>
   </data>
   <data name="Write" xml:space="preserve">
     <value>Write</value>
