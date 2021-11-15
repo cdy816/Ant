@@ -4,6 +4,48 @@
         <name>AntRutime.WebApi</name>
     </assembly>
     <members>
+        <member name="T:AntRutime.WebApi.Controllers.HomeController">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:AntRutime.WebApi.Controllers.HomeController.Index">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:AntRutime.WebApi.Controllers.HomeController.OnActionExecuting(Microsoft.AspNetCore.Mvc.Filters.ActionExecutingContext)">
+            <summary>
+            
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="T:AntRutime.WebApi.Controllers.LoginController">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:AntRutime.WebApi.Controllers.LoginController.Login(AntRutime.WebApi.LoginUser)">
+            <summary>
+            登录
+            </summary>
+            <param name="user"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AntRutime.WebApi.Controllers.LoginController.Hart(AntRutime.WebApi.RequestBase)">
+            <summary>
+            心跳，维持用户在线
+            </summary>
+            <param name="token"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AntRutime.WebApi.Controllers.LoginController.Logout(AntRutime.WebApi.RequestBase)">
+            <summary>
+            登出
+            </summary>
+            <param name="token"></param>
+            <returns></returns>
+        </member>
         <member name="T:AntRutime.WebApi.Controllers.MessageController">
             <summary>
             
@@ -105,47 +147,84 @@
             过滤条件
             </summary>
         </member>
-        <member name="T:AntRutime.WebApi.Controllers.HomeController">
+        <member name="T:AntRutime.WebApi.Controllers.MessageResponse">
+            <summary>
+            消息返回结果
+            </summary>
+        </member>
+        <member name="P:AntRutime.WebApi.Controllers.MessageResponse.Message">
+            <summary>
+            消息内容
+            </summary>
+        </member>
+        <member name="T:AntRutime.WebApi.Controllers.AlarmMessageResponse">
+            <summary>
+            报警消息返回结果
+            </summary>
+        </member>
+        <member name="P:AntRutime.WebApi.Controllers.AlarmMessageResponse.Message">
+            <summary>
+            消息内容
+            </summary>
+        </member>
+        <member name="T:AntRutime.WebApi.Controllers.InfoMessageResponse">
+            <summary>
+            提示消息返回结果
+            </summary>
+        </member>
+        <member name="P:AntRutime.WebApi.Controllers.InfoMessageResponse.Message">
+            <summary>
+            消息内容
+            </summary>
+        </member>
+        <member name="T:AntRutime.WebApi.Controllers.TagController">
             <summary>
             
             </summary>
         </member>
-        <member name="M:AntRutime.WebApi.Controllers.HomeController.Index">
+        <member name="M:AntRutime.WebApi.Controllers.TagController.ModifyTag(AntRutime.WebApi.Controllers.ModifyTagRequest)">
             <summary>
-            
+            修改变量配置
             </summary>
-        </member>
-        <member name="M:AntRutime.WebApi.Controllers.HomeController.OnActionExecuting(Microsoft.AspNetCore.Mvc.Filters.ActionExecutingContext)">
-            <summary>
-            
-            </summary>
-            <param name="context"></param>
-        </member>
-        <member name="T:AntRutime.WebApi.Controllers.LoginController">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="M:AntRutime.WebApi.Controllers.LoginController.Login(AntRutime.WebApi.LoginUser)">
-            <summary>
-            登录
-            </summary>
-            <param name="user"></param>
+            <param name="request"></param>
             <returns></returns>
         </member>
-        <member name="M:AntRutime.WebApi.Controllers.LoginController.Hart(AntRutime.WebApi.RequestBase)">
+        <member name="M:AntRutime.WebApi.Controllers.TagController.QueryTagProperty(AntRutime.WebApi.Controllers.TagRequestBase)">
             <summary>
-            心跳，维持用户在线
+            获取变量的可供修改的属性配置
             </summary>
-            <param name="token"></param>
+            <param name="request"></param>
             <returns></returns>
         </member>
-        <member name="M:AntRutime.WebApi.Controllers.LoginController.Logout(AntRutime.WebApi.RequestBase)">
+        <member name="T:AntRutime.WebApi.Controllers.TagRequestBase">
             <summary>
-            登出
+            变量服务请求基类
             </summary>
-            <param name="token"></param>
-            <returns></returns>
+        </member>
+        <member name="P:AntRutime.WebApi.Controllers.TagRequestBase.TagName">
+            <summary>
+            变量名称
+            </summary>
+        </member>
+        <member name="T:AntRutime.WebApi.Controllers.ModifyTagRequest">
+            <summary>
+            修改变量配置请求
+            </summary>
+        </member>
+        <member name="P:AntRutime.WebApi.Controllers.ModifyTagRequest.PropertyValues">
+            <summary>
+            属性名称、值的集合
+            </summary>
+        </member>
+        <member name="T:AntRutime.WebApi.Controllers.QueryTagPropertyResponse">
+            <summary>
+            变量可供修改属性的集合
+            </summary>
+        </member>
+        <member name="P:AntRutime.WebApi.Controllers.QueryTagPropertyResponse.PropertyValues">
+            <summary>
+            属性、值集合
+            </summary>
         </member>
         <member name="T:AntRutime.WebApi.LoginUser">
             <summary>
@@ -224,6 +303,13 @@
             </summary>
             <param name="args"></param>
             <returns></returns>
+        </member>
+        <member name="M:AntRutime.WebApi.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IWebHostEnvironment)">
+            <summary>
+            
+            </summary>
+            <param name="app"></param>
+            <param name="env"></param>
         </member>
         <member name="M:AntRutime.WebApi.DatetimeJsonConverter.Read(System.Text.Json.Utf8JsonReader@,System.Type,System.Text.Json.JsonSerializerOptions)">
             <summary>

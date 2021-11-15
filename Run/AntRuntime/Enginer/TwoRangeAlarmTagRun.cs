@@ -38,6 +38,37 @@ namespace AntRuntime.Enginer
 
         #region ... Methods    ...
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public override Dictionary<string, string> GetSupportModifyProperty()
+        {
+            var re = base.GetSupportModifyProperty();
+            re.Add("AlarmLevel", ((byte)mTag.AlarmLevel).ToString());
+            re.Add("AlarmDatas", mTag.AlarmDatasToString());
+            return re;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="value"></param>
+        protected override void OnPropertyChangedForRuntime(string name, string value)
+        {
+            if (name == "alarmdatas")
+            {
+                mTag.AlarmDatasFromSting(value);
+            }
+            else if (name == "alarmlevel")
+            {
+                mTag.AlarmLevel = (AlarmLevel)(int.Parse(value));
+            }
+            base.OnPropertyChangedForRuntime(name, value);
+        }
+
         /// <summary>
         /// 
         /// </summary>

@@ -38,6 +38,19 @@ namespace AntRuntime.Enginer
         /// <summary>
         /// 
         /// </summary>
+        public bool IsEnable {
+            get { return mTag.IsEnable; 
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string Name { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public bool NeedCal
         {
             get
@@ -98,6 +111,72 @@ namespace AntRuntime.Enginer
         #endregion ...Properties...
 
         #region ... Methods    ...
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="props"></param>
+        public virtual void ModifyProperty(Dictionary<string,string> props)
+        {
+            foreach(var vv in props)
+            {
+                switch (vv.Key.ToLower())
+                {
+                    case "desc":
+                        mTag.Desc = vv.Value;
+                        break;
+                    case "customcontent1":
+                        mTag.CustomContent1 = vv.Value;
+                        break;
+                    case "customcontent2":
+                        mTag.CustomContent2 = vv.Value;
+                        break;
+                    case "customcontent3":
+                        mTag.CustomContent3 = vv.Value;
+                        break;
+                    case "isenable":
+                        mTag.IsEnable = bool.Parse(vv.Value);
+                        break;
+                    default:
+                        OnPropertyChangedForRuntime(vv.Key.ToLower(), vv.Value);
+                        break;
+                }
+            }
+            OnPropertyChangedFinish();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public virtual Dictionary<string,string> GetSupportModifyProperty()
+        {
+            Dictionary<string, string> re = new Dictionary<string, string>();
+            re.Add("Desc", mTag.Desc);
+            re.Add("CustomContent1", mTag.CustomContent1);
+            re.Add("CustomContent2", mTag.CustomContent2);
+            re.Add("CustomContent3", mTag.CustomContent3);
+            re.Add("IsEnable", mTag.IsEnable.ToString());
+            return re;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="value"></param>
+        protected virtual void OnPropertyChangedForRuntime(string name,string value)
+        {
+
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        protected virtual void OnPropertyChangedFinish()
+        {
+
+        }
 
         /// <summary>
         /// 

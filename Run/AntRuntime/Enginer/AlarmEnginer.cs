@@ -1,4 +1,5 @@
 ﻿using Cdy.Ant;
+using Cdy.Ant.Tag;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace AntRuntime.Enginer
     /// <summary>
     /// 
     /// </summary>
-    public class AlarmEnginer
+    public class AlarmEnginer: IRuntimeTagService
     {
 
         #region ... Variables  ...
@@ -123,7 +124,7 @@ namespace AntRuntime.Enginer
                         foreach(var vvv in skeys)
                         {
                             string skey = vvv + vv.Id;
-                            AnalogAlarmTagRun at = new AnalogAlarmTagRun() { Source = mDatabase.Name, LinkedTag = vv,TagName = vvv,Id=vv.Id };
+                            AnalogAlarmTagRun at = new AnalogAlarmTagRun() { Source = mDatabase.Name, LinkedTag = vv,TagName = vvv,Id=vv.Id, Name = vv.FullName };
                             if (exe.RunTags.ContainsKey(vvv))
                             {
                                 exe.RunTags[vvv].Add(at);
@@ -140,7 +141,7 @@ namespace AntRuntime.Enginer
                         foreach (var vvv in skeys)
                         {
                             string skey = vvv + vv.Id;
-                            AnalogRangeAlarmTagRun at = new AnalogRangeAlarmTagRun() { Source = mDatabase.Name, LinkedTag = vv, TagName = vvv, Id = vv.Id };
+                            AnalogRangeAlarmTagRun at = new AnalogRangeAlarmTagRun() { Source = mDatabase.Name, LinkedTag = vv, TagName = vvv, Id = vv.Id,Name=vv.FullName };
                             if (exe.RunTags.ContainsKey(vvv))
                             {
                                 exe.RunTags[vvv].Add(at);
@@ -157,7 +158,7 @@ namespace AntRuntime.Enginer
                         foreach (var vvv in skeys)
                         {
                             string skey = vvv + vv.Id;
-                            DelayDigitalAlarmTagRun at = new DelayDigitalAlarmTagRun() { Source = mDatabase.Name, LinkedTag = vv, TagName = vvv, Id = vv.Id };
+                            DelayDigitalAlarmTagRun at = new DelayDigitalAlarmTagRun() { Source = mDatabase.Name, LinkedTag = vv, TagName = vvv, Id = vv.Id, Name = vv.FullName };
                             if (exe.RunTags.ContainsKey(vvv))
                             {
                                 exe.RunTags[vvv].Add(at);
@@ -174,7 +175,7 @@ namespace AntRuntime.Enginer
                         foreach (var vvv in skeys)
                         {
                             string skey = vvv + vv.Id;
-                            DigitalAlarmTagRun at = new DigitalAlarmTagRun() { Source = mDatabase.Name, LinkedTag = vv, TagName = vvv, Id = vv.Id };
+                            DigitalAlarmTagRun at = new DigitalAlarmTagRun() { Source = mDatabase.Name, LinkedTag = vv, TagName = vvv, Id = vv.Id, Name = vv.FullName };
                             if (exe.RunTags.ContainsKey(vvv))
                             {
                                 exe.RunTags[vvv].Add(at);
@@ -191,7 +192,7 @@ namespace AntRuntime.Enginer
                         foreach (var vvv in skeys)
                         {
                             string skey = vvv + vv.Id;
-                            OneRangeAlarmTagRun at = new OneRangeAlarmTagRun() { Source = mDatabase.Name, LinkedTag = vv, TagName = vvv, Id = vv.Id };
+                            OneRangeAlarmTagRun at = new OneRangeAlarmTagRun() { Source = mDatabase.Name, LinkedTag = vv, TagName = vvv, Id = vv.Id, Name = vv.FullName };
                             if (exe.RunTags.ContainsKey(vvv))
                             {
                                 exe.RunTags[vvv].Add(at);
@@ -208,7 +209,7 @@ namespace AntRuntime.Enginer
                         foreach (var vvv in skeys)
                         {
                             string skey = vvv + vv.Id;
-                            TwoRangeAlarmTagRun at = new TwoRangeAlarmTagRun() { Source = mDatabase.Name, LinkedTag = vv, TagName = vvv, Id = vv.Id };
+                            TwoRangeAlarmTagRun at = new TwoRangeAlarmTagRun() { Source = mDatabase.Name, LinkedTag = vv, TagName = vvv, Id = vv.Id, Name = vv.FullName };
                             if (exe.RunTags.ContainsKey(vvv))
                             {
                                 exe.RunTags[vvv].Add(at);
@@ -225,7 +226,7 @@ namespace AntRuntime.Enginer
                         foreach (var vvv in skeys)
                         {
                             string skey = vvv + vv.Id;
-                            StringAlarmTagRun at = new StringAlarmTagRun() { Source = mDatabase.Name, LinkedTag = vv, TagName = vvv, Id = vv.Id };
+                            StringAlarmTagRun at = new StringAlarmTagRun() { Source = mDatabase.Name, LinkedTag = vv, TagName = vvv, Id = vv.Id, Name = vv.FullName };
                             if (exe.RunTags.ContainsKey(vvv))
                             {
                                 exe.RunTags[vvv].Add(at);
@@ -242,7 +243,7 @@ namespace AntRuntime.Enginer
                         foreach (var vvv in skeys)
                         {
                             string skey = vvv + vv.Id;
-                            ThreeRangeAlarmTagRun at = new ThreeRangeAlarmTagRun() { Source = mDatabase.Name, LinkedTag = vv, TagName = vvv, Id = vv.Id };
+                            ThreeRangeAlarmTagRun at = new ThreeRangeAlarmTagRun() { Source = mDatabase.Name, LinkedTag = vv, TagName = vvv, Id = vv.Id, Name = vv.FullName };
                             if (exe.RunTags.ContainsKey(vvv))
                             {
                                 exe.RunTags[vvv].Add(at);
@@ -259,7 +260,7 @@ namespace AntRuntime.Enginer
                         foreach (var vvv in skeys)
                         {
                             string skey = vvv + vv.Id;
-                            PulseAlarmTagRun at = new PulseAlarmTagRun() { Source = mDatabase.Name, LinkedTag = vv, TagName = vvv, Id = vv.Id };
+                            PulseAlarmTagRun at = new PulseAlarmTagRun() { Source = mDatabase.Name, LinkedTag = vv, TagName = vvv, Id = vv.Id, Name = vv.FullName };
                             if (exe.RunTags.ContainsKey(vvv))
                             {
                                 exe.RunTags[vvv].Add(at);
@@ -273,7 +274,7 @@ namespace AntRuntime.Enginer
                         break;
                     case TagType.Script:
                          var  skey1 = vv.Id.ToString();
-                        ScriptAlarmTagRun stag = new ScriptAlarmTagRun() { Source = mDatabase.Name, LinkedTag = vv,Id=vv.Id };
+                        ScriptAlarmTagRun stag = new ScriptAlarmTagRun() { Source = mDatabase.Name, LinkedTag = vv,Id=vv.Id, Name = vv.FullName };
                         bool ishas = false;
                         foreach(var vvv in stag.ListLinkTag())
                         {
@@ -360,6 +361,53 @@ namespace AntRuntime.Enginer
             {
                 vv.Start();
             }
+        }
+
+        /// <summary>
+        /// 根据名称获取变量
+        /// </summary>
+        /// <param name="tagname"></param>
+        /// <returns></returns>
+        private IEnumerable<TagRunBase> GetTag(string tagname)
+        {
+            var tag = mRunTags.Values.Where(e => e.Name == tagname);
+            if (tag != null && tag.Count() > 0)
+            {
+                return tag;
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="tagname"></param>
+        /// <param name="propertys"></param>
+        /// <returns></returns>
+        public bool ModifyTag(string tagname, Dictionary<string, string> propertys)
+        {
+            var tags = GetTag(tagname);
+            if(tags!=null)
+            {
+                tags.First().ModifyProperty(propertys);
+                return true;
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="tagname"></param>
+        /// <returns></returns>
+        public Dictionary<string, string> ListTagDefines(string tagname)
+        {
+            var tags = GetTag(tagname);
+            if (tags != null)
+            {
+                return tags.First().GetSupportModifyProperty();
+            }
+            return new Dictionary<string, string>();
         }
 
         #endregion ...Methods...
@@ -450,7 +498,7 @@ namespace AntRuntime.Enginer
                 {
                     foreach (var vvv in vv)
                     {
-                        if (vvv.NeedCal)
+                        if (vvv.NeedCal && vvv.IsEnable)
                         {
                             vvv.NeedCal = false;
                             vvv.LinkExecute();

@@ -45,6 +45,36 @@ namespace AntRuntime.Enginer
         /// <summary>
         /// 
         /// </summary>
+        /// <returns></returns>
+        public override Dictionary<string, string> GetSupportModifyProperty()
+        {
+            var re = base.GetSupportModifyProperty();
+            re.Add("AlarmLevel", ((byte)mDTag.AlarmLevel).ToString());
+            re.Add("Value", mDTag.Value.ToString());
+            return re;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="value"></param>
+        protected override void OnPropertyChangedForRuntime(string name, string value)
+        {
+            if(name=="value")
+            {
+                mDTag.Value = bool.Parse(value);
+            }
+            else if(name== "alarmlevel")
+            {
+                mDTag.AlarmLevel = (AlarmLevel)(int.Parse(value));
+            }
+            base.OnPropertyChangedForRuntime(name, value);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public override void CheckTagValueAlarm()
         {
             bool bval = Convert.ToBoolean(Value);
@@ -120,11 +150,46 @@ namespace AntRuntime.Enginer
         /// </summary>
         public override Tagbase LinkedTag { get => base.LinkedTag; set { base.LinkedTag = value;  mDTag = value as DelayDigitalAlarmTag; } }
 
-       
+
 
         #endregion ...Properties...
 
         #region ... Methods    ...
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public override Dictionary<string, string> GetSupportModifyProperty()
+        {
+            var re = base.GetSupportModifyProperty();
+            re.Add("AlarmLevel", ((byte)mDTag.AlarmLevel).ToString());
+            re.Add("Value", mDTag.Value.ToString());
+            re.Add("Delay", mDTag.Delay.ToString());
+            return re;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="value"></param>
+        protected override void OnPropertyChangedForRuntime(string name, string value)
+        {
+            if (name == "value")
+            {
+                mDTag.Value = bool.Parse(value);
+            }
+            else if (name == "alarmlevel")
+            {
+                mDTag.AlarmLevel = (AlarmLevel)(int.Parse(value));
+            }
+            else if (name == "delay")
+            {
+                mDTag.Delay = (double.Parse(value));
+            }
+            base.OnPropertyChangedForRuntime(name, value);
+        }
 
         /// <summary>
         /// 

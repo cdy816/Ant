@@ -878,6 +878,13 @@
             <param name="id"></param>
             <returns></returns>
         </member>
+        <member name="M:Cdy.Ant.Tag.IRuntimeSecurity.IsAdmin(System.String)">
+            <summary>
+            是否为管理员
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
         <member name="M:Cdy.Ant.Tag.IRuntimeSecurity.CheckLogin(System.Int64)">
             <summary>
             
@@ -949,6 +956,26 @@
             
             </summary>
             <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Cdy.Ant.Tag.IRuntimeTagService">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cdy.Ant.Tag.IRuntimeTagService.ModifyTag(System.String,System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+            
+            </summary>
+            <param name="tagname"></param>
+            <param name="propertys"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.Tag.IRuntimeTagService.ListTagDefines(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="tagname"></param>
             <returns></returns>
         </member>
         <member name="T:Cdy.Ant.ITagManager">
@@ -1899,6 +1926,34 @@
             
             </summary>
         </member>
+        <member name="P:Cdy.Ant.AnalogRangeAlarmTag.Items">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.AnalogRangeAlarmTag.Type">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cdy.Ant.AnalogRangeAlarmTag.SaveTo">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.AnalogRangeAlarmTag.LoadFrom(System.Xml.Linq.XElement)">
+            <summary>
+            
+            </summary>
+            <param name="xe"></param>
+        </member>
+        <member name="M:Cdy.Ant.AnalogRangeAlarmTag.ToString">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:Cdy.Ant.AnalogRangeAlarmTag.LoadFrom(System.Span{System.String})">
             <summary>
             
@@ -2278,6 +2333,18 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:Cdy.Ant.TwoRangeAlarmTag.AlarmDatasToString">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.TwoRangeAlarmTag.AlarmDatasFromSting(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="val"></param>
+        </member>
         <member name="M:Cdy.Ant.TwoRangeAlarmTag.LoadFrom(System.Span{System.String})">
             <summary>
             
@@ -2304,6 +2371,18 @@
             <summary>
             在范围内报警
             </summary>
+        </member>
+        <member name="M:Cdy.Ant.ThreeRangeAlarmTag.AlarmDatasToString">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.ThreeRangeAlarmTag.AlarmDatasFromSting(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="val"></param>
         </member>
         <member name="M:Cdy.Ant.ThreeRangeAlarmTag.SaveTo">
             <summary>

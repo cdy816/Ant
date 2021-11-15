@@ -46,11 +46,55 @@ namespace AntRuntime.Enginer
         /// <summary>
         /// 
         /// </summary>
+        /// <returns></returns>
+        public override Dictionary<string, string> GetSupportModifyProperty()
+        {
+            var re = base.GetSupportModifyProperty();
+            if (mATag != null)
+            {
+                StringBuilder sb = new StringBuilder();
+                foreach (var vv in mATag.Items)
+                {
+                    sb.Append(vv.ToString() + ";");
+                }
+                sb.Length = sb.Length > 0 ? sb.Length - 1 : sb.Length;
+                re.Add("Items", sb.ToString());
+            }
+            return re;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="value"></param>
+        protected override void OnPropertyChangedForRuntime(string name, string value)
+        {
+            if(name=="items")
+            {
+                mATag.Items.Clear();
+                string[] ss = value.Split(new char[] { ';' });
+                foreach(var vv in ss)
+                {
+                    mATag.Items.Add(new AnalogRangeAlarmItem().LoadFromString(vv));
+                }
+                Init();
+            }
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
         public override void Init()
         {
-            foreach(var vv in mATag.Items)
+            lock (mItems)
             {
-                mItems.Add(vv.MaxValue + vv.MinValue, vv);
+                mItems.Clear();
+                foreach (var vv in mATag.Items)
+                {
+                    mItems.Add(vv.MaxValue + vv.MinValue, vv);
+                }
             }
         }
 
@@ -68,6 +112,7 @@ namespace AntRuntime.Enginer
                 if (dval >= minval && dval <= maxval) return;
             }
             AnalogRangeAlarmItem item = null;
+            lock(mItems)
             foreach (var vv in mItems)
             {
                 if(dval>=vv.Value.MinValue&&dval<vv.Value.MaxValue)
@@ -115,6 +160,8 @@ namespace AntRuntime.Enginer
 
         protected SortedList<double, AnalogRangeAlarmItem> mLowItems = new SortedList<double, AnalogRangeAlarmItem>();
 
+        private bool mIsDirty = false;
+
         #endregion ...Variables...
 
         #region ... Events     ...
@@ -141,44 +188,119 @@ namespace AntRuntime.Enginer
         #endregion ...Properties...
 
         #region ... Methods    ...
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public override Dictionary<string, string> GetSupportModifyProperty()
+        {
+            var re = base.GetSupportModifyProperty();
+            if (mAtag.LowLowValue != null)
+            {
+                re.Add("LowLowValue", mAtag.LowLowValue.ToString());
+            }
+
+            if (mAtag.LowValue != null)
+            {
+                re.Add("LowValue", mAtag.LowValue.ToString());
+            }
+
+            if (mAtag.HighHighValue != null)
+            {
+                re.Add("HighHighValue", mAtag.HighHighValue.ToString());
+            }
+
+            if (mAtag.HighValue != null)
+            {
+                re.Add("HighValue", mAtag.HighValue.ToString());
+            }
+            return re;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="value"></param>
+        protected override void OnPropertyChangedForRuntime(string name, string value)
+        {
+            switch (name)
+            {
+                case "lowlowvalue":
+                    mAtag.LowLowValue = new AnalogAlarmItem().LoadFromString(value);
+                    mIsDirty = true;
+                    break;
+                case "lowvalue":
+                    mAtag.LowValue = new AnalogAlarmItem().LoadFromString(value);
+                    mIsDirty = true;
+                    break;
+                case "highhighvalue":
+                    mAtag.HighHighValue = new AnalogAlarmItem().LoadFromString(value);
+                    mIsDirty = true;
+                    break;
+                case "highvalue":
+                    mAtag.HighValue = new AnalogAlarmItem().LoadFromString(value);
+                    mIsDirty = true;
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        protected override void OnPropertyChangedFinish()
+        {
+            if(mIsDirty)
+            {
+                Init();
+                mIsDirty = false;
+            }
+        }
+
         /// <summary>
         /// 
         /// </summary>
         public override void Init()
         {
             AnalogRangeAlarmItem lastitem = null;
-            if (mAtag.LowLowValue != null)
+            lock (mLowItems)
             {
-                var ll = mAtag.LowLowValue;
-                var vv = new AnalogRangeAlarmItem() { AlarmLevel = ll.AlarmLevel, MinValue = lastitem != null ? lastitem.MaxValue : double.MinValue, MaxValue = ll.Value, DeadArea = ll.DeadArea };
-                mLowItems.Add(vv.MaxValue + vv.MinValue, vv);
-                lastitem = vv;
-            }
+                mLowItems.Clear();
+                mItems.Clear();
+                if (mAtag.LowLowValue != null)
+                {
+                    var ll = mAtag.LowLowValue;
+                    var vv = new AnalogRangeAlarmItem() { AlarmLevel = ll.AlarmLevel, MinValue = lastitem != null ? lastitem.MaxValue : double.MinValue, MaxValue = ll.Value, DeadArea = ll.DeadArea };
+                    mLowItems.Add(vv.MaxValue + vv.MinValue, vv);
+                    lastitem = vv;
+                }
 
-            if (mAtag.LowValue != null)
-            {
-                var ll = mAtag.LowValue;
-                var vv = new AnalogRangeAlarmItem() { AlarmLevel = ll.AlarmLevel, MinValue = lastitem != null ? lastitem.MaxValue : double.MinValue, MaxValue = ll.Value, DeadArea = ll.DeadArea };
-                mLowItems.Add(vv.MaxValue + vv.MinValue, vv);
-                lastitem = vv;
-            }
+                if (mAtag.LowValue != null)
+                {
+                    var ll = mAtag.LowValue;
+                    var vv = new AnalogRangeAlarmItem() { AlarmLevel = ll.AlarmLevel, MinValue = lastitem != null ? lastitem.MaxValue : double.MinValue, MaxValue = ll.Value, DeadArea = ll.DeadArea };
+                    mLowItems.Add(vv.MaxValue + vv.MinValue, vv);
+                    lastitem = vv;
+                }
 
-            lastitem = null;
-            if (mAtag.HighHighValue!=null)
-            {
-                var ll = mAtag.HighHighValue;
-                var vv = new AnalogRangeAlarmItem() { AlarmLevel = ll.AlarmLevel, MaxValue = lastitem != null ? lastitem.MinValue : double.MaxValue, MinValue = ll.Value, DeadArea = ll.DeadArea };
-                mItems.Add(vv.MaxValue + vv.MinValue, vv);
-                lastitem = vv;
-            }
+                lastitem = null;
+                if (mAtag.HighHighValue != null)
+                {
+                    var ll = mAtag.HighHighValue;
+                    var vv = new AnalogRangeAlarmItem() { AlarmLevel = ll.AlarmLevel, MaxValue = lastitem != null ? lastitem.MinValue : double.MaxValue, MinValue = ll.Value, DeadArea = ll.DeadArea };
+                    mItems.Add(vv.MaxValue + vv.MinValue, vv);
+                    lastitem = vv;
+                }
 
 
-            if (mAtag.HighValue != null)
-            {
-                var ll = mAtag.HighValue;
-                var vv = new AnalogRangeAlarmItem() { AlarmLevel = ll.AlarmLevel, MaxValue = lastitem != null ? lastitem.MinValue : double.MaxValue, MinValue = ll.Value, DeadArea = ll.DeadArea };
-                mItems.Add(vv.MaxValue + vv.MinValue, vv);
-                lastitem = vv;
+                if (mAtag.HighValue != null)
+                {
+                    var ll = mAtag.HighValue;
+                    var vv = new AnalogRangeAlarmItem() { AlarmLevel = ll.AlarmLevel, MaxValue = lastitem != null ? lastitem.MinValue : double.MaxValue, MinValue = ll.Value, DeadArea = ll.DeadArea };
+                    mItems.Add(vv.MaxValue + vv.MinValue, vv);
+                    lastitem = vv;
+                }
             }
         }
 
@@ -197,6 +319,7 @@ namespace AntRuntime.Enginer
             }
             AnalogRangeAlarmItem item = null;
 
+            lock(mLowItems)
             foreach (var vv in mLowItems)
             {
                 if (dval > vv.Value.MinValue && dval <= vv.Value.MaxValue)
@@ -205,7 +328,7 @@ namespace AntRuntime.Enginer
                     break;
                 }
             }
-
+            lock (mLowItems)
             foreach (var vv in mItems)
             {
                 if (dval >= vv.Value.MinValue && dval < vv.Value.MaxValue)

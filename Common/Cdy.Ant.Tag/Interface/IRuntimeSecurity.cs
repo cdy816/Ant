@@ -51,6 +51,13 @@ namespace Cdy.Ant.Tag
         bool CheckLogin(string id);
 
         /// <summary>
+        /// 是否为管理员
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        bool IsAdmin(string id);
+
+        /// <summary>
         /// 
         /// </summary>
         /// <param name="id"></param>

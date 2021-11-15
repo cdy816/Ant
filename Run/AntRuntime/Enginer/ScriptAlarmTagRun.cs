@@ -71,9 +71,37 @@ namespace AntRuntime.Enginer
         /// </summary>
         public override TagType SupportTag => TagType.Script;
 
+        private object mLockObj = new object();
+
         #endregion ...Properties...
 
         #region ... Methods    ...
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public override Dictionary<string, string> GetSupportModifyProperty()
+        {
+            var re = base.GetSupportModifyProperty();
+            re.Add("Expresse", "");
+            return re;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="value"></param>
+        protected override void OnPropertyChangedForRuntime(string name, string value)
+        {
+            if (name == "expresse")
+            {
+                mDTag.Expresse = value;
+                Init();
+            }
+            base.OnPropertyChangedForRuntime(name, value);
+        }
 
         /// <summary>
         /// 
@@ -100,37 +128,40 @@ namespace AntRuntime.Enginer
         /// </summary>
         public override void Init()
         {
-            Message = new MessageScriptImp() { Owner = this };
-            Tag = new TagScriptImp() { Owner = this };
-
-            var vsp = Microsoft.CodeAnalysis.CSharp.Scripting.CSharpScript.Create(mDTag.Expresse, sop, typeof(ScriptAlarmTagRun));
-            try
+            lock (mLockObj)
             {
-                var cp = vsp.Compile();
-                if (cp != null && cp.Length > 0)
+                Message = new MessageScriptImp() { Owner = this };
+                Tag = new TagScriptImp() { Owner = this };
+
+                var vsp = Microsoft.CodeAnalysis.CSharp.Scripting.CSharpScript.Create(mDTag.Expresse, sop, typeof(ScriptAlarmTagRun));
+                try
                 {
-                    StringBuilder sb = new StringBuilder();
-                    foreach (var vvp in cp)
+                    var cp = vsp.Compile();
+                    if (cp != null && cp.Length > 0)
                     {
-                        sb.Append(vvp.ToString());
+                        StringBuilder sb = new StringBuilder();
+                        foreach (var vvp in cp)
+                        {
+                            sb.Append(vvp.ToString());
+                        }
+                        LoggerService.Service.Warn("ScriptAlarmTagRun", mDTag.FullName + " " + sb.ToString());
                     }
-                    LoggerService.Service.Warn("ScriptAlarmTagRun", mDTag.FullName + " " + sb.ToString());
-                }
-                mScript = vsp;
+                    mScript = vsp;
 
-                //如果没有操作任何变量，则直接开个线程让其执行
-                if(ListLinkTag().Count==0)
+                    //如果没有操作任何变量，则直接开个线程让其执行
+                    if (ListLinkTag().Count == 0)
+                    {
+                        mIsNeedCallAlways = true;
+                    }
+
+                }
+                catch (Exception ex)
                 {
-                    mIsNeedCallAlways = true;
+                    LoggerService.Service.Erro("ScriptAlarmTagRun", ex.Message);
                 }
-
+                base.Init();
+                mNeedCal = true;
             }
-            catch (Exception ex)
-            {
-                LoggerService.Service.Erro("ScriptAlarmTagRun", ex.Message);
-            }
-            base.Init();
-            mNeedCal = true;
         }
 
         
@@ -142,12 +173,15 @@ namespace AntRuntime.Enginer
         {
             try
             {
-                mScript?.RunAsync(this, (exp) =>
+                lock (mLockObj)
                 {
-                    LoggerService.Service.Erro("ScriptAlarmTagRun", this.mDTag.FullName + " : " + exp.Message);
-                    return true;
-                });
-                if (mIsNeedCallAlways) mNeedCal = true;
+                    mScript?.RunAsync(this, (exp) =>
+                    {
+                        LoggerService.Service.Erro("ScriptAlarmTagRun", this.mDTag.FullName + " : " + exp.Message);
+                        return true;
+                    });
+                        if (mIsNeedCallAlways) mNeedCal = true;
+                }
             }
             catch
             {

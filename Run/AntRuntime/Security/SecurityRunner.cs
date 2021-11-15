@@ -368,6 +368,21 @@ namespace AntRuntime
             return mDocument != null && mDocument.User.Users.ContainsKey(user) && mDocument.User.Users[user].Password == pass;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public bool IsAdmin(string id)
+        {
+            if(mUseIdMap.ContainsKey(id))
+            {
+                string user = mUseIdMap[id];
+                return mDocument.User.Users[user].SuperUser || (mDocument.User.Users[user].Permissions!=null && mDocument.User.Users[user].Permissions.Contains("Super"));
+            }
+            return false;
+        }
+
 
 
         #endregion ...Methods...

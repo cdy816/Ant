@@ -45,6 +45,36 @@ namespace AntRuntime.Enginer
         #region ... Methods    ...
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public override Dictionary<string, string> GetSupportModifyProperty()
+        {
+            var re = base.GetSupportModifyProperty();
+            re.Add("AlarmLevel", ((byte)mDTag.AlarmLevel).ToString());
+            re.Add("PulseType", mDTag.PulseType.ToString());
+            return re;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="value"></param>
+        protected override void OnPropertyChangedForRuntime(string name, string value)
+        {
+            if (name == "pulsetype")
+            {
+                mDTag.PulseType = (PulseAlarmType)Enum.Parse(typeof(PulseAlarmType),value);
+            }
+            else if (name == "alarmlevel")
+            {
+                mDTag.AlarmLevel = (AlarmLevel)(int.Parse(value));
+            }
+            base.OnPropertyChangedForRuntime(name, value);
+        }
+
+        /// <summary>
         /// 每次发生变化，则会产生报警，同时不会产生回复信息
         /// </summary>
         public override void CheckTagValueAlarm()

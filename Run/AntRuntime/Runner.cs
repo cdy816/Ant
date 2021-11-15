@@ -92,6 +92,8 @@ namespace AntRuntime
 
             mSecurityRunner = new SecurityRunner() { Document = new SecuritySerise().LoadByName(mCurrentDatabase.Name) };
             ServiceLocator.Locator.Registor<Cdy.Ant.Tag.IRuntimeSecurity>(mSecurityRunner);
+
+            ServiceLocator.Locator.Registor<Cdy.Ant.Tag.IRuntimeTagService>(alarmEnginer);
         }
 
         /// <summary>

@@ -207,6 +207,7 @@ namespace Cdy.Ant
                 if (mName != value)
                 {
                     mName = value;
+                    mFullName = mName;
                 }
             }
         }
@@ -686,10 +687,20 @@ namespace Cdy.Ant
     /// </summary>
     public class AnalogRangeAlarmTag : AlarmTag
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public List<AnalogRangeAlarmItem> Items { get; set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public override TagType Type => TagType.AnalogRangeAlarm;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public override XElement SaveTo()
         {
             var re = base.SaveTo();
@@ -703,6 +714,10 @@ namespace Cdy.Ant
             return re;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="xe"></param>
         public override void LoadFrom(XElement xe)
         {
             Items = new List<AnalogRangeAlarmItem>();
@@ -713,6 +728,10 @@ namespace Cdy.Ant
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
@@ -1532,7 +1551,7 @@ namespace Cdy.Ant
     /// <summary>
     /// 二维区域报警
     /// </summary>
-    public class TwoRangeAlarmTag:SimpleAlarmTag
+    public class TwoRangeAlarmTag : SimpleAlarmTag
     {
 
         #region ... Variables  ...
@@ -1577,7 +1596,7 @@ namespace Cdy.Ant
             var re = base.SaveTo();
             re.SetAttributeValue("IsInRangeAlarm", IsInRangeAlarm);
             StringBuilder sb = new StringBuilder();
-            foreach(var vv in AlarmDatas)
+            foreach (var vv in AlarmDatas)
             {
                 sb.Append(vv.X + "," + vv.Y + ";");
             }
@@ -1593,15 +1612,15 @@ namespace Cdy.Ant
         public override void LoadFrom(XElement xe)
         {
             base.LoadFrom(xe);
-            if(xe.Attribute("IsInRangeAlarm") !=null)
+            if (xe.Attribute("IsInRangeAlarm") != null)
             {
                 IsInRangeAlarm = bool.Parse(xe.Attribute("IsInRangeAlarm").Value);
             }
             AlarmDatas = new List<Point>();
             string[] ss = xe.Value.Split(new char[] { ';' });
-            if(ss.Length>0)
+            if (ss.Length > 0)
             {
-                foreach(var vv in ss)
+                foreach (var vv in ss)
                 {
                     string[] s1 = vv.Split(new char[] { ',' });
                     double val1 = double.Parse(s1[0]);
@@ -1620,7 +1639,7 @@ namespace Cdy.Ant
             StringBuilder sb = new StringBuilder();
             foreach (var vv in AlarmDatas)
             {
-                sb.Append(vv.X + "|" + vv.Y +  ";");
+                sb.Append(vv.X + "|" + vv.Y + ";");
             }
             sb.Length = sb.Length > 0 ? sb.Length - 1 : sb.Length;
             return base.ToString() + "," + IsInRangeAlarm + "," + sb.ToString();
@@ -1629,9 +1648,43 @@ namespace Cdy.Ant
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="vals"></param>
         /// <returns></returns>
-        protected override Span<string> LoadFrom(Span<string> vals)
+        public string AlarmDatasToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (var vv in AlarmDatas)
+            {
+                sb.Append(vv.X + "|" + vv.Y + ";");
+            }
+            sb.Length = sb.Length > 0 ? sb.Length - 1 : sb.Length;
+            return sb.ToString();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="val"></param>
+        public void AlarmDatasFromSting(string val)
+        {
+            AlarmDatas = new List<Point>();
+            string[] ss = val.Split(new char[] { ';' });
+            if (ss.Length > 0)
+            {
+                foreach (var vv in ss)
+                {
+                    string[] s1 = vv.Split(new char[] { '|' });
+                    AlarmDatas.Add(new Point() { X = double.Parse(s1[0]), Y = double.Parse(s1[1]) });
+                }
+            }
+        }
+
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="vals"></param>
+    /// <returns></returns>
+    protected override Span<string> LoadFrom(Span<string> vals)
         {
             var re = base.LoadFrom(vals);
             IsInRangeAlarm = bool.Parse(re[0]);
@@ -1693,6 +1746,39 @@ namespace Cdy.Ant
         #endregion ...Properties...
 
         #region ... Methods    ...
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public string AlarmDatasToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (var vv in AlarmDatas)
+            {
+                sb.Append(vv.X + "|" + vv.Y + "|" + vv.Z + ";");
+            }
+            sb.Length = sb.Length > 0 ? sb.Length - 1 : sb.Length;
+            return sb.ToString();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="val"></param>
+        public void AlarmDatasFromSting(string val)
+        {
+            AlarmDatas = new List<Point3D>();
+            string[] ss = val.Split(new char[] { ';' });
+            if (ss.Length > 0)
+            {
+                foreach (var vv in ss)
+                {
+                    string[] s1 = vv.Split(new char[] { '|' });
+                    AlarmDatas.Add(new Point3D() { X = double.Parse(s1[0]), Y = double.Parse(s1[1]), Z = double.Parse(s1[2]) });
+                }
+            }
+        }
         /// <summary>
         /// 
         /// </summary>

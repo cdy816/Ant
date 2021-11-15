@@ -41,6 +41,41 @@ namespace AntRuntime.Enginer
         /// <summary>
         /// 
         /// </summary>
+        /// <returns></returns>
+        public override Dictionary<string, string> GetSupportModifyProperty()
+        {
+            var re = base.GetSupportModifyProperty();
+            re.Add("AlarmLevel", ((byte)mTag.AlarmLevel).ToString());
+            re.Add("MaxValue", mTag.MaxValue.ToString());
+            re.Add("MinValue", mTag.MinValue.ToString());
+            return re;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="value"></param>
+        protected override void OnPropertyChangedForRuntime(string name, string value)
+        {
+            if (name == "maxvalue")
+            {
+                mTag.MaxValue = double.Parse(value);
+            }
+            if (name == "minvalue")
+            {
+                mTag.MinValue = double.Parse(value);
+            }
+            else if (name == "alarmlevel")
+            {
+                mTag.AlarmLevel = (AlarmLevel)(int.Parse(value));
+            }
+            base.OnPropertyChangedForRuntime(name, value);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public override void CheckTagValueAlarm()
         {
             double dval = Convert.ToDouble(Value);
