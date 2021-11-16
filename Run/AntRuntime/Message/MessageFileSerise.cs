@@ -148,14 +148,16 @@ namespace AntRuntime.Message
         /// <param name="block"></param>
         public static void Save(MessageBlockBuffer block, System.IO.Stream stream)
         {
-            var vbb = stream.Length;
+            //文件指针便宜
+            int head = 64 + 8 * 24;
+            var vbb = stream.Length < head ? head : stream.Length;
             using (var br = new System.IO.BinaryWriter(stream, Encoding.UTF8, true))
             {
                 stream.Position = block.Hour * 8 + 64;
                 br.Write(vbb);
             }
             stream.Position = vbb;
-
+            block.Save(stream);
         }
 
         /// <summary>
@@ -420,7 +422,7 @@ namespace AntRuntime.Message
 
             using (System.IO.MemoryStream ms = new System.IO.MemoryStream())
             {
-                using (System.IO.Compression.BrotliStream bs = new System.IO.Compression.BrotliStream(ms, System.IO.Compression.CompressionMode.Decompress))
+                using (System.IO.Compression.BrotliStream bs = new System.IO.Compression.BrotliStream(ms, System.IO.Compression.CompressionMode.Decompress,true))
                 {
                     using (var vss = new System.IO.UnmanagedMemoryStream((byte*)pointer, dsize))
                     {
@@ -501,26 +503,62 @@ namespace AntRuntime.Message
             if(IsAckDirty)
             {
                 stream.Position += AckOffset;
-                UpdateAckChanged();
+                UpdateAckChanged(stream);
                 IsAckDirty = false;
             }
 
             if(IsRestoreDirty)
             {
                 stream.Position = pos + RestoreOffset;
-                UpdateRestoreChange();
+                UpdateRestoreChange(stream);
                 IsRestoreDirty = false;
             }
         }
 
-        private void UpdateRestoreChange()
+        /// <summary>
+        /// 
+        /// </summary>
+        private unsafe void UpdateRestoreChange(System.IO.Stream stream)
         {
+            var datasize = mAlarmMessages.Values.Count * 72;
+            var mDataPointer = Marshal.AllocHGlobal((int)datasize);
+            int offset = 0;
+            foreach (var vv in mAlarmMessages.Values)
+            {
+                MemoryHelper.WriteInt64((void*)mDataPointer, offset, vv.RestoreTime.Ticks);
+                offset += 8;
+                MemoryHelper.WriteString((void*)mDataPointer, offset, vv.RestoreValue == null ? "" : vv.RestoreValue, 64);
+                offset += 64;
+            }
 
+            using (System.IO.UnmanagedMemoryStream ss = new System.IO.UnmanagedMemoryStream((byte*)mDataPointer, datasize))
+            {
+                ss.CopyTo(stream);
+            }
         }
 
-        private void UpdateAckChanged()
+        /// <summary>
+        /// 
+        /// </summary>
+        private unsafe void UpdateAckChanged(System.IO.Stream stream)
         {
+            var datasize = mAlarmMessages.Values.Count * 104;
+            var mDataPointer = Marshal.AllocHGlobal((int)datasize);
+            int offset = 0;
+            foreach (var vv in mAlarmMessages.Values)
+            {
+                MemoryHelper.WriteInt64((void*)mDataPointer, offset, vv.AckTime.Ticks);
+                offset += 8;
+                MemoryHelper.WriteString((void*)mDataPointer, offset, vv.AckMessage == null ? "" : vv.AckMessage, 64);
+                offset += 64;
+                MemoryHelper.WriteString((void*)mDataPointer, offset, vv.AckUser == null ? "" : vv.AckUser, 32);
+                offset += 32;
+            }
 
+            using (System.IO.UnmanagedMemoryStream ss = new System.IO.UnmanagedMemoryStream((byte*)mDataPointer, datasize))
+            {
+                ss.CopyTo(stream);
+            }
         }
 
         /// <summary>
@@ -534,19 +572,22 @@ namespace AntRuntime.Message
                 //Server(64)+sourcetag(64)+createtime(8)+MessageBody(128)+AppendContent1(64)+AppendContent2(64)+AppendContent3(64)+AlarmLevel(1)+AlarmValue(64)+AlarmCondition(64)+LinkTag(64)
                 sb.AppendLine(vv.Server + "," + vv.SourceTag + "," + vv.CreateTime.Ticks + "," + vv.MessageBody + "," + vv.AppendContent1 + "," + vv.AppendContent2 + "," + vv.AppendContent3 + "," + (int)vv.AlarmLevel + "," + vv.AlarmValue + "," + vv.AlarmCondition + "," + vv.LinkTag);
             }
+            var gck = sb.GetChunks(); 
+            gck.MoveNext();
+
             System.IO.MemoryStream mCompressBuffer = new System.IO.MemoryStream();
-            using (System.IO.Compression.BrotliStream bs = new System.IO.Compression.BrotliStream(mCompressBuffer, System.IO.Compression.CompressionLevel.Fastest))
+            using (System.IO.Compression.BrotliStream bs = new System.IO.Compression.BrotliStream(mCompressBuffer, System.IO.Compression.CompressionLevel.Fastest,true))
             {
-                bs.Write(new Span<byte>(sb.GetChunks().Current.Pin().Pointer, sb.Length));
+                bs.Write(new Span<byte>(gck.Current.Pin().Pointer, sb.Length));
                 bs.Flush();
                 bs.Close();
             }
 
             var mcount = mAlarmMessages.Count;
 
-            var mcdatasize = mCompressBuffer.Length;
+            var mcdatasize = mCompressBuffer.Position;
 
-            long datacount = mcdatasize + mcount * 184 + 12;
+            long datacount = mcdatasize + mcount * 184 + 12+4;
 
             mDataPointer = Marshal.AllocHGlobal((int)datacount);
             DataSize = (int)datacount;
@@ -558,10 +599,10 @@ namespace AntRuntime.Message
             offset += 4;
 
             //Restore 数据地址
-            MemoryHelper.WriteInt32((void*)mDataPointer, offset, (int)(mcdatasize + mcount * 8 + 12));
+            MemoryHelper.WriteInt32((void*)mDataPointer, offset, (int)(mcdatasize + mcount * 8 + 12+4));
             offset += 4;
             //Ack 数据地址
-            MemoryHelper.WriteInt32((void*)mDataPointer, offset, (int)(mcdatasize + mcount * 8 + 12 + mcount * 72));
+            MemoryHelper.WriteInt32((void*)mDataPointer, offset, (int)(mcdatasize + mcount * 8 + 12 + mcount * 72+4));
             offset += 4;
 
             //写入ID
@@ -576,31 +617,34 @@ namespace AntRuntime.Message
             offset += 4;
 
             //写入压缩数据
-            mCompressBuffer.Position = 0;
-            using (var mm = new System.IO.UnmanagedMemoryStream((byte*)(mDataPointer + offset), mcdatasize))
-            {
-                mCompressBuffer.CopyTo(mm);
-            }
+            //mCompressBuffer.Position = 0;
+            //using (var mm = new System.IO.UnmanagedMemoryStream((byte*)(mDataPointer + offset), mcdatasize))
+            //{
+            //    mCompressBuffer.CopyTo(mm);
+            //}
+            Marshal.Copy(mCompressBuffer.GetBuffer(), 0, mDataPointer + offset, (int)mcdatasize);
+
+
             //写入恢复值
-            offset = (int)(mcdatasize + mcount * 8 + 12);
+            offset = (int)(mcdatasize + mcount * 8 + 12+4);
             foreach (var vv in mAlarmMessages.Values)
             {
                 MemoryHelper.WriteInt64((void*)mDataPointer, offset, vv.RestoreTime.Ticks);
                 offset += 8;
-                MemoryHelper.WriteString((void*)mDataPointer, offset, vv.RestoreValue,64);
+                MemoryHelper.WriteString((void*)mDataPointer, offset, vv.RestoreValue==null?"":vv.RestoreValue,64);
                 offset += 64;
             }
 
 
             //写入确认值
-            offset = (int)(mcdatasize + mcount * 8 + 12 + mcount * 72);
+            offset = (int)(mcdatasize + mcount * 8 + 12 + mcount * 72+4);
             foreach (var vv in mAlarmMessages.Values)
             {
                 MemoryHelper.WriteInt64((void*)mDataPointer, offset, vv.AckTime.Ticks);
                 offset += 8;
-                MemoryHelper.WriteString((void*)mDataPointer, offset, vv.AckMessage, 64);
+                MemoryHelper.WriteString((void*)mDataPointer, offset, vv.AckMessage==null?"":vv.AckMessage, 64);
                 offset += 64;
-                MemoryHelper.WriteString((void*)mDataPointer, offset, vv.AckUser, 32);
+                MemoryHelper.WriteString((void*)mDataPointer, offset, vv.AckUser==null?"":vv.AckUser, 32);
                 offset += 32;
             }
 
@@ -683,7 +727,7 @@ namespace AntRuntime.Message
 
             using (System.IO.MemoryStream ms = new System.IO.MemoryStream())
             {
-                using (System.IO.Compression.BrotliStream bs = new System.IO.Compression.BrotliStream(ms, System.IO.Compression.CompressionMode.Decompress))
+                using (System.IO.Compression.BrotliStream bs = new System.IO.Compression.BrotliStream(ms, System.IO.Compression.CompressionMode.Decompress,true))
                 {
                     using (var vss = new System.IO.UnmanagedMemoryStream((byte*)pointer+offset, dsize))
                     {
@@ -732,18 +776,22 @@ namespace AntRuntime.Message
                 sb.AppendLine(vv.Id+","+ vv.Server + "," + vv.SourceTag + "," + vv.CreateTime.Ticks + "," + vv.MessageBody + "," + vv.AppendContent1 + "," + vv.AppendContent2 + "," + vv.AppendContent3 );
             }
             System.IO.MemoryStream mCompressBuffer = new System.IO.MemoryStream();
-            using (System.IO.Compression.BrotliStream bs = new System.IO.Compression.BrotliStream(mCompressBuffer, System.IO.Compression.CompressionLevel.Fastest))
+
+            var gck = sb.GetChunks();
+            gck.MoveNext();
+
+            using (System.IO.Compression.BrotliStream bs = new System.IO.Compression.BrotliStream(mCompressBuffer, System.IO.Compression.CompressionLevel.Fastest,true))
             {
-                bs.Write(new Span<byte>(sb.GetChunks().Current.Pin().Pointer, sb.Length));
+                bs.Write(new Span<byte>(gck.Current.Pin().Pointer, sb.Length));
                 bs.Flush();
                 bs.Close();
             }
 
             var mcount = mAlarmMessages.Count;
 
-            var mcdatasize = mCompressBuffer.Length;
+            var mcdatasize = mCompressBuffer.Position;
 
-            long datacount = mcdatasize + mcount * 184 + 12;
+            long datacount = mcdatasize + mcount * 184 + 12 +4;
 
             mDataPointer = Marshal.AllocHGlobal((int)datacount);
             DataSize = (int)datacount;
@@ -758,11 +806,12 @@ namespace AntRuntime.Message
             offset += 4;
 
             //写入压缩数据
-            mCompressBuffer.Position = 0;
-            using (var mm = new System.IO.UnmanagedMemoryStream((byte*)(mDataPointer + offset), mcdatasize))
-            {
-                mCompressBuffer.CopyTo(mm);
-            }
+            //mCompressBuffer.Position = 0;
+            Marshal.Copy(mCompressBuffer.GetBuffer(), 0, mDataPointer + offset, (int)mcdatasize);
+            //using (var mm = new System.IO.UnmanagedMemoryStream((byte*)(mDataPointer + offset), mcdatasize))
+            //{
+            //    mCompressBuffer.CopyTo(mm);
+            //}
         }
     }
 }

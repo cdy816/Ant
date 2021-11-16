@@ -132,9 +132,12 @@ namespace AntRuntime
         public void Start()
         {
             alarmEnginer.Start();
+          
+            mSecurityRunner?.Start();
+            HisMessageService.Service.Start();
             mDataApi?.Start();
             mServiceProxy?.Start();
-            mSecurityRunner?.Start();
+            IsStarted = true;
         }
 
         /// <summary>
@@ -151,9 +154,15 @@ namespace AntRuntime
         public void Stop()
         {
             mDataApi?.Stop();
-            mServiceProxy?.Stop();
+          
             alarmEnginer.Stop();
             mSecurityRunner?.Stop();
+            MessageService.Service.FlushDirtyBufferToDisk();
+            HisMessageService.Service.Stop();
+
+            mServiceProxy?.Stop();
+
+            IsStarted = false;
         }
 
         #endregion ...Methods...

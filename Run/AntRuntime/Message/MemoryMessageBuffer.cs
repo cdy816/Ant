@@ -11,7 +11,10 @@ using System.Threading.Tasks;
 namespace AntRuntime
 {
 
-    partial class MemoryMessageHourBuffer:Dictionary<long,Cdy.Ant.Message>
+    /// <summary>
+    /// 
+    /// </summary>
+    public class MemoryMessageHourBuffer:Dictionary<long,Cdy.Ant.Message>
     {
 
         /// <summary>
@@ -207,7 +210,7 @@ namespace AntRuntime
         private string GetDataFile(DateTime Starttime)
         {
             string name = Starttime.ToString("yyyyMMdd");
-            return PathHelper.helper.GetDataPath(DatabaseName, name + ".alm");
+            return PathHelper.helper.GetDataPath(DatabaseName, System.IO.Path.Combine("Alm", name + ".alm"));
         }
 
         /// <summary>
@@ -218,23 +221,26 @@ namespace AntRuntime
             if (buffer.IsDirty)
             {
                 string sfile = GetDataFile(buffer.OldestMessageTime);
-                if (System.IO.File.Exists(sfile))
-                {
-                    using (var vv = System.IO.File.Open(sfile, System.IO.FileMode.Open, System.IO.FileAccess.Read, System.IO.FileShare.ReadWrite))
-                    {
 
-                        MessageBlockBuffer mbb = new MessageBlockBuffer();
-                        mbb.Hour = buffer.OldestMessageTime.Hour;
-                        mbb.AlarmArea = new AlarmMessageAreaBuffer();
-                        foreach(var vvm in buffer.Where(e => e.Value.Type == MessgeType.Alarm).Select(e => e.Value as AlarmMessage))
-                        {
-                            mbb.AlarmArea.AlarmMessage.Add(vvm.Id,vvm);
-                        }
-                        
-                        mbb.CommonArea = new CommonMessageAreaBuffer();
-                        mbb.CommonArea.Message.AddRange(buffer.Where(e => e.Value.Type == MessgeType.InfoMessage).Select(e => e.Value));
-                        MessageFileSerise.Save(mbb, vv);
+                string sdir = System.IO.Path.GetDirectoryName(sfile);
+                if (!System.IO.Directory.Exists(sdir)) System.IO.Directory.CreateDirectory(sdir);
+
+                using (var vv = System.IO.File.Open(sfile, System.IO.FileMode.OpenOrCreate, System.IO.FileAccess.ReadWrite, System.IO.FileShare.ReadWrite))
+                {
+
+                    vv.Position = vv.Length;
+
+                    MessageBlockBuffer mbb = new MessageBlockBuffer();
+                    mbb.Hour = buffer.OldestMessageTime.Hour;
+                    mbb.AlarmArea = new AlarmMessageAreaBuffer();
+                    foreach (var vvm in buffer.Where(e => e.Value.Type == MessgeType.Alarm).Select(e => e.Value as AlarmMessage))
+                    {
+                        mbb.AlarmArea.AlarmMessage.Add(vvm.Id, vvm);
                     }
+
+                    mbb.CommonArea = new CommonMessageAreaBuffer();
+                    mbb.CommonArea.Message.AddRange(buffer.Where(e => e.Value.Type == MessgeType.InfoMessage).Select(e => e.Value));
+                    MessageFileSerise.Save(mbb, vv);
                 }
                 buffer.IsDirty = false;
             }
@@ -331,6 +337,20 @@ namespace AntRuntime
                         (tmp as AlarmMessage).AckMessage = content;
                         vbmp.IsDirty = true;
                     }
+                }
+            }
+        }
+
+        /// <summary>
+        /// 将变脏的数据块存盘
+        /// </summary>
+        public void FlushDirtyBufferToDisk()
+        {
+            foreach(var vv in mBufferItems.ToArray())
+            {
+                if(vv.Value.IsDirty)
+                {
+                    CheckSaveAlarmToFile(vv.Value);
                 }
             }
         }

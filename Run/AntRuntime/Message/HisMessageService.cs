@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace AntRuntime
@@ -19,6 +20,12 @@ namespace AntRuntime
         /// 
         /// </summary>
         public static HisMessageService Service = new HisMessageService();
+
+        private object mLockObj = new object();
+
+        private Thread mScanThread;
+
+        private bool mIsClosed = false;
 
         #endregion ...Variables...
 
@@ -46,6 +53,55 @@ namespace AntRuntime
         /// <summary>
         /// 
         /// </summary>
+        public void Start()
+        {
+            mScanThread = new Thread(OldBufferRemoveProcess);
+            mScanThread.IsBackground = true;
+            mScanThread.Start();
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public void Stop()
+        {
+            mIsClosed = true;
+            while (mScanThread.IsAlive) Thread.Sleep(1);
+            SaveChangedMessageToDisk();
+        }
+
+        /// <summary>
+        /// 删除长时间不实用的缓存
+        /// </summary>
+        public void OldBufferRemoveProcess()
+        {
+            while(!mIsClosed)
+            {
+                DateTime dnow = DateTime.Now;
+                List<DateTime> mremoved = new List<DateTime>();
+                foreach(var vv in mBufferedFiles)
+                {
+                    if((dnow - vv.Value.LastAccessTime).TotalDays>1)
+                    {
+                        mremoved.Add(vv.Key);
+                    }
+                }
+                lock (mLockObj)
+                {
+                    foreach (var vv in mremoved)
+                    {
+                        mBufferedFiles[vv].SaveChangedMessageToDisk();
+                        mBufferedFiles.Remove(vv);
+                    }
+                }
+                Thread.Sleep(10000);
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="lid"></param>
         /// <returns></returns>
         public DateTime RestoreTimeFromId(long lid)
@@ -63,6 +119,7 @@ namespace AntRuntime
         {
             DateTime dt = RestoreTimeFromId(id);
             var dtt = dt.Date;
+
             if(mBufferedFiles.ContainsKey(dtt))
             {
                 mBufferedFiles[dtt].RestoreMessage(id, value, dt.Hour);
@@ -85,15 +142,18 @@ namespace AntRuntime
         {
             DateTime dt = RestoreTimeFromId(id);
             var dtt = dt.Date;
-            if (mBufferedFiles.ContainsKey(dtt))
+            lock (mLockObj)
             {
-                mBufferedFiles[dtt].AckMessage(id, user, content, dt.Hour);
-            }
-            else
-            {
-                var vv = new HisFileMessageBuffer() { Starttime = dt, Endtime = dt.AddHours(1), DatabaseName = DatabaseName, AlarmDate = dtt };
-                mBufferedFiles.Add(vv.AlarmDate, vv);
-                vv.AckMessage(id, user, content, dt.Hour);
+                if (mBufferedFiles.ContainsKey(dtt))
+                {
+                    mBufferedFiles[dtt].AckMessage(id, user, content, dt.Hour);
+                }
+                else
+                {
+                    var vv = new HisFileMessageBuffer() { Starttime = dt, Endtime = dt.AddHours(1), DatabaseName = DatabaseName, AlarmDate = dtt };
+                    mBufferedFiles.Add(vv.AlarmDate, vv);
+                    vv.AckMessage(id, user, content, dt.Hour);
+                }
             }
         }
 
@@ -106,16 +166,19 @@ namespace AntRuntime
         {
             HisFileMessageBuffer hh;
             var time = RestoreTimeFromId(lid);
-            if(mBufferedFiles.ContainsKey(time.Date))
+            lock (mLockObj)
             {
-                hh = mBufferedFiles[time.Date];
-            }
-            else
-            {
-                var vv = new HisFileMessageBuffer() { Starttime = time, Endtime = time.AddHours(1), DatabaseName = DatabaseName, AlarmDate = time.Date };
-                mBufferedFiles.Add(vv.AlarmDate, vv);
-                vv.LoadMessageBlock(time.Hour);
-                hh = vv;
+                if (mBufferedFiles.ContainsKey(time.Date))
+                {
+                    hh = mBufferedFiles[time.Date];
+                }
+                else
+                {
+                    var vv = new HisFileMessageBuffer() { Starttime = time, Endtime = time.AddHours(1), DatabaseName = DatabaseName, AlarmDate = time.Date };
+                    mBufferedFiles.Add(vv.AlarmDate, vv);
+                    vv.LoadMessageBlock(time.Hour);
+                    hh = vv;
+                }
             }
             return hh.Query(lid,time.Hour);
         }
@@ -152,34 +215,40 @@ namespace AntRuntime
                 dt = st.AddHours(1);
                 if (dt.Day > st.Day)
                 {
-                    if(mBufferedFiles.ContainsKey(dt.Date))
+                    lock (mLockObj)
                     {
-                        var vv = mBufferedFiles[dt.Date];
-                        vv.Starttime = st;
-                        vv.Endtime = dt;
-                        mReaders.Add(vv);
-                    }
-                    else
-                    {
-                        var vv = new HisFileMessageBuffer() { Starttime = st, Endtime = dt, DatabaseName = DatabaseName, AlarmDate = st.Date };
-                        mBufferedFiles.Add(vv.AlarmDate, vv);
-                        mReaders.Add(vv);
+                        if (mBufferedFiles.ContainsKey(dt.Date))
+                        {
+                            var vv = mBufferedFiles[dt.Date];
+                            vv.Starttime = st;
+                            vv.Endtime = dt;
+                            mReaders.Add(vv);
+                        }
+                        else
+                        {
+                            var vv = new HisFileMessageBuffer() { Starttime = st, Endtime = dt, DatabaseName = DatabaseName, AlarmDate = st.Date };
+                            mBufferedFiles.Add(vv.AlarmDate, vv);
+                            mReaders.Add(vv);
+                        }
                     }
                 }
                 else if(dt>etime)
                 {
-                    if (mBufferedFiles.ContainsKey(dt.Date))
+                    lock (mLockObj)
                     {
-                        var vv = mBufferedFiles[dt.Date];
-                        vv.Starttime = st;
-                        vv.Endtime = etime;
-                        mReaders.Add(mBufferedFiles[dt.Date]);
-                    }
-                    else
-                    {
-                        var vv = new HisFileMessageBuffer() { Starttime = st, Endtime = etime, DatabaseName = DatabaseName, AlarmDate = st.Date };
-                        mBufferedFiles.Add(vv.AlarmDate, vv);
-                        mReaders.Add(vv);
+                        if (mBufferedFiles.ContainsKey(dt.Date))
+                        {
+                            var vv = mBufferedFiles[dt.Date];
+                            vv.Starttime = st;
+                            vv.Endtime = etime;
+                            mReaders.Add(mBufferedFiles[dt.Date]);
+                        }
+                        else
+                        {
+                            var vv = new HisFileMessageBuffer() { Starttime = st, Endtime = etime, DatabaseName = DatabaseName, AlarmDate = st.Date };
+                            mBufferedFiles.Add(vv.AlarmDate, vv);
+                            mReaders.Add(vv);
+                        }
                     }
                    // mReaders.Add(new FileMessageBuffer() { Starttime = st, Endtime = dt, DatabaseName = DatabaseName, AlarmDate = st.Date });
                 }
@@ -198,6 +267,18 @@ namespace AntRuntime
             }
 
             return re;
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public void SaveChangedMessageToDisk()
+        {
+            foreach(var vv in mBufferedFiles)
+            {
+                vv.Value.SaveChangedMessageToDisk();
+            }
         }
 
         #endregion ...Methods...

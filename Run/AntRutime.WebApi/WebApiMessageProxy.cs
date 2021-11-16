@@ -79,7 +79,9 @@ namespace AntRutime.WebApi
         /// </summary>
         public void Start()
         {
-            CreateHostBuilder(null).Build().Run();
+            Task.Run(() => {
+                CreateHostBuilder(null).Build().Run();
+            });
         }
 
         /// <summary>

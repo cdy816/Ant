@@ -71,6 +71,9 @@ namespace AntRuntime
             lock (mBuffers)
                 ltmp = mBuffers.Values.ToList();
             string sfile = GetDataFile();
+            string sdir = System.IO.Path.GetDirectoryName(sfile);
+            if (!System.IO.Directory.Exists(sdir)) System.IO.Directory.CreateDirectory(sdir);
+
             using (var vv = System.IO.File.Open(sfile, System.IO.FileMode.OpenOrCreate, System.IO.FileAccess.ReadWrite, System.IO.FileShare.ReadWrite))
             {
                 foreach (var vvv in ltmp)
@@ -78,6 +81,7 @@ namespace AntRuntime
                     if (vvv.AlarmArea.IsAckDirty || vvv.AlarmArea.IsRestoreDirty)
                     {
                         MessageFileSerise.UpdateDirtyToDisk(vvv, vv);
+                        vvv.AlarmArea.IsAckDirty = vvv.AlarmArea.IsRestoreDirty = false;
                     }
                 }
             }
@@ -103,6 +107,7 @@ namespace AntRuntime
                     mg.AckUser = user;
                 }
                 mBuffers[hour].AlarmArea.IsAckDirty = true;
+                LastAccessTime = DateTime.Now;
             }
             else
             {
@@ -120,6 +125,7 @@ namespace AntRuntime
                     mg.AckUser = user;
                 }
                 mBuffers[hour].AlarmArea.IsAckDirty = true;
+                LastAccessTime = DateTime.Now;
             }
         }
 
@@ -141,6 +147,7 @@ namespace AntRuntime
                     mg.RestoreTime = DateTime.Now;
                 }
                 mBuffers[hour].AlarmArea.IsRestoreDirty = true;
+                LastAccessTime = DateTime.Now;
             }
             else
             {
@@ -157,6 +164,7 @@ namespace AntRuntime
                     mg.RestoreTime = DateTime.Now;
                 }
                 mBuffers[hour].AlarmArea.IsRestoreDirty = true;
+                LastAccessTime = DateTime.Now;
             }
         }
 
@@ -167,7 +175,7 @@ namespace AntRuntime
         private string GetDataFile()
         {
             string name = AlarmDate.ToString("yyyyMMdd");
-            return PathHelper.helper.GetDataPath(DatabaseName, name + ".alm");
+            return PathHelper.helper.GetDataPath(DatabaseName,System.IO.Path.Combine("Alm", name + ".alm"));
         }
 
         /// <summary>
@@ -187,6 +195,9 @@ namespace AntRuntime
         public MessageBlockBuffer ReadMessgeBlock(int hour)
         {
             string sfile = GetDataFile();
+            string sdir = System.IO.Path.GetDirectoryName(sfile);
+            if (!System.IO.Directory.Exists(sdir)) System.IO.Directory.CreateDirectory(sdir);
+
             if (System.IO.File.Exists(sfile))
             {
                 using (var vv = System.IO.File.Open(sfile, System.IO.FileMode.Open, System.IO.FileAccess.Read, System.IO.FileShare.ReadWrite))
@@ -237,6 +248,9 @@ namespace AntRuntime
         public IEnumerable<Cdy.Ant.Message> ReadFromFile(DateTime startTime, DateTime endTime)
         {
             string sfile = GetDataFile();
+            string sdir = System.IO.Path.GetDirectoryName(sfile);
+            if (!System.IO.Directory.Exists(sdir)) System.IO.Directory.CreateDirectory(sdir);
+
             List<Cdy.Ant.Message> ll = new List<Cdy.Ant.Message>();
             if (System.IO.File.Exists(sfile))
             {
@@ -266,6 +280,7 @@ namespace AntRuntime
                         ll.AddRange(mBuffers[i].GetMessages(startTime, endTime));
                     }
                 }
+                LastAccessTime = DateTime.Now;
             }
             return ll;
         }
@@ -276,7 +291,7 @@ namespace AntRuntime
         public void Dispose()
         {
             SaveChangedMessageToDisk();
-            foreach(var vv in mBuffers)
+            foreach (var vv in mBuffers)
             {
                 vv.Value.Dispose();
             }

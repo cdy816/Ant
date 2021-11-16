@@ -64,6 +64,14 @@ namespace AntRuntime
         #region ... Methods    ...
 
         /// <summary>
+        /// 
+        /// </summary>
+        public void FlushDirtyBufferToDisk()
+        {
+            mMemoryBuffer.FlushDirtyBufferToDisk();
+        }
+
+        /// <summary>
         /// 生成一个Message的Id
         /// </summary>
         /// <param name="id"></param>
