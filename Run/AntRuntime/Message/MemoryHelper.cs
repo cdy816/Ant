@@ -7,6 +7,7 @@
 //  种道洋
 //==============================================================
 using System;
+using System.Buffers;
 using System.Collections.Generic;
 using System.Text;
 
@@ -57,7 +58,30 @@ namespace AntRuntime
             }
         }
 
-      
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ptr"></param>
+        /// <param name="offset"></param>
+        /// <param name="Maxlen"></param>
+        /// <returns></returns>
+        public static unsafe string ReadString(void* ptr, int offset,  int Maxlen)
+        {
+            try
+            {
+                byte[] bval =  ArrayPool<byte>.Shared.Rent(Maxlen);
+
+                System.Runtime.InteropServices.Marshal.Copy((IntPtr)(ptr) + offset,bval,0, Maxlen);
+
+                return Encoding.UTF8.GetString(bval.AsSpan(Maxlen));
+
+
+            }
+            catch (NullReferenceException)
+            {
+                throw new AccessViolationException();
+            }
+        }
 
         /// <summary>
         /// 

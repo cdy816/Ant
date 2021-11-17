@@ -23,6 +23,11 @@ namespace AntRuntime
         public int Hour { get; set; }
 
         /// <summary>
+        /// 
+        /// </summary>
+        public long LastFilePosition { get; set; } = 0;
+
+        /// <summary>
         /// 最早消息的时间
         /// </summary>
         public DateTime OldestMessageTime { get; set; }
@@ -134,15 +139,19 @@ namespace AntRuntime
         public void LoadBuffer()
         {
             DateTime dnow = DateTime.Now;
-            var vv = new HisFileMessageBuffer() { Starttime = dnow, Endtime = dnow.AddHours(1), DatabaseName = DatabaseName }.ReadFromFile();
-            if(vv!=null)
+            var vv = new HisFileMessageBuffer() {AlarmDate = dnow, Starttime = dnow, Endtime = dnow.AddHours(1), DatabaseName = DatabaseName }.ReadDataBlockFromFile();
+            if(vv!=null && vv.Count()>0)
             {
-                mLastHourBuffer = new MemoryMessageHourBuffer() { Hour = dnow.Hour };
+                mLastHourBuffer = new MemoryMessageHourBuffer() { Hour = dnow.Hour,LastFilePosition = vv.First().FilePosition };
                 mLastHourBuffer.OldestMessageTime = dnow.Date.AddHours(dnow.Hour);
 
                 foreach(var vvv in vv)
                 {
-                    mLastHourBuffer.Add(vvv.Id, vvv);
+                    foreach(var msg in vvv.GetMessages())
+                    {
+                        mLastHourBuffer.Add(msg.Id, msg);
+                    }
+                   
                 }
                 lock (mBufferItems)
                     mBufferItems.Add(mLastHourBuffer.Hour,mLastHourBuffer);
@@ -227,8 +236,14 @@ namespace AntRuntime
 
                 using (var vv = System.IO.File.Open(sfile, System.IO.FileMode.OpenOrCreate, System.IO.FileAccess.ReadWrite, System.IO.FileShare.ReadWrite))
                 {
-
-                    vv.Position = vv.Length;
+                    if (buffer.LastFilePosition > 0)
+                    {
+                        vv.Position = buffer.LastFilePosition;
+                    }
+                    else
+                    {
+                        vv.Position = vv.Length;
+                    }
 
                     MessageBlockBuffer mbb = new MessageBlockBuffer();
                     mbb.Hour = buffer.OldestMessageTime.Hour;

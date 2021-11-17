@@ -94,7 +94,7 @@ namespace AntRuntime.Message
 
             using (var br = new System.IO.BinaryReader(stream, Encoding.UTF8, true))
             {
-                foreach(var vv in mHours)
+                foreach (var vv in mHours)
                 {
                     stream.Position = 64 + vv * 8;
                     ltmp.Add(br.ReadInt64());
@@ -105,7 +105,11 @@ namespace AntRuntime.Message
             {
                 stream.Position = vv;
                 MessageBlockBuffer mbb = new MessageBlockBuffer();
-                mbb.Load(stream);
+                if (vv >= (64 + 24 * 8))
+                {
+                    mbb.Load(stream);
+                    mbb.FilePosition = vv;
+                }
                 Result.Add(mbb);
             }
             return this;
@@ -197,6 +201,11 @@ namespace AntRuntime.Message
         public int Hour { get; set; }
 
         /// <summary>
+        /// 数据在文件中偏移
+        /// </summary>
+        public long FilePosition { get; set; }
+
+        /// <summary>
         /// 
         /// </summary>
         public AlarmMessageAreaBuffer AlarmArea { get; set; }
@@ -249,20 +258,54 @@ namespace AntRuntime.Message
         /// <summary>
         /// 
         /// </summary>
+        /// <returns></returns>
+        public IEnumerable<Cdy.Ant.Message> GetMessages()
+        {
+            SortedDictionary<long, Cdy.Ant.Message> ltmp = new SortedDictionary<long, Cdy.Ant.Message>();
+
+            if (AlarmArea != null && AlarmArea.AlarmMessage != null)
+            {
+                foreach (var vv in AlarmArea.AlarmMessage.Values)
+                {
+                    ltmp.Add(vv.Id, vv);
+
+                }
+            }
+
+            if (CommonArea != null && CommonArea.Message != null)
+            {
+                foreach (var vv in CommonArea.Message)
+                {
+                    ltmp.Add(vv.Id, vv);
+
+                }
+            }
+
+            return ltmp.Values.ToList();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="stream"></param>
         /// <param name="seek"></param>
         public unsafe void Load(System.IO.Stream stream)
         {
             using(var br = new System.IO.BinaryReader(stream,Encoding.UTF8,true))
             {
-                var vsize = br.ReadInt64();
+                var vsize = br.ReadInt32();
                 var offset = br.ReadInt32();
                 IntPtr ptr = Marshal.AllocHGlobal((int)vsize);
                 br.BaseStream.Read(new Span<byte>((void*)ptr, (int)vsize));
-                Marshal.FreeHGlobal(ptr);
+
+                AlarmArea = new AlarmMessageAreaBuffer();
 
                 AlarmArea.Load(ptr);
+                CommonArea = new CommonMessageAreaBuffer();
+
                 CommonArea.Load(ptr, (int)offset);
+
+                Marshal.FreeHGlobal(ptr);
             }
         }
 
@@ -420,22 +463,21 @@ namespace AntRuntime.Message
             int dsize = MemoryHelper.ReadInt32(pointer, offset);
             offset += 4;
 
-            using (System.IO.MemoryStream ms = new System.IO.MemoryStream())
+            System.IO.MemoryStream ms = new System.IO.MemoryStream();
             {
-                using (System.IO.Compression.BrotliStream bs = new System.IO.Compression.BrotliStream(ms, System.IO.Compression.CompressionMode.Decompress,true))
+                using (var vss = new System.IO.UnmanagedMemoryStream((byte*)pointer + offset, dsize))
                 {
-                    using (var vss = new System.IO.UnmanagedMemoryStream((byte*)pointer, dsize))
+                    using (System.IO.Compression.BrotliStream bs = new System.IO.Compression.BrotliStream(vss, System.IO.Compression.CompressionMode.Decompress, true))
                     {
-                        bs.CopyTo(vss);
-                        vss.Flush();
+                        bs.CopyTo(ms);
                     }
-                    bs.Close();
                 }
 
                 ms.Position = 0;
-                var tr = new System.IO.StreamReader(ms);
+                var tr = new System.IO.StreamReader(ms, Encoding.UTF8);
+
                 int i = 0;
-                while (tr.EndOfStream)
+                while (!tr.EndOfStream)
                 {
                     string msgbd = tr.ReadLine();
                     if (!string.IsNullOrEmpty(msgbd))
@@ -468,7 +510,7 @@ namespace AntRuntime.Message
             {
                 var vtime = MemoryHelper.ReadDateTime((void*)pointer,offset);
                 offset += 8;
-                var sval = Encoding.UTF8.GetString(new ReadOnlySpan<byte>((void*)(pointer + offset), 64));
+                var sval = MemoryHelper.ReadString((void*)pointer , offset, 64);
                 offset += 64;
                 var vtag = mtmp[i];
                 vtag.RestoreTime = vtime;
@@ -481,9 +523,9 @@ namespace AntRuntime.Message
             {
                 var vtime = MemoryHelper.ReadDateTime((void*)pointer, offset);
                 offset += 8;
-                var sval = Encoding.UTF8.GetString(new ReadOnlySpan<byte>((void*)(pointer + offset), 64));
+                var sval = MemoryHelper.ReadString((void*)(pointer), offset,64);
                 offset += 64;
-                var suser = Encoding.UTF8.GetString(new ReadOnlySpan<byte>((void*)(pointer + offset), 32));
+                var suser = MemoryHelper.ReadString((void*)(pointer), offset, 32);
 
                 var vtag = mtmp[i];
                 vtag.AckTime = vtime;
@@ -566,21 +608,16 @@ namespace AntRuntime.Message
         /// </summary>
         public unsafe void Save()
         {
-            StringBuilder sb = new StringBuilder();
-            foreach (var vv in mAlarmMessages.Values)
-            {
-                //Server(64)+sourcetag(64)+createtime(8)+MessageBody(128)+AppendContent1(64)+AppendContent2(64)+AppendContent3(64)+AlarmLevel(1)+AlarmValue(64)+AlarmCondition(64)+LinkTag(64)
-                sb.AppendLine(vv.Server + "," + vv.SourceTag + "," + vv.CreateTime.Ticks + "," + vv.MessageBody + "," + vv.AppendContent1 + "," + vv.AppendContent2 + "," + vv.AppendContent3 + "," + (int)vv.AlarmLevel + "," + vv.AlarmValue + "," + vv.AlarmCondition + "," + vv.LinkTag);
-            }
-            var gck = sb.GetChunks(); 
-            gck.MoveNext();
 
             System.IO.MemoryStream mCompressBuffer = new System.IO.MemoryStream();
             using (System.IO.Compression.BrotliStream bs = new System.IO.Compression.BrotliStream(mCompressBuffer, System.IO.Compression.CompressionLevel.Fastest,true))
             {
-                bs.Write(new Span<byte>(gck.Current.Pin().Pointer, sb.Length));
-                bs.Flush();
-                bs.Close();
+                foreach (var vv in mAlarmMessages.Values)
+                {
+                    //Server(64)+sourcetag(64)+createtime(8)+MessageBody(128)+AppendContent1(64)+AppendContent2(64)+AppendContent3(64)+AlarmLevel(1)+AlarmValue(64)+AlarmCondition(64)+LinkTag(64)
+                    string str = vv.Server + "," + vv.SourceTag + "," + vv.CreateTime.Ticks + "," + vv.MessageBody + "," + vv.AppendContent1 + "," + vv.AppendContent2 + "," + vv.AppendContent3 + "," + (int)vv.AlarmLevel + "," + vv.AlarmValue + "," + vv.AlarmCondition + "," + vv.LinkTag+"\r\n";
+                    bs.Write(Encoding.UTF8.GetBytes(str));
+                }
             }
 
             var mcount = mAlarmMessages.Count;
@@ -727,20 +764,18 @@ namespace AntRuntime.Message
 
             using (System.IO.MemoryStream ms = new System.IO.MemoryStream())
             {
-                using (System.IO.Compression.BrotliStream bs = new System.IO.Compression.BrotliStream(ms, System.IO.Compression.CompressionMode.Decompress,true))
+                using (var vss = new System.IO.UnmanagedMemoryStream((byte*)pointer + offset, dsize))
                 {
-                    using (var vss = new System.IO.UnmanagedMemoryStream((byte*)pointer+offset, dsize))
+                    using (System.IO.Compression.BrotliStream bs = new System.IO.Compression.BrotliStream(vss, System.IO.Compression.CompressionMode.Decompress, true))
                     {
-                        bs.CopyTo(vss);
-                        vss.Flush();
+                        bs.CopyTo(ms);
                     }
-                    bs.Close();
                 }
 
                 ms.Position = 0;
-                var tr = new System.IO.StreamReader(ms);
+                var tr = new System.IO.StreamReader(ms,Encoding.UTF8);
                 int i = 0;
-                while (tr.EndOfStream)
+                while (!tr.EndOfStream)
                 {
                     string msgbd = tr.ReadLine();
                     if (!string.IsNullOrEmpty(msgbd))
@@ -769,22 +804,16 @@ namespace AntRuntime.Message
         /// </summary>
         public unsafe void Save()
         {
-            StringBuilder sb = new StringBuilder();
-            foreach (var vv in mAlarmMessages)
-            {
-                //messageid(8)+source(64)+sourcetag(64)+createtime(8)+MessageBody(128)+AppendContent1(64)+AppendContent2(64)+AppendContent3(64)
-                sb.AppendLine(vv.Id+","+ vv.Server + "," + vv.SourceTag + "," + vv.CreateTime.Ticks + "," + vv.MessageBody + "," + vv.AppendContent1 + "," + vv.AppendContent2 + "," + vv.AppendContent3 );
-            }
             System.IO.MemoryStream mCompressBuffer = new System.IO.MemoryStream();
-
-            var gck = sb.GetChunks();
-            gck.MoveNext();
 
             using (System.IO.Compression.BrotliStream bs = new System.IO.Compression.BrotliStream(mCompressBuffer, System.IO.Compression.CompressionLevel.Fastest,true))
             {
-                bs.Write(new Span<byte>(gck.Current.Pin().Pointer, sb.Length));
-                bs.Flush();
-                bs.Close();
+                foreach (var vv in mAlarmMessages)
+                {
+                    //messageid(8)+source(64)+sourcetag(64)+createtime(8)+MessageBody(128)+AppendContent1(64)+AppendContent2(64)+AppendContent3(64)
+                    string str = vv.Id + "," + vv.Server + "," + vv.SourceTag + "," + vv.CreateTime.Ticks + "," + vv.MessageBody + "," + vv.AppendContent1 + "," + vv.AppendContent2 + "," + vv.AppendContent3+"\r\n";
+                    bs.Write(Encoding.UTF8.GetBytes(str));
+                }
             }
 
             var mcount = mAlarmMessages.Count;
@@ -808,10 +837,6 @@ namespace AntRuntime.Message
             //写入压缩数据
             //mCompressBuffer.Position = 0;
             Marshal.Copy(mCompressBuffer.GetBuffer(), 0, mDataPointer + offset, (int)mcdatasize);
-            //using (var mm = new System.IO.UnmanagedMemoryStream((byte*)(mDataPointer + offset), mcdatasize))
-            //{
-            //    mCompressBuffer.CopyTo(mm);
-            //}
         }
     }
 }

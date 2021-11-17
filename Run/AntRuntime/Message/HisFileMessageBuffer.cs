@@ -190,6 +190,15 @@ namespace AntRuntime
         /// <summary>
         /// 
         /// </summary>
+        /// <returns></returns>
+        public IEnumerable<MessageBlockBuffer> ReadDataBlockFromFile()
+        {
+            return ReadDataBlockFromFile(Starttime, Endtime);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="hour"></param>
         /// <returns></returns>
         public MessageBlockBuffer ReadMessgeBlock(int hour)
@@ -239,6 +248,48 @@ namespace AntRuntime
             {
                 mBuffers.Add(hour, vv);
             }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="startTime"></param>
+        /// <param name="endTime"></param>
+        /// <returns></returns>
+        public IEnumerable<MessageBlockBuffer> ReadDataBlockFromFile(DateTime startTime, DateTime endTime)
+        {
+            string sfile = GetDataFile();
+            string sdir = System.IO.Path.GetDirectoryName(sfile);
+            if (!System.IO.Directory.Exists(sdir)) System.IO.Directory.CreateDirectory(sdir);
+
+            Dictionary<int, MessageBlockBuffer> dd = new Dictionary<int, MessageBlockBuffer>();
+            if (System.IO.File.Exists(sfile))
+            {
+                using (var vv = System.IO.File.Open(sfile, System.IO.FileMode.Open, System.IO.FileAccess.Read, System.IO.FileShare.ReadWrite))
+                {
+
+                   
+                    List<int> itmp = new List<int>();
+                    for (int i = startTime.Hour; i < endTime.Hour; i++)
+                    {
+                        if (!dd.ContainsKey(i))
+                        {
+                            itmp.Add(i);
+                        }
+                    }
+
+                    if (itmp.Count > 0)
+                    {
+                        foreach (var vvb in new MessageFileSerise().Load(vv, itmp).Result)
+                        {
+                            dd.Add(vvb.Hour, vvb);
+                        }
+                    }
+                }
+
+                LastAccessTime = DateTime.Now;
+            }
+            return dd.Values;
         }
 
         /// <summary>

@@ -64,6 +64,14 @@ namespace AntRuntime
         #region ... Methods    ...
 
         /// <summary>
+        /// 加载上次退出时的缓存
+        /// </summary>
+        public void LoadLastBuffer()
+        {
+            mMemoryBuffer.LoadBuffer();
+        }
+
+        /// <summary>
         /// 
         /// </summary>
         public void FlushDirtyBufferToDisk()

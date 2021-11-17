@@ -77,6 +77,8 @@ namespace AntRuntime
             LoadServerProxy();
             LoadApi();
             alarmEnginer.Init();
+
+            MessageService.Service.LoadLastBuffer();
         }
 
         /// <summary>
