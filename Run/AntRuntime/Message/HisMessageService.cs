@@ -80,13 +80,17 @@ namespace AntRuntime
             {
                 DateTime dnow = DateTime.Now;
                 List<DateTime> mremoved = new List<DateTime>();
-                foreach(var vv in mBufferedFiles)
+                lock (mLockObj)
                 {
-                    if((dnow - vv.Value.LastAccessTime).TotalDays>1)
+                    foreach (var vv in mBufferedFiles)
                     {
-                        mremoved.Add(vv.Key);
+                        if ((dnow - vv.Value.LastAccessTime).TotalDays > 1)
+                        {
+                            mremoved.Add(vv.Key);
+                        }
                     }
                 }
+
                 lock (mLockObj)
                 {
                     foreach (var vv in mremoved)
@@ -210,6 +214,7 @@ namespace AntRuntime
             List<HisFileMessageBuffer> mReaders = new List<HisFileMessageBuffer>();
             DateTime st = new DateTime(stime.Year, stime.Month, stime.Day, stime.Hour, 0, 0);
             DateTime dt = DateTime.MinValue;
+            DateTime sst = st;
             do
             {
                 dt = st.AddHours(1);
@@ -220,34 +225,36 @@ namespace AntRuntime
                         if (mBufferedFiles.ContainsKey(dt.Date))
                         {
                             var vv = mBufferedFiles[dt.Date];
-                            vv.Starttime = st;
+                            //vv.Starttime = st;
                             vv.Endtime = dt;
                             mReaders.Add(vv);
                         }
                         else
                         {
-                            var vv = new HisFileMessageBuffer() { Starttime = st, Endtime = dt, DatabaseName = DatabaseName, AlarmDate = st.Date };
+                            var vv = new HisFileMessageBuffer() { Starttime = sst, Endtime = dt, DatabaseName = DatabaseName, AlarmDate = st.Date,LastAccessTime=DateTime.Now };
                             mBufferedFiles.Add(vv.AlarmDate, vv);
                             mReaders.Add(vv);
+                            sst = dt;
                         }
                     }
                 }
-                else if(dt>etime)
+                else if(dt>=etime)
                 {
                     lock (mLockObj)
                     {
                         if (mBufferedFiles.ContainsKey(dt.Date))
                         {
                             var vv = mBufferedFiles[dt.Date];
-                            vv.Starttime = st;
+                            //vv.Starttime = st;
                             vv.Endtime = etime;
                             mReaders.Add(mBufferedFiles[dt.Date]);
                         }
                         else
                         {
-                            var vv = new HisFileMessageBuffer() { Starttime = st, Endtime = etime, DatabaseName = DatabaseName, AlarmDate = st.Date };
+                            var vv = new HisFileMessageBuffer() { Starttime = sst, Endtime = etime, DatabaseName = DatabaseName, AlarmDate = st.Date, LastAccessTime = DateTime.Now };
                             mBufferedFiles.Add(vv.AlarmDate, vv);
                             mReaders.Add(vv);
+                            sst = dt;
                         }
                     }
                    // mReaders.Add(new FileMessageBuffer() { Starttime = st, Endtime = dt, DatabaseName = DatabaseName, AlarmDate = st.Date });

@@ -74,7 +74,7 @@ namespace AntRuntime.Message
                 long offset = br.ReadInt64();
                 stream.Position = offset;
 
-                MessageBlockBuffer mbb = new MessageBlockBuffer();
+                MessageBlockBuffer mbb = new MessageBlockBuffer() { Hour = dt.Hour };
                 mbb.Load(stream);
                 Result.Add(mbb);
             }
@@ -100,17 +100,19 @@ namespace AntRuntime.Message
                     ltmp.Add(br.ReadInt64());
                 }
             }
-
+            int i = 0;
             foreach (var vv in ltmp)
             {
                 stream.Position = vv;
                 MessageBlockBuffer mbb = new MessageBlockBuffer();
                 if (vv >= (64 + 24 * 8))
                 {
+                    mbb.Hour = mHours[i];
                     mbb.Load(stream);
                     mbb.FilePosition = vv;
                 }
                 Result.Add(mbb);
+                i++;
             }
             return this;
         }
@@ -122,7 +124,7 @@ namespace AntRuntime.Message
         public MessageFileSerise Load(System.IO.Stream stream,int from,int to)
         {
             Result = new List<MessageBlockBuffer>();
-            List<long> ltmp = new List<long>();
+            Dictionary<int,long> ltmp = new Dictionary<int, long>();
             //确保读取一个
             if (from == to) to++;
 
@@ -131,14 +133,14 @@ namespace AntRuntime.Message
                 for (int i = from; i < to; i++)
                 {
                     stream.Position = 64 + i * 8;
-                    ltmp.Add(br.ReadInt64());
+                    ltmp.Add(i,br.ReadInt64());
                 }
             }
 
             foreach(var vv in ltmp)
             {
-                stream.Position = vv;
-                MessageBlockBuffer mbb = new MessageBlockBuffer();
+                stream.Position = vv.Value;
+                MessageBlockBuffer mbb = new MessageBlockBuffer() { Hour = vv.Key };
                 mbb.Load(stream);
                 Result.Add(mbb);
             }

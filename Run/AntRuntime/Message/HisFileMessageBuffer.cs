@@ -322,12 +322,14 @@ namespace AntRuntime
                     {
                         foreach (var vvb in new MessageFileSerise().Load(vv, itmp).Result)
                         {
-                            mBuffers.Add(vvb.Hour, vvb);
+                            if (!mBuffers.ContainsKey(vvb.Hour))
+                                mBuffers.Add(vvb.Hour, vvb);
                         }
                     }
 
                     for (int i = Starttime.Hour; i < Endtime.Hour; i++)
                     {
+                        if(mBuffers.ContainsKey(i))
                         ll.AddRange(mBuffers[i].GetMessages(startTime, endTime));
                     }
                 }

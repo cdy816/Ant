@@ -145,16 +145,20 @@ namespace AntRuntime
                 mLastHourBuffer = new MemoryMessageHourBuffer() { Hour = dnow.Hour,LastFilePosition = vv.First().FilePosition };
                 mLastHourBuffer.OldestMessageTime = dnow.Date.AddHours(dnow.Hour);
 
-                foreach(var vvv in vv)
+                foreach (var vvv in vv)
                 {
-                    foreach(var msg in vvv.GetMessages())
+                    foreach (var msg in vvv.GetMessages())
                     {
+                        if (mLastHourBuffer.Count == 0)
+                            mLastHourBuffer.OldestMessageTime = msg.CreateTime;
                         mLastHourBuffer.Add(msg.Id, msg);
                     }
-                   
                 }
+
                 lock (mBufferItems)
                     mBufferItems.Add(mLastHourBuffer.Hour,mLastHourBuffer);
+
+                OldestMessageTime = mLastHourBuffer.OldestMessageTime;
             }
 
         }
@@ -186,6 +190,10 @@ namespace AntRuntime
             else if(mLastHourBuffer.Hour == hh)
             {
                 mLastHourBuffer.NewestMessageTime = msg.CreateTime;
+                if(mLastHourBuffer.Count==0)
+                {
+                    mLastHourBuffer.OldestMessageTime = msg.CreateTime;
+                }
                 mLastHourBuffer.AddMessage(msg);
 
                 NewestMessageTime = mLastHourBuffer.NewestMessageTime;
