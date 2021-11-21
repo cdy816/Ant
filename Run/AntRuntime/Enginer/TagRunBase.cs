@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace AntRuntime.Enginer
 {
@@ -39,7 +40,9 @@ namespace AntRuntime.Enginer
         /// 
         /// </summary>
         public bool IsEnable {
-            get { return mTag.IsEnable; 
+            get 
+            { 
+                return mTag.IsEnable; 
             }
         }
 
@@ -201,6 +204,26 @@ namespace AntRuntime.Enginer
         public virtual void LinkExecute()
         {
 
+        }
+
+        /// <summary>
+        /// 保存运行时状态
+        /// </summary>
+        /// <param name="keyName">关键列</param>
+        /// <returns></returns>
+        public virtual XElement SaveRuntimeStatue(string keyName)
+        {
+            XElement xe = new XElement(this.GetType().Name);
+            xe.SetAttributeValue("Id", keyName);
+            return xe;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public virtual void LoadRuntimeStatue(XElement xe)
+        {
+            
         }
 
         #endregion ...Methods...

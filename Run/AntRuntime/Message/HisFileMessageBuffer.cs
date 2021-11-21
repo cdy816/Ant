@@ -74,14 +74,17 @@ namespace AntRuntime
             string sdir = System.IO.Path.GetDirectoryName(sfile);
             if (!System.IO.Directory.Exists(sdir)) System.IO.Directory.CreateDirectory(sdir);
 
-            using (var vv = System.IO.File.Open(sfile, System.IO.FileMode.OpenOrCreate, System.IO.FileAccess.ReadWrite, System.IO.FileShare.ReadWrite))
+            if (ltmp.Count > 0)
             {
-                foreach (var vvv in ltmp)
+                using (var vv = System.IO.File.Open(sfile, System.IO.FileMode.OpenOrCreate, System.IO.FileAccess.ReadWrite, System.IO.FileShare.ReadWrite))
                 {
-                    if (vvv.AlarmArea.IsAckDirty || vvv.AlarmArea.IsRestoreDirty)
+                    foreach (var vvv in ltmp)
                     {
-                        MessageFileSerise.UpdateDirtyToDisk(vvv, vv);
-                        vvv.AlarmArea.IsAckDirty = vvv.AlarmArea.IsRestoreDirty = false;
+                        if (vvv.AlarmArea != null && (vvv.AlarmArea.IsAckDirty || vvv.AlarmArea.IsRestoreDirty))
+                        {
+                            MessageFileSerise.UpdateDirtyToDisk(vvv, vv);
+                            vvv.AlarmArea.IsAckDirty = vvv.AlarmArea.IsRestoreDirty = false;
+                        }
                     }
                 }
             }
@@ -125,6 +128,67 @@ namespace AntRuntime
                     mg.AckUser = user;
                 }
                 mBuffers[hour].AlarmArea.IsAckDirty = true;
+                LastAccessTime = DateTime.Now;
+            }
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="user"></param>
+        /// <param name="content"></param>
+        /// <param name="hour"></param>
+        public void DeleteMessage(long id, string user, string content, int hour)
+        {
+            if (mBuffers.ContainsKey(hour))
+            {
+                var msg = mBuffers[hour].AlarmArea.AlarmMessage;
+                if (msg.ContainsKey(id))
+                {
+                    var mg = msg[id];
+                    mg.DeleteNote = content;
+                    mg.DeleteTime = DateTime.Now;
+                    mg.DeleteUser = user;
+                    mBuffers[hour].AlarmArea.IsDeleteDirty = true;
+                }
+                else if(mBuffers[hour].CommonArea.Message.ContainsKey(id))
+                {
+                    var mg = mBuffers[hour].CommonArea.Message[id];
+                    mg.DeleteNote = content;
+                    mg.DeleteTime = DateTime.Now;
+                    mg.DeleteUser = user;
+                    mBuffers[hour].CommonArea.IsDeleteDirty = true;
+                }
+               
+                LastAccessTime = DateTime.Now;
+            }
+            else
+            {
+                var bb = ReadMessgeBlock(hour);
+                if (bb == null) return;
+
+                mBuffers.Add(hour, bb);
+
+                var msg = mBuffers[hour].AlarmArea.AlarmMessage;
+                if (msg.ContainsKey(id))
+                {
+                    var mg = msg[id];
+                    mg.AckMessage = content;
+                    mg.AckTime = DateTime.Now;
+                    mg.AckUser = user;
+                    mBuffers[hour].AlarmArea.IsDeleteDirty = true;
+                }
+                else if (mBuffers[hour].CommonArea.Message.ContainsKey(id))
+                {
+                    var mg = mBuffers[hour].CommonArea.Message[id];
+                    mg.DeleteNote = content;
+                    mg.DeleteTime = DateTime.Now;
+                    mg.DeleteUser = user;
+                    mBuffers[hour].CommonArea.IsDeleteDirty = true;
+                }
+               
                 LastAccessTime = DateTime.Now;
             }
         }
@@ -231,8 +295,14 @@ namespace AntRuntime
                 {
                     return bb.AlarmArea.AlarmMessage[id];
                 }
-                var res = bb.CommonArea.Message.Where(e => e.Id == id);
-                if (res.Count() > 0) return res.First();
+
+                if(bb.CommonArea.Message.ContainsKey(id))
+                {
+                    return bb.CommonArea.Message[id];
+                }
+
+                //var res = bb.CommonArea.Message.Where(e => e.Id == id);
+                //if (res.Count() > 0) return res.First();
             }
             return null;
         }
@@ -268,9 +338,11 @@ namespace AntRuntime
                 using (var vv = System.IO.File.Open(sfile, System.IO.FileMode.Open, System.IO.FileAccess.Read, System.IO.FileShare.ReadWrite))
                 {
 
-                   
+                    int endhour = endTime.Day > startTime.Day ? endTime.Hour + 24 : endTime.Hour;
+
                     List<int> itmp = new List<int>();
-                    for (int i = startTime.Hour; i < endTime.Hour; i++)
+
+                    for (int i = startTime.Hour; i < endhour; i++)
                     {
                         if (!dd.ContainsKey(i))
                         {
@@ -286,7 +358,7 @@ namespace AntRuntime
                         }
                     }
                 }
-
+                
                 LastAccessTime = DateTime.Now;
             }
             return dd.Values;
@@ -308,9 +380,12 @@ namespace AntRuntime
                 using (var vv = System.IO.File.Open(sfile, System.IO.FileMode.Open, System.IO.FileAccess.Read, System.IO.FileShare.ReadWrite))
                 {
 
-                    Dictionary<int, MessageBlockBuffer> dd = new Dictionary<int, MessageBlockBuffer>();
+                    //Dictionary<int, MessageBlockBuffer> dd = new Dictionary<int, MessageBlockBuffer>();
                     List<int> itmp = new List<int>();
-                    for (int i = startTime.Hour; i < endTime.Hour; i++)
+
+                    int endhour = endTime.Day > startTime.Day ? endTime.Hour + 24 : endTime.Hour;
+
+                    for (int i = startTime.Hour; i < endhour; i++)
                     {
                         if (!mBuffers.ContainsKey(i))
                         {
@@ -327,7 +402,7 @@ namespace AntRuntime
                         }
                     }
 
-                    for (int i = Starttime.Hour; i < Endtime.Hour; i++)
+                    for (int i = Starttime.Hour; i < endhour; i++)
                     {
                         if(mBuffers.ContainsKey(i))
                         ll.AddRange(mBuffers[i].GetMessages(startTime, endTime));

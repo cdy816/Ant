@@ -102,6 +102,13 @@
             <param name="request"></param>
             <returns></returns>
         </member>
+        <member name="M:AntRutime.WebApi.Controllers.MessageController.DeleteMessage(AntRutime.WebApi.Controllers.DeleteMessageRequest)">
+            <summary>
+            删除消息
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
         <member name="T:AntRutime.WebApi.Controllers.AckMessageRequest">
             <summary>
             消息确认
@@ -120,6 +127,26 @@
         <member name="P:AntRutime.WebApi.Controllers.AckMessageRequest.User">
             <summary>
             确认人
+            </summary>
+        </member>
+        <member name="T:AntRutime.WebApi.Controllers.DeleteMessageRequest">
+            <summary>
+            删除消息
+            </summary>
+        </member>
+        <member name="P:AntRutime.WebApi.Controllers.DeleteMessageRequest.Id">
+            <summary>
+            消息Id
+            </summary>
+        </member>
+        <member name="P:AntRutime.WebApi.Controllers.DeleteMessageRequest.DeleteNote">
+            <summary>
+            删除备注
+            </summary>
+        </member>
+        <member name="P:AntRutime.WebApi.Controllers.DeleteMessageRequest.User">
+            <summary>
+            删除人
             </summary>
         </member>
         <member name="T:AntRutime.WebApi.Controllers.GetMessageRequest">

@@ -92,6 +92,8 @@ namespace AntRuntime.Message
             Result = new List<MessageBlockBuffer>();
             List<long> ltmp = new List<long>();
 
+            if (stream.Length == 0) return this;
+
             using (var br = new System.IO.BinaryReader(stream, Encoding.UTF8, true))
             {
                 foreach (var vv in mHours)
@@ -247,7 +249,7 @@ namespace AntRuntime.Message
 
             if (CommonArea != null && CommonArea.Message != null)
             {
-                foreach (var vv in CommonArea.Message)
+                foreach (var vv in CommonArea.Message.Values)
                 {
                     if (vv.CreateTime >= starttime && vv.CreateTime < endtime)
                         ltmp.Add(vv.Id, vv);
@@ -276,7 +278,7 @@ namespace AntRuntime.Message
 
             if (CommonArea != null && CommonArea.Message != null)
             {
-                foreach (var vv in CommonArea.Message)
+                foreach (var vv in CommonArea.Message.Values)
                 {
                     ltmp.Add(vv.Id, vv);
 
@@ -353,7 +355,21 @@ namespace AntRuntime.Message
         /// <param name="offset"></param>
         public void UpdateDirtyToDisk(System.IO.Stream stream)
         {
+            //Block头部两个Int整形数据：数据大小+一般区域地址偏移
+            stream.Position += 4;
+
+            int compos = 0;
+            //读取一般消息，存储区地址
+            using(var br = new System.IO.BinaryReader(stream,Encoding.UTF8,true))
+            {
+                compos = br.ReadInt32();
+            }
+
+            var pos = stream.Position;
             this.AlarmArea?.UpdateChanged(stream);
+
+            stream.Position = pos+compos;
+            this.CommonArea?.UpdateChanged(stream);
         }
 
 
@@ -390,18 +406,28 @@ namespace AntRuntime.Message
         public int DataSize { get; set; }
 
         /// <summary>
-        /// 
+        /// 恢复区地址偏移
         /// </summary>
         public int RestoreOffset { get; set; }
         /// <summary>
-        /// 
+        /// 确认区地址偏移
         /// </summary>
         public int AckOffset { get; set; }
+
+        /// <summary>
+        /// 删除区地址偏移
+        /// </summary>
+        public int DeleteOffset { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
         public bool IsAckDirty { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public bool IsDeleteDirty { get; set; }
 
         /// <summary>
         /// 
@@ -448,19 +474,24 @@ namespace AntRuntime.Message
             int offset = 0;
             var mcount = MemoryHelper.ReadInt32(pointer, offset);
             offset += 4;
+
             RestoreOffset = MemoryHelper.ReadInt32(pointer, offset);
             offset += 4;
+
             AckOffset = MemoryHelper.ReadInt32(pointer, offset);
             offset += 4;
 
-            List<long> lids = new List<long>(mcount);
+            DeleteOffset = MemoryHelper.ReadInt32(pointer, offset);
+            offset += 4;
+
+            //List<long> lids = new List<long>(mcount);
             mAlarmMessages = new Dictionary<long, Cdy.Ant.AlarmMessage>();
-              var mtmp = new List<Cdy.Ant.AlarmMessage>(mcount);
-            for (int i = 0; i < mcount; i++)
-            {
-                lids.Add(MemoryHelper.ReadInt64(pointer, offset));
-                offset += 8;
-            }
+            var mtmp = new List<Cdy.Ant.AlarmMessage>(mcount);
+            //for (int i = 0; i < mcount; i++)
+            //{
+            //    lids.Add(MemoryHelper.ReadInt64(pointer, offset));
+            //    offset += 8;
+            //}
 
             int dsize = MemoryHelper.ReadInt32(pointer, offset);
             offset += 4;
@@ -486,25 +517,27 @@ namespace AntRuntime.Message
                     {
                         var almmsg = msgbd.Split(new char[] { ',' });
                         Cdy.Ant.AlarmMessage am = new Cdy.Ant.AlarmMessage();
-                        //[Server(64)+sourcetag(64)+createtime(8)+MessageBody(128)+AppendContent1(64)+AppendContent2(64)+AppendContent3(64)+AlarmLevel(1)+AlarmValue(64)+AlarmCondition(64)+LinkTag(64)]
-                        am.Id = lids[i];
-                        am.Server = almmsg[0];
-                        am.SourceTag = almmsg[1];
-                        am.CreateTime = DateTime.FromBinary(long.Parse(almmsg[2]));
-                        am.MessageBody = almmsg[3];
-                        am.AppendContent1 = almmsg[4];
-                        am.AppendContent2 = almmsg[5];
-                        am.AppendContent3 = almmsg[6];
-                        am.AlarmLevel = (Cdy.Ant.AlarmLevel)(int.Parse(almmsg[7]));
-                        am.AlarmValue = almmsg[8];
-                        am.AlarmCondition = almmsg[9];
-                        am.LinkTag = almmsg[10];
+                        //[Id+Server(64)+sourcetag(64)+createtime(8)+MessageBody(128)+AppendContent1(64)+AppendContent2(64)+AppendContent3(64)+AlarmLevel(1)+AlarmValue(64)+AlarmCondition(64)+LinkTag(64)]
+                        am.Id = long.Parse(almmsg[0]); ;
+                        am.Server = almmsg[1];
+                        am.SourceTag = almmsg[2];
+                        am.CreateTime = DateTime.FromBinary(long.Parse(almmsg[3]));
+                        am.MessageBody = almmsg[4];
+                        am.AppendContent1 = almmsg[5];
+                        am.AppendContent2 = almmsg[6];
+                        am.AppendContent3 = almmsg[7];
+                        am.AlarmLevel = (Cdy.Ant.AlarmLevel)(int.Parse(almmsg[8]));
+                        am.AlarmValue = almmsg[9];
+                        am.AlarmCondition = almmsg[10];
+                        am.LinkTag = almmsg[11];
                         mAlarmMessages.Add(am.Id,am);
                         mtmp.Add(am);
                     }
                     i++;
                 }
             }
+
+            offset += dsize;
 
             offset = RestoreOffset;
 
@@ -523,11 +556,12 @@ namespace AntRuntime.Message
 
             for (int i = 0; i < mcount; i++)
             {
-                var vtime = MemoryHelper.ReadDateTime((void*)pointer, offset);
+                var vtime = DateTime.FromBinary(MemoryHelper.ReadInt64((void*)pointer, offset));
                 offset += 8;
                 var sval = MemoryHelper.ReadString((void*)(pointer), offset,64);
                 offset += 64;
                 var suser = MemoryHelper.ReadString((void*)(pointer), offset, 32);
+                offset += 32;
 
                 var vtag = mtmp[i];
                 vtag.AckTime = vtime;
@@ -535,6 +569,22 @@ namespace AntRuntime.Message
                 vtag.AckUser = suser;
             }
 
+            offset = DeleteOffset;
+
+            for (int i = 0; i < mcount; i++)
+            {
+                var vtime = DateTime.FromBinary(MemoryHelper.ReadInt64((void*)pointer, offset));
+                offset += 8;
+                var sval = MemoryHelper.ReadString((void*)(pointer), offset, 64);
+                offset += 64;
+                var suser = MemoryHelper.ReadString((void*)(pointer), offset, 32);
+                offset += 32;
+
+                var vtag = mtmp[i];
+                vtag.DeleteTime = vtime;
+                vtag.DeleteNote = sval;
+                vtag.DeleteUser = suser;
+            }
             mtmp.Clear();
         }
 
@@ -557,6 +607,13 @@ namespace AntRuntime.Message
                 UpdateRestoreChange(stream);
                 IsRestoreDirty = false;
             }
+
+            if (IsDeleteDirty)
+            {
+                stream.Position = pos + DeleteOffset;
+                UpdateDeleteChanged(stream);
+                IsDeleteDirty = false;
+            }
         }
 
         /// <summary>
@@ -566,6 +623,7 @@ namespace AntRuntime.Message
         {
             var datasize = mAlarmMessages.Values.Count * 72;
             var mDataPointer = Marshal.AllocHGlobal((int)datasize);
+            new Span<byte>((void*)mDataPointer, datasize).Fill(0);
             int offset = 0;
             foreach (var vv in mAlarmMessages.Values)
             {
@@ -588,6 +646,8 @@ namespace AntRuntime.Message
         {
             var datasize = mAlarmMessages.Values.Count * 104;
             var mDataPointer = Marshal.AllocHGlobal((int)datasize);
+            new Span<byte>((void*)mDataPointer, datasize).Fill(0);
+           
             int offset = 0;
             foreach (var vv in mAlarmMessages.Values)
             {
@@ -605,6 +665,33 @@ namespace AntRuntime.Message
             }
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private unsafe void UpdateDeleteChanged(System.IO.Stream stream)
+        {
+            var datasize = mAlarmMessages.Values.Count * 104;
+            var mDataPointer = Marshal.AllocHGlobal((int)datasize);
+            new Span<byte>((void*)mDataPointer, datasize).Fill(0);
+
+            int offset = 0;
+            foreach (var vv in mAlarmMessages.Values)
+            {
+                MemoryHelper.WriteInt64((void*)mDataPointer, offset, vv.DeleteTime.Ticks);
+                offset += 8;
+                MemoryHelper.WriteString((void*)mDataPointer, offset, vv.DeleteNote == null ? "" : vv.DeleteNote, 64);
+                offset += 64;
+                MemoryHelper.WriteString((void*)mDataPointer, offset, vv.DeleteUser == null ? "" : vv.DeleteUser, 32);
+                offset += 32;
+            }
+
+            using (System.IO.UnmanagedMemoryStream ss = new System.IO.UnmanagedMemoryStream((byte*)mDataPointer, datasize))
+            {
+                ss.CopyTo(stream);
+            }
+        }
+
         /// <summary>
         /// 
         /// </summary>
@@ -612,12 +699,12 @@ namespace AntRuntime.Message
         {
 
             System.IO.MemoryStream mCompressBuffer = new System.IO.MemoryStream();
-            using (System.IO.Compression.BrotliStream bs = new System.IO.Compression.BrotliStream(mCompressBuffer, System.IO.Compression.CompressionLevel.Fastest,true))
+            using (System.IO.Compression.BrotliStream bs = new System.IO.Compression.BrotliStream(mCompressBuffer, System.IO.Compression.CompressionLevel.Optimal, true))
             {
                 foreach (var vv in mAlarmMessages.Values)
                 {
-                    //Server(64)+sourcetag(64)+createtime(8)+MessageBody(128)+AppendContent1(64)+AppendContent2(64)+AppendContent3(64)+AlarmLevel(1)+AlarmValue(64)+AlarmCondition(64)+LinkTag(64)
-                    string str = vv.Server + "," + vv.SourceTag + "," + vv.CreateTime.Ticks + "," + vv.MessageBody + "," + vv.AppendContent1 + "," + vv.AppendContent2 + "," + vv.AppendContent3 + "," + (int)vv.AlarmLevel + "," + vv.AlarmValue + "," + vv.AlarmCondition + "," + vv.LinkTag+"\r\n";
+                    //Id(8)+ Server(64)+sourcetag(64)+createtime(8)+MessageBody(128)+AppendContent1(64)+AppendContent2(64)+AppendContent3(64)+AlarmLevel(1)+AlarmValue(64)+AlarmCondition(64)+LinkTag(64)
+                    string str = vv.Id +"," +vv.Server + "," + vv.SourceTag + "," + vv.CreateTime.Ticks + "," + vv.MessageBody + "," + vv.AppendContent1 + "," + vv.AppendContent2 + "," + vv.AppendContent3 + "," + (int)vv.AlarmLevel + "," + vv.AlarmValue + "," + vv.AlarmCondition + "," + vv.LinkTag + "\r\n";
                     bs.Write(Encoding.UTF8.GetBytes(str));
                 }
             }
@@ -626,9 +713,12 @@ namespace AntRuntime.Message
 
             var mcdatasize = mCompressBuffer.Position;
 
-            long datacount = mcdatasize + mcount * 184 + 12+4;
+            long datacount = 20 + mcdatasize + mcount * (104+104+72);
 
             mDataPointer = Marshal.AllocHGlobal((int)datacount);
+            //清空数据
+            new Span<byte>((byte*)mDataPointer, (int)datacount).Fill(0);
+
             DataSize = (int)datacount;
 
             int offset = 0;
@@ -638,52 +728,57 @@ namespace AntRuntime.Message
             offset += 4;
 
             //Restore 数据地址
-            MemoryHelper.WriteInt32((void*)mDataPointer, offset, (int)(mcdatasize + mcount * 8 + 12+4));
-            offset += 4;
-            //Ack 数据地址
-            MemoryHelper.WriteInt32((void*)mDataPointer, offset, (int)(mcdatasize + mcount * 8 + 12 + mcount * 72+4));
+            MemoryHelper.WriteInt32((void*)mDataPointer, offset, (int)(mcdatasize + 20));
             offset += 4;
 
-            //写入ID
-            foreach (var vv in mAlarmMessages.Values)
-            {
-                MemoryHelper.WriteInt64((void*)mDataPointer, offset, vv.Id);
-                offset += 8;
-            }
+            //Ack 数据地址
+            MemoryHelper.WriteInt32((void*)mDataPointer, offset, (int)(mcdatasize + 20 + mcount * 72));
+            offset += 4;
+
+            //Delete 数据地址
+            MemoryHelper.WriteInt32((void*)mDataPointer, offset, (int)(mcdatasize + 20 + mcount * 72 + mcount * 104));
+            offset += 4;
 
             //写入压缩数据包大小
             MemoryHelper.WriteInt32((void*)mDataPointer, offset, (int)(mcdatasize));
             offset += 4;
 
             //写入压缩数据
-            //mCompressBuffer.Position = 0;
-            //using (var mm = new System.IO.UnmanagedMemoryStream((byte*)(mDataPointer + offset), mcdatasize))
-            //{
-            //    mCompressBuffer.CopyTo(mm);
-            //}
             Marshal.Copy(mCompressBuffer.GetBuffer(), 0, mDataPointer + offset, (int)mcdatasize);
 
-
+            offset += (int)mcdatasize;
             //写入恢复值
-            offset = (int)(mcdatasize + mcount * 8 + 12+4);
+            //offset = (int)(mcdatasize + mcount * 8 + 12+4);
             foreach (var vv in mAlarmMessages.Values)
             {
                 MemoryHelper.WriteInt64((void*)mDataPointer, offset, vv.RestoreTime.Ticks);
                 offset += 8;
-                MemoryHelper.WriteString((void*)mDataPointer, offset, vv.RestoreValue==null?"":vv.RestoreValue,64);
+                MemoryHelper.WriteString((void*)mDataPointer, offset, vv.RestoreValue == null ? "" : vv.RestoreValue, 64);
                 offset += 64;
             }
 
 
             //写入确认值
-            offset = (int)(mcdatasize + mcount * 8 + 12 + mcount * 72+4);
+            //offset = (int)(mcdatasize + mcount * 8 + 12 +4 + mcount * 72 );
             foreach (var vv in mAlarmMessages.Values)
             {
                 MemoryHelper.WriteInt64((void*)mDataPointer, offset, vv.AckTime.Ticks);
                 offset += 8;
-                MemoryHelper.WriteString((void*)mDataPointer, offset, vv.AckMessage==null?"":vv.AckMessage, 64);
+                MemoryHelper.WriteString((void*)mDataPointer, offset, vv.AckMessage == null ? "" : vv.AckMessage, 64);
                 offset += 64;
-                MemoryHelper.WriteString((void*)mDataPointer, offset, vv.AckUser==null?"":vv.AckUser, 32);
+                MemoryHelper.WriteString((void*)mDataPointer, offset, vv.AckUser == null ? "" : vv.AckUser, 32);
+                offset += 32;
+            }
+
+            //写入删除信息
+            //offset = (int)(mcdatasize + mcount * 8 + 12 + 4 + mcount * 72 + mcount*104);
+            foreach (var vv in mAlarmMessages.Values)
+            {
+                MemoryHelper.WriteInt64((void*)mDataPointer, offset, vv.DeleteTime.Ticks);
+                offset += 8;
+                MemoryHelper.WriteString((void*)mDataPointer, offset, vv.DeleteNote == null ? "" : vv.DeleteNote, 64);
+                offset += 64;
+                MemoryHelper.WriteString((void*)mDataPointer, offset, vv.DeleteUser == null ? "" : vv.DeleteUser, 32);
                 offset += 32;
             }
 
@@ -700,7 +795,7 @@ namespace AntRuntime.Message
     public class CommonMessageAreaBuffer:IDisposable
     {
 
-        private List<Cdy.Ant.Message> mAlarmMessages = new List<Cdy.Ant.Message>();
+        private Dictionary<long, Cdy.Ant.Message> mAlarmMessages = new Dictionary<long, Cdy.Ant.Message>();
         /// <summary>
         /// 
         /// </summary>
@@ -725,7 +820,17 @@ namespace AntRuntime.Message
         /// <summary>
         /// 
         /// </summary>
-        public List<Cdy.Ant.Message> Message
+        public bool IsDeleteDirty { get; set; }
+
+        /// <summary>
+        /// 删除区地址偏移
+        /// </summary>
+        public int DeleteOffset { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public Dictionary<long, Cdy.Ant.Message> Message
         {
             get
             {
@@ -761,6 +866,7 @@ namespace AntRuntime.Message
             int offset = offt;
             var mcount = MemoryHelper.ReadInt32(pointer, offset);
             offset += 4;
+
             int dsize = MemoryHelper.ReadInt32(pointer, offset);
             offset += 4;
 
@@ -777,13 +883,14 @@ namespace AntRuntime.Message
                 ms.Position = 0;
                 var tr = new System.IO.StreamReader(ms,Encoding.UTF8);
                 int i = 0;
+                var mtmp = new List<Cdy.Ant.InfoMessage>(mcount);
                 while (!tr.EndOfStream)
                 {
                     string msgbd = tr.ReadLine();
                     if (!string.IsNullOrEmpty(msgbd))
                     {
                         var almmsg = msgbd.Split(new char[] { ',' });
-                        Cdy.Ant.Message am = new Cdy.Ant.InfoMessage();
+                        Cdy.Ant.InfoMessage am = new Cdy.Ant.InfoMessage();
                         //messageid(8)+source(64)+sourcetag(64)+createtime(8)+MessageBody(128)+AppendContent1(64)+AppendContent2(64)+AppendContent3(64)
                         am.Id = long.Parse(almmsg[0]);
                         am.Server = almmsg[1];
@@ -793,10 +900,29 @@ namespace AntRuntime.Message
                         am.AppendContent1 = almmsg[5];
                         am.AppendContent2 = almmsg[6];
                         am.AppendContent3 = almmsg[7];
-                      
-                        mAlarmMessages.Add(am);
+                        mtmp.Add(am);
+                        mAlarmMessages.Add(am.Id,am);
                     }
                     i++;
+                }
+
+                offset += dsize;
+
+                DeleteOffset = offset;
+
+                for (i = 0; i < mcount; i++)
+                {
+                    var vtime = DateTime.FromBinary(MemoryHelper.ReadInt64((void*)pointer, offset));
+                    offset += 8;
+                    var sval = MemoryHelper.ReadString((void*)(pointer), offset, 64);
+                    offset += 64;
+                    var suser = MemoryHelper.ReadString((void*)(pointer), offset, 32);
+                    offset += 32;
+
+                    var vtag = mtmp[i];
+                    vtag.DeleteTime = vtime;
+                    vtag.DeleteNote = sval;
+                    vtag.DeleteUser = suser;
                 }
             }
         }
@@ -810,7 +936,7 @@ namespace AntRuntime.Message
 
             using (System.IO.Compression.BrotliStream bs = new System.IO.Compression.BrotliStream(mCompressBuffer, System.IO.Compression.CompressionLevel.Fastest,true))
             {
-                foreach (var vv in mAlarmMessages)
+                foreach (var vv in mAlarmMessages.Values)
                 {
                     //messageid(8)+source(64)+sourcetag(64)+createtime(8)+MessageBody(128)+AppendContent1(64)+AppendContent2(64)+AppendContent3(64)
                     string str = vv.Id + "," + vv.Server + "," + vv.SourceTag + "," + vv.CreateTime.Ticks + "," + vv.MessageBody + "," + vv.AppendContent1 + "," + vv.AppendContent2 + "," + vv.AppendContent3+"\r\n";
@@ -822,7 +948,7 @@ namespace AntRuntime.Message
 
             var mcdatasize = mCompressBuffer.Position;
 
-            long datacount = mcdatasize + mcount * 184 + 12 +4;
+            long datacount = mcdatasize + mcount * 104 + 8;
 
             mDataPointer = Marshal.AllocHGlobal((int)datacount);
             DataSize = (int)datacount;
@@ -832,13 +958,67 @@ namespace AntRuntime.Message
             MemoryHelper.WriteInt32((void*)mDataPointer, offset, mcount);
             offset += 4;
 
-            //写入数据大小
+            //写入压缩数据大小
             MemoryHelper.WriteInt32((void*)mDataPointer, offset, (int)(mcdatasize));
             offset += 4;
 
             //写入压缩数据
             //mCompressBuffer.Position = 0;
             Marshal.Copy(mCompressBuffer.GetBuffer(), 0, mDataPointer + offset, (int)mcdatasize);
+
+            offset += (int)mcdatasize;
+
+            //写入删除信息
+            foreach (var vv in mAlarmMessages.Values)
+            {
+                MemoryHelper.WriteInt64((void*)mDataPointer, offset, vv.DeleteTime.Ticks);
+                offset += 8;
+                MemoryHelper.WriteString((void*)mDataPointer, offset, vv.DeleteNote == null ? "" : vv.DeleteNote, 64);
+                offset += 64;
+                MemoryHelper.WriteString((void*)mDataPointer, offset, vv.DeleteUser == null ? "" : vv.DeleteUser, 32);
+                offset += 32;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public void UpdateChanged(System.IO.Stream stream)
+        {
+            var pos = stream.Position;
+            if (IsDeleteDirty)
+            {
+                stream.Position = pos + DeleteOffset;
+                UpdateDeleteChanged(stream);
+                IsDeleteDirty = false;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="stream"></param>
+        private unsafe void UpdateDeleteChanged(System.IO.Stream stream)
+        {
+            var datasize = mAlarmMessages.Values.Count * 104;
+            var mDataPointer = Marshal.AllocHGlobal((int)datasize);
+            new Span<byte>((void*)mDataPointer, datasize).Fill(0);
+
+            int offset = 0;
+            foreach (var vv in mAlarmMessages.Values)
+            {
+                MemoryHelper.WriteInt64((void*)mDataPointer, offset, vv.DeleteTime.Ticks);
+                offset += 8;
+                MemoryHelper.WriteString((void*)mDataPointer, offset, vv.DeleteNote == null ? "" : vv.DeleteNote, 64);
+                offset += 64;
+                MemoryHelper.WriteString((void*)mDataPointer, offset, vv.DeleteUser == null ? "" : vv.DeleteUser, 32);
+                offset += 32;
+            }
+
+            using (System.IO.UnmanagedMemoryStream ss = new System.IO.UnmanagedMemoryStream((byte*)mDataPointer, datasize))
+            {
+                ss.CopyTo(stream);
+            }
         }
     }
 }

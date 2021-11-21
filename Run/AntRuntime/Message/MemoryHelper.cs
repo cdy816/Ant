@@ -50,7 +50,8 @@ namespace AntRuntime
             try
             {
                 var val = Encoding.UTF8.GetBytes(value);
-                System.Runtime.InteropServices.Marshal.Copy(val, 0, (IntPtr)(ptr) + offset, Math.Min(Maxlen,val.Length));
+                WriteUShort(ptr, offset, (ushort)val.Length);
+                System.Runtime.InteropServices.Marshal.Copy(val, 0, (IntPtr)(ptr) + offset+2, Math.Min(Maxlen-2,val.Length));
             }
             catch (NullReferenceException)
             {
@@ -69,11 +70,15 @@ namespace AntRuntime
         {
             try
             {
-                byte[] bval =  ArrayPool<byte>.Shared.Rent(Maxlen);
+                byte[] bval =  ArrayPool<byte>.Shared.Rent(Maxlen-2);
 
-                System.Runtime.InteropServices.Marshal.Copy((IntPtr)(ptr) + offset,bval,0, Maxlen);
+                var len = ReadUShort(ptr, offset);
 
-                return Encoding.UTF8.GetString(bval.AsSpan(Maxlen));
+                len = (ushort)Math.Min(len, Maxlen);
+
+                System.Runtime.InteropServices.Marshal.Copy((IntPtr)(ptr) + offset+2,bval,0, len);
+
+                return Encoding.UTF8.GetString(bval.AsSpan(0,len));
 
 
             }

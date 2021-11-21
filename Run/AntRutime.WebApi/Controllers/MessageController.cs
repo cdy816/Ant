@@ -208,9 +208,30 @@ namespace AntRutime.WebApi.Controllers
             }
             else
             {
-                return new ResponseBase() { Result = true,ErroMessage="Login failed!" };
+                return new ResponseBase() { Result = false,ErroMessage="Login failed!" };
             }
            
+        }
+
+        /// <summary>
+        /// 删除消息
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpPost("DeleteMessage")]
+        public ResponseBase DeleteMessage([FromBody] DeleteMessageRequest request)
+        {
+            var service = ServiceLocator.Locator.Resolve<IRuntimeSecurity>();
+            if (service.CheckLogin(request.Token)&& service.IsAdmin(request.Token))
+            {
+                WebApiMessageProxy.MessageService.DeleteMessage(request.Id, request.DeleteNote, request.User);
+                return new ResponseBase() { Result = true };
+            }
+            else
+            {
+                return new ResponseBase() { Result = false, ErroMessage = "Login failed!" };
+            }
+
         }
     }
 
@@ -231,6 +252,28 @@ namespace AntRutime.WebApi.Controllers
 
         /// <summary>
         /// 确认人
+        /// </summary>
+        public string User { get; set; }
+    }
+
+
+    /// <summary>
+    /// 删除消息
+    /// </summary>
+    public class DeleteMessageRequest : RequestBase
+    {
+        /// <summary>
+        /// 消息Id
+        /// </summary>
+        public long Id { get; set; }
+
+        /// <summary>
+        /// 删除备注
+        /// </summary>
+        public string DeleteNote { get; set; }
+
+        /// <summary>
+        /// 删除人
         /// </summary>
         public string User { get; set; }
     }

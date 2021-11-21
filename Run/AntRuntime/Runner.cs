@@ -79,6 +79,8 @@ namespace AntRuntime
             alarmEnginer.Init();
 
             MessageService.Service.LoadLastBuffer();
+
+            alarmEnginer.LoadTagStatus();
         }
 
         /// <summary>
@@ -159,10 +161,13 @@ namespace AntRuntime
           
             alarmEnginer.Stop();
             mSecurityRunner?.Stop();
-            MessageService.Service.FlushDirtyBufferToDisk();
+            
             HisMessageService.Service.Stop();
+            MessageService.Service.FlushDirtyBufferToDisk();
 
             mServiceProxy?.Stop();
+
+            alarmEnginer.SaveTagStatus();
 
             IsStarted = false;
         }

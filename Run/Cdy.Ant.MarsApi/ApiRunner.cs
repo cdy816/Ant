@@ -69,6 +69,7 @@ namespace Cdy.Ant.MarsApi
 
         private List<ApiTag> mChangedApi;
 
+        private bool mIsClosed = false;
         #endregion ...Variables...
 
         #region ... Events     ...
@@ -95,6 +96,8 @@ namespace Cdy.Ant.MarsApi
         /// </summary>
         public void Start()
         {
+            mIsClosed = false;
+
             client = new DBRunTime.ServiceApi.ApiClient();
             client.ServerIp = Data.ServerIp;
             client.Port = Data.Port;
@@ -109,6 +112,7 @@ namespace Cdy.Ant.MarsApi
         /// </summary>
         public void Close()
         {
+            mIsClosed = true;
             client.Close();
         }
 
@@ -118,7 +122,7 @@ namespace Cdy.Ant.MarsApi
         private void ScanThread()
         {
             int lcount = 20;
-            while(true)
+            while(!mIsClosed)
             {
                 if(client.IsConnected)
                 {

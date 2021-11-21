@@ -161,6 +161,31 @@ namespace AntRuntime
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="content"></param>
+        /// <param name="user"></param>
+        public void DeleteMessage(long id, string content, string user)
+        {
+            DateTime dt = RestoreTimeFromId(id);
+            var dtt = dt.Date;
+            lock (mLockObj)
+            {
+                if (mBufferedFiles.ContainsKey(dtt))
+                {
+                    mBufferedFiles[dtt].DeleteMessage(id, user, content, dt.Hour);
+                }
+                else
+                {
+                    var vv = new HisFileMessageBuffer() { Starttime = dt, Endtime = dt.AddHours(1), DatabaseName = DatabaseName, AlarmDate = dtt };
+                    mBufferedFiles.Add(vv.AlarmDate, vv);
+                    vv.DeleteMessage(id, user, content, dt.Hour);
+                }
+            }
+        }
+
 
         /// <summary>
         /// 
@@ -203,70 +228,141 @@ namespace AntRuntime
                 return re;
         }
 
+
         /// <summary>
         /// 
+        /// </summary>
+        /// <param name="stime"></param>
+        /// <param name="etime"></param>
+        /// <param name="Filters"></param>
+        /// <returns></returns>
+        public IEnumerable<Cdy.Ant.Message> QueryAll(DateTime stime, DateTime etime, IEnumerable<QueryFilter> Filters)
+        {
+            var re = QueryAll(stime, etime);
+            if (Filters != null && Filters.Count() > 0)
+                return re.Filter(Filters);
+            else
+                return re;
+        }
+
+        /// <summary>
+        /// 查询报警、踢出到以删除的报警
         /// </summary>
         /// <param name="stime"></param>
         /// <param name="etime"></param>
         /// <returns></returns>
         public IEnumerable<Cdy.Ant.Message> Query(DateTime stime, DateTime etime)
         {
-            List<HisFileMessageBuffer> mReaders = new List<HisFileMessageBuffer>();
-            DateTime st = new DateTime(stime.Year, stime.Month, stime.Day, stime.Hour, 0, 0);
-            DateTime dt = DateTime.MinValue;
-            DateTime sst = st;
-            do
-            {
-                dt = st.AddHours(1);
-                if (dt.Day > st.Day)
-                {
-                    lock (mLockObj)
-                    {
-                        if (mBufferedFiles.ContainsKey(dt.Date))
-                        {
-                            var vv = mBufferedFiles[dt.Date];
-                            //vv.Starttime = st;
-                            vv.Endtime = dt;
-                            mReaders.Add(vv);
-                        }
-                        else
-                        {
-                            var vv = new HisFileMessageBuffer() { Starttime = sst, Endtime = dt, DatabaseName = DatabaseName, AlarmDate = st.Date,LastAccessTime=DateTime.Now };
-                            mBufferedFiles.Add(vv.AlarmDate, vv);
-                            mReaders.Add(vv);
-                            sst = dt;
-                        }
-                    }
-                }
-                else if(dt>=etime)
-                {
-                    lock (mLockObj)
-                    {
-                        if (mBufferedFiles.ContainsKey(dt.Date))
-                        {
-                            var vv = mBufferedFiles[dt.Date];
-                            //vv.Starttime = st;
-                            vv.Endtime = etime;
-                            mReaders.Add(mBufferedFiles[dt.Date]);
-                        }
-                        else
-                        {
-                            var vv = new HisFileMessageBuffer() { Starttime = sst, Endtime = etime, DatabaseName = DatabaseName, AlarmDate = st.Date, LastAccessTime = DateTime.Now };
-                            mBufferedFiles.Add(vv.AlarmDate, vv);
-                            mReaders.Add(vv);
-                            sst = dt;
-                        }
-                    }
-                   // mReaders.Add(new FileMessageBuffer() { Starttime = st, Endtime = dt, DatabaseName = DatabaseName, AlarmDate = st.Date });
-                }
-                st = dt;
-            }
-            while (dt < etime);
+            Dictionary<HisFileMessageBuffer,Tuple<DateTime,DateTime>> mReaders = new Dictionary<HisFileMessageBuffer, Tuple<DateTime, DateTime>>();
 
+            DateTime st = stime;
+            while(st.Day<=etime.Day)
+            {
+                if(st.Day == etime.Day)
+                {
+                    if (mBufferedFiles.ContainsKey(st.Date))
+                    {
+                        var vv = mBufferedFiles[st.Date];
+                        mReaders.Add(vv,new Tuple<DateTime, DateTime>(st,etime));
+                    }
+                    else
+                    {
+                        lock (mLockObj)
+                        {
+                            var vv = new HisFileMessageBuffer() { Starttime = st, Endtime = etime, DatabaseName = DatabaseName, AlarmDate = st.Date, LastAccessTime = DateTime.Now };
+                            mBufferedFiles.Add(vv.AlarmDate, vv);
+                            mReaders.Add(vv, new Tuple<DateTime, DateTime>(st, etime));
+                        }
+                    }
+                    break;
+                }
+                else
+                {
+                    if (mBufferedFiles.ContainsKey(st.Date))
+                    {
+                        var vv = mBufferedFiles[st.Date];
+                        mReaders.Add(vv,new Tuple<DateTime, DateTime>(st,st.Date.AddDays(1)));
+                    }
+                    else
+                    {
+                        lock (mLockObj)
+                        {
+                            var vv = new HisFileMessageBuffer() { Starttime = st, Endtime = st.Date.AddDays(1), DatabaseName = DatabaseName, AlarmDate = st.Date, LastAccessTime = DateTime.Now };
+                            mBufferedFiles.Add(vv.AlarmDate, vv);
+                            mReaders.Add(vv, new Tuple<DateTime, DateTime>(st, st.Date.AddDays(1)));
+                        }
+                    }
+                }
+                st = st.Date.AddDays(1);
+            }
             List<Cdy.Ant.Message> re = new List<Cdy.Ant.Message>();
             foreach (var vv in mReaders)
             {
-                var vtmp = vv.ReadFromFile();
+                var vtmp = vv.Key.ReadFromFile(vv.Value.Item1,vv.Value.Item2);
+                if (vtmp != null)
+                {
+                    re.AddRange(vtmp.Where(e=>e.DeleteTime==DateTime.MinValue));
+                }
+            }
+
+            return re;
+        }
+
+
+        /// <summary>
+        ///  查询所有报警
+        /// </summary>
+        /// <param name="stime"></param>
+        /// <param name="etime"></param>
+        /// <returns></returns>
+        public IEnumerable<Cdy.Ant.Message> QueryAll(DateTime stime, DateTime etime)
+        {
+            Dictionary<HisFileMessageBuffer, Tuple<DateTime, DateTime>> mReaders = new Dictionary<HisFileMessageBuffer, Tuple<DateTime, DateTime>>();
+
+            DateTime st = stime;
+            while (st.Day <= etime.Day)
+            {
+                if (st.Day == etime.Day)
+                {
+                    if (mBufferedFiles.ContainsKey(st.Date))
+                    {
+                        var vv = mBufferedFiles[st.Date];
+                        mReaders.Add(vv, new Tuple<DateTime, DateTime>(st, etime));
+                    }
+                    else
+                    {
+                        lock (mLockObj)
+                        {
+                            var vv = new HisFileMessageBuffer() { Starttime = st, Endtime = etime, DatabaseName = DatabaseName, AlarmDate = st.Date, LastAccessTime = DateTime.Now };
+                            mBufferedFiles.Add(vv.AlarmDate, vv);
+                            mReaders.Add(vv, new Tuple<DateTime, DateTime>(st, etime));
+                        }
+                    }
+                    break;
+                }
+                else
+                {
+                    if (mBufferedFiles.ContainsKey(st.Date))
+                    {
+                        var vv = mBufferedFiles[st.Date];
+                        mReaders.Add(vv, new Tuple<DateTime, DateTime>(st, st.Date.AddDays(1)));
+                    }
+                    else
+                    {
+                        lock (mLockObj)
+                        {
+                            var vv = new HisFileMessageBuffer() { Starttime = st, Endtime = st.Date.AddDays(1), DatabaseName = DatabaseName, AlarmDate = st.Date, LastAccessTime = DateTime.Now };
+                            mBufferedFiles.Add(vv.AlarmDate, vv);
+                            mReaders.Add(vv, new Tuple<DateTime, DateTime>(st, st.Date.AddDays(1)));
+                        }
+                    }
+                }
+                st = st.Date.AddDays(1);
+            }
+            List<Cdy.Ant.Message> re = new List<Cdy.Ant.Message>();
+            foreach (var vv in mReaders)
+            {
+                var vtmp = vv.Key.ReadFromFile(vv.Value.Item1, vv.Value.Item2);
                 if (vtmp != null)
                 {
                     re.AddRange(vtmp);

@@ -790,6 +790,14 @@
             <param name="username"></param>
             <returns></returns>
         </member>
+        <member name="M:Cdy.Ant.Tag.IMessageQuery.DeleteMessage(System.Int64,System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="lid"></param>
+            <param name="content"></param>
+            <param name="username"></param>
+        </member>
         <member name="M:Cdy.Ant.Tag.IMessageQuery.Query(System.DateTime,System.DateTime)">
             <summary>
             
@@ -1275,6 +1283,21 @@
             附加字段3
             </summary>
         </member>
+        <member name="P:Cdy.Ant.Message.DeleteNote">
+            <summary>
+            删除备注
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.Message.DeleteUser">
+            <summary>
+            删除人
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.Message.DeleteTime">
+            <summary>
+            删除时间
+            </summary>
+        </member>
         <member name="T:Cdy.Ant.InfoMessage">
             <summary>
             提示消息
@@ -1392,15 +1415,17 @@
         </member>
         <member name="M:Cdy.Ant.PathHelper.GetDataPath(System.String,System.String)">
             <summary>
-            
+            获取数据路径
             </summary>
-            <param name="path"></param>
+            <param name="databaseName">数据库名称</param>
+            <param name="path">子路径</param>
+            <returns></returns>
         </member>
         <member name="M:Cdy.Ant.PathHelper.GetAlarmDataPath(System.String)">
             <summary>
-            
+            获取报警文件的路径
             </summary>
-            <param name="databaseName"></param>
+            <param name="databaseName">数据库名称</param>
             <returns></returns>
         </member>
         <member name="M:Cdy.Ant.PathHelper.GetDatabasePath(System.String)">

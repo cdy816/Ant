@@ -82,6 +82,22 @@ namespace Cdy.Ant
         /// </summary>
         public string AppendContent3 { get; set; }
 
+
+        /// <summary>
+        /// 删除备注
+        /// </summary>
+        public string DeleteNote { get; set; }
+
+        /// <summary>
+        /// 删除人
+        /// </summary>
+        public string DeleteUser { get; set; }
+
+        /// <summary>
+        /// 删除时间
+        /// </summary>
+        public DateTime DeleteTime { get; set; }
+
     }
 
     /// <summary>

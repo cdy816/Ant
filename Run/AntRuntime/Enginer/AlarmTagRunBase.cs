@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace AntRuntime.Enginer
 {
@@ -94,7 +95,28 @@ namespace AntRuntime.Enginer
 
         #region ... Methods    ...
 
-       
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public override XElement SaveRuntimeStatue(string keyName)
+        {
+            var re = base.SaveRuntimeStatue(keyName);
+            re.SetAttributeValue("CurrentStatue", (int)CurrentStatue);
+            re.SetAttributeValue("CurrentMessageId", mCurrentMessageId);
+            return re;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="xe"></param>
+        public override void LoadRuntimeStatue(XElement xe)
+        {
+            base.LoadRuntimeStatue(xe);
+            CurrentStatue = xe.Attribute("CurrentStatue") != null ? (AlarmStatue)int.Parse(xe.Attribute("CurrentStatue").Value) : AlarmStatue.None;
+            mCurrentMessageId = xe.Attribute("CurrentMessageId") != null ? long.Parse(xe.Attribute("CurrentMessageId").Value) : 0;
+        }
 
 
         /// <summary>

@@ -177,8 +177,28 @@ namespace AntRuntime
             }
         }
 
+
         /// <summary>
-        /// 
+        /// 删除消息
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="content"></param>
+        /// <param name="user"></param>
+        public void DeleteMessage(long id, string content, string user)
+        {
+            var vtime = RestoreTimeFromId(id);
+            if (vtime >= mMemoryBuffer.OldestMessageTime)
+            {
+                mMemoryBuffer.DeleteMessage(id, content, user);
+            }
+            else
+            {
+                HisMessageService.Service.DeleteMessage(id, content, user);
+            }
+        }
+
+        /// <summary>
+        /// 查询指定ID的报警
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -196,7 +216,7 @@ namespace AntRuntime
         }
 
         /// <summary>
-        /// 
+        /// 查询踢出删除后的报警
         /// </summary>
         /// <param name="stime"></param>
         /// <param name="etime"></param>
@@ -216,6 +236,31 @@ namespace AntRuntime
                 List<Cdy.Ant.Message> re = new List<Cdy.Ant.Message>();
                 re.AddRange(HisMessageService.Service.Query(stime, mMemoryBuffer.OldestMessageTime));
                 re.AddRange(mMemoryBuffer.Query(mMemoryBuffer.OldestMessageTime, etime));
+                return re;
+            }
+        }
+
+        /// <summary>
+        /// 查询所有报警
+        /// </summary>
+        /// <param name="stime"></param>
+        /// <param name="etime"></param>
+        /// <returns></returns>
+        public IEnumerable<Cdy.Ant.Message> QueryAll(DateTime stime, DateTime etime)
+        {
+            if (etime < mMemoryBuffer.OldestMessageTime)
+            {
+                return HisMessageService.Service.QueryAll(stime, etime);
+            }
+            else if (stime > mMemoryBuffer.OldestMessageTime)
+            {
+                return mMemoryBuffer.QueryAll(stime, etime);
+            }
+            else
+            {
+                List<Cdy.Ant.Message> re = new List<Cdy.Ant.Message>();
+                re.AddRange(HisMessageService.Service.QueryAll(stime, mMemoryBuffer.OldestMessageTime));
+                re.AddRange(mMemoryBuffer.QueryAll(mMemoryBuffer.OldestMessageTime, etime));
                 return re;
             }
         }

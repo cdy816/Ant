@@ -109,22 +109,24 @@ namespace Cdy.Ant
         }
 
         /// <summary>
-        /// 
+        /// 获取数据路径
         /// </summary>
-        /// <param name="path"></param>
+        /// <param name="databaseName">数据库名称</param>
+        /// <param name="path">子路径</param>
+        /// <returns></returns>
         public string GetDataPath(string databaseName,string path)
         {
             return System.IO.Path.Combine(mDataPath,databaseName, path);
         }
 
         /// <summary>
-        /// 
+        /// 获取报警文件的路径
         /// </summary>
-        /// <param name="databaseName"></param>
+        /// <param name="databaseName">数据库名称</param>
         /// <returns></returns>
         public string GetAlarmDataPath(string databaseName)
         {
-            return System.IO.Path.Combine(mDataPath, databaseName,"alarm");
+            return System.IO.Path.Combine(mDataPath, databaseName,"Alm");
         }
 
         /// <summary>

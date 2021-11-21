@@ -76,6 +76,14 @@ namespace Cdy.Ant.Tag
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="lid"></param>
+        /// <param name="content"></param>
+        /// <param name="username"></param>
+        void DeleteMessage(long lid, string content, string username);
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="stime"></param>
         /// <param name="etime"></param>
         /// <returns></returns>

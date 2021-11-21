@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace AntRuntime.Enginer
 {
@@ -15,7 +16,7 @@ namespace AntRuntime.Enginer
 
         #region ... Variables  ...
         Cdy.Ant.AnalogRangeAlarmTag mATag;
-       protected  Cdy.Ant.AnalogRangeAlarmItem mLastAlarmItem;
+        protected Cdy.Ant.AnalogRangeAlarmItem mLastAlarmItem;
         protected SortedList<double, AnalogRangeAlarmItem> mItems = new SortedList<double, AnalogRangeAlarmItem>();
 
         #endregion ...Variables...
@@ -47,6 +48,43 @@ namespace AntRuntime.Enginer
         /// 
         /// </summary>
         /// <returns></returns>
+        public override XElement SaveRuntimeStatue(string keyName)
+        {
+            var re = base.SaveRuntimeStatue(keyName);
+            if(mLastAlarmItem!=null)
+            {
+                re.SetAttributeValue("LastAlarmItem", mLastAlarmItem.ToString());
+            }
+
+            return re;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="xe"></param>
+        public override void LoadRuntimeStatue(XElement xe)
+        {
+            base.LoadRuntimeStatue(xe);
+            if(xe.Attribute("LastAlarmItem") !=null)
+            {
+                var arg = new AnalogRangeAlarmItem().LoadFromString(xe.Attribute("LastAlarmItem").Value.ToString());
+
+                foreach(var vv in mItems)
+                {
+                    if(vv.Value.ToString() == arg.ToString())
+                    {
+                        mLastAlarmItem = vv.Value;
+                        break;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public override Dictionary<string, string> GetSupportModifyProperty()
         {
             var re = base.GetSupportModifyProperty();
@@ -70,11 +108,11 @@ namespace AntRuntime.Enginer
         /// <param name="value"></param>
         protected override void OnPropertyChangedForRuntime(string name, string value)
         {
-            if(name=="items")
+            if (name == "items")
             {
                 mATag.Items.Clear();
                 string[] ss = value.Split(new char[] { ';' });
-                foreach(var vv in ss)
+                foreach (var vv in ss)
                 {
                     mATag.Items.Add(new AnalogRangeAlarmItem().LoadFromString(vv));
                 }
@@ -105,22 +143,22 @@ namespace AntRuntime.Enginer
         {
             double dval = Convert.ToDouble(Value);
 
-            if(CurrentStatue!= AlarmStatue.None)
+            if (CurrentStatue != AlarmStatue.None)
             {
                 var maxval = mLastAlarmItem.MaxValue + mLastAlarmItem.DeadArea;
                 var minval = mLastAlarmItem.MinValue - mLastAlarmItem.DeadArea;
                 if (dval >= minval && dval <= maxval) return;
             }
             AnalogRangeAlarmItem item = null;
-            lock(mItems)
-            foreach (var vv in mItems)
-            {
-                if(dval>=vv.Value.MinValue&&dval<vv.Value.MaxValue)
+            lock (mItems)
+                foreach (var vv in mItems)
                 {
-                    item = vv.Value;
-                    break;
+                    if (dval >= vv.Value.MinValue && dval < vv.Value.MaxValue)
+                    {
+                        item = vv.Value;
+                        break;
+                    }
                 }
-            }
 
             if (item != mLastAlarmItem)
             {
@@ -132,7 +170,7 @@ namespace AntRuntime.Enginer
 
                 if (item != null)
                 {
-                    Alarm(Source, item.AlarmLevel, mATag.Desc, dval.ToString(),"["+item.MinValue+","+item.MaxValue+"]");
+                    Alarm(Source, item.AlarmLevel, mATag.Desc, dval.ToString(), "(" + item.MinValue + "-" + item.MaxValue + ")");
                     CurrentStatue = (AlarmStatue)((byte)item.AlarmLevel);
                 }
 
@@ -348,7 +386,7 @@ namespace AntRuntime.Enginer
 
                 if (item != null)
                 {
-                    Alarm(Source, item.AlarmLevel, mAtag.Desc, dval.ToString(), "[" + (item.MinValue==double.MinValue?"-∞":item.MinValue.ToString()) + "," + (item.MaxValue==double.MaxValue?"∞":item.MaxValue.ToString()) + "]");
+                    Alarm(Source, item.AlarmLevel, mAtag.Desc, dval.ToString(), "(" + (item.MinValue==double.MinValue?"-∞":item.MinValue.ToString()) + "-" + (item.MaxValue==double.MaxValue?"∞":item.MaxValue.ToString()) + ")");
                     CurrentStatue = (AlarmStatue)((byte)item.AlarmLevel);
                 }
 

@@ -160,6 +160,10 @@ namespace AntRuntime
 
                 OldestMessageTime = mLastHourBuffer.OldestMessageTime;
             }
+            else
+            {
+                OldestMessageTime = dnow;
+            }
 
         }
 
@@ -262,7 +266,9 @@ namespace AntRuntime
                     }
 
                     mbb.CommonArea = new CommonMessageAreaBuffer();
-                    mbb.CommonArea.Message.AddRange(buffer.Where(e => e.Value.Type == MessgeType.InfoMessage).Select(e => e.Value));
+                    foreach (var vvm in buffer.Where(e => e.Value.Type == MessgeType.InfoMessage).Select(e => e.Value))
+                        mbb.CommonArea.Message.Add(vvm.Id, vvm);
+
                     MessageFileSerise.Save(mbb, vv);
                 }
                 buffer.IsDirty = false;
@@ -364,6 +370,42 @@ namespace AntRuntime
             }
         }
 
+
+        /// <summary>
+        /// 删除消息
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="content"></param>
+        /// <param name="user"></param>
+        public void DeleteMessage(long id, string content, string user)
+        {
+            if (mLastHourBuffer.ContainsKey(id))
+            {
+                var tmp = mLastHourBuffer[id];
+                (tmp as AlarmMessage).DeleteTime = DateTime.Now;
+                (tmp as AlarmMessage).DeleteUser = user;
+                (tmp as AlarmMessage).DeleteNote = content;
+                mLastHourBuffer.IsDirty = true;
+            }
+            else
+            {
+                DateTime dt = RestoreTimeFromId(id);
+
+                if (mBufferItems.ContainsKey(dt.Hour))
+                {
+                    var vbmp = mBufferItems[dt.Hour];
+                    if (vbmp.ContainsKey(id))
+                    {
+                        var tmp = vbmp[id];
+                        (tmp as AlarmMessage).DeleteTime = DateTime.Now;
+                        (tmp as AlarmMessage).DeleteUser = user;
+                        (tmp as AlarmMessage).DeleteNote = content;
+                        vbmp.IsDirty = true;
+                    }
+                }
+            }
+        }
+
         /// <summary>
         /// 将变脏的数据块存盘
         /// </summary>
@@ -422,6 +464,31 @@ namespace AntRuntime
             {
                 foreach (var vv in mBufferItems.ToArray())
                 {
+                    re.AddRange(vv.Value.Where(e => e.Key >= sid && e.Key <= eid && e.Value.DeleteTime==DateTime.MinValue).Select(e => e.Value));
+                }
+            }
+
+            return re;
+        }
+
+
+        /// <summary>
+        /// 查询所有消息，包括删除消息
+        /// </summary>
+        /// <param name="stime"></param>
+        /// <param name="etime"></param>
+        /// <returns></returns>
+        public IEnumerable<Cdy.Ant.Message> QueryAll(DateTime stime, DateTime etime)
+        {
+            long sid = GetId(stime);
+            long eid = GetId(etime);
+
+            List<Cdy.Ant.Message> re = new List<Cdy.Ant.Message>();
+
+            lock (mBufferItems)
+            {
+                foreach (var vv in mBufferItems.ToArray())
+                {
                     re.AddRange(vv.Value.Where(e => e.Key >= sid && e.Key <= eid).Select(e => e.Value));
                 }
             }
@@ -439,6 +506,19 @@ namespace AntRuntime
         public IEnumerable<Cdy.Ant.Message> Query(DateTime stime, DateTime etime, IEnumerable<QueryFilter> Filters)
         {
             return Query(stime,etime).Filter(Filters);
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="stime"></param>
+        /// <param name="etime"></param>
+        /// <param name="Filters"></param>
+        /// <returns></returns>
+        public IEnumerable<Cdy.Ant.Message> QueryAll(DateTime stime, DateTime etime, IEnumerable<QueryFilter> Filters)
+        {
+            return QueryAll(stime, etime).Filter(Filters);
         }
 
         #endregion ...Methods...

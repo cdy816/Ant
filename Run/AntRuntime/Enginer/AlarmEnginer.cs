@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace AntRuntime.Enginer
 {
@@ -65,6 +66,59 @@ namespace AntRuntime.Enginer
         #endregion ...Properties...
 
         #region ... Methods    ...
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public void LoadTagStatus()
+        {
+            try
+            {
+                string sfile = System.IO.Path.Combine(PathHelper.helper.GetAlarmDataPath(mDatabase.Name), "runtimecach.ach");
+                if (System.IO.File.Exists(sfile))
+                {
+
+                    var xx = XElement.Load(sfile);
+                    foreach(var vv in xx.Elements())
+                    {
+                        string sid = vv.Attribute("Id").Value;
+                        if(mRunTags.ContainsKey(sid))
+                        {
+                            mRunTags[sid].LoadRuntimeStatue(vv);
+                        }
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+                LoggerService.Service.Erro("AlarmEnginer", " Load tag status failed:" + ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public void SaveTagStatus()
+        {
+            try
+            {
+                string sfile = System.IO.Path.Combine(PathHelper.helper.GetAlarmDataPath(mDatabase.Name), "runtimecach.ach");
+                using (var vss = System.IO.File.Open(sfile, System.IO.FileMode.OpenOrCreate, System.IO.FileAccess.ReadWrite, System.IO.FileShare.ReadWrite))
+                {
+                    XElement xe = new XElement("TagsStatus");
+                    foreach (var vv in this.mRunTags)
+                    {
+                        xe.Add(vv.Value.SaveRuntimeStatue(vv.Key));
+                    }
+                    xe.Save(vss, SaveOptions.DisableFormatting);
+                    vss.Flush();
+                }
+            }
+            catch (Exception ex)
+            {
+                LoggerService.Service.Erro("AlarmEnginer", " Save tag status failed:" + ex.Message);
+            }
+        }
 
         /// <summary>
         /// 
