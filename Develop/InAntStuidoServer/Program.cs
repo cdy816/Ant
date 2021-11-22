@@ -435,7 +435,7 @@ namespace InAntStuidoServer
                 {
                     var info = new ProcessStartInfo() { FileName = "InAntRun.exe" };
                     info.UseShellExecute = true;
-                    info.Arguments = "start " + name;
+                    info.Arguments = name;
                     info.WorkingDirectory = System.IO.Path.GetDirectoryName(typeof(Program).Assembly.Location);
                     Process.Start(info).WaitForExit(1000);
                 }
@@ -444,7 +444,7 @@ namespace InAntStuidoServer
                     var info = new ProcessStartInfo() { FileName = "dotnet" };
                     info.UseShellExecute = true;
                     info.CreateNoWindow = false;
-                    info.Arguments = "./InAntRun.dll start " + name;
+                    info.Arguments = "./InAntRun.dll " + name;
                     info.WorkingDirectory = System.IO.Path.GetDirectoryName(typeof(Program).Assembly.Location);
                     Process.Start(info).WaitForExit(1000);
                 }

@@ -1,0 +1,4353 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>InAntStudio</name>
+    </assembly>
+    <members>
+        <member name="T:DbManager.Desktop.App">
+            <summary>
+            Interaction logic for App.xaml
+            </summary>
+            <summary>
+            App
+            </summary>
+        </member>
+        <member name="M:DbManager.Desktop.App.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:DbManager.Desktop.App.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="M:DbManager.Desktop.App.Main">
+            <summary>
+            Application Entry Point.
+            </summary>
+        </member>
+        <member name="T:InAntStudio.AutoLoginHelper">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:InAntStudio.AutoLoginHelper.Helper">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:InAntStudio.CustomWindowBase">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.CustomWindowBase.#cctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.CustomWindowBase.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.CustomWindowBase.IsOK">
+            <summary>
+            是否确认关闭窗口
+            </summary>
+        </member>
+        <member name="F:InAntStudio.CustomWindowBase.IsOKProperty">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.CustomWindowBase.IsCancel">
+            <summary>
+            是否取消关闭窗口
+            </summary>
+        </member>
+        <member name="F:InAntStudio.CustomWindowBase.IsCancelProperty">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.CustomWindowBase.IsClosed">
+            <summary>
+            已经关闭
+            </summary>
+        </member>
+        <member name="F:InAntStudio.CustomWindowBase.IsClosedProperty">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.CustomWindowBase.IsEnableMax">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:InAntStudio.CustomWindowBase.IsEnableMaxProperty">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.CustomWindowBase.IsHidden">
+            <summary>
+            隐藏窗口
+            </summary>
+        </member>
+        <member name="F:InAntStudio.CustomWindowBase.IsHiddenProperty">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.CustomWindowBase.IconString">
+            <summary>
+            图标
+            </summary>
+        </member>
+        <member name="F:InAntStudio.CustomWindowBase.IconStringProperty">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.CustomWindowBase.CustomWindowBase_Loaded(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:InAntStudio.CustomWindowBase.OnApplyTemplate">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.CustomWindowBase.closeB_Click(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:InAntStudio.CustomWindowBase.maxB_Click(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:InAntStudio.CustomWindowBase.IsEnableMaxPropertyChanged(System.Windows.DependencyObject,System.Windows.DependencyPropertyChangedEventArgs)">
+            <summary>
+            
+            </summary>
+            <param name="sender"></param>
+            <param name="arg"></param>
+        </member>
+        <member name="M:InAntStudio.CustomWindowBase.OKPropertyChanged(System.Windows.DependencyObject,System.Windows.DependencyPropertyChangedEventArgs)">
+            <summary>
+            
+            </summary>
+            <param name="sender"></param>
+            <param name="arg"></param>
+        </member>
+        <member name="M:InAntStudio.CustomWindowBase.CancelPropertyChanged(System.Windows.DependencyObject,System.Windows.DependencyPropertyChangedEventArgs)">
+            <summary>
+            
+            </summary>
+            <param name="sender"></param>
+            <param name="arg"></param>
+        </member>
+        <member name="M:InAntStudio.CustomWindowBase.IsHiddenPropertyChanged(System.Windows.DependencyObject,System.Windows.DependencyPropertyChangedEventArgs)">
+            <summary>
+            
+            </summary>
+            <param name="sender"></param>
+            <param name="arg"></param>
+        </member>
+        <member name="M:InAntStudio.CustomWindowBase.Hidden">
+            <summary>
+            隐藏窗口
+            </summary>
+        </member>
+        <member name="M:InAntStudio.CustomWindowBase.OKClose">
+            <summary>
+            确认关闭窗口
+            </summary>
+        </member>
+        <member name="M:InAntStudio.CustomWindowBase.CancelClose">
+            <summary>
+            取消关闭窗口
+            </summary>
+        </member>
+        <member name="M:InAntStudio.CustomWindowBase.OnClosed(System.EventArgs)">
+            <summary>
+            窗口关闭后回调
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:InAntStudio.CustomWindowBase.OnActivated(System.EventArgs)">
+            <summary>
+            
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:InAntStudio.CustomWindowBase.OnDeactivated(System.EventArgs)">
+            <summary>
+            
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:InAntStudio.DialogHelper.GetActiveWindow">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:InAntStudio.DialogHelper.Show(InAntStudio.WindowViewModelBase,System.Boolean,System.Boolean,System.Boolean,System.Int32,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="model"></param>
+            <param name="topMost"></param>
+            <param name="titleBar"></param>
+            <param name="showInCenter"></param>
+            <param name="x"></param>
+            <param name="y"></param>
+        </member>
+        <member name="M:InAntStudio.DialogHelper.ShowDialog(InAntStudio.WindowViewModelBase,System.Boolean,System.Boolean)">
+            <summary>
+            显示对话框
+            </summary>
+            <param name="model"></param>
+            <param name="topMost">是否顶层窗口</param>
+            <param name="titleBar">是否需要显示TitleBar</param>
+            <returns></returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "T:InAntStudio.PasswordControl" -->
+        <member name="P:InAntStudio.PasswordControl.Password">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.PasswordControl.PasswordChanged(System.Windows.DependencyObject,System.Windows.DependencyPropertyChangedEventArgs)">
+            <summary>
+            
+            </summary>
+            <param name="sender"></param>
+            <param name="arg"></param>
+        </member>
+        <member name="P:InAntStudio.PasswordControl.IsShowPassword">
+            <summary>
+            显示Password
+            </summary>
+        </member>
+        <member name="M:InAntStudio.PasswordControl.ApplyPasswordBoxVisiable">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.PasswordControl.ApplyPasswordToPasswordBox">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.PasswordControl.OnApplyTemplate">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.PasswordControl.Mpb_PasswordChanged(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="T:InAntStudio.RelayCommand`1">
+            <summary>
+            A command whose sole purpose is to 
+            relay its functionality to other
+            objects by invoking delegates. The
+            default return value for the CanExecute
+            method is 'true'.
+            </summary>
+        </member>
+        <member name="E:InAntStudio.RelayCommand`1.CanExecuteChanged">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.RelayCommand`1.#ctor(System.Action{`0})">
+            <summary>
+            
+            </summary>
+            <param name="execute"></param>
+        </member>
+        <member name="M:InAntStudio.RelayCommand`1.#ctor(System.Action{`0},System.Predicate{`0})">
+            <summary>
+            Creates a new command.
+            </summary>
+            <param name="execute">The execution logic.</param>
+            <param name="canExecute">The execution status logic.</param>
+        </member>
+        <member name="M:InAntStudio.RelayCommand`1.CanExecute(System.Object)">
+            <summary>
+            
+            </summary>
+            <param name="parameter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:InAntStudio.RelayCommand`1.Execute(System.Object)">
+            <summary>
+            
+            </summary>
+            <param name="parameter"></param>
+        </member>
+        <member name="T:InAntStudio.RelayCommand">
+            <summary>
+            A command whose sole purpose is to 
+            relay its functionality to other
+            objects by invoking delegates. The
+            default return value for the CanExecute
+            method is 'true'.
+            </summary>
+        </member>
+        <member name="F:InAntStudio.RelayCommand.mExecute">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:InAntStudio.RelayCommand.mCanExecute">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.RelayCommand.#ctor(System.Action)">
+            <summary>
+            Creates a new command that can always execute.
+            </summary>
+            <param name="execute">The execution logic.</param>
+        </member>
+        <member name="M:InAntStudio.RelayCommand.#ctor(System.Action,System.Func{System.Boolean})">
+            <summary>
+            Creates a new command.
+            </summary>
+            <param name="execute">The execution logic.</param>
+            <param name="canExecute">The execution status logic.</param>
+        </member>
+        <member name="M:InAntStudio.RelayCommand.CanExecute(System.Object)">
+            <summary>
+            
+            </summary>
+            <param name="parameter"></param>
+            <returns></returns>
+        </member>
+        <member name="E:InAntStudio.RelayCommand.CanExecuteChanged">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.RelayCommand.Execute(System.Object)">
+            <summary>
+            
+            </summary>
+            <param name="parameter"></param>
+        </member>
+        <member name="M:InAntStudio.ResMarkerExtension.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.ResMarkerExtension.#ctor(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="key"></param>
+        </member>
+        <member name="P:InAntStudio.ResMarkerExtension.Target">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ResMarkerExtension.Property">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ResMarkerExtension.Key">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.ResMarkerExtension.ProvideValue(System.IServiceProvider)">
+            <summary>
+            
+            </summary>
+            <param name="serviceProvider"></param>
+            <returns></returns>
+        </member>
+        <member name="M:InAntStudio.ResMarkerExtension.GetValue">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:InAntStudio.ResMarkerExtension.mTarget_Unloaded(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:InAntStudio.ResMarkerExtension.Update">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.ResMarkerExtension.UpdateResource">
+            <summary>
+            更新资源
+            </summary>
+        </member>
+        <member name="M:InAntStudio.ResMarkerExtension.ClearCach">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:InAntStudio.WindowViewModelBase">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:InAntStudio.WindowViewModelBase.mCancelCommand">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:InAntStudio.WindowViewModelBase.mOKCommand">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:InAntStudio.WindowViewModelBase.mTitle">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:InAntStudio.WindowViewModelBase.mIcon">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:InAntStudio.WindowViewModelBase.mIsCancel">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:InAntStudio.WindowViewModelBase.mIsOK">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:InAntStudio.WindowViewModelBase.mIsClosed">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:InAntStudio.WindowViewModelBase.mIsEnableMax">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:InAntStudio.WindowViewModelBase.mIsHidden">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.WindowViewModelBase.IsEnableDefault">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.WindowViewModelBase.MinWidth">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.WindowViewModelBase.MinHeight">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.WindowViewModelBase.DefaultHeight">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.WindowViewModelBase.DefaultWidth">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.WindowViewModelBase.IsOkCancel">
+            <summary>
+            是否是包含OK 和 Cancel的标准模式
+            </summary>
+        </member>
+        <member name="P:InAntStudio.WindowViewModelBase.Icon">
+            <summary>
+            图标
+            </summary>
+        </member>
+        <member name="P:InAntStudio.WindowViewModelBase.Title">
+            <summary>
+            标题
+            </summary>
+        </member>
+        <member name="P:InAntStudio.WindowViewModelBase.IsOK">
+            <summary>
+            确定
+            </summary>
+        </member>
+        <member name="P:InAntStudio.WindowViewModelBase.IsCancel">
+            <summary>
+            取消
+            </summary>
+        </member>
+        <member name="P:InAntStudio.WindowViewModelBase.IsEnableMax">
+            <summary>
+            是能最大化按钮
+            </summary>
+        </member>
+        <member name="P:InAntStudio.WindowViewModelBase.Message">
+            <summary>
+            状态栏提示信息
+            </summary>
+        </member>
+        <member name="P:InAntStudio.WindowViewModelBase.CancelCommand">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.WindowViewModelBase.OKCommand">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.WindowViewModelBase.IsClosed">
+            <summary>
+            关闭
+            </summary>
+        </member>
+        <member name="P:InAntStudio.WindowViewModelBase.IsHidden">
+            <summary>
+            隐藏
+            </summary>
+        </member>
+        <member name="P:InAntStudio.WindowViewModelBase.ActiveWindow">
+            <summary>
+            当前激活的窗口实例引用
+            </summary>
+        </member>
+        <member name="M:InAntStudio.WindowViewModelBase.Hidden">
+            <summary>
+            隐藏窗口
+            </summary>
+        </member>
+        <member name="M:InAntStudio.WindowViewModelBase.ClosedProcess">
+            <summary>
+            关闭处理
+            </summary>
+        </member>
+        <member name="M:InAntStudio.WindowViewModelBase.OKCommandProcess">
+            <summary>
+            确定处理函数
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:InAntStudio.WindowViewModelBase.CancelCommandProcess">
+            <summary>
+            取消处理函数
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:InAntStudio.WindowViewModelBase.CanOKCommandProcess">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:InAntStudio.WindowViewModelBase.CanCancelCommandProcess">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:InAntStudio.WindowViewModelBase.Dispose">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.WindowViewModelBase.Active">
+            <summary>
+            激活
+            </summary>
+        </member>
+        <member name="M:InAntStudio.WindowViewModelBase.DeActive">
+            <summary>
+            取消激活
+            </summary>
+        </member>
+        <member name="E:InAntStudio.WindowViewModelBase.PropertyChanged">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.WindowViewModelBase.OnPropertyChanged(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="name"></param>
+        </member>
+        <member name="T:InAntStudio.MainWindow">
+            <summary>
+            Interaction logic for MainWindow.xaml
+            </summary>
+            <summary>
+            MainWindow
+            </summary>
+        </member>
+        <member name="M:InAntStudio.MainWindow.TextBox_Loaded(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:InAntStudio.MainWindow.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:InAntStudio.DoubleFormateConvert">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:InAntStudio.MarsApiData">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.MarsApiData.ServerIp">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.MarsApiData.Port">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.MarsApiData.UserName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.MarsApiData.Password">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.MarsApiData.ScanCircle">
+            <summary>
+            扫描周期
+            </summary>
+        </member>
+        <member name="M:InAntStudio.MarsApiData.SaveToXML">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:InAntStudio.MarsApiData.LoadFromXML(System.Xml.Linq.XElement)">
+            <summary>
+            
+            </summary>
+            <param name="xe"></param>
+        </member>
+        <member name="T:InAntStudio.MarsApiDevelop">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.MarsApiDevelop.Data">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.MarsApiDevelop.TypeName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.MarsApiDevelop.ConfigTags">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:InAntStudio.MarsApiDevelop.Config">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:InAntStudio.MarsApiDevelop.CreatNewData">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:InAntStudio.MarsApiDevelop.NewApi">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:InAntStudio.MarsApiDevelopView">
+            <summary>
+            MarsApiDevelopView.xaml 的交互逻辑
+            </summary>
+            <summary>
+            MarsApiDevelopView
+            </summary>
+        </member>
+        <member name="M:InAntStudio.MarsApiDevelopView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:InAntStudio.MarsApiDevelopViewModel">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.MarsApiDevelopViewModel.Data">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.MarsApiDevelopViewModel.ServerIp">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.MarsApiDevelopViewModel.Port">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.MarsApiDevelopViewModel.UserName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.MarsApiDevelopViewModel.Password">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.MarsApiDevelopViewModel.ScanCircle">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:InAntStudio.MarsTagBrowserView">
+            <summary>
+            TagBrowserView.xaml 的交互逻辑
+            </summary>
+            <summary>
+            MarsTagBrowserView
+            </summary>
+        </member>
+        <member name="M:InAntStudio.MarsTagBrowserView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:InAntStudio.MarsTagBrowserViewModel">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:InAntStudio.MarsTagBrowserViewModel.mTagGroups">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:InAntStudio.MarsTagBrowserViewModel.mTags">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.MarsTagBrowserViewModel.#cctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.MarsTagBrowserViewModel.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.MarsTagBrowserViewModel.ServerModel">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.MarsTagBrowserViewModel.IsLocalServer">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.MarsTagBrowserViewModel.IsRemoteServer">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.MarsTagBrowserViewModel.TagTypeList">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.MarsTagBrowserViewModel.ReadWriteModeList">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.MarsTagBrowserViewModel.TagGroups">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.MarsTagBrowserViewModel.Tags">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.MarsTagBrowserViewModel.IsConnected">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.MarsTagBrowserViewModel.ServerPassword">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.MarsTagBrowserViewModel.ServerAddress">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.MarsTagBrowserViewModel.ServerUserName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.MarsTagBrowserViewModel.ConnectCommand">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.MarsTagBrowserViewModel.CurrentSelectTag">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.MarsTagBrowserViewModel.CurrentDatabase">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.MarsTagBrowserViewModel.Databases">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.MarsTagBrowserViewModel.CurrentGroup">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.MarsTagBrowserViewModel.Grid">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.MarsTagBrowserViewModel.SelectTagName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.MarsTagBrowserViewModel.IsLoading">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.MarsTagBrowserViewModel.EnableFilter">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.MarsTagBrowserViewModel.FilterReadWriteMode">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.MarsTagBrowserViewModel.ReadWriteModeFilterEnable">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.MarsTagBrowserViewModel.FilterType">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.MarsTagBrowserViewModel.FilterKeyName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.MarsTagBrowserViewModel.TagTypeFilterEnable">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.MarsTagBrowserViewModel.PreLoadDatabase">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.MarsTagBrowserViewModel.NewQueryTags">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.MarsTagBrowserViewModel.BuildFilters">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.MarsTagBrowserViewModel.LoadConfig">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.MarsTagBrowserViewModel.LoadFromLocal">
+            <summary>
+            从本地文件加载数据库
+            </summary>
+        </member>
+        <member name="M:InAntStudio.MarsTagBrowserViewModel.Load">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.MarsTagBrowserViewModel.UnLoad">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.MarsTagBrowserViewModel.UpdateTagGroup">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.MarsTagBrowserViewModel.QueryGroups">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.MarsTagBrowserViewModel.QueryGroupsFromLocal">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.MarsTagBrowserViewModel.ContinueLoadData">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.MarsTagBrowserViewModel.ContinueQueryTags">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.MarsTagBrowserViewModel.GetSelectTags">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:InAntStudio.MarsTagBrowserViewModel.CanOKCommandProcess">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:InAntStudio.MarsTagBrowserViewModel.SaveConfig">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.MarsTagBrowserViewModel.OKCommandProcess">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:InAntStudio.MarsTagBrowserViewModel.ClosedProcess">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:InAntStudio.MarsTagGroupViewModel">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:InAntStudio.MarsTagGroupViewModel.mChildren">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.MarsTagGroupViewModel.Children">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.MarsTagGroupViewModel.FullName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.MarsTagGroupViewModel.Name">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.MarsTagGroupViewModel.Parent">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.MarsTagGroupViewModel.Database">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.MarsTagGroupViewModel.IsSelected">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.MarsTagGroupViewModel.IsExpended">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.MarsTagGroupViewModel.InitData(System.Collections.Generic.List{DBDevelopClientWebApi.TagGroup})">
+            <summary>
+            
+            </summary>
+            <param name="groups"></param>
+        </member>
+        <member name="M:InAntStudio.MarsTagGroupViewModel.InitData(System.Collections.Generic.List{Cdy.Tag.TagGroup})">
+            <summary>
+            
+            </summary>
+            <param name="groups"></param>
+        </member>
+        <member name="T:InAntStudio.MarsTagViewModel">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.MarsTagViewModel.Group">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.MarsTagViewModel.Name">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.MarsTagViewModel.Desc">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.MarsTagViewModel.Type">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.MarsTagViewModel.ReadWriteMode">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.MarsTagViewModel.FullName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.MarsTagViewModel.ConvertTo">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:InAntStudio.Properties.Resources">
+            <summary>
+              一个强类型的资源类，用于查找本地化的字符串等。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.ResourceManager">
+            <summary>
+              返回此类使用的缓存的 ResourceManager 实例。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.Culture">
+            <summary>
+              重写当前线程的 CurrentUICulture 属性，对
+              使用此强类型资源类的所有资源查找执行重写。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.AbsoluteValue">
+            <summary>
+              查找类似 Value 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.Add">
+            <summary>
+              查找类似 Add 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.AddTagFail">
+            <summary>
+              查找类似 Add tag {0} failed! 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.AllGroup">
+            <summary>
+              查找类似 All group 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.Append">
+            <summary>
+              查找类似 Append 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.Cancel">
+            <summary>
+              查找类似 Cancel 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.CancelSave">
+            <summary>
+              查找类似 Cancel 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.CancelSave_Tooltip">
+            <summary>
+              查找类似 Discard the content changed 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.canceltosavemsg">
+            <summary>
+              查找类似 you will be lost all data you have modify. To continue? 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.Circle">
+            <summary>
+              查找类似 Circle 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.CompressType">
+            <summary>
+              查找类似 CompressType 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.Convert">
+            <summary>
+              查找类似 Convert 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.Copy">
+            <summary>
+              查找类似 Copy 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.Custom">
+            <summary>
+              查找类似 Custom 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.CustomDataPathTooltip">
+            <summary>
+              查找类似 Relative database path or absolute path 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.Database">
+            <summary>
+              查找类似 Database 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.databaseSelect">
+            <summary>
+              查找类似 Database select 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.DeadAreaCompress">
+            <summary>
+              查找类似 Dead zone 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.DeadAreaType">
+            <summary>
+              查找类似 Type 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.DeadAreaValue">
+            <summary>
+              查找类似 Dead zone 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.Default">
+            <summary>
+              查找类似 Default 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.Desc">
+            <summary>
+              查找类似 Description 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.Driver">
+            <summary>
+              查找类似 Driver 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.EnableWrite">
+            <summary>
+              查找类似 EnableWrite 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.EnableZipFile">
+            <summary>
+              查找类似 Enable double compression 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.EndPort">
+            <summary>
+              查找类似 End port 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.erro">
+            <summary>
+              查找类似 erro 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.Export">
+            <summary>
+              查找类似 Export 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.FindAvaiableId">
+            <summary>
+              查找类似 Reset id 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.FindAvaiableIdTooltip">
+            <summary>
+              查找类似 Find the smallest unused ID and set it to the tag.The ID is used as the record identifier of historical records. Resetting the ID may cause confusion of historical data. 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.funTitle">
+            <summary>
+              查找类似 Conversion formula 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.Group">
+            <summary>
+              查找类似 Group 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.HisDataKeepTime">
+            <summary>
+              查找类似 Historical data retention time 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.HotReRun_Tooltip">
+            <summary>
+              查找类似 Rerun database 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.Id">
+            <summary>
+              查找类似 Id 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.IDResetStartId">
+            <summary>
+              查找类似 Start search ID 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.IDResetWarnning">
+            <summary>
+              查找类似 Warning: The ID is used as the record identifier of historical records. Resetting the ID may cause confusion of historical data. 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.Import">
+            <summary>
+              查找类似 Import 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.ImportErroMsg">
+            <summary>
+              查找类似 Some erro has happened,do you see erro.txt for detail? 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.ImportMode">
+            <summary>
+              查找类似 Import mode 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.IsAdmin">
+            <summary>
+              查找类似 Admin 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.KeepTimeUnit">
+            <summary>
+              查找类似 (Day) 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.Keyword">
+            <summary>
+              查找类似 Keyword 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.Link">
+            <summary>
+              查找类似 Link 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.Login">
+            <summary>
+              查找类似 Login 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.LoginFailed">
+            <summary>
+              查找类似 Login Failed! 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.Logout">
+            <summary>
+              查找类似 Logout 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.LosslessCompress">
+            <summary>
+              查找类似 Lossless 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.MainwindowTitle">
+            <summary>
+              查找类似 Mars database developer 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.Manual">
+            <summary>
+              查找类似 Manual 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.MarsTitle">
+            <summary>
+              查找类似 Welcome to Mars realtime iot database 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.MaxValue">
+            <summary>
+              查找类似 MaxValue 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.MaxValueCountPersecond">
+            <summary>
+              查找类似 MaxValueCountPersecond 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.MinValue">
+            <summary>
+              查找类似 MinValue 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.Modify">
+            <summary>
+              查找类似 Modify 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.Name">
+            <summary>
+              查找类似 Name 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.New">
+            <summary>
+              查找类似 New 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.NewDatabase">
+            <summary>
+              查找类似 New database 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.NewDatabaseFailed">
+            <summary>
+              查找类似 New database failed! 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.NoneCompress">
+            <summary>
+              查找类似 None 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.OK">
+            <summary>
+              查找类似 OK 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.opendatabasefailed">
+            <summary>
+              查找类似 Open database {0} failed! 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.Password">
+            <summary>
+              查找类似 Password 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.PasswordConfirm">
+            <summary>
+              查找类似 Password confirm 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.PasswordNew">
+            <summary>
+              查找类似 New password  的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.Paste">
+            <summary>
+              查找类似 Paste 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.PercentValue">
+            <summary>
+              查找类似 Percent 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.Permission">
+            <summary>
+              查找类似 Permission 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.PermissionList">
+            <summary>
+              查找类似 Permission list 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.Precision">
+            <summary>
+              查找类似 Precision 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.PropertyCopy">
+            <summary>
+              查找类似 PropertyCopy 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.PropertyPaste">
+            <summary>
+              查找类似 PropertyPaste 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.Read">
+            <summary>
+              查找类似 Read 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.ReadWrite">
+            <summary>
+              查找类似 ReadWrite 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.ReadWriteMode">
+            <summary>
+              查找类似 ReadWriteMode 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.Record">
+            <summary>
+              查找类似 Record 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.RecordType">
+            <summary>
+              查找类似 RecordType 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.Registor">
+            <summary>
+              查找类似 Registor 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.Remove">
+            <summary>
+              查找类似 Remove 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.RemoveConfirmMsg">
+            <summary>
+              查找类似 Are you sure to remove {0}? 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.ReName">
+            <summary>
+              查找类似 Rename 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.Replace">
+            <summary>
+              查找类似 Replace 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.ReplaceAll">
+            <summary>
+              查找类似 Replace all 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.ReRun">
+            <summary>
+              查找类似 ReRun 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.Save">
+            <summary>
+              查找类似 Save 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.Savefailed">
+            <summary>
+              查找类似 save failed! 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.saveprompt">
+            <summary>
+              查找类似 Data is changed,do you want to save? 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.SaveSucessful">
+            <summary>
+              查找类似 save sucessfull! 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.Security">
+            <summary>
+              查找类似 Security 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.SelectAll">
+            <summary>
+              查找类似 All 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.SelectDatabase">
+            <summary>
+              查找类似 Select a database 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.SelectGroup">
+            <summary>
+              查找类似 Selected group 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.ServerBackupDataPath">
+            <summary>
+              查找类似 History backup path 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.ServerIp">
+            <summary>
+              查找类似 Server Ip 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.ServerPort">
+            <summary>
+              查找类似 ServerPort 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.ServerPrimaryDataPath">
+            <summary>
+              查找类似 History data path 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.ServerSecurity">
+            <summary>
+              查找类似 ServerSecurity 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.ServerSetting">
+            <summary>
+              查找类似 Server setting 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.SetDescription">
+            <summary>
+              查找类似 SetDescription 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.SetPasswordfail">
+            <summary>
+              查找类似 set password fail. 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.SetPasswordSeccussful">
+            <summary>
+              查找类似 set password seccussfull. 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.Setting">
+            <summary>
+              查找类似 Setting 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.SlopeAreaValue">
+            <summary>
+              查找类似 Slope zone 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.SlopeCompress">
+            <summary>
+              查找类似 Slope 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.Start">
+            <summary>
+              查找类似 Start 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.Start_Tooltip">
+            <summary>
+              查找类似 Run database 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.StartPort">
+            <summary>
+              查找类似 Start port 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.Stop">
+            <summary>
+              查找类似 Stop 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.Stop_Tooltip">
+            <summary>
+              查找类似 Stop databse 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.Switch">
+            <summary>
+              查找类似 Switch 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.Tag">
+            <summary>
+              查找类似 Tag 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.TagCount">
+            <summary>
+              查找类似 Tag count 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.TagExportComplete">
+            <summary>
+              查找类似 Tag export complete! 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.TagFilter">
+            <summary>
+              查找类似 Query filter 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.TagGroup">
+            <summary>
+              查找类似 Tag group 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.Timer">
+            <summary>
+              查找类似 Timer 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.Type">
+            <summary>
+              查找类似 Type 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.UpdateTagFail">
+            <summary>
+              查找类似 Update tag {0} failed! 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.User">
+            <summary>
+              查找类似 User 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.UserList">
+            <summary>
+              查找类似 User list 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.UserName">
+            <summary>
+              查找类似 User name 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.UseTls">
+            <summary>
+              查找类似 UseTls 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.ValueChanged">
+            <summary>
+              查找类似 ValueChanged 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.Properties.Resources.Write">
+            <summary>
+              查找类似 Write 的本地化字符串。
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ServiceHelper.Server">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ServiceHelper.UserName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ServiceHelper.Password">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ServiceHelper.Database">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:InAntStudio.ViewModel.DatabaseSettingConfigViewModel">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ViewModel.DatabaseSettingConfigViewModel.ApiKeys">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ViewModel.DatabaseSettingConfigViewModel.ProxyKeys">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ViewModel.DatabaseSettingConfigViewModel.ApiKey">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ViewModel.DatabaseSettingConfigViewModel.ProxyKey">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ViewModel.DatabaseSettingConfigViewModel.ApiConfigModel">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ViewModel.DatabaseSettingConfigViewModel.MessageConfigModel">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ViewModel.DatabaseSettingConfigViewModel.Database">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.ViewModel.DatabaseSettingConfigViewModel.Init">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.ViewModel.DatabaseSettingConfigViewModel.Active">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.ViewModel.DatabaseSettingConfigViewModel.DeActive">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:InAntStudio.ViewModel.DriverSetViewModel">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ViewModel.DriverSetViewModel.Name">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ViewModel.DriverSetViewModel.Children">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.ViewModel.DriverSetViewModel.Init(System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+            
+            </summary>
+            <param name="vals"></param>
+        </member>
+        <member name="M:InAntStudio.ViewModel.DriverSetViewModel.ToDictionary">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:InAntStudio.ViewModel.DriverSettingItem.Name">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ViewModel.DriverSettingItem.DisplayName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ViewModel.DriverSettingItem.Value">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:InAntStudio.ViewModel.ListDatabaseViewModel">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.ViewModel.ListDatabaseViewModel.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ViewModel.ListDatabaseViewModel.SelectDatabase">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ViewModel.ListDatabaseViewModel.DatabaseItems">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.ViewModel.ListDatabaseViewModel.CanOKCommandProcess">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:InAntStudio.ViewModel.ListDatabaseViewModel.AutoOpenDatabse">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:InAntStudio.ViewModel.ListDatabaseViewModel.OKCommandProcess">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:InAntStudio.ViewModel.LoginViewModel.IPList">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ViewModel.LoginViewModel.Server">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ViewModel.LoginViewModel.UserName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ViewModel.LoginViewModel.Password">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ViewModel.LoginViewModel.LoginUserId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.ViewModel.LoginViewModel.OKCommandProcess">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:InAntStudio.ViewModel.LoginViewModel.UseTls">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.ViewModel.LoginViewModel.AutoLogin">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:InAntStudio.ViewModel.LoginViewModel.Login">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:InAntStudio.ViewModel.LoginViewModel.CheckLocalServerRun">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.ViewModel.LoginViewModel.SaveIpCach">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:InAntStudio.ViewModel.MarInfoViewModel">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.ViewModel.MarInfoViewModel.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ViewModel.MarInfoViewModel.MarsTitle">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.ViewModel.MarInfoViewModel.Tim_Elapsed(System.Object,System.Timers.ElapsedEventArgs)">
+            <summary>
+            
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="P:InAntStudio.ViewModel.NewDatabaseViewModel.Name">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ViewModel.NewDatabaseViewModel.Desc">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.ViewModel.NewDatabaseViewModel.CanOKCommandProcess">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:InAntStudio.ViewModel.NewDatabaseViewModel.OKCommandProcess">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:InAntStudio.ViewModel.CurrentUserManager.UserName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:InAntStudio.ViewModel.ExpressionEditViewModel">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.ViewModel.ExpressionEditViewModel.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ViewModel.ExpressionEditViewModel.InsertCharCommand">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ViewModel.ExpressionEditViewModel.Commands">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ViewModel.ExpressionEditViewModel.Scripts">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ViewModel.ExpressionEditViewModel.ExpressEditor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ViewModel.ExpressionEditViewModel.Expresse">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ViewModel.ExpressionEditViewModel.CurrentCommand">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ViewModel.ExpressionEditViewModel.CurrentCommandGroup">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.ViewModel.ExpressionEditViewModel.InsertTextDelegate(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="exp"></param>
+        </member>
+        <member name="M:InAntStudio.ViewModel.ExpressionEditViewModel.Init">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.ViewModel.ExpressionEditViewModel.LoadFunction">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.ViewModel.ExpressionEditViewModel.LoadScript">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.ViewModel.ExpressionEditViewModel.GetExpressResult">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:InAntStudio.ViewModel.CommandGroup">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ViewModel.CommandGroup.Name">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ViewModel.CommandGroup.Commands">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ViewModel.CommandGroup.Parent">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ViewModel.CommandGroup.IsSelected">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.ViewModel.CommandGroup.LoadFromXML(System.Xml.Linq.XElement)">
+            <summary>
+            
+            </summary>
+            <param name="xe"></param>
+        </member>
+        <member name="T:InAntStudio.ViewModel.ScriptItem">
+            <summary>
+            脚本片段
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ViewModel.ScriptItem.Name">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ViewModel.ScriptItem.Desc">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ViewModel.ScriptItem.Body">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ViewModel.ScriptItem.Parent">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ViewModel.ScriptItem.InsertCommand">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.ViewModel.ScriptItem.LoadFromXML(System.Xml.Linq.XElement)">
+            <summary>
+            
+            </summary>
+            <param name="xe"></param>
+        </member>
+        <member name="T:InAntStudio.ViewModel.CommandItem">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ViewModel.CommandItem.Name">
+            <summary>
+            名称
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ViewModel.CommandItem.Description">
+            <summary>
+            描述
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ViewModel.CommandItem.Function">
+            <summary>
+            函数定义
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ViewModel.CommandItem.Parameters">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ViewModel.CommandItem.InsertCommand">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ViewModel.CommandItem.IsSelected">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ViewModel.CommandItem.SelectCommand">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ViewModel.CommandItem.Parent">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.ViewModel.CommandItem.LoadFromXML(System.Xml.Linq.XElement)">
+            <summary>
+            
+            </summary>
+            <param name="xe"></param>
+        </member>
+        <member name="T:InAntStudio.ViewModel.Function">
+            <summary>
+            函数
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ViewModel.Function.Body">
+            <summary>
+            函数体
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ViewModel.Function.ReturnType">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ViewModel.Function.Parameters">
+            <summary>
+            参数
+            </summary>
+        </member>
+        <member name="M:InAntStudio.ViewModel.Function.LoadFromXML(System.Xml.Linq.XElement)">
+            <summary>
+            
+            </summary>
+            <param name="xe"></param>
+        </member>
+        <member name="T:InAntStudio.ViewModel.Parameter">
+            <summary>
+            参数
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ViewModel.Parameter.Name">
+            <summary>
+            名称
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ViewModel.Parameter.Type">
+            <summary>
+            类型
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ViewModel.Parameter.DesignType">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ViewModel.Parameter.Desc">
+            <summary>
+            描述
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ViewModel.Parameter.Value">
+            <summary>
+            配置的值
+            </summary>
+        </member>
+        <member name="M:InAntStudio.ViewModel.Parameter.LoadFromXML(System.Xml.Linq.XElement)">
+            <summary>
+            
+            </summary>
+            <param name="xe"></param>
+        </member>
+        <member name="M:InAntStudio.ViewModel.Parameter.Clone">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:InAntStudio.ViewModel.IdResetViewModel">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ViewModel.IdResetViewModel.StartId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:InAntStudio.ViewModel.ImportModeSelectViewModel">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.ViewModel.ImportModeSelectViewModel.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ViewModel.ImportModeSelectViewModel.IsReplace">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ViewModel.ImportModeSelectViewModel.IsReplaceMode">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ViewModel.ImportModeSelectViewModel.IsAddMode">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ViewModel.ImportModeSelectViewModel.Mode">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:InAntStudio.ViewModel.ParametersViewModel">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:InAntStudio.ViewModel.ParametersViewModel.mParameters">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.ViewModel.ParametersViewModel.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ViewModel.ParametersViewModel.Parameters">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.ViewModel.ParametersViewModel.Init(System.Collections.Generic.List{InAntStudio.ViewModel.Parameter})">
+            <summary>
+            
+            </summary>
+            <param name="paras"></param>
+        </member>
+        <member name="M:InAntStudio.ViewModel.ParametersViewModel.InnerInit">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.ViewModel.ParametersViewModel.GetResult">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:InAntStudio.ViewModel.ParameterDesignViewModelBase">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.ViewModel.ParameterDesignViewModelBase.#ctor(InAntStudio.ViewModel.Parameter)">
+            <summary>
+            
+            </summary>
+            <param name="model"></param>
+        </member>
+        <member name="M:InAntStudio.ViewModel.ParameterDesignViewModelBase.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ViewModel.ParameterDesignViewModelBase.Model">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ViewModel.ParameterDesignViewModelBase.Name">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ViewModel.ParameterDesignViewModelBase.Desc">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ViewModel.ParameterDesignViewModelBase.Type">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ViewModel.ParameterDesignViewModelBase.Value">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.ViewModel.ParameterDesignViewModelBase.New(InAntStudio.ViewModel.Parameter)">
+            <summary>
+            
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="T:InAntStudio.ViewModel.TagParameterDesignViewModel">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.ViewModel.TagParameterDesignViewModel.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.ViewModel.TagParameterDesignViewModel.#ctor(InAntStudio.ViewModel.Parameter)">
+            <summary>
+            
+            </summary>
+            <param name="model"></param>
+        </member>
+        <member name="P:InAntStudio.ViewModel.TagParameterDesignViewModel.TagBrowseCommand">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ViewModel.TagParameterDesignViewModel.Value">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.ViewModel.TagParameterDesignViewModel.New(InAntStudio.ViewModel.Parameter)">
+            <summary>
+            
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="T:InAntStudio.ViewModel.TagGroupDetailViewModel">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ViewModel.TagGroupDetailViewModel.IsPopup">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ViewModel.TagGroupDetailViewModel.RowSelectMode">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ViewModel.TagGroupDetailViewModel.CellSelectMode">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ViewModel.TagGroupDetailViewModel.SelectMode">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ViewModel.TagGroupDetailViewModel.FilterType">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ViewModel.TagGroupDetailViewModel.FilterKeyName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ViewModel.TagGroupDetailViewModel.TagTypeFilterEnable">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ViewModel.TagGroupDetailViewModel.LinkedTagFilterEnable">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ViewModel.TagGroupDetailViewModel.LinkedTagFilter">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ViewModel.TagGroupDetailViewModel.IsLoading">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ViewModel.TagGroupDetailViewModel.CopyCommand">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ViewModel.TagGroupDetailViewModel.CellCopyCommand">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ViewModel.TagGroupDetailViewModel.PasteCommand">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ViewModel.TagGroupDetailViewModel.CellPasteCommand">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ViewModel.TagGroupDetailViewModel.AddCommand">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ViewModel.TagGroupDetailViewModel.ImportFromMarsDatabseCommand">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ViewModel.TagGroupDetailViewModel.AddFromMarsOnlineCommand">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ViewModel.TagGroupDetailViewModel.RemoveCommand">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ViewModel.TagGroupDetailViewModel.ExportCommand">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ViewModel.TagGroupDetailViewModel.ImportCommand">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ViewModel.TagGroupDetailViewModel.FindAvaiableIdCommand">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ViewModel.TagGroupDetailViewModel.ReplaceCommand">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ViewModel.TagGroupDetailViewModel.CurrentSelectTag">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ViewModel.TagGroupDetailViewModel.GroupModel">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ViewModel.TagGroupDetailViewModel.SelectGroupTags">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ViewModel.TagGroupDetailViewModel.TagCount">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ViewModel.TagGroupDetailViewModel.EnableFilter">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ViewModel.TagGroupDetailViewModel.TagTypeList">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ViewModel.TagGroupDetailViewModel.SelectedCells">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ViewModel.TagGroupDetailViewModel.grid">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.ViewModel.TagGroupDetailViewModel.ImportFromMarsDatabase">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.ViewModel.TagGroupDetailViewModel.AddFromMarsTag">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.ViewModel.TagGroupDetailViewModel.DoResetTagId(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="startId"></param>
+        </member>
+        <member name="M:InAntStudio.ViewModel.TagGroupDetailViewModel.NewQueryTags">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.ViewModel.TagGroupDetailViewModel.ExportToFile">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.ViewModel.TagGroupDetailViewModel.ImportFromFile">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.ViewModel.TagGroupDetailViewModel.ContinueLoadData">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.ViewModel.TagGroupDetailViewModel.CanContinueLoadData">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:InAntStudio.ViewModel.TagGroupDetailViewModel.ContinueQueryTags">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.ViewModel.TagGroupDetailViewModel.RemoveTag">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.ViewModel.TagGroupDetailViewModel.CopyTag">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.ViewModel.TagGroupDetailViewModel.CopyTagProperty">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.ViewModel.TagGroupDetailViewModel.PasteTag">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.ViewModel.TagGroupDetailViewModel.PasteTagProperty">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.ViewModel.TagGroupDetailViewModel.NewTag">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.ViewModel.TagGroupDetailViewModel.GetNumberInt(System.String)">
+            <summary>
+            获取字符串中的数字
+            </summary>
+            <param name="str">字符串</param>
+            <returns>数字</returns>
+        </member>
+        <member name="M:InAntStudio.ViewModel.TagGroupDetailViewModel.GetNewName(System.String)">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:InAntStudio.ViewModel.TagGroupDetailViewModel.UpdateTag(InAntStudio.TagViewModel)">
+            <summary>
+            
+            </summary>
+            <param name="tagmodel"></param>
+        </member>
+        <member name="M:InAntStudio.ViewModel.TagGroupDetailViewModel.UpdateAll">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.ViewModel.TagGroupDetailViewModel.Active">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.ViewModel.TagGroupDetailViewModel.DeActive">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:InAntStudio.DatabaseSettingViewModel">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.DatabaseSettingViewModel.GetModel(InAntStudio.ViewModelBase)">
+            <summary>
+            
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:InAntStudio.IModeSwitch.Active">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.IModeSwitch.DeActive">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.MainViewModel.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.MainViewModel.IsDatabaseRunning">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.MainViewModel.ReRunCommand">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.MainViewModel.StartCommand">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.MainViewModel.StopCommand">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.MainViewModel.CancelCommand">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.MainViewModel.MainwindowTitle">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.MainViewModel.Database">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.MainViewModel.UserName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.MainViewModel.NotifyVisiblity">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.MainViewModel.ProcessNotify">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.MainViewModel.IsCanOperate">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.MainViewModel.ImportCommand">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.MainViewModel.ExportCommand">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.MainViewModel.ContentViewModel">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.MainViewModel.TagGroup">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.MainViewModel.CurrentSelectGroup">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.MainViewModel.LogoutCommand">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.MainViewModel.LoginCommand">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.MainViewModel.AddGroupCommand">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.MainViewModel.RemoveGroupCommand">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.MainViewModel.SaveCommand">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.MainViewModel.DatabaseSelectCommand">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.MainViewModel.IsLogin">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.MainViewModel.CheckSaveDatabase(System.Boolean)">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.MainViewModel.MCheckRunningTimer_Elapsed(System.Object,System.Timers.ElapsedEventArgs)">
+            <summary>
+            
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:InAntStudio.MainViewModel.ImportFromFile">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.MainViewModel.ExportToFile">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.MainViewModel.SwitchDatabase">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.MainViewModel.Manager_RefreshNameEvent(System.Object,System.EventArgs)">
+            <summary>
+            
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:InAntStudio.MainViewModel.StartCheckDatabaseRunning">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.MainViewModel.StopCheckDatabaseRunning">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.MainViewModel.Logout">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.MainViewModel.AutoLogin">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.MainViewModel.Login">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.MainViewModel.QueryGroups">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.MainViewModel.SelectContentModel">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.MainViewModel.BeginShowNotify">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.MainViewModel.ShowNotifyValue(System.Double)">
+            <summary>
+            
+            </summary>
+            <param name="val"></param>
+        </member>
+        <member name="M:InAntStudio.MainViewModel.EndShowNotify">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:InAntStudio.IProcessNotify">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.IProcessNotify.BeginShowNotify">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.IProcessNotify.ShowNotifyValue(System.Double)">
+            <summary>
+            
+            </summary>
+            <param name="val"></param>
+        </member>
+        <member name="M:InAntStudio.IProcessNotify.EndShowNotify">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:InAntStudio.TagGroupViewModel">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.TagGroupViewModel.#ctor(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="name"></param>
+            <param name="description"></param>
+        </member>
+        <member name="P:InAntStudio.TagGroupViewModel.Description">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.TagGroupViewModel.IsDescriptionEdit">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.TagGroupViewModel.GetModel(InAntStudio.ViewModelBase)">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:InAntStudio.TagGroupViewModel.CanPaste">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:InAntStudio.TagGroupViewModel.CanCopy">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:InAntStudio.TagGroupViewModel.CanAddChild">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:InAntStudio.TagGroupViewModel.CanRemove">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:InAntStudio.TagGroupViewModel.Remove">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.TagGroupViewModel.GetNewGroupName">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:InAntStudio.TagGroupViewModel.AddGroup(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="parent"></param>
+            <returns></returns>
+        </member>
+        <member name="M:InAntStudio.TagGroupViewModel.Add">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.TagGroupViewModel.Copy">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.TagGroupViewModel.Paste">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.TagGroupViewModel.OnRename(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="oldName"></param>
+            <param name="newName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:InAntStudio.TagGroupViewModel.InitData(System.Collections.Generic.List{System.Tuple{System.String,System.String,System.String}})">
+            <summary>
+            
+            </summary>
+            <param name="groups"></param>
+        </member>
+        <member name="M:InAntStudio.RootTagGroupViewModel.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.RootTagGroupViewModel.FullName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.RootTagGroupViewModel.CanRemove">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:InAntStudio.RootTagGroupViewModel.CanCopy">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:InAntStudio.RootTagGroupViewModel.OnRename(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="oldName"></param>
+            <param name="newName"></param>
+            <returns></returns>
+        </member>
+        <member name="T:InAntStudio.TagViewModel">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.TagViewModel.#cctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.TagViewModel.ClearLinkTagsCommand">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.TagViewModel.TagBrowseCommand">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.TagViewModel.TagDetailModel">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.TagViewModel.IsChanged">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.TagViewModel.IsSelected">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.TagViewModel.IsNew">
+            <summary>
+            是否新建
+            </summary>
+        </member>
+        <member name="P:InAntStudio.TagViewModel.RealTagMode">
+            <summary>
+            实时变量配置
+            </summary>
+        </member>
+        <member name="P:InAntStudio.TagViewModel.Id">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.TagViewModel.Name">
+            <summary>
+            名字
+            </summary>
+        </member>
+        <member name="P:InAntStudio.TagViewModel.Desc">
+            <summary>
+            描述
+            </summary>
+        </member>
+        <member name="P:InAntStudio.TagViewModel.TagTypeList">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.TagViewModel.Type">
+            <summary>
+            类型
+            </summary>
+        </member>
+        <member name="P:InAntStudio.TagViewModel.TypeString">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.TagViewModel.Group">
+            <summary>
+            组
+            </summary>
+        </member>
+        <member name="P:InAntStudio.TagViewModel.LinkAddress">
+            <summary>
+            关联外部地址
+            </summary>
+        </member>
+        <member name="P:InAntStudio.TagViewModel.IsEnable">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.TagViewModel.CustomContent1">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.TagViewModel.CustomContent2">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.TagViewModel.CustomContent3">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.TagViewModel.InitTagDetailModel">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.TagViewModel.MTagDetailModel_PropertyChanged(System.Object,System.ComponentModel.PropertyChangedEventArgs)">
+            <summary>
+            
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:InAntStudio.TagViewModel.CheckAvaiableName(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="M:InAntStudio.TagViewModel.InitEnumType">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.TagViewModel.ChangeTagType(Cdy.Ant.TagType)">
+            <summary>
+            
+            </summary>
+            <param name="tagType"></param>
+        </member>
+        <member name="M:InAntStudio.TagViewModel.Clone">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:InAntStudio.TagViewModel.SaveToCSVString">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:InAntStudio.TagViewModel.LoadFromCSVString(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="val"></param>
+        </member>
+        <member name="M:InAntStudio.TagViewModel.LoadFromMarsCSVString(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="val"></param>
+            <returns></returns>
+        </member>
+        <member name="T:InAntStudio.TagDetailConfigViewModelBase">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.TagDetailConfigViewModelBase.Model">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.TagDetailConfigViewModelBase.IsChanged">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.AlarmTagConfigViewModel.LinkTag">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.AlarmTagConfigViewModel.TagBrowerCommand">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.AlarmTagConfigViewModel.Init">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:InAntStudio.MarsTagType.Bool">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:InAntStudio.MarsTagType.Byte">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:InAntStudio.MarsTagType.Short">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:InAntStudio.MarsTagType.UShort">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:InAntStudio.MarsTagType.Int">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:InAntStudio.MarsTagType.UInt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:InAntStudio.MarsTagType.Long">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:InAntStudio.MarsTagType.ULong">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:InAntStudio.MarsTagType.Double">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:InAntStudio.MarsTagType.Float">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:InAntStudio.MarsTagType.DateTime">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:InAntStudio.MarsTagType.String">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:InAntStudio.MarsTagType.IntPoint">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:InAntStudio.MarsTagType.UIntPoint">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:InAntStudio.MarsTagType.LongPoint">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:InAntStudio.MarsTagType.ULongPoint">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:InAntStudio.MarsTagType.IntPoint3">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:InAntStudio.MarsTagType.UIntPoint3">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:InAntStudio.MarsTagType.LongPoint3">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:InAntStudio.MarsTagType.ULongPoint3">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:InAntStudio.SimpleTagConfigViewModel">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.SimpleTagConfigViewModel.#cctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.SimpleTagConfigViewModel.AlarmLevels">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.SimpleTagConfigViewModel.AlarmLevel">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.SimpleTagConfigViewModel.Init">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:InAntStudio.AnalogTagConfigViewModel">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.AnalogTagConfigViewModel.AlarmLevels">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.AnalogTagConfigViewModel.HasHighHighValue">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.AnalogTagConfigViewModel.HighHighAlarmLevel">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.AnalogTagConfigViewModel.HighHighValue">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.AnalogTagConfigViewModel.HighHighDeadArea">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.AnalogTagConfigViewModel.HasHighValue">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.AnalogTagConfigViewModel.HighAlarmLevel">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.AnalogTagConfigViewModel.HighValue">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.AnalogTagConfigViewModel.HighDeadArea">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.AnalogTagConfigViewModel.LowAlarmLevel">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.AnalogTagConfigViewModel.LowDeadArea">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.AnalogTagConfigViewModel.LowLowAlarmLevel">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.AnalogTagConfigViewModel.LowLowValue">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.AnalogTagConfigViewModel.LowLowDeadArea">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.AnalogTagConfigViewModel.Init">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:InAntStudio.AnalogRangTagConfigViewModel">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.AnalogRangTagConfigViewModel.CurrentItem">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.AnalogRangTagConfigViewModel.RemoveItemCommand">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.AnalogRangTagConfigViewModel.Items">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.AnalogRangTagConfigViewModel.AddItem(Cdy.Ant.AnalogRangeAlarmItem)">
+            <summary>
+            
+            </summary>
+            <param name="item"></param>
+        </member>
+        <member name="M:InAntStudio.AnalogRangTagConfigViewModel.Mm_PropertyChanged(System.Object,System.ComponentModel.PropertyChangedEventArgs)">
+            <summary>
+            
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:InAntStudio.AnalogRangTagConfigViewModel.Init">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:InAntStudio.AnalogRangTagItemConfigViewModel">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.AnalogRangTagItemConfigViewModel.AlarmLevels">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.AnalogRangTagItemConfigViewModel.Model">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.AnalogRangTagItemConfigViewModel.AlarmLevel">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.AnalogRangTagItemConfigViewModel.MaxValue">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.AnalogRangTagItemConfigViewModel.MinValue">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.AnalogRangTagItemConfigViewModel.DeadArea">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:InAntStudio.DigitalTagConfigViewModel">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.DigitalTagConfigViewModel.Values">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.DigitalTagConfigViewModel.Value">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.DigitalTagConfigViewModel.Init">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:InAntStudio.DigitalDelayTagConfigViewModel">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.DigitalDelayTagConfigViewModel.Delay">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.DigitalDelayTagConfigViewModel.Value">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.DigitalDelayTagConfigViewModel.Init">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:InAntStudio.PulseTagConfigViewModel">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.PulseTagConfigViewModel.PulseTypes">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.PulseTagConfigViewModel.Type">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:InAntStudio.OneRangeTagConfigViewModel">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.OneRangeTagConfigViewModel.MaxValue">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.OneRangeTagConfigViewModel.MinValue">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.OneRangeTagConfigViewModel.IsInRangeAlarm">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:InAntStudio.StringTagConfigViewModel">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.StringTagConfigViewModel.Value">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.StringTagConfigViewModel.Init">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:InAntStudio.TwoRangeTagConfigViewModel">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.TwoRangeTagConfigViewModel.Value">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.TwoRangeTagConfigViewModel.ToStringAlarmPoint(System.Collections.Generic.List{Cdy.Ant.Point})">
+            <summary>
+            
+            </summary>
+            <param name="points"></param>
+            <returns></returns>
+        </member>
+        <member name="M:InAntStudio.TwoRangeTagConfigViewModel.DeSeriseAlarmPoint(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:InAntStudio.TwoRangeTagConfigViewModel.Init">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:InAntStudio.ThreeRangeTagConfigViewModel">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ThreeRangeTagConfigViewModel.Value">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.ThreeRangeTagConfigViewModel.ToStringAlarmPoint(System.Collections.Generic.List{Cdy.Ant.Point3D})">
+            <summary>
+            
+            </summary>
+            <param name="points"></param>
+            <returns></returns>
+        </member>
+        <member name="M:InAntStudio.ThreeRangeTagConfigViewModel.DeSeriseAlarmPoint(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:InAntStudio.ThreeRangeTagConfigViewModel.Init">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:InAntStudio.ScriptTagConfigViewModel">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ScriptTagConfigViewModel.Express">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ScriptTagConfigViewModel.ExpressEditCommand">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ScriptTagConfigViewModel.ExpressClearCommand">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.ScriptTagConfigViewModel.Init">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:InAntStudio.DatabaseViewModel">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.DatabaseViewModel.OnRename(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="oldName"></param>
+            <param name="newName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:InAntStudio.DatabaseViewModel.CanAddChild">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:InAntStudio.TreeItemViewModel.CopyCommand">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.TreeItemViewModel.PasteCommand">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.TreeItemViewModel.Name">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.TreeItemViewModel.ReNameCommand">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.TreeItemViewModel.RemoveCommand">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.TreeItemViewModel.IsSelected">
+            <summary>
+            被选中
+            </summary>
+        </member>
+        <member name="P:InAntStudio.TreeItemViewModel.IsExpanded">
+            <summary>
+            展开
+            </summary>
+        </member>
+        <member name="P:InAntStudio.TreeItemViewModel.Parent">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.TreeItemViewModel.FullName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.TreeItemViewModel.CheckAvaiableName(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="M:InAntStudio.TreeItemViewModel.GetModel(InAntStudio.ViewModelBase)">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:InAntStudio.TreeItemViewModel.Add">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.TreeItemViewModel.Copy">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.TreeItemViewModel.Paste">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.TreeItemViewModel.CanCopy">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:InAntStudio.TreeItemViewModel.CanPaste">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:InAntStudio.TreeItemViewModel.Remove">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.TreeItemViewModel.CanRemove">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:InAntStudio.TreeItemViewModel.OnRename(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="oldName"></param>
+            <param name="newName"></param>
+        </member>
+        <member name="P:InAntStudio.HasChildrenTreeItemViewModel.Children">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ITreeItemViewModel.Name">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.ViewModelBase.OnPropertyChanged(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="name"></param>
+        </member>
+        <member name="M:InAntStudio.ViewModelBase.Dispose">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="E:InAntStudio.ViewModelBase.PropertyChanged">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:InAntStudio.IndexConverter">
+            <summary>
+            Class IndexConverter
+            </summary>
+        </member>
+        <member name="F:InAntStudio.IndexConverter.mCollectionView">
+            <summary>
+            The m collection view
+            </summary>
+        </member>
+        <member name="M:InAntStudio.IndexConverter.Convert(System.Object[],System.Type,System.Object,System.Globalization.CultureInfo)">
+            <summary>
+            Converts source values to a value for the binding target. The data binding engine calls this method when it propagates the values from source bindings to the binding target.
+            </summary>
+            <param name="values">The array of values that the source bindings in the <see cref="T:System.Windows.Data.MultiBinding" /> produces. The value <see cref="F:System.Windows.DependencyProperty.UnsetValue" /> indicates that the source binding has no value to provide for conversion.</param>
+            <param name="targetType">The type of the binding target property.</param>
+            <param name="parameter">The converter parameter to use.</param>
+            <param name="culture">The culture to use in the converter.</param>
+            <returns>A converted value.If the method returns null, the valid null value is used.A return value of <see cref="T:System.Windows.DependencyProperty" />.<see cref="F:System.Windows.DependencyProperty.UnsetValue" /> indicates that the converter did not produce a value, and that the binding will use the <see cref="P:System.Windows.Data.BindingBase.FallbackValue" /> if it is available, or else will use the default value.A return value of <see cref="T:System.Windows.Data.Binding" />.<see cref="F:System.Windows.Data.Binding.DoNothing" /> indicates that the binding does not transfer the value or use the <see cref="P:System.Windows.Data.BindingBase.FallbackValue" /> or the default value.</returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:InAntStudio.IndexConverter.ConvertBack(System.Object,System.Type[],System.Object,System.Globalization.CultureInfo)">
+            <summary>
+            Converts a binding target value to the source binding values.
+            </summary>
+            <param name="value">The value that the binding target produces.</param>
+            <param name="targetTypes">The array of types to convert to. The array length indicates the number and types of values that are suggested for the method to return.</param>
+            <param name="parameter">The converter parameter to use.</param>
+            <param name="culture">The culture to use in the converter.</param>
+            <returns>An array of values that have been converted from the target value back to the source values.</returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:InAntStudio.BoolInvertConvert.Convert(System.Object,System.Type,System.Object,System.Globalization.CultureInfo)">
+            <summary>
+            
+            </summary>
+            <param name="value"></param>
+            <param name="targetType"></param>
+            <param name="parameter"></param>
+            <param name="culture"></param>
+            <returns></returns>
+        </member>
+        <member name="M:InAntStudio.BoolInvertConvert.ConvertBack(System.Object,System.Type,System.Object,System.Globalization.CultureInfo)">
+            <summary>
+            
+            </summary>
+            <param name="value"></param>
+            <param name="targetType"></param>
+            <param name="parameter"></param>
+            <param name="culture"></param>
+            <returns></returns>
+        </member>
+        <member name="T:InAntStudio.BoolInvertToVisiableConvert">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.BoolInvertToVisiableConvert.Convert(System.Object,System.Type,System.Object,System.Globalization.CultureInfo)">
+            <summary>
+            
+            </summary>
+            <param name="value"></param>
+            <param name="targetType"></param>
+            <param name="parameter"></param>
+            <param name="culture"></param>
+            <returns></returns>
+        </member>
+        <member name="M:InAntStudio.BoolInvertToVisiableConvert.ConvertBack(System.Object,System.Type,System.Object,System.Globalization.CultureInfo)">
+            <summary>
+            
+            </summary>
+            <param name="value"></param>
+            <param name="targetType"></param>
+            <param name="parameter"></param>
+            <param name="culture"></param>
+            <returns></returns>
+        </member>
+        <member name="T:InAntStudio.DoubleValueConvert">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:InAntStudio.View.DatabaseSettingView">
+            <summary>
+            DatabaseSettingView.xaml 的交互逻辑
+            </summary>
+            <summary>
+            DatabaseSettingView
+            </summary>
+        </member>
+        <member name="M:InAntStudio.View.DatabaseSettingView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:InAntStudio.View.IdResetView">
+            <summary>
+            IdResetView.xaml 的交互逻辑
+            </summary>
+            <summary>
+            IdResetView
+            </summary>
+        </member>
+        <member name="M:InAntStudio.View.IdResetView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:InAntStudio.View.ImportModeSelectView">
+            <summary>
+            ImportModeSelectView.xaml 的交互逻辑
+            </summary>
+            <summary>
+            ImportModeSelectView
+            </summary>
+        </member>
+        <member name="M:InAntStudio.View.ImportModeSelectView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:InAntStudio.View.ListDatabaseView">
+            <summary>
+            ListDatabaseView.xaml 的交互逻辑
+            </summary>
+            <summary>
+            ListDatabaseView
+            </summary>
+        </member>
+        <member name="M:InAntStudio.View.ListDatabaseView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:InAntStudio.View.LoginView">
+            <summary>
+            LoginView.xaml 的交互逻辑
+            </summary>
+            <summary>
+            LoginView
+            </summary>
+        </member>
+        <member name="M:InAntStudio.View.LoginView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:InAntStudio.View.MarInfoView">
+            <summary>
+            MarInfoView.xaml 的交互逻辑
+            </summary>
+            <summary>
+            MarInfoView
+            </summary>
+        </member>
+        <member name="M:InAntStudio.View.MarInfoView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:InAntStudio.View.NewDatabaseView">
+            <summary>
+            NewDatabaseView.xaml 的交互逻辑
+            </summary>
+            <summary>
+            NewDatabaseView
+            </summary>
+        </member>
+        <member name="M:InAntStudio.View.NewDatabaseView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:InAntStudio.View.TagGroupDetailView">
+            <summary>
+            TagGroupDetailView.xaml 的交互逻辑
+            </summary>
+            <summary>
+            TagGroupDetailView
+            </summary>
+        </member>
+        <member name="M:InAntStudio.View.TagGroupDetailView.GetVisualParent(System.Windows.DependencyObject,System.Collections.Generic.List{System.String})">
+            <summary>
+            
+            </summary>
+            <param name="target"></param>
+            <param name="ll"></param>
+        </member>
+        <member name="M:InAntStudio.View.TagGroupDetailView.DataGrid_SelectedCellsChanged(System.Object,System.Windows.Controls.SelectedCellsChangedEventArgs)">
+            <summary>
+            
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:InAntStudio.View.TagGroupDetailView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:InAntStudio.AnalogRangTagConfigView">
+            <summary>
+            AnalogRangTagConfigView.xaml 的交互逻辑
+            </summary>
+            <summary>
+            AnalogRangTagConfigView
+            </summary>
+        </member>
+        <member name="M:InAntStudio.AnalogRangTagConfigView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:InAntStudio.AnalogTagConfigView">
+            <summary>
+            AnalogTagConfigView.xaml 的交互逻辑
+            </summary>
+            <summary>
+            AnalogTagConfigView
+            </summary>
+        </member>
+        <member name="M:InAntStudio.AnalogTagConfigView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:InAntStudio.DelayDigitalTagConfigView">
+            <summary>
+            DelayDigitalTagConfigView.xaml 的交互逻辑
+            </summary>
+            <summary>
+            DelayDigitalTagConfigView
+            </summary>
+        </member>
+        <member name="M:InAntStudio.DelayDigitalTagConfigView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:InAntStudio.DigitalTagConfigView">
+            <summary>
+            DigitalTagConfigView.xaml 的交互逻辑
+            </summary>
+            <summary>
+            DigitalTagConfigView
+            </summary>
+        </member>
+        <member name="M:InAntStudio.DigitalTagConfigView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:InAntStudio.ExpressionEditView">
+            <summary>
+            ExpressionEditView.xaml 的交互逻辑
+            </summary>
+            <summary>
+            ExpressionEditView
+            </summary>
+        </member>
+        <member name="M:InAntStudio.ExpressionEditView.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.ExpressionEditView.ExpressionEditView_Loaded(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:InAntStudio.ExpressionEditView.Init">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.ExpressionEditView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:InAntStudio.OneRangeTagConfigView">
+            <summary>
+            OneRangeTagConfigView.xaml 的交互逻辑
+            </summary>
+            <summary>
+            OneRangeTagConfigView
+            </summary>
+        </member>
+        <member name="M:InAntStudio.OneRangeTagConfigView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:InAntStudio.ParametersView">
+            <summary>
+            ParametersView.xaml 的交互逻辑
+            </summary>
+            <summary>
+            ParametersView
+            </summary>
+        </member>
+        <member name="M:InAntStudio.ParametersView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:InAntStudio.PulseTagConfigView">
+            <summary>
+            PulseTagConfigView.xaml 的交互逻辑
+            </summary>
+            <summary>
+            PulseTagConfigView
+            </summary>
+        </member>
+        <member name="M:InAntStudio.PulseTagConfigView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:InAntStudio.ScriptTagConfigView">
+            <summary>
+            ScriptTagConfigView.xaml 的交互逻辑
+            </summary>
+            <summary>
+            ScriptTagConfigView
+            </summary>
+        </member>
+        <member name="M:InAntStudio.ScriptTagConfigView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:InAntStudio.StringTagConfigView">
+            <summary>
+            StringTagConfigView.xaml 的交互逻辑
+            </summary>
+            <summary>
+            StringTagConfigView
+            </summary>
+        </member>
+        <member name="M:InAntStudio.StringTagConfigView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:InAntStudio.ThreeRangeTagConfigView">
+            <summary>
+            ThreeRangeTagConfigView.xaml 的交互逻辑
+            </summary>
+            <summary>
+            ThreeRangeTagConfigView
+            </summary>
+        </member>
+        <member name="M:InAntStudio.ThreeRangeTagConfigView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:InAntStudio.TwoRangeTagConfigView">
+            <summary>
+            TwoRangeTagConfigView.xaml 的交互逻辑
+            </summary>
+            <summary>
+            TwoRangeTagConfigView
+            </summary>
+        </member>
+        <member name="M:InAntStudio.TwoRangeTagConfigView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:Cdy.Ant.Tag.Tag">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cdy.Ant.Tag.Tag.GetTagValue(System.String)">
+            <summary>
+            获取变量的值
+            </summary>
+            <param name="tag">格式:"组名.点名"</param>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.Tag.Tag.SetTagValue(System.String,System.Object)">
+            <summary>
+            设置变量的值
+            </summary>
+            <param name="tag">格式:"组名.点名"</param>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.Tag.Tag.IsTagQualityGood(System.String)">
+            <summary>
+            变量的质量戳是否为有效值
+            </summary>
+            <param name="tag">格式:"组名.点名"</param>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.Tag.Tag.TagValueSum(System.String[])">
+            <summary>
+            对变量的值求和
+            </summary>
+            <param name="tags">变量名称集合 变量名格式:"组名.点名"</param>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.Tag.Tag.TagValueAvg(System.String[])">
+            <summary>
+            对变量的值求平均值
+            </summary>
+            <param name="tags">变量名称集合 变量名格式:"组名.点名"</param>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.Tag.Tag.TagValueMax(System.String[])">
+            <summary>
+            对变量的值取最大
+            </summary>
+            <param name="tags">变量名称集合 变量名格式:"组名.点名"</param>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.Tag.Tag.TagValueMin(System.String[])">
+            <summary>
+            对变量的值取最小
+            </summary>
+            <param name="tags">变量名称集合 变量名格式:"组名.点名"</param>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.Tag.Tag.Avg(System.Object[])">
+            <summary>
+            对一组数值进行求平均值
+            </summary>
+            <param name="values"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.Tag.Tag.Max(System.Object[])">
+            <summary>
+            对一组数值取最大值
+            </summary>
+            <param name="values"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.Tag.Tag.Min(System.Object[])">
+            <summary>
+            对一组数值取最小值
+            </summary>
+            <param name="values"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.Tag.Tag.Bit(System.Object,System.Byte)">
+            <summary>
+            对值进行取位
+            </summary>
+            <param name="value">值</param>
+            <param name="index">要取位的序号，从0开始</param>
+            <returns></returns>
+        </member>
+        <member name="T:Cdy.Ant.Tag.Message">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cdy.Ant.Tag.Message.Alarm(System.String,System.String,Cdy.Ant.AlarmLevel)">
+            <summary>
+            产生报警
+            </summary>
+            <param name="messageBody">消息体</param>
+            <param name="value">报警值</param>
+            <param name="level">报警级别</param>
+        </member>
+        <member name="M:Cdy.Ant.Tag.Message.Alarm(System.String,Cdy.Ant.AlarmLevel)">
+            <summary>
+            产生报警
+            </summary>
+            <param name="value">报警值</param>
+            <param name="level">报警级别</param>
+        </member>
+        <member name="M:Cdy.Ant.Tag.Message.Info(System.String)">
+            <summary>
+            产生一条消息
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="M:Cdy.Ant.Tag.Message.Restore(System.String)">
+            <summary>
+            恢复报警
+            </summary>
+            <param name="value">恢复值</param>
+        </member>
+    </members>
+</doc>

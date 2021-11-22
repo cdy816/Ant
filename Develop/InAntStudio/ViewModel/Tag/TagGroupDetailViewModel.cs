@@ -1268,6 +1268,11 @@ namespace InAntStudio.ViewModel
             var vtmps = mSelectGroupTags.Select(e => e.Name).ToList();
             string tagName = baseName;
 
+            if (!vtmps.Contains(tagName))
+            {
+                return tagName;
+            }
+
             int number = GetNumberInt(baseName);
             if(number>=0)
             {

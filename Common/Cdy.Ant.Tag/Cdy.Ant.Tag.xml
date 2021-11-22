@@ -709,6 +709,11 @@
             
             </summary>
         </member>
+        <member name="F:Cdy.Ant.Tag.ScriptExtend.extend">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="M:Cdy.Ant.Tag.ScriptExtend.#ctor">
             <summary>
             

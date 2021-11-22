@@ -301,14 +301,12 @@ namespace InAntStudio.ViewModel
         /// <summary>
         /// 
         /// </summary>
-        public override string Value { get => base.Value; set {
+        public override string Value { get => base.Value; set 
+            {
                 
-                if(string.IsNullOrEmpty(value) || value.StartsWith("Tag."))
+                if(!string.IsNullOrEmpty(value))
                 base.Value = value;
-                else
-                {
-                    OnPropertyChanged("Value");
-                }
+                OnPropertyChanged("Value");
             } }
 
         #endregion ...Properties...

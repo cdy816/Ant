@@ -135,6 +135,7 @@ namespace AntRuntime
         /// </summary>
         public void Start()
         {
+            LoggerService.Service.Info("Runner", "Start the " + this.Name + " ... ");
             alarmEnginer.Start();
           
             mSecurityRunner?.Start();
@@ -142,6 +143,8 @@ namespace AntRuntime
             mDataApi?.Start();
             mServiceProxy?.Start();
             IsStarted = true;
+
+            LoggerService.Service.Info("Runner", "Start the " + this.Name + " complete.");
         }
 
         /// <summary>
@@ -157,6 +160,8 @@ namespace AntRuntime
         /// </summary>
         public void Stop()
         {
+            LoggerService.Service.Info("Runner", "Stop the" + this.Name + " ... ");
+
             mDataApi?.Stop();
           
             alarmEnginer.Stop();
@@ -170,6 +175,8 @@ namespace AntRuntime
             alarmEnginer.SaveTagStatus();
 
             IsStarted = false;
+
+            LoggerService.Service.Info("Runner", "Stop the " + this.Name + " complete.");
         }
 
         #endregion ...Methods...

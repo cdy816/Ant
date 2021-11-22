@@ -24,14 +24,22 @@ namespace InAntRun
 
             if (args.Length > 0)
             {
-                mRunner = new AntRuntime.Runner() { Name = args[1] };
-                mRunner.Name = args[0];
-                mRunner.Init();
-                mRunner.Start();
-
-                Task.Run(() => {
-                    StartMonitor(args[1]);
-                });
+                try
+                {
+                    mRunner = new AntRuntime.Runner() { Name = args[0] };
+                    //mRunner.Name = args[0];
+                    mRunner.Init();
+                    mRunner.Start();
+                    Console.Title = " InAntRun " + mRunner.Name;
+                    Task.Run(() =>
+                    {
+                        StartMonitor(args[0]);
+                    });
+                }
+                catch(Exception ex)
+                {
+                    Console.WriteLine(args[0]+" --> "+ ex.Message);
+                }
             }
 
             Console.WriteLine(Res.Get("HelpMsg"));
@@ -62,6 +70,7 @@ namespace InAntRun
                         if (mRunner != null && mRunner.IsStarted)
                         {
                             mRunner.Stop();
+                            Console.Title = " InAntRun";
                         }
                         mIsClosed = true;
 
@@ -70,6 +79,7 @@ namespace InAntRun
                         if (mRunner != null && mRunner.IsStarted)
                         {
                             mRunner.Stop();
+                            Console.Title = " InAntRun";
                         }
                         break;
                     case "list":
@@ -87,7 +97,7 @@ namespace InAntRun
                                     mRunner.Init();
                                     mRunner.Start();
                                 }
-
+                                Console.Title = " InAntRun " + mRunner.Name;
                                 Task.Run(() => {
                                     StartMonitor(cmd[1]);
                                 });

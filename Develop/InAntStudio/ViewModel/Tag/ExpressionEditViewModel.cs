@@ -262,7 +262,7 @@ namespace InAntStudio.ViewModel
             if(System.IO.File.Exists(sfile))
             {
                 XDocument xe = XDocument.Load(sfile);
-                foreach(var vv in (xe.FirstNode as XElement).Elements())
+                foreach(var vv in xe.Element("CommandDocument").Elements())
                 {
                     var cg = new CommandGroup() { Parent = this }.LoadFromXML(vv);
                     mCommands.Add(cg);

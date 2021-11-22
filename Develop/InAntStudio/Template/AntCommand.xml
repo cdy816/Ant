@@ -1,44 +1,45 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
+<!--DesignType: tag -->
 <CommandDocument Version="0.1">
   <CommandGroup Name="Tag">
     
   <Command Name="SetTagValue" Desc="设置变量的值">
     <Function Body="Tag.SetTagValue" ReturnType="void">
-      <Parameter Name="tag" Type="string" DesignType="tag" Desc="变量名称" Value="Tag." />
+      <Parameter Name="tag" Type="string" DesignType="tag" Desc="变量名称" Value="tag1" />
       <Parameter Name="value" Type="object"  Desc="变量的值" Value="0" />
     </Function>
   </Command>
 
   <Command Name="GetTagValue" Desc="获取变量的值">
-    <Function Body="Tag.SetTagValue"  ReturnType="object">
-      <Parameter Name="tag" Type="string" DesignType="tag" Desc="变量名称" Value="Tag." />
+    <Function Body="Tag.GetTagValue"  ReturnType="object">
+      <Parameter Name="tag" Type="string" DesignType="tag" Desc="变量名称" Value="tag1" />
     </Function>
   </Command>
 
   <Command Name="IsTagQualityGood" Desc="变量的质量戳是否为有效值">
     <Function Body="Tag.IsTagQualityGood"  ReturnType="object">
-      <Parameter Name="tag" Type="string" DesignType="tag" Desc="变量名称" Value="Tag." />
+      <Parameter Name="tag" Type="string" DesignType="tag" Desc="变量名称" Value="tag1" />
     </Function>
   </Command>
 
   <Command Name="TagValueSum" Desc="求多个变量值的和">
     <Function Body="Tag.TagValueSum"  ReturnType="object">
-      <Parameter Name="tag1" Type="string" DesignType="tag" Desc="变量名称" Value="Tag." />
-      <Parameter Name="tag2" Type="string" DesignType="tag" Desc="变量名称" Value="Tag." />
+      <Parameter Name="tag1" Type="string" DesignType="tag" Desc="变量名称" Value="tag1" />
+      <Parameter Name="tag2" Type="string" DesignType="tag" Desc="变量名称" Value="tag2" />
     </Function>
   </Command>
 
   <Command Name="TagValueAvg" Desc="求多个变量的平均值">
     <Function Body="Tag.TagValueAvg"  ReturnType="object">
-      <Parameter Name="tag1" Type="string" DesignType="tag" Desc="变量名称" Value="Tag." />
-      <Parameter Name="tag2" Type="string" DesignType="tag" Desc="变量名称" Value="Tag." />
+      <Parameter Name="tag1" Type="string" DesignType="tag" Desc="变量名称" Value="tag1" />
+      <Parameter Name="tag2" Type="string" DesignType="tag" Desc="变量名称" Value="tag2" />
     </Function>
   </Command>
 
   <Command Name="TagValueMax" Desc="求多个变量的最大值">
     <Function Body="Tag.TagValueMax"  ReturnType="object">
-      <Parameter Name="tag1" Type="string" DesignType="tag" Desc="变量名称" Value="Tag." />
-      <Parameter Name="tag2" Type="string" DesignType="tag" Desc="变量名称" Value="Tag." />
+      <Parameter Name="tag1" Type="string" DesignType="tag" Desc="变量名称" Value="tag1" />
+      <Parameter Name="tag2" Type="string" DesignType="tag" Desc="变量名称" Value="tag2" />
     </Function>
   </Command>
 

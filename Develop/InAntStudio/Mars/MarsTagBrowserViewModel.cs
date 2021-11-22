@@ -920,7 +920,7 @@ namespace InAntStudio
                     {
                         foreach (var vv in tags)
                         {
-                            var vtag = new MarsTagViewModel() { Name = vv.Item1.Name, Desc = vv.Item1.Desc, Type = vv.Item1.Type.ToString(), ReadWriteMode = vv.Item1.ReadWriteType.ToString(), Group = CurrentGroup != null ? CurrentGroup.FullName : "" };
+                            var vtag = new MarsTagViewModel() { Name = vv.Item1.Name, Desc = vv.Item1.Desc, Type = vv.Item1.Type.ToString(), ReadWriteMode = vv.Item1.ReadWriteType.ToString(), Group = group };
                             if (vv.Item1 is Cdy.Tag.NumberTagBase)
                             {
                                 vtag.MaxValue = (vv.Item1 as Cdy.Tag.NumberTagBase).MaxValue;
@@ -955,7 +955,7 @@ namespace InAntStudio
                     {
                         foreach (var vv in tags)
                         {
-                            var vtag = new MarsTagViewModel() { Name = vv.Item1.Name, Desc = vv.Item1.Desc, Type = vv.Item1.Type.ToString(), ReadWriteMode = vv.Item1.ReadWriteType.ToString(), Group = CurrentGroup != null ? CurrentGroup.FullName : "" };
+                            var vtag = new MarsTagViewModel() { Name = vv.Item1.Name, Desc = vv.Item1.Desc, Type = vv.Item1.Type.ToString(), ReadWriteMode = vv.Item1.ReadWriteType.ToString(), Group = group };
                             if (vv.Item1 is Cdy.Tag.NumberTagBase)
                             {
                                 vtag.MaxValue = (vv.Item1 as Cdy.Tag.NumberTagBase).MaxValue;
@@ -1032,7 +1032,7 @@ namespace InAntStudio
                     }
                     foreach (var vv in retags)
                     {
-                        var vtag = new MarsTagViewModel() { Name = vv.Name, Desc = vv.Desc, Type = vv.Type.ToString(), ReadWriteMode = vv.ReadWriteType.ToString(), Group = CurrentGroup != null ? CurrentGroup.FullName : "" };
+                        var vtag = new MarsTagViewModel() { Name = vv.Name, Desc = vv.Desc, Type = vv.Type.ToString(), ReadWriteMode = vv.ReadWriteType.ToString(), Group = group };
                         if (vv is Cdy.Tag.NumberTagBase)
                         {
                             vtag.MaxValue = (vv as Cdy.Tag.NumberTagBase).MaxValue;

@@ -12,6 +12,9 @@ namespace Cdy.Ant.Tag
 
         #region ... Variables  ...
         
+        /// <summary>
+        /// 
+        /// </summary>
         public static ScriptExtend extend = new ScriptExtend();
 
         private List<string> mExtendDlls = new List<string>();
@@ -54,7 +57,7 @@ namespace Cdy.Ant.Tag
         /// </summary>
         private void Init()
         {
-            string sfile = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(this.GetType().Assembly.Location), "AntConfig", "ScriptExtend.cfg");
+            string sfile = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(this.GetType().Assembly.Location), "Config", "AntScriptExtend.cfg");
             if(System.IO.File.Exists(sfile))
             {
                 var dlls = System.IO.File.ReadAllLines(sfile);
