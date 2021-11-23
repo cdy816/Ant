@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Cdy.Tag;
+using Cheetah;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -251,6 +253,10 @@ namespace Cdy.Ant.MarsApi
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="datas"></param>
         private void ProcessRealDataResult(Cheetah.ByteBuffer datas)
         {
             mChangedApi.Clear();
@@ -428,6 +434,339 @@ namespace Cdy.Ant.MarsApi
                 return client.SetTagValue(vtag.Id, vtag.ValueType,value);
             }
             return false;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        private unsafe HisQueryResult<T> ProcessHisResultByMemory<T>(ByteBuffer data)
+        {
+
+            int count = data.ReadInt();
+            HisQueryResult<T> re = new HisQueryResult<T>(count);
+
+            data.CopyTo(re.Address, data.ReadIndex, 0, data.WriteIndex - data.ReadIndex);
+
+            //Marshal.Copy(data.Array, data.ArrayOffset + data.ReaderIndex, re.Address, data.ReadableBytes);
+            re.Count = count;
+            data.UnlockAndReturn();
+            return re;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="tagName"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        private Dictionary<DateTime,object> ProcessHisResult(string tagName,ByteBuffer value)
+        {
+            Dictionary<DateTime, object> re = new Dictionary<DateTime, object>();
+            var vtag = mTags[tagName];
+            switch (vtag.ValueType)
+            {
+                case (byte)Cdy.Tag.TagType.Bool:
+                    var rr = ProcessHisResultByMemory<bool>(value);
+                    for (int i = 0; i < rr.Count; i++)
+                    {
+                        var val = rr.GetValue(i, out DateTime time, out byte qu);
+                        if (qu == 0)
+                        {
+                            re.Add(time, val);
+                        }
+                    }
+                    break;
+                case (byte)Cdy.Tag.TagType.Byte:
+                    var brr = ProcessHisResultByMemory<byte>(value);
+                    for (int i = 0; i < brr.Count; i++)
+                    {
+                        var val = brr.GetValue(i, out DateTime time, out byte qu);
+                        if (qu == 0)
+                        {
+                            re.Add(time, val);
+                        }
+                    }
+                    break;
+                case (byte)Cdy.Tag.TagType.Short:
+                    var srr = ProcessHisResultByMemory<short>(value);
+                    for (int i = 0; i < srr.Count; i++)
+                    {
+                        var val = srr.GetValue(i, out DateTime time, out byte qu);
+                        if (qu == 0)
+                        {
+                            re.Add(time, val);
+                        }
+                    }
+                    break;
+                case (byte)Cdy.Tag.TagType.UShort:
+                    var usrr = ProcessHisResultByMemory<ushort>(value);
+                    for (int i = 0; i < usrr.Count; i++)
+                    {
+                        var val = usrr.GetValue(i, out DateTime time, out byte qu);
+                        if (qu == 0)
+                        {
+                            re.Add(time, val);
+                        }
+                    }
+                    break;
+                case (byte)Cdy.Tag.TagType.Int:
+                    var irr = ProcessHisResultByMemory<int>(value);
+                    for (int i = 0; i < irr.Count; i++)
+                    {
+                        var val = irr.GetValue(i, out DateTime time, out byte qu);
+                        if (qu == 0)
+                        {
+                            re.Add(time, val);
+                        }
+                    }
+                    break;
+                case (byte)Cdy.Tag.TagType.UInt:
+                    var uirr = ProcessHisResultByMemory<uint>(value);
+                    for (int i = 0; i < uirr.Count; i++)
+                    {
+                        var val = uirr.GetValue(i, out DateTime time, out byte qu);
+                        if (qu == 0)
+                        {
+                            re.Add(time, val);
+                        }
+                    }
+                    break;
+                case (byte)Cdy.Tag.TagType.Long:
+                    var lrr = ProcessHisResultByMemory<long>(value);
+                    for (int i = 0; i < lrr.Count; i++)
+                    {
+                        var val = lrr.GetValue(i, out DateTime time, out byte qu);
+                        if (qu == 0)
+                        {
+                            re.Add(time, val);
+                        }
+                    }
+                    break;
+                case (byte)Cdy.Tag.TagType.ULong:
+                    var ulrr = ProcessHisResultByMemory<ulong>(value);
+                    for (int i = 0; i < ulrr.Count; i++)
+                    {
+                        var val = ulrr.GetValue(i, out DateTime time, out byte qu);
+                        if (qu == 0)
+                        {
+                            re.Add(time, val);
+                        }
+                    }
+                    break;
+                case (byte)Cdy.Tag.TagType.Double:
+                    var drr = ProcessHisResultByMemory<double>(value);
+                    for (int i = 0; i < drr.Count; i++)
+                    {
+                        var val = drr.GetValue(i, out DateTime time, out byte qu);
+                        if (qu == 0)
+                        {
+                            re.Add(time, val);
+                        }
+                    }
+                    break;
+                case (byte)Cdy.Tag.TagType.Float:
+                    var frr = ProcessHisResultByMemory<float>(value);
+                    for (int i = 0; i < frr.Count; i++)
+                    {
+                        var val = frr.GetValue(i, out DateTime time, out byte qu);
+                        if (qu == 0)
+                        {
+                            re.Add(time, val);
+                        }
+                    }
+                    break;
+                case (byte)Cdy.Tag.TagType.DateTime:
+                    var dtrr = ProcessHisResultByMemory<DateTime>(value);
+                    for (int i = 0; i < dtrr.Count; i++)
+                    {
+                        var val = dtrr.GetValue(i, out DateTime time, out byte qu);
+                        if (qu == 0)
+                        {
+                            re.Add(time, val);
+                        }
+                    }
+                    break;
+                case (byte)Cdy.Tag.TagType.String:
+                    var strr = ProcessHisResultByMemory<string>(value);
+                    for (int i = 0; i < strr.Count; i++)
+                    {
+                        var val = strr.GetValue(i, out DateTime time, out byte qu);
+                        if (qu == 0)
+                        {
+                            re.Add(time, val);
+                        }
+                    }
+                    break;
+                case (byte)Cdy.Tag.TagType.IntPoint:
+                    var iptrr = ProcessHisResultByMemory<IntPointData>(value);
+                    for (int i = 0; i < iptrr.Count; i++)
+                    {
+                        var val = iptrr.GetValue(i, out DateTime time, out byte qu);
+                        if (qu == 0)
+                        {
+                            re.Add(time, val);
+                        }
+                    }
+                    break;
+                case (byte)Cdy.Tag.TagType.IntPoint3:
+                    var ip3trr = ProcessHisResultByMemory<IntPoint3Data>(value);
+                    for (int i = 0; i < ip3trr.Count; i++)
+                    {
+                        var val = ip3trr.GetValue(i, out DateTime time, out byte qu);
+                        if (qu == 0)
+                        {
+                            re.Add(time, val);
+                        }
+                    }
+                    break;
+                case (byte)Cdy.Tag.TagType.UIntPoint:
+                    var uiptrr = ProcessHisResultByMemory<UIntPointData>(value);
+                    for (int i = 0; i < uiptrr.Count; i++)
+                    {
+                        var val = uiptrr.GetValue(i, out DateTime time, out byte qu);
+                        if (qu == 0)
+                        {
+                            re.Add(time, val);
+                        }
+                    }
+                    break;
+                case (byte)Cdy.Tag.TagType.UIntPoint3:
+                    var uip3trr = ProcessHisResultByMemory<UIntPoint3Data>(value);
+                    for (int i = 0; i < uip3trr.Count; i++)
+                    {
+                        var val = uip3trr.GetValue(i, out DateTime time, out byte qu);
+                        if (qu == 0)
+                        {
+                            re.Add(time, val);
+                        }
+                    }
+                    break;
+                case (byte)Cdy.Tag.TagType.LongPoint:
+                    var liptrr = ProcessHisResultByMemory<LongPointData>(value);
+                    for (int i = 0; i < liptrr.Count; i++)
+                    {
+                        var val = liptrr.GetValue(i, out DateTime time, out byte qu);
+                        if (qu == 0)
+                        {
+                            re.Add(time, val);
+                        }
+                    }
+                    break;
+                case (byte)Cdy.Tag.TagType.LongPoint3:
+                    var lip3trr = ProcessHisResultByMemory<LongPoint3Data>(value);
+                    for (int i = 0; i < lip3trr.Count; i++)
+                    {
+                        var val = lip3trr.GetValue(i, out DateTime time, out byte qu);
+                        if (qu == 0)
+                        {
+                            re.Add(time, val);
+                        }
+                    }
+                    break;
+                case (byte)Cdy.Tag.TagType.ULongPoint:
+                    var uliptrr = ProcessHisResultByMemory<ULongPointData>(value);
+                    for (int i = 0; i < uliptrr.Count; i++)
+                    {
+                        var val = uliptrr.GetValue(i, out DateTime time, out byte qu);
+                        if (qu == 0)
+                        {
+                            re.Add(time, val);
+                        }
+                    }
+                    break;
+                case (byte)Cdy.Tag.TagType.ULongPoint3:
+                    var ulip3trr = ProcessHisResultByMemory<ULongPoint3Data>(value);
+                    for (int i = 0; i < ulip3trr.Count; i++)
+                    {
+                        var val = ulip3trr.GetValue(i, out DateTime time, out byte qu);
+                        if (qu == 0)
+                        {
+                            re.Add(time, val);
+                        }
+                    }
+                    break;
+
+
+            }
+            return re;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="tagName"></param>
+        /// <param name="startTime"></param>
+        /// <param name="endTime"></param>
+        /// <param name="span"></param>
+        /// <returns></returns>
+        public Dictionary<DateTime, object> QueryGoodHisValue(string tagName, DateTime startTime, DateTime endTime,TimeSpan span)
+        {
+            Dictionary<DateTime, object> re = new Dictionary<DateTime, object>();
+            if (client.IsLogin)
+            {
+                var vtag = mTags[tagName];
+                if(vtag!=null)
+                {
+                    var  res = client.QueryHisValueForTimeSpan(vtag.Id, startTime, endTime, span, Cdy.Tag.QueryValueMatchType.Linear);
+                    if(res!=null)
+                    {
+                        return ProcessHisResult(tagName, res);
+                    }
+                }
+            }
+            return re;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="tagName"></param>
+        /// <param name="startTime"></param>
+        /// <param name="endTime"></param>
+        /// <returns></returns>
+        public Dictionary<DateTime, object> QueryAllGoodHisValue(string tagName, DateTime startTime, DateTime endTime)
+        {
+            Dictionary<DateTime, object> re = new Dictionary<DateTime, object>();
+            if (client.IsLogin)
+            {
+                var vtag = mTags[tagName];
+                if (vtag != null)
+                {
+                    var res = client.QueryAllHisValue(vtag.Id, startTime, endTime);
+                    if (res != null)
+                    {
+                        return ProcessHisResult(tagName, res);
+                    }
+                }
+            }
+            return re;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="tagName"></param>
+        /// <param name="times"></param>
+        /// <returns></returns>
+        public Dictionary<DateTime, object> QueryGoodHisValue(string tagName, List<DateTime> times)
+        {
+            Dictionary<DateTime, object> re = new Dictionary<DateTime, object>();
+            if (client.IsLogin)
+            {
+                var vtag = mTags[tagName];
+                if (vtag != null)
+                {
+                    var res = client.QueryHisValueAtTimes(vtag.Id, times,QueryValueMatchType.Linear);
+                    if (res != null)
+                    {
+                        return ProcessHisResult(tagName, res);
+                    }
+                }
+            }
+            return re;
         }
 
 

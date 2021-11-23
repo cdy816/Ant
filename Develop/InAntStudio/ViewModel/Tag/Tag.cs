@@ -124,6 +124,43 @@ namespace Cdy.Ant.Tag
             return 0;
         }
 
+        /// <summary>
+        /// 查询变量好的历史值
+        /// </summary>
+        /// <param name="tagName">变量名称</param>
+        /// <param name="startTime">开始时间</param>
+        /// <param name="endTime">结束时间</param>
+        /// <param name="span">时间间隔</param>
+        /// <returns></returns>
+        public static Dictionary<DateTime, object> QueryGoodHisValue(string tagName, DateTime startTime, DateTime endTime, TimeSpan span)
+        {
+            
+            return null;
+        }
+
+        /// <summary>
+        /// 查询某个时间段记录的所有好的值
+        /// </summary>
+        /// <param name="tagName">变量名称</param>
+        /// <param name="startTime">开始时间</param>
+        /// <param name="endTime">结束时间</param>
+        /// <returns></returns>
+        public static Dictionary<DateTime, object> QueryAllGoodHisValue(string tagName, DateTime startTime, DateTime endTime)
+        {
+            return null;
+        }
+
+        /// <summary>
+        /// 查询执行时刻点的好的值
+        /// </summary>
+        /// <param name="tagName">变量名称</param>
+        /// <param name="times">时间点集合</param>
+        /// <returns></returns>
+        public static Dictionary<DateTime, object> QueryGoodHisValue(string tagName, List<DateTime> times)
+        {
+            return null;
+        }
+
     }
 
     /// <summary>

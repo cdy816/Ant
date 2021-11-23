@@ -342,6 +342,42 @@ namespace AntRuntime.Enginer
         public ScriptAlarmTagRun Owner { get; set; }
 
         /// <summary>
+        /// 查询变量好的历史值
+        /// </summary>
+        /// <param name="tagName">变量名称</param>
+        /// <param name="startTime">开始时间</param>
+        /// <param name="endTime">结束时间</param>
+        /// <param name="span">时间间隔</param>
+        /// <returns></returns>
+        public Dictionary<DateTime, object> QueryGoodHisValue(string tagName, DateTime startTime, DateTime endTime, TimeSpan span)
+        {
+            return Owner.TagService?.QueryGoodHisValue(tagName,startTime,endTime,span);
+        }
+
+        /// <summary>
+        /// 查询某个时间段记录的所有好的值
+        /// </summary>
+        /// <param name="tagName">变量名称</param>
+        /// <param name="startTime">开始时间</param>
+        /// <param name="endTime">结束时间</param>
+        /// <returns></returns>
+        public Dictionary<DateTime, object> QueryAllGoodHisValue(string tagName, DateTime startTime, DateTime endTime)
+        {
+            return Owner.TagService?.QueryAllGoodHisValue(tagName,startTime,endTime);
+        }
+
+        /// <summary>
+        /// 查询执行时刻点的好的值
+        /// </summary>
+        /// <param name="tagName">变量名称</param>
+        /// <param name="times">时间点集合</param>
+        /// <returns></returns>
+        public Dictionary<DateTime, object> QueryGoodHisValue(string tagName, List<DateTime> times)
+        {
+            return Owner.TagService?.QueryGoodHisValue(tagName,times);
+        }
+
+        /// <summary>
         /// 获取变量的值
         /// </summary>
         /// <param name="tag">格式:"Tag.设备名.点名"</param>

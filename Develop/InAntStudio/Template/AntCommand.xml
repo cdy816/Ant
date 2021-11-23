@@ -73,6 +73,31 @@
       <Parameter Name="index" Type="object"  Desc="要取位的序号，从0开始" Value="0" />
     </Function>
   </Command>
+
+    <Command Name="QueryGoodHisValue" Desc="查询变量好的历史值">
+      <Function Body="Tag.QueryGoodHisValue" ReturnType="Dictionary&lt;DateTime, object&gt;">
+        <Parameter Name="tagName" Type="string" DesignType="tag" Desc="变量名称" Value="tag1" />
+        <Parameter Name="startTime" Type="datetime"  Desc="开始时间" Value="DateTime.Now" />
+        <Parameter Name="endTime" Type="datetime"  Desc="结束时间" Value="DateTime.Now" />
+        <Parameter Name="span" Type="timespan"  Desc="时间间隔" Value="new TimeSpan(0,0,1)" />
+      </Function>
+    </Command>
+
+    <Command Name="QueryAllGoodHisValue" Desc="查询某个时间段记录的所有好的值">
+      <Function Body="Tag.QueryAllGoodHisValue" ReturnType="Dictionary&lt;DateTime, object&gt;">
+        <Parameter Name="tagName" Type="string" DesignType="tag" Desc="变量名称" Value="tag1" />
+        <Parameter Name="startTime" Type="datetime"  Desc="开始时间" Value="DateTime.Now" />
+        <Parameter Name="endTime" Type="datetime"  Desc="结束时间" Value="DateTime.Now" />
+      </Function>
+    </Command>
+
+    <Command Name="QueryGoodHisValue" Desc="查询执行时刻点的好的值">
+      <Function Body="Tag.QueryGoodHisValue" ReturnType="Dictionary&lt;DateTime, object&gt;">
+        <Parameter Name="tagName" Type="string" DesignType="tag" Desc="变量名称" Value="tag1" />
+        <Parameter Name="times" Type="List&lt;datetime&gt;"  Desc="时间点集合" Value="null" />
+      </Function>
+    </Command>
+    
   </CommandGroup>
 
   <CommandGroup Name="Message">
@@ -104,6 +129,7 @@
       </Function>
     </Command>
 
+    
    
   </CommandGroup>
 </CommandDocument>
