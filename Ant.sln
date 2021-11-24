@@ -27,7 +27,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InAntDevelopServerClientApi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AntRutime.WebApi", "Run\AntRutime.WebApi\AntRutime.WebApi.csproj", "{7058FA5E-AD37-4B59-9E52-8A04FCF9874F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AntApiAndProxyConfigDevelop", "Develop\AntApiAndProxyConfigDevelop\AntApiAndProxyConfigDevelop.csproj", "{AF5F921F-3305-4FA2-BDD2-FEFD88747D7E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AntApiAndProxyConfigDevelop", "Develop\AntApiAndProxyConfigDevelop\AntApiAndProxyConfigDevelop.csproj", "{AF5F921F-3305-4FA2-BDD2-FEFD88747D7E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cdy.Ant.CRUD", "Common\Cdy.Ant.CRUD\Cdy.Ant.CRUD.csproj", "{D2F27AE4-A4AF-4ECB-A2ED-65AC1249B71C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -75,6 +77,10 @@ Global
 		{AF5F921F-3305-4FA2-BDD2-FEFD88747D7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AF5F921F-3305-4FA2-BDD2-FEFD88747D7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AF5F921F-3305-4FA2-BDD2-FEFD88747D7E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D2F27AE4-A4AF-4ECB-A2ED-65AC1249B71C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2F27AE4-A4AF-4ECB-A2ED-65AC1249B71C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2F27AE4-A4AF-4ECB-A2ED-65AC1249B71C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2F27AE4-A4AF-4ECB-A2ED-65AC1249B71C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -90,6 +96,7 @@ Global
 		{72765DC4-5C18-4822-A227-CD97931A4B14} = {D0FD1ABD-FC41-4C7B-B465-EDD657120D4A}
 		{7058FA5E-AD37-4B59-9E52-8A04FCF9874F} = {2DAF4C7E-14B0-4A5C-87E9-F2BE612EDEC5}
 		{AF5F921F-3305-4FA2-BDD2-FEFD88747D7E} = {D0FD1ABD-FC41-4C7B-B465-EDD657120D4A}
+		{D2F27AE4-A4AF-4ECB-A2ED-65AC1249B71C} = {40A33EC7-14EA-48CF-A06B-C1C3941D176A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D298DE71-994E-4E0F-94CD-1FD0C85FE2DD}
