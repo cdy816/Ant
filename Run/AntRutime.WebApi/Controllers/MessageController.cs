@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AntRutime;
 
 namespace AntRutime.WebApi.Controllers
 {
@@ -31,7 +32,7 @@ namespace AntRutime.WebApi.Controllers
             if (service.CheckLogin(request.Token))
             {
                 List<object> re = new List<object>();
-                foreach (var vv in WebApiMessageProxy.MessageService.Query(request.StartTime, request.EndTime, request.Filter))
+                foreach (var vv in WebApiMessageProxy.MessageService.Query(request.StartTime, request.EndTime, request.Filter.GetFiltersFromString()))
                 {
                     if (vv is Cdy.Ant.AlarmMessage)
                     {
@@ -62,7 +63,7 @@ namespace AntRutime.WebApi.Controllers
             if (service.CheckLogin(request.Token))
             {
                 List<Cdy.Ant.AlarmMessage> re = new List<Cdy.Ant.AlarmMessage>();
-                foreach (var vv in WebApiMessageProxy.MessageService.Query(request.StartTime, request.EndTime, request.Filter))
+                foreach (var vv in WebApiMessageProxy.MessageService.Query(request.StartTime, request.EndTime, request.Filter.GetFiltersFromString()))
                 {
                     if (vv is Cdy.Ant.AlarmMessage)
                     {
@@ -89,7 +90,7 @@ namespace AntRutime.WebApi.Controllers
             if (service.CheckLogin(request.Token))
             {
                 List<Cdy.Ant.InfoMessage> re = new List<Cdy.Ant.InfoMessage>();
-                foreach (var vv in WebApiMessageProxy.MessageService.Query(request.StartTime, request.EndTime, request.Filter))
+                foreach (var vv in WebApiMessageProxy.MessageService.Query(request.StartTime, request.EndTime, request.Filter.GetFiltersFromString()))
                 {
                     if (vv is Cdy.Ant.InfoMessage)
                     {
@@ -117,7 +118,7 @@ namespace AntRutime.WebApi.Controllers
             if (service.CheckLogin(request.Token))
             {
                 List<object> re = new List<object>();
-                foreach (var vv in WebApiMessageProxy.MessageService.Query(request.StartTime, DateTime.Now, request.Filter))
+                foreach (var vv in WebApiMessageProxy.MessageService.Query(request.StartTime, DateTime.Now, request.Filter.GetFiltersFromString()))
                 {
                     if (vv is Cdy.Ant.AlarmMessage)
                     {
@@ -149,7 +150,7 @@ namespace AntRutime.WebApi.Controllers
             if (service.CheckLogin(request.Token))
             {
                 List<Cdy.Ant.AlarmMessage> re = new List<Cdy.Ant.AlarmMessage>();
-                foreach (var vv in WebApiMessageProxy.MessageService.Query(request.StartTime, DateTime.Now, request.Filter))
+                foreach (var vv in WebApiMessageProxy.MessageService.Query(request.StartTime, DateTime.Now, request.Filter.GetFiltersFromString()))
                 {
                     if (vv is Cdy.Ant.AlarmMessage)
                     {
@@ -177,7 +178,7 @@ namespace AntRutime.WebApi.Controllers
             if (service.CheckLogin(request.Token))
             {
                 List<Cdy.Ant.InfoMessage> re = new List<Cdy.Ant.InfoMessage>();
-                foreach (var vv in WebApiMessageProxy.MessageService.Query(request.StartTime, DateTime.Now, request.Filter))
+                foreach (var vv in WebApiMessageProxy.MessageService.Query(request.StartTime, DateTime.Now, request.Filter.GetFiltersFromString()))
                 {
                     if (vv is Cdy.Ant.InfoMessage)
                     {
@@ -304,8 +305,12 @@ namespace AntRutime.WebApi.Controllers
 
         /// <summary>
         /// 过滤条件
+        /// name==value  等于
+        /// name>value  大于
+        /// name &lt; value  小于
+        /// name..value  包含
         /// </summary>
-        public List<QueryFilter> Filter { get; set; }
+        public List<string> Filter { get; set; }
 
     }
 

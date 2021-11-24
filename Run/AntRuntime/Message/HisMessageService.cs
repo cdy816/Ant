@@ -396,6 +396,55 @@ namespace AntRuntime
     /// </summary>
     public static class HisQueryExtends
     {
+
+        ///// <summary>
+        ///// 
+        ///// </summary>
+        ///// <param name="sval"></param>
+        ///// <returns></returns>
+        //public static QueryFilter GetFilterFromString(this string sval)
+        //{
+        //    QueryFilter re = new QueryFilter();
+        //    if(sval.Contains("=="))
+        //    {
+        //        string[] ss = sval.Split("==");
+        //        re = new QueryFilter() { PropertyName = ss[0], Value = ss[2], Opetate = FilterOperate.Equals };
+        //    }
+        //    else if(sval.Contains(">"))
+        //    {
+        //        string[] ss = sval.Split(">");
+        //        re = new QueryFilter() { PropertyName = ss[0], Value = ss[2], Opetate = FilterOperate.Great };
+        //    }
+        //    else if (sval.Contains("<"))
+        //    {
+        //        string[] ss = sval.Split("<");
+        //        re = new QueryFilter() { PropertyName = ss[0], Value = ss[2], Opetate = FilterOperate.Low };
+        //    }
+        //    else if (sval.Contains(".."))
+        //    {
+        //        string[] ss = sval.Split("..");
+        //        re = new QueryFilter() { PropertyName = ss[0], Value = ss[2], Opetate = FilterOperate.Contains };
+        //    }
+        //    return re;
+        //}
+
+        ///// <summary>
+        ///// 
+        ///// </summary>
+        ///// <param name="sval"></param>
+        ///// <returns></returns>
+        //public static IEnumerable<QueryFilter> GetFiltersFromString(this IEnumerable<string> sval)
+        //{
+        //    List<QueryFilter> re = new List<QueryFilter>();
+        //    if (sval == null) return re;
+        //        foreach (var vv in sval)
+        //    {
+        //        re.Add(vv.GetFilterFromString());
+        //    }
+        //    return re;
+        //}
+
+
         /// <summary>
         /// 
         /// </summary>
@@ -411,12 +460,12 @@ namespace AntRuntime
                 bool re = true;
                 foreach(var vv in Filters)
                 {
-                    switch(vv.PropertyName)
+                    switch(vv.PropertyName.ToLower())
                     {
-                        case "Type":
+                        case "type":
                             re &= (e.Type.ToString() == vv.Value);
                             break;
-                        case "Server":
+                        case "server":
                             switch (vv.Opetate)
                             {
                                 case FilterOperate.Contains:
@@ -430,7 +479,7 @@ namespace AntRuntime
                                     break;
                             }
                             break;
-                        case "SourceTag":
+                        case "sourcetag":
                             switch (vv.Opetate)
                             {
                                 case FilterOperate.Contains:
@@ -444,7 +493,7 @@ namespace AntRuntime
                                     break;
                             }
                             break;
-                        case "MessageBody":
+                        case "messagebody":
                             switch (vv.Opetate)
                             {
                                 case FilterOperate.Contains:
@@ -458,7 +507,7 @@ namespace AntRuntime
                                     break;
                             }
                             break;
-                        case "AppendContent1":
+                        case "appendcontent1":
                             switch (vv.Opetate)
                             {
                                 case FilterOperate.Contains:
@@ -472,7 +521,7 @@ namespace AntRuntime
                                     break;
                             }
                             break;
-                        case "AppendContent2":
+                        case "appendcontent2":
                             switch (vv.Opetate)
                             {
                                 case FilterOperate.Contains:
@@ -486,7 +535,7 @@ namespace AntRuntime
                                     break;
                             }
                             break;
-                        case "AppendContent3":
+                        case "appendcontent3":
                             switch (vv.Opetate)
                             {
                                 case FilterOperate.Contains:
@@ -500,7 +549,7 @@ namespace AntRuntime
                                     break;
                             }
                             break;
-                        case "DisposalMessages":
+                        case "disposalmessages":
                             if (e.DisposalMessages.Count > 0)
                             {
                                 switch (vv.Opetate)
@@ -539,7 +588,7 @@ namespace AntRuntime
                                 re &= false;
                             }
                             break;
-                        case "DisposalMessages.User":
+                        case "disposalmessages.user":
                             if (e.DisposalMessages.Count > 0)
                             {
                                 switch (vv.Opetate)
@@ -578,7 +627,7 @@ namespace AntRuntime
                                 re &= false;
                             }
                             break;
-                        case "DisposalMessages.Time":
+                        case "disposalmessages.time":
                             if (e.DisposalMessages.Count > 0)
                             {
                                 DateTime dt = DateTime.Parse(vv.Value);
@@ -630,7 +679,7 @@ namespace AntRuntime
                                 re &= false;
                             }
                             break;
-                        case "AlarmLevel":
+                        case "alarmlevel":
                             if(e is Cdy.Ant.AlarmMessage)
                             {
                                 var alm = e as Cdy.Ant.AlarmMessage;
@@ -653,7 +702,7 @@ namespace AntRuntime
                                 re = false;
                             }
                             break;
-                        case "AlarmValue":
+                        case "alarmvalue":
                             if (e is Cdy.Ant.AlarmMessage)
                             {
                                 var alm = e as Cdy.Ant.AlarmMessage;
@@ -693,7 +742,7 @@ namespace AntRuntime
                                 re = false;
                             }
                             break;
-                        case "AlarmCondition":
+                        case "alarmcondition":
                             if (e is Cdy.Ant.AlarmMessage)
                             {
                                 var alm = e as Cdy.Ant.AlarmMessage;
@@ -716,7 +765,7 @@ namespace AntRuntime
                                 re = false;
                             }
                             break;
-                        case "LinkTag":
+                        case "linktag":
                             if (e is Cdy.Ant.AlarmMessage)
                             {
                                 var alm = e as Cdy.Ant.AlarmMessage;
@@ -739,7 +788,7 @@ namespace AntRuntime
                                 re = false;
                             }
                             break;
-                        case "AckMessage":
+                        case "ackmessage":
                             if (e is Cdy.Ant.AlarmMessage)
                             {
                                 var alm = e as Cdy.Ant.AlarmMessage;
@@ -762,7 +811,7 @@ namespace AntRuntime
                                 re = false;
                             }
                             break;
-                        case "AckUser":
+                        case "ackuser":
                             if (e is Cdy.Ant.AlarmMessage)
                             {
                                 var alm = e as Cdy.Ant.AlarmMessage;
@@ -785,7 +834,7 @@ namespace AntRuntime
                                 re = false;
                             }
                             break;
-                        case "AckTime":
+                        case "acktime":
                             if (e is Cdy.Ant.AlarmMessage)
                             {
                                 var alm = e as Cdy.Ant.AlarmMessage;
@@ -813,7 +862,7 @@ namespace AntRuntime
                                 re = false;
                             }
                             break;
-                        case "RestoreTime":
+                        case "restoretime":
                             if (e is Cdy.Ant.AlarmMessage)
                             {
                                 var alm = e as Cdy.Ant.AlarmMessage;
@@ -840,7 +889,7 @@ namespace AntRuntime
                                 re = false;
                             }
                             break;
-                        case "RestoreValue":
+                        case "restorevalue":
                             if (e is Cdy.Ant.AlarmMessage)
                             {
                                 var alm = e as Cdy.Ant.AlarmMessage;

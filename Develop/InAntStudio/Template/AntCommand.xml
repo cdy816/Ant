@@ -97,6 +97,30 @@
         <Parameter Name="times" Type="List&lt;datetime&gt;"  Desc="时间点集合" Value="null" />
       </Function>
     </Command>
+
+    <Command Name="QueryHisValue" Desc="查询变量好的历史值">
+      <Function Body="Tag.QueryHisValue" ReturnType="Dictionary&lt;DateTime,Tuple&lt;object,byte&gt;&gt;">
+        <Parameter Name="tagName" Type="string" DesignType="tag" Desc="变量名称" Value="tag1" />
+        <Parameter Name="startTime" Type="datetime"  Desc="开始时间" Value="DateTime.Now" />
+        <Parameter Name="endTime" Type="datetime"  Desc="结束时间" Value="DateTime.Now" />
+        <Parameter Name="span" Type="timespan"  Desc="时间间隔" Value="new TimeSpan(0,0,1)" />
+      </Function>
+    </Command>
+
+    <Command Name="QueryAllHisValue" Desc="查询某个时间段记录的所有好的值">
+      <Function Body="Tag.QueryAllHisValue" ReturnType="Dictionary&lt;DateTime,Tuple&lt;object,byte&gt;&gt;">
+        <Parameter Name="tagName" Type="string" DesignType="tag" Desc="变量名称" Value="tag1" />
+        <Parameter Name="startTime" Type="datetime"  Desc="开始时间" Value="DateTime.Now" />
+        <Parameter Name="endTime" Type="datetime"  Desc="结束时间" Value="DateTime.Now" />
+      </Function>
+    </Command>
+
+    <Command Name="QueryHisValue" Desc="查询执行时刻点的好的值">
+      <Function Body="Tag.QueryHisValue" ReturnType="Dictionary&lt;DateTime,Tuple&lt;object,byte&gt;&gt;">
+        <Parameter Name="tagName" Type="string" DesignType="tag" Desc="变量名称" Value="tag1" />
+        <Parameter Name="times" Type="List&lt;datetime&gt;"  Desc="时间点集合" Value="null" />
+      </Function>
+    </Command>
     
   </CommandGroup>
 
@@ -129,7 +153,35 @@
       </Function>
     </Command>
 
-    
+    <Command Name="QueryMessage" Desc="查询指定时间段内的消息">
+      <Function Body="Message.QueryMessage" ReturnType="IEnumerable&lt;Cdy.Ant.Message&gt;">
+        <Parameter Name="startTime" Type="datetime"  Desc="开始时间" Value="DateTime.Now" />
+        <Parameter Name="endTime" Type="datetime"  Desc="结束时间" Value="DateTime.Now" />
+      </Function>
+    </Command>
+
+    <Command Name="QueryMessage" Desc="查询指定时间段内的消息">
+      <Function Body="Message.QueryMessage" ReturnType="IEnumerable&lt;Cdy.Ant.Message&gt;">
+        <Parameter Name="startTime" Type="datetime"  Desc="开始时间" Value="DateTime.Now" />
+        <Parameter Name="endTime" Type="datetime"  Desc="结束时间" Value="DateTime.Now" />
+        <Parameter Name="filter" Type="string[]"  Desc="过滤条件" Value="&quot;LinkTag==value&quot;" />
+      </Function>
+    </Command>
+
+    <Command Name="QueryAlarmMessage" Desc="查询指定时间段内的报警消息">
+      <Function Body="Message.QueryAlarmMessage" ReturnType="IEnumerable&lt;Cdy.Ant.Message&gt;">
+        <Parameter Name="startTime" Type="datetime"  Desc="开始时间" Value="DateTime.Now" />
+        <Parameter Name="endTime" Type="datetime"  Desc="结束时间" Value="DateTime.Now" />
+      </Function>
+    </Command>
+
+    <Command Name="QueryAlarmMessage" Desc="查询指定时间段内的报警消息">
+      <Function Body="Message.QueryAlarmMessage" ReturnType="IEnumerable&lt;Cdy.Ant.Message&gt;">
+        <Parameter Name="startTime" Type="datetime"  Desc="开始时间" Value="DateTime.Now" />
+        <Parameter Name="endTime" Type="datetime"  Desc="结束时间" Value="DateTime.Now" />
+        <Parameter Name="filter" Type="string[]"  Desc="过滤条件" Value="&quot;LinkTag==value&quot;" />
+      </Function>
+    </Command>
    
   </CommandGroup>
 </CommandDocument>

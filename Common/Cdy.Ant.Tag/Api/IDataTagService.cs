@@ -46,6 +46,34 @@ namespace Cdy.Ant
         bool SetTagValue(string tagname, object value);
 
         /// <summary>
+        /// 查询变量的历史值
+        /// </summary>
+        /// <param name="tagName">变量名称</param>
+        /// <param name="startTime">开始时间</param>
+        /// <param name="endTime">结束时间</param>
+        /// <param name="span">时间间隔</param>
+        /// <returns></returns>
+        Dictionary<DateTime, Tuple<object, byte>> QueryHisValue(string tagName, DateTime startTime, DateTime endTime, TimeSpan span);
+
+        /// <summary>
+        /// 查询某个时间段记录的所有的值
+        /// </summary>
+        /// <param name="tagName">变量名称</param>
+        /// <param name="startTime">开始时间</param>
+        /// <param name="endTime">结束时间</param>
+        /// <returns></returns>
+        Dictionary<DateTime, Tuple<object, byte>> QueryAllHisValue(string tagName, DateTime startTime, DateTime endTime);
+
+        /// <summary>
+        /// 查询执行时刻点的的值
+        /// </summary>
+        /// <param name="tagName">变量名称</param>
+        /// <param name="times">时间列表</param>
+        /// <returns></returns>
+        Dictionary<DateTime, Tuple<object, byte>> QueryHisValue(string tagName, List<DateTime> times);
+
+
+        /// <summary>
         /// 查询变量好的历史值
         /// </summary>
         /// <param name="tagName">变量名称</param>

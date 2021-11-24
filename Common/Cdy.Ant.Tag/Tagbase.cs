@@ -1890,9 +1890,25 @@ namespace Cdy.Ant
         public override TagType Type => TagType.Script;
 
         /// <summary>
-        /// 
+        /// 表达式
         /// </summary>
         public string Expresse { get; set; }
+
+        /// <summary>
+        /// 启动触发
+        /// </summary>
+        public TriggerBase StartTrigger { get; set; } = new TagChangedTrigger();
+
+        /// <summary>
+        /// 执行模式
+        /// </summary>
+        public ExecuteMode Mode { get; set; } = ExecuteMode.Once;
+
+        /// <summary>
+        /// 间隔时间
+        /// 单位:毫秒
+        /// </summary>
+        public int Duration { get; set; } = 1000;
 
         #endregion ...Properties...
 
@@ -1905,6 +1921,9 @@ namespace Cdy.Ant
         {
             var re = base.SaveTo();
             re.Add(new XCData(Expresse));
+            re.SetAttributeValue("Mode", (int)Mode);
+            re.SetAttributeValue("Duration", Duration);
+            re.SetAttributeValue("StartTrigger", StartTrigger.ToString());
             return re;
         }
 
@@ -1916,6 +1935,43 @@ namespace Cdy.Ant
         {
             base.LoadFrom(xe);
             this.Expresse = xe.Value;
+            if(xe.Attribute("Mode") !=null)
+            {
+                Mode = (ExecuteMode)(int.Parse(xe.Attribute("Mode").Value));
+            }
+
+            if(xe.Attribute("Duration") !=null)
+            {
+                Duration = int.Parse(xe.Attribute("Duration").Value);
+            }
+
+            if (xe.Attribute("StartTrigger") != null)
+            {
+                StartTrigger = LoadTriggerFromString(xe.Attribute("StartTrigger").Value);
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public TriggerBase LoadTriggerFromString(string value)
+        {
+            var ss = value.Split(":");
+            if(ss[0]== "Start")
+            {
+                return new StartTrigger();
+            }
+            else if(ss[0]== "TagChanged")
+            {
+                return new TagChangedTrigger();
+            }
+            else if(ss[0]== "Timer")
+            {
+                new TimerTrigger().LoadFromString(ss[1]);
+            }
+            return null;
         }
 
         /// <summary>
@@ -1945,6 +2001,118 @@ namespace Cdy.Ant
 
         #endregion ...Interfaces...
 
+    }
+
+    /// <summary>
+    /// 执行模式
+    /// </summary>
+    public enum ExecuteMode
+    {
+        /// <summary>
+        /// 执行一次
+        /// </summary>
+        Once,
+        /// <summary>
+        /// 重复执行
+        /// </summary>
+        Repeat
+    }
+
+    /// <summary>
+    /// 触发条件
+    /// </summary>
+    public enum TriggerType
+    {
+        /// <summary>
+        /// 变量改变
+        /// </summary>
+        TagChanged,
+        /// <summary>
+        /// 定时
+        /// </summary>
+        Timer,
+        /// <summary>
+        /// 程序启动
+        /// </summary>
+        Start
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public abstract class TriggerBase
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+       public abstract TriggerType Type { get; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return Type.ToString();
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public class TagChangedTrigger:TriggerBase
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        public override TriggerType Type => TriggerType.TagChanged;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public class StartTrigger:TriggerBase
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        public override TriggerType Type => TriggerType.Start;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public class TimerTrigger:TriggerBase
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        public override TriggerType Type => TriggerType.Timer;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string Timer { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return base.ToString()+":"+Timer;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="val"></param>
+        /// <returns></returns>
+        public TimerTrigger LoadFromString(string val)
+        {
+            Timer = val;
+            return this;
+        }
     }
 
 

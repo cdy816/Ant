@@ -12,6 +12,11 @@ namespace Cdy.Ant.Tag
     public class Tag
     {
         /// <summary>
+        /// 用于缓存中间数据的对象
+        /// </summary>
+        public static Dictionary<string, object> GlobalObject { get; set; } = new Dictionary<string, object>();
+
+        /// <summary>
         /// 获取变量的值
         /// </summary>
         /// <param name="tag">格式:"组名.点名"</param>
@@ -125,6 +130,43 @@ namespace Cdy.Ant.Tag
         }
 
         /// <summary>
+        /// 查询变量的历史值
+        /// </summary>
+        /// <param name="tagName">变量名称</param>
+        /// <param name="startTime">开始时间</param>
+        /// <param name="endTime">结束时间</param>
+        /// <param name="span">时间间隔</param>
+        /// <returns></returns>
+        public static Dictionary<DateTime,Tuple<object,byte>> QueryHisValue(string tagName,DateTime startTime,DateTime endTime,TimeSpan span)
+        {
+            return null;
+        }
+
+        /// <summary>
+        /// 查询某个时间段记录的所有的值
+        /// </summary>
+        /// <param name="tagName">变量名称</param>
+        /// <param name="startTime">开始时间</param>
+        /// <param name="endTime">结束时间</param>
+        /// <returns></returns>
+        public static Dictionary<DateTime, Tuple<object, byte>> QueryAllHisValue(string tagName, DateTime startTime, DateTime endTime)
+        {
+            return null;
+        }
+
+        /// <summary>
+        /// 查询执行时刻点的的值
+        /// </summary>
+        /// <param name="tagName">变量名称</param>
+        /// <param name="times">时间点集合</param>
+        /// <returns></returns>
+        public static Dictionary<DateTime, Tuple<object, byte>> QueryHisValue(string tagName, List<DateTime> times)
+        {
+            return null;
+        }
+
+
+        /// <summary>
         /// 查询变量好的历史值
         /// </summary>
         /// <param name="tagName">变量名称</param>
@@ -168,6 +210,54 @@ namespace Cdy.Ant.Tag
     /// </summary>
     public class Message
     {
+
+        /// <summary>
+        /// 查询消息
+        /// </summary>
+        /// <param name="startTime">开始时间</param>
+        /// <param name="endTime">结束时间</param>
+        /// <returns></returns>
+        public static IEnumerable<Cdy.Ant.Message> QueryMessage(DateTime startTime, DateTime endTime)
+        {
+            return null;
+        }
+
+        /// <summary>
+        /// 查询报警消息
+        /// </summary>
+        /// <param name="startTime">开始时间</param>
+        /// <param name="endTime">结束时间</param>
+        /// <returns></returns>
+        public static IEnumerable<Cdy.Ant.AlarmMessage> QueryAlarmMessage(DateTime startTime, DateTime endTime)
+        {
+            return null;
+        }
+
+        /// <summary>
+        /// 查询消息
+        /// </summary>
+        /// <param name="startTime">开始时间</param>
+        /// <param name="endTime">结束时间</param>
+        /// <param name="filters">过滤条件</param>
+        /// <returns></returns>
+        public static IEnumerable<Cdy.Ant.Message> QueryMessage(DateTime startTime, DateTime endTime, params string[] filters)
+        {
+            return null;
+        }
+
+        /// <summary>
+        /// 查询报警消息
+        /// </summary>
+        /// <param name="startTime">开始时间</param>
+        /// <param name="endTime">结束时间</param>
+        /// <param name="filters">过滤条件</param>
+        /// <returns></returns>
+        public static IEnumerable<Cdy.Ant.AlarmMessage> QueryAlarmMessage(DateTime startTime, DateTime endTime, params string[] filters)
+        {
+            return null;
+        }
+
+
         /// <summary>
         /// 产生报警
         /// </summary>
@@ -203,6 +293,42 @@ namespace Cdy.Ant.Tag
         /// </summary>
         /// <param name="value">恢复值</param>
         public static void Restore(string value)
+        {
+
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public class Logger
+    {
+        /// <summary>
+        /// 输出提示信息
+        /// </summary>
+        /// <param name="source">触发者</param>
+        /// <param name="msg">消息内容</param>
+        public static void Info(string source,string msg)
+        {
+
+        }
+
+        /// <summary>
+        /// 输出警告信息
+        /// </summary>
+        /// <param name="source">触发者</param>
+        /// <param name="msg">消息内容</param>
+        public static void Warn(string source, string msg)
+        {
+
+        }
+
+        /// <summary>
+        /// 输出错误信息
+        /// </summary>
+        /// <param name="source">触发者</param>
+        /// <param name="msg">消息内容</param>
+        public static void Erro(string source, string msg)
         {
 
         }

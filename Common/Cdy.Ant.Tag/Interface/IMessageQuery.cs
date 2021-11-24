@@ -51,6 +51,59 @@ namespace Cdy.Ant.Tag
         public string Value { get; set; }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    public static class FilterExtends
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sval"></param>
+        /// <returns></returns>
+        public static QueryFilter GetFilterFromString(this string sval)
+        {
+            QueryFilter re = new QueryFilter();
+            if (sval.Contains("=="))
+            {
+                string[] ss = sval.Split("==");
+                re = new QueryFilter() { PropertyName = ss[0], Value = ss[2], Opetate = FilterOperate.Equals };
+            }
+            else if (sval.Contains(">"))
+            {
+                string[] ss = sval.Split(">");
+                re = new QueryFilter() { PropertyName = ss[0], Value = ss[2], Opetate = FilterOperate.Great };
+            }
+            else if (sval.Contains("<"))
+            {
+                string[] ss = sval.Split("<");
+                re = new QueryFilter() { PropertyName = ss[0], Value = ss[2], Opetate = FilterOperate.Low };
+            }
+            else if (sval.Contains(".."))
+            {
+                string[] ss = sval.Split("..");
+                re = new QueryFilter() { PropertyName = ss[0], Value = ss[2], Opetate = FilterOperate.Contains };
+            }
+            return re;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sval"></param>
+        /// <returns></returns>
+        public static IEnumerable<QueryFilter> GetFiltersFromString(this IEnumerable<string> sval)
+        {
+            List<QueryFilter> re = new List<QueryFilter>();
+            if (sval == null) return re;
+            foreach (var vv in sval)
+            {
+                re.Add(vv.GetFilterFromString());
+            }
+            return re;
+        }
+    }
+
 
     /// <summary>
     /// 

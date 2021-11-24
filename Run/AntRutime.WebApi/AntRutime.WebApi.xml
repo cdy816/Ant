@@ -172,6 +172,10 @@
         <member name="P:AntRutime.WebApi.Controllers.GetRecentMessageRequest.Filter">
             <summary>
             过滤条件
+            name==value  等于
+            name>value  大于
+            name &lt; value  小于
+            name..value  包含
             </summary>
         </member>
         <member name="T:AntRutime.WebApi.Controllers.MessageResponse">

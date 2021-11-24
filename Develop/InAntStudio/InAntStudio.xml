@@ -4238,6 +4238,11 @@
             
             </summary>
         </member>
+        <member name="P:Cdy.Ant.Tag.Tag.GlobalObject">
+            <summary>
+            用于缓存中间数据的对象
+            </summary>
+        </member>
         <member name="M:Cdy.Ant.Tag.Tag.GetTagValue(System.String)">
             <summary>
             获取变量的值
@@ -4317,6 +4322,33 @@
             <param name="index">要取位的序号，从0开始</param>
             <returns></returns>
         </member>
+        <member name="M:Cdy.Ant.Tag.Tag.QueryHisValue(System.String,System.DateTime,System.DateTime,System.TimeSpan)">
+            <summary>
+            查询变量的历史值
+            </summary>
+            <param name="tagName">变量名称</param>
+            <param name="startTime">开始时间</param>
+            <param name="endTime">结束时间</param>
+            <param name="span">时间间隔</param>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.Tag.Tag.QueryAllHisValue(System.String,System.DateTime,System.DateTime)">
+            <summary>
+            查询某个时间段记录的所有的值
+            </summary>
+            <param name="tagName">变量名称</param>
+            <param name="startTime">开始时间</param>
+            <param name="endTime">结束时间</param>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.Tag.Tag.QueryHisValue(System.String,System.Collections.Generic.List{System.DateTime})">
+            <summary>
+            查询执行时刻点的的值
+            </summary>
+            <param name="tagName">变量名称</param>
+            <param name="times">时间点集合</param>
+            <returns></returns>
+        </member>
         <member name="M:Cdy.Ant.Tag.Tag.QueryGoodHisValue(System.String,System.DateTime,System.DateTime,System.TimeSpan)">
             <summary>
             查询变量好的历史值
@@ -4349,6 +4381,40 @@
             
             </summary>
         </member>
+        <member name="M:Cdy.Ant.Tag.Message.QueryMessage(System.DateTime,System.DateTime)">
+            <summary>
+            查询消息
+            </summary>
+            <param name="startTime">开始时间</param>
+            <param name="endTime">结束时间</param>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.Tag.Message.QueryAlarmMessage(System.DateTime,System.DateTime)">
+            <summary>
+            查询报警消息
+            </summary>
+            <param name="startTime">开始时间</param>
+            <param name="endTime">结束时间</param>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.Tag.Message.QueryMessage(System.DateTime,System.DateTime,System.String[])">
+            <summary>
+            查询消息
+            </summary>
+            <param name="startTime">开始时间</param>
+            <param name="endTime">结束时间</param>
+            <param name="filters">过滤条件</param>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.Tag.Message.QueryAlarmMessage(System.DateTime,System.DateTime,System.String[])">
+            <summary>
+            查询报警消息
+            </summary>
+            <param name="startTime">开始时间</param>
+            <param name="endTime">结束时间</param>
+            <param name="filters">过滤条件</param>
+            <returns></returns>
+        </member>
         <member name="M:Cdy.Ant.Tag.Message.Alarm(System.String,System.String,Cdy.Ant.AlarmLevel)">
             <summary>
             产生报警
@@ -4375,6 +4441,32 @@
             恢复报警
             </summary>
             <param name="value">恢复值</param>
+        </member>
+        <member name="T:Cdy.Ant.Tag.Logger">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cdy.Ant.Tag.Logger.Info(System.String,System.String)">
+            <summary>
+            输出提示信息
+            </summary>
+            <param name="source">触发者</param>
+            <param name="msg">消息内容</param>
+        </member>
+        <member name="M:Cdy.Ant.Tag.Logger.Warn(System.String,System.String)">
+            <summary>
+            输出警告信息
+            </summary>
+            <param name="source">触发者</param>
+            <param name="msg">消息内容</param>
+        </member>
+        <member name="M:Cdy.Ant.Tag.Logger.Erro(System.String,System.String)">
+            <summary>
+            输出错误信息
+            </summary>
+            <param name="source">触发者</param>
+            <param name="msg">消息内容</param>
         </member>
     </members>
 </doc>

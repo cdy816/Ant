@@ -69,6 +69,11 @@ namespace AntRuntime.Enginer
         /// <summary>
         /// 
         /// </summary>
+        public LoggerImp Logger { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public override TagType SupportTag => TagType.Script;
 
         private object mLockObj = new object();
@@ -132,6 +137,7 @@ namespace AntRuntime.Enginer
             {
                 Message = new MessageScriptImp() { Owner = this };
                 Tag = new TagScriptImp() { Owner = this };
+                Logger = new LoggerImp();
 
                 var vsp = Microsoft.CodeAnalysis.CSharp.Scripting.CSharpScript.Create(mDTag.Expresse, sop, typeof(ScriptAlarmTagRun));
                 try
@@ -340,6 +346,47 @@ namespace AntRuntime.Enginer
         /// 
         /// </summary>
         public ScriptAlarmTagRun Owner { get; set; }
+
+        /// <summary>
+        /// 用于缓存中间数据的对象
+        /// </summary>
+        public Dictionary<string, object> GlobalObject { get; set; } = new Dictionary<string, object>();
+
+        /// <summary>
+        /// 查询变量的历史值
+        /// </summary>
+        /// <param name="tagName">变量名称</param>
+        /// <param name="startTime">开始时间</param>
+        /// <param name="endTime">结束时间</param>
+        /// <param name="span">时间间隔</param>
+        /// <returns></returns>
+        public Dictionary<DateTime, Tuple<object, byte>> QueryHisValue(string tagName, DateTime startTime, DateTime endTime, TimeSpan span)
+        {
+            return Owner.TagService?.QueryHisValue(tagName, startTime, endTime, span);
+        }
+
+        /// <summary>
+        /// 查询某个时间段记录的所有的值
+        /// </summary>
+        /// <param name="tagName">变量名称</param>
+        /// <param name="startTime">开始时间</param>
+        /// <param name="endTime">结束时间</param>
+        /// <returns></returns>
+        public Dictionary<DateTime, Tuple<object, byte>> QueryAllHisValue(string tagName, DateTime startTime, DateTime endTime)
+        {
+            return Owner.TagService?.QueryAllHisValue(tagName, startTime, endTime);
+        }
+
+        /// <summary>
+        /// 查询执行时刻点的的值
+        /// </summary>
+        /// <param name="tagName">变量名称</param>
+        /// <param name="times">时间点集合</param>
+        /// <returns></returns>
+        public Dictionary<DateTime, Tuple<object, byte>> QueryHisValue(string tagName, List<DateTime> times)
+        {
+            return Owner.TagService?.QueryHisValue(tagName, times);
+        }
 
         /// <summary>
         /// 查询变量好的历史值
@@ -595,6 +642,53 @@ namespace AntRuntime.Enginer
         public ScriptAlarmTagRun Owner { get; set; }
 
         /// <summary>
+        /// 查询消息
+        /// </summary>
+        /// <param name="startTime">开始时间</param>
+        /// <param name="endTime">结束时间</param>
+        /// <returns></returns>
+        public  IEnumerable<Cdy.Ant.Message> QueryMessage(DateTime startTime, DateTime endTime)
+        {
+            return MessageService.Service.Query(startTime,endTime);
+        }
+
+        /// <summary>
+        /// 查询消息
+        /// </summary>
+        /// <param name="startTime">开始时间</param>
+        /// <param name="endTime">结束时间</param>
+        /// <param name="filters">过滤条件</param>
+        /// <returns></returns>
+        public  IEnumerable<Cdy.Ant.Message> QueryMessage(DateTime startTime, DateTime endTime,params string[] filters)
+        {
+            return MessageService.Service.Query(startTime, endTime,filters.GetFiltersFromString());
+        }
+
+        /// <summary>
+        /// 查询报警消息
+        /// </summary>
+        /// <param name="startTime">开始时间</param>
+        /// <param name="endTime">结束时间</param>
+        /// <returns></returns>
+        public  IEnumerable<Cdy.Ant.AlarmMessage> QueryAlarmMessage(DateTime startTime, DateTime endTime)
+        {
+            return MessageService.Service.Query(startTime, endTime).Where(e=>e is Cdy.Ant.AlarmMessage).Select(e=>e as Cdy.Ant.AlarmMessage);
+        }
+
+        /// <summary>
+        /// 查询报警消息
+        /// </summary>
+        /// <param name="startTime">开始时间</param>
+        /// <param name="endTime">结束时间</param>
+        /// <param name="filters">过滤条件</param>
+        /// <returns></returns>
+        public  IEnumerable<Cdy.Ant.AlarmMessage> QueryAlarmMessage(DateTime startTime, DateTime endTime, params string[] filters)
+        {
+            return MessageService.Service.Query(startTime, endTime,filters.GetFiltersFromString()).Where(e => e is Cdy.Ant.AlarmMessage).Select(e => e as Cdy.Ant.AlarmMessage);
+        }
+
+
+        /// <summary>
         /// 产生报警
         /// </summary>
         /// <param name="messageBody">消息体</param>
@@ -644,6 +738,39 @@ namespace AntRuntime.Enginer
         public void Restore(string value)
         {
             Owner?.Restore(value);
+        }
+    }
+
+    public class LoggerImp
+    {
+        /// <summary>
+        /// 输出提示信息
+        /// </summary>
+        /// <param name="source">触发者</param>
+        /// <param name="msg">消息内容</param>
+        public void Info(string source, string msg)
+        {
+            LoggerService.Service.Info(source, msg);
+        }
+
+        /// <summary>
+        /// 输出警告信息
+        /// </summary>
+        /// <param name="source">触发者</param>
+        /// <param name="msg">消息内容</param>
+        public void Warn(string source, string msg)
+        {
+            LoggerService.Service.Warn(source, msg);
+        }
+
+        /// <summary>
+        /// 输出错误信息
+        /// </summary>
+        /// <param name="source">触发者</param>
+        /// <param name="msg">消息内容</param>
+        public void Erro(string source, string msg)
+        {
+            LoggerService.Service.Erro(source, msg);
         }
     }
 

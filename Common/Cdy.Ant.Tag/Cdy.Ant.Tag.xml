@@ -665,6 +665,33 @@
             <param name="value"></param>
             <returns></returns>
         </member>
+        <member name="M:Cdy.Ant.IDataTagService.QueryHisValue(System.String,System.DateTime,System.DateTime,System.TimeSpan)">
+            <summary>
+            查询变量的历史值
+            </summary>
+            <param name="tagName">变量名称</param>
+            <param name="startTime">开始时间</param>
+            <param name="endTime">结束时间</param>
+            <param name="span">时间间隔</param>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.IDataTagService.QueryAllHisValue(System.String,System.DateTime,System.DateTime)">
+            <summary>
+            查询某个时间段记录的所有的值
+            </summary>
+            <param name="tagName">变量名称</param>
+            <param name="startTime">开始时间</param>
+            <param name="endTime">结束时间</param>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.IDataTagService.QueryHisValue(System.String,System.Collections.Generic.List{System.DateTime})">
+            <summary>
+            查询执行时刻点的的值
+            </summary>
+            <param name="tagName">变量名称</param>
+            <param name="times">时间列表</param>
+            <returns></returns>
+        </member>
         <member name="M:Cdy.Ant.IDataTagService.QueryGoodHisValue(System.String,System.DateTime,System.DateTime,System.TimeSpan)">
             <summary>
             查询变量好的历史值
@@ -800,6 +827,25 @@
             <summary>
             值
             </summary>
+        </member>
+        <member name="T:Cdy.Ant.Tag.FilterExtends">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cdy.Ant.Tag.FilterExtends.GetFilterFromString(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="sval"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.Tag.FilterExtends.GetFiltersFromString(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            
+            </summary>
+            <param name="sval"></param>
+            <returns></returns>
         </member>
         <member name="T:Cdy.Ant.Tag.IMessageQuery">
             <summary>
@@ -2478,7 +2524,23 @@
         </member>
         <member name="P:Cdy.Ant.ScriptTag.Expresse">
             <summary>
-            
+            表达式
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.ScriptTag.StartTrigger">
+            <summary>
+            启动触发
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.ScriptTag.Mode">
+            <summary>
+            执行模式
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.ScriptTag.Duration">
+            <summary>
+            间隔时间
+            单位:毫秒
             </summary>
         </member>
         <member name="M:Cdy.Ant.ScriptTag.SaveTo">
@@ -2493,6 +2555,13 @@
             </summary>
             <param name="xe"></param>
         </member>
+        <member name="M:Cdy.Ant.ScriptTag.LoadTriggerFromString(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
         <member name="M:Cdy.Ant.ScriptTag.ToString">
             <summary>
             
@@ -2504,6 +2573,105 @@
             
             </summary>
             <param name="vals"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Cdy.Ant.ExecuteMode">
+            <summary>
+            执行模式
+            </summary>
+        </member>
+        <member name="F:Cdy.Ant.ExecuteMode.Once">
+            <summary>
+            执行一次
+            </summary>
+        </member>
+        <member name="F:Cdy.Ant.ExecuteMode.Repeat">
+            <summary>
+            重复执行
+            </summary>
+        </member>
+        <member name="T:Cdy.Ant.TriggerType">
+            <summary>
+            触发条件
+            </summary>
+        </member>
+        <member name="F:Cdy.Ant.TriggerType.TagChanged">
+            <summary>
+            变量改变
+            </summary>
+        </member>
+        <member name="F:Cdy.Ant.TriggerType.Timer">
+            <summary>
+            定时
+            </summary>
+        </member>
+        <member name="F:Cdy.Ant.TriggerType.Start">
+            <summary>
+            程序启动
+            </summary>
+        </member>
+        <member name="T:Cdy.Ant.TriggerBase">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.TriggerBase.Type">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cdy.Ant.TriggerBase.ToString">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Cdy.Ant.TagChangedTrigger">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.TagChangedTrigger.Type">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Cdy.Ant.StartTrigger">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.StartTrigger.Type">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Cdy.Ant.TimerTrigger">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.TimerTrigger.Type">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.TimerTrigger.Timer">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cdy.Ant.TimerTrigger.ToString">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.TimerTrigger.LoadFromString(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="val"></param>
             <returns></returns>
         </member>
         <member name="T:Cdy.Ant.TagGroup">
