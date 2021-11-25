@@ -15,13 +15,13 @@ namespace Cdy.Ant
     public class CRUD
     {
         /// <summary>
-        /// 
+        /// 获取PostgreSQL 数据库连接
         /// </summary>
-        /// <param name="server"></param>
-        /// <param name="port"></param>
-        /// <param name="userId"></param>
-        /// <param name="password"></param>
-        /// <param name="database"></param>
+        /// <param name="server">服务器地址</param>
+        /// <param name="port">端口</param>
+        /// <param name="userId">用户名</param>
+        /// <param name="password">密码</param>
+        /// <param name="database">数据库</param>
         /// <returns></returns>
         public static IDbConnection GetPostgreSQLConnection(string server,int port,string userId,string password,string database)
         {
@@ -29,9 +29,9 @@ namespace Cdy.Ant
         }
 
         /// <summary>
-        /// 
+        /// 获取SqlLite 数据库连接
         /// </summary>
-        /// <param name="database"></param>
+        /// <param name="database">数据库</param>
         /// <returns></returns>
         public static IDbConnection GetSQLiteConnection(string database)
         {
@@ -40,37 +40,25 @@ namespace Cdy.Ant
         }
 
         /// <summary>
-        /// 
+        /// 获取MySql 数据库连接
         /// </summary>
-        /// <param name="server"></param>
-        /// <param name="port"></param>
-        /// <param name="userId"></param>
-        /// <param name="password"></param>
-        /// <param name="database"></param>
+        /// <param name="server">服务器地址</param>
+        /// <param name="port">端口</param>
+        /// <param name="userId">用户名</param>
+        /// <param name="password">密码</param>
+        /// <param name="database">数据库</param>
         /// <returns></returns>
         public static IDbConnection GetMySqlConnection(string server, int port, string userId, string password, string database)
         {
             return new MySqlConnection(String.Format("Server={0};Port={1};User Id={2};Password={3};Database={4};",server, port, userId, password, database));
         }
 
-        ///// <summary>
-        ///// 
-        ///// </summary>
-        ///// <param name="server"></param>
-        ///// <param name="userId"></param>
-        ///// <param name="password"></param>
-        ///// <param name="database"></param>
-        ///// <returns></returns>
-        //public static IDbConnection GetDB2Connection(string server, string userId, string password, string database)
-        //{
-        //    return new DB2Connection(string.Format("Server={0};UID={1};PWD={2};Database={3};", server, userId, password, database));
-        //}
-
         /// <summary>
-        /// 
+        /// 获取SqlServer 数据库连接
+        /// 信任连接
         /// </summary>
-        /// <param name="server"></param>
-        /// <param name="database"></param>
+        /// <param name="server">服务器地址</param>
+        /// <param name="database">数据库</param>
         /// <returns></returns>
         public static IDbConnection GetSqlServerConnection(string server, string database)
         {
@@ -78,12 +66,13 @@ namespace Cdy.Ant
         }
 
         /// <summary>
-        /// 
+        /// 获取SqlServer 数据库连接
+        /// 标准安全连接
         /// </summary>
-        /// <param name="server"></param>
-        /// <param name="userId"></param>
-        /// <param name="password"></param>
-        /// <param name="database"></param>
+        /// <param name="server">服务器地址</param>
+        /// <param name="userId">用户名</param>
+        /// <param name="password">密码</param>
+        /// <param name="database">数据库</param>
         /// <returns></returns>
         public static IDbConnection GetSqlServerConnection(string server,  string userId, string password, string database)
         {

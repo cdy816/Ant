@@ -46,7 +46,8 @@ namespace InAntStudio.ViewModel
         {
             Title = Res.Get("Expresse");
             DefaultWidth = 1020;
-            DefaultHeight = 600;
+            DefaultHeight = 760;
+            this.IsEnableMax = true;
             Init();
         }
         #endregion ...Constructor...
