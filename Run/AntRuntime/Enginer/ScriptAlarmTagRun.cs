@@ -4,8 +4,10 @@ using Microsoft.CodeAnalysis.Scripting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace AntRuntime.Enginer
@@ -20,7 +22,7 @@ namespace AntRuntime.Enginer
         static ScriptOptions sop;
         ScriptTag mDTag;
         private Script<object> mScript;
-        private bool mIsNeedCallAlways = false;
+        //private bool mIsNeedCallAlways = false;
 
         private long mCurrentMessageId = -1;
 
@@ -78,6 +80,14 @@ namespace AntRuntime.Enginer
 
         private object mLockObj = new object();
 
+        private Timer mTimer;
+
+        private Task<ScriptState<object>> mResult;
+
+        DateTime mLastExecuteTime;
+
+        DateTime mNextExecuteTime;
+
         #endregion ...Properties...
 
         #region ... Methods    ...
@@ -104,8 +114,25 @@ namespace AntRuntime.Enginer
             {
                 mDTag.Expresse = value;
                 Init();
+                ExecuteExpress();
             }
             base.OnPropertyChangedForRuntime(name, value);
+        }
+
+        public static void LoadRefernceDll(string sfile)
+        {
+            //using (var dependencyFileStream = System.IO.File.OpenRead(sfile))
+            //{
+            //    using (DependencyContextJsonReader dependencyContextJsonReader = new DependencyContextJsonReader())
+            //    {
+            //        //得到对应的实体文件
+            //        var dependencyContext = dependencyContextJsonReader.Read(dependencyFileStream);
+            //        //定义的运行环境,没有,则为全平台运行.
+            //        string currentRuntimeIdentifier = dependencyContext.Target.Runtime;
+            //        //运行时所需要的dll文件
+            //        var assemblyNames = dependencyContext.RuntimeLibraries;
+            //    }
+            //}
         }
 
         /// <summary>
@@ -119,8 +146,31 @@ namespace AntRuntime.Enginer
                 if (ScriptExtend.extend.ExtendDlls.Count > 0)
                 {
                     sop = sop.AddReferences(ScriptExtend.extend.ExtendDlls.Select(e => Microsoft.CodeAnalysis.MetadataReference.CreateFromFile(e)));
+
+                    foreach(var vv in ScriptExtend.extend.ExtendDlls)
+                    {
+                        try
+                        {
+                            var ass = Assembly.LoadFrom(vv);
+                            var reass = ass.GetReferencedAssemblies();
+
+                            //foreach(var vva in reass)
+                            //{
+                            //    Assembly.Load(vva);
+                            //}
+
+                            //string sfile = System.IO.Path.GetFileNameWithoutExtension(vv) + ".deps.json";
+                            //LoadRefernceDll(sfile);
+
+                        }
+                        catch(Exception eex)
+                        {
+                            LoggerService.Service.Erro("ScriptAlarmTagRun", eex.Message);
+                        }
+                    }
+
                 }
-                sop = sop.AddReferences(typeof(System.Collections.Generic.ReferenceEqualityComparer).Assembly).AddReferences(typeof(ScriptExtend).Assembly).AddReferences(typeof(ScriptAlarmTagRun).Assembly).WithImports("AntRuntime.Enginer", "Cdy.Ant.Tag", "Cdy.Ant", "System", "System.Collections.Generic");
+                sop = sop.AddReferences(typeof(System.Collections.Generic.ReferenceEqualityComparer).Assembly).AddReferences(typeof(ScriptExtend).Assembly).AddReferences(typeof(ScriptAlarmTagRun).Assembly).WithImports("AntRuntime.Enginer", "Cdy.Ant.Tag", "Cdy.Ant", "System", "System.Collections.Generic", "System.Linq", "System.Text");
             }
             catch (Exception ex)
             {
@@ -135,6 +185,13 @@ namespace AntRuntime.Enginer
         {
             lock (mLockObj)
             {
+
+                if (mTimer != null)
+                {
+                    mTimer.Dispose();
+                    mTimer = null;
+                }
+
                 Message = new MessageScriptImp() { Owner = this };
                 Tag = new TagScriptImp() { Owner = this };
                 Logger = new LoggerImp();
@@ -154,12 +211,6 @@ namespace AntRuntime.Enginer
                     }
                     mScript = vsp;
 
-                    //如果没有操作任何变量，则直接开个线程让其执行
-                    if (ListLinkTag().Count == 0)
-                    {
-                        mIsNeedCallAlways = true;
-                    }
-
                 }
                 catch (Exception ex)
                 {
@@ -170,7 +221,40 @@ namespace AntRuntime.Enginer
             }
         }
 
-        
+        /// <summary>
+        /// 对于类型为Trigger 为 Start类型的
+        /// </summary>
+        public override void PreRun()
+        {
+            if (mDTag.StartTrigger.Type == TriggerType.Start)
+            {
+                ExecuteExpress();
+                if(mDTag.Mode == ExecuteMode.Repeat)
+                {
+                    mTimer =  new Timer((obj)=> {
+                        ExecuteExpress();
+                    },null,0,mDTag.Duration);     
+                }
+            }
+            base.PreRun();
+        }
+
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public void ExecuteExpress()
+        {
+            //如果上次没有执行完，则直接返回
+            if (mResult != null && !mResult.IsCompleted) return;
+            mResult = mScript?.RunAsync(this, (exp) =>
+            {
+                LoggerService.Service.Erro("ScriptAlarmTagRun", this.mDTag.FullName + " : " + exp.Message);
+                return true;
+            });
+            mLastExecuteTime = DateTime.Now;
+        }
 
         /// <summary>
         /// 
@@ -181,18 +265,164 @@ namespace AntRuntime.Enginer
             {
                 lock (mLockObj)
                 {
-                    mScript?.RunAsync(this, (exp) =>
+                    if (mDTag.StartTrigger.Type == TriggerType.TagChanged)
                     {
-                        LoggerService.Service.Erro("ScriptAlarmTagRun", this.mDTag.FullName + " : " + exp.Message);
-                        return true;
-                    });
-                        if (mIsNeedCallAlways) mNeedCal = true;
+                        ExecuteExpress();
+                        //mScript?.RunAsync(this, (exp) =>
+                        //{
+                        //    LoggerService.Service.Erro("ScriptAlarmTagRun", this.mDTag.FullName + " : " + exp.Message);
+                        //    return true;
+                        //});
+                        //if (mIsNeedCallAlways) mNeedCal = true;
+                    }
+                    else if (mDTag.StartTrigger.Type == TriggerType.Timer)
+                    {
+                        var dnow = DateTime.Now;
+                        if (CheckTimeCondition())
+                        {
+                            if (mDTag.Mode == ExecuteMode.Repeat && ((dnow - mLastExecuteTime).TotalMilliseconds > mDTag.Duration))
+                            {
+                                ExecuteExpress();
+                            }
+                            else if ((dnow > mNextExecuteTime || mLastExecuteTime == DateTime.MinValue) && mDTag.Mode == ExecuteMode.Once)
+                            {
+                                ExecuteExpress();
+                            }
+                        }
+                        mNeedCal = true;
+                    }
                 }
             }
             catch
             {
 
             }
+        }
+
+        /// <summary>
+        /// 计算定时条件是否满足
+        /// </summary>
+        /// <returns></returns>
+        private bool CheckTimeCondition()
+        {
+
+            DateTime dnow = DateTime.Now;
+
+            DateTime nexttime = dnow;
+
+            string stime = (mDTag.StartTrigger as TimerTrigger).Timer;
+            //时间格式为 yyyy-mm-dd|HH:dd:ss
+
+            int? year = null;
+            int? month = null;
+            int? day = null;
+            int? hour = null;
+            int? min = null;
+            int? sec = null;
+
+            string[] ss = stime.Split("|");
+            foreach (var vv in ss)
+            {
+                if (vv.Contains("-"))
+                {
+                    string[] dd = vv.Split("-");
+                    dd = dd.Reverse().ToArray();
+                    if (int.TryParse(dd[0], out int imp))
+                    {
+                        day = imp;
+                    }
+
+                    if (dd.Length > 1)
+                    {
+                        if (int.TryParse(dd[1], out imp))
+                        {
+                            month = imp;
+                        }
+                    }
+                    if (dd.Length > 2)
+                    {
+                        if (int.TryParse(dd[2], out imp))
+                        {
+                            year = imp;
+                        }
+                    }
+                }
+                else
+                {
+                    string[] dd = vv.Split(":");
+                    dd = dd.Reverse().ToArray();
+                    if (int.TryParse(dd[0], out int imp))
+                    {
+                        sec = imp;
+                    }
+                    if (dd.Length > 1)
+                    {
+                        if (int.TryParse(dd[1], out imp))
+                        {
+                            min = imp;
+                        }
+                    }
+                    if (dd.Length > 2)
+                    {
+                        if (int.TryParse(dd[2], out imp))
+                        {
+                            hour = imp;
+                        }
+                    }
+                }
+            }
+
+            bool isAdded = false;
+            bool re = true;
+            if (year != null)
+            {
+                re &= (dnow.Year == year.Value);
+                if (re && !isAdded) { nexttime = nexttime.AddYears(1000); isAdded = true; }
+            }
+
+            if (month != null)
+            {
+                re &= (dnow.Month == month.Value);
+                if (re && !isAdded) { nexttime = nexttime.AddYears(1); isAdded = true; }
+            }
+
+            if (day != null)
+            {
+                re &= (dnow.Day == day.Value);
+                if (re && !isAdded) { nexttime = nexttime.AddMonths(1); isAdded = true; }
+            }
+
+            if (hour != null)
+            {
+                re &= (dnow.Hour == hour.Value);
+                if (re && !isAdded) { nexttime = nexttime.AddDays(1); isAdded = true; }
+            }
+            if (min != null)
+            {
+                re &= (dnow.Minute == min.Value);
+                if (re && !isAdded) { nexttime = nexttime.AddHours(1); isAdded = true; }
+            }
+
+            if (sec != null)
+            {
+                re &= (dnow.Second == sec.Value);
+                if (re && !isAdded)
+                {
+                    nexttime = nexttime.AddMinutes(1); isAdded = true;
+                }
+            }
+            if (re)
+                mNextExecuteTime = nexttime;
+            else
+            {
+                //如果优于程序执行慢，导致错过了执行条件，也要补上让其执行
+                if (dnow > mNextExecuteTime && mLastExecuteTime!=DateTime.MinValue)
+                {
+                    re = true;
+                }
+            }
+
+            return re;
         }
 
         /// <summary>
@@ -206,6 +436,8 @@ namespace AntRuntime.Enginer
             rr.AddRange(re);
             return rr;
         }
+
+
         /// <summary>
         /// 
         /// </summary>
@@ -328,6 +560,18 @@ namespace AntRuntime.Enginer
         {
             MessageService.Service.RestoreMessage(mCurrentMessageId, value);
         }
+
+
+        public override void Dispose()
+        {
+            if (mTimer != null)
+            {
+                mTimer.Dispose();
+                mTimer = null;
+            }
+            base.Dispose();
+        }
+
 
         #endregion ...Methods...
 
@@ -741,6 +985,9 @@ namespace AntRuntime.Enginer
         }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public class LoggerImp
     {
         /// <summary>

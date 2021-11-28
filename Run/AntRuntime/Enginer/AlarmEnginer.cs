@@ -147,6 +147,17 @@ namespace AntRuntime.Enginer
         /// <summary>
         /// 
         /// </summary>
+        public void PreRun()
+        {
+            foreach (var vv in mRunTags)
+            {
+                vv.Value.PreRun();
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="tagname"></param>
         /// <param name="value"></param>
         private void DataTagValueChanged(string tagname, object value)
@@ -400,10 +411,11 @@ namespace AntRuntime.Enginer
         /// </summary>
         public void Start()
         {
-           foreach(var vv in mExecuter)
+            foreach (var vv in mExecuter)
             {
                 vv.Start();
             }
+            PreRun();
         }
 
         /// <summary>

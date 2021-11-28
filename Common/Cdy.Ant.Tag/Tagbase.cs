@@ -1956,9 +1956,9 @@ namespace Cdy.Ant
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public TriggerBase LoadTriggerFromString(string value)
+        public static TriggerBase LoadTriggerFromString(string value)
         {
-            var ss = value.Split(":");
+            var ss = value.Split("$");
             if(ss[0]== "Start")
             {
                 return new StartTrigger();
@@ -1969,7 +1969,7 @@ namespace Cdy.Ant
             }
             else if(ss[0]== "Timer")
             {
-                new TimerTrigger().LoadFromString(ss[1]);
+               return new TimerTrigger().LoadFromString(ss[1]);
             }
             return null;
         }
@@ -2077,6 +2077,9 @@ namespace Cdy.Ant
         /// 
         /// </summary>
         public override TriggerType Type => TriggerType.Start;
+
+
+
     }
 
     /// <summary>
@@ -2092,7 +2095,7 @@ namespace Cdy.Ant
         /// <summary>
         /// 
         /// </summary>
-        public string Timer { get; set; }
+        public string Timer { get; set; } = "--|9::";
 
         /// <summary>
         /// 
@@ -2100,7 +2103,7 @@ namespace Cdy.Ant
         /// <returns></returns>
         public override string ToString()
         {
-            return base.ToString()+":"+Timer;
+            return base.ToString()+"$"+Timer;
         }
 
         /// <summary>

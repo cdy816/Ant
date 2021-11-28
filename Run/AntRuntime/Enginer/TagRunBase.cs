@@ -11,7 +11,7 @@ namespace AntRuntime.Enginer
     /// <summary>
     /// 
     /// </summary>
-    public abstract class TagRunBase
+    public abstract class TagRunBase:IDisposable
     {
 
         #region ... Variables  ...
@@ -199,6 +199,14 @@ namespace AntRuntime.Enginer
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        public virtual void PreRun()
+        {
+
+        }
+
+        /// <summary>
         /// 执行变量报警
         /// </summary>
         public virtual void LinkExecute()
@@ -222,6 +230,14 @@ namespace AntRuntime.Enginer
         /// 
         /// </summary>
         public virtual void LoadRuntimeStatue(XElement xe)
+        {
+            
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public virtual void Dispose()
         {
             
         }

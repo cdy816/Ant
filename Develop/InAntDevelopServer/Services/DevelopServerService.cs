@@ -967,7 +967,10 @@ namespace InAntDevelopServer
             else if(tag is Cdy.Ant.ScriptTag)
             {
                 var vtag = tag as Cdy.Ant.ScriptTag;
-                re.Append(vtag.Expresse + ";");
+                re.Append(vtag.Expresse + "_$^cdy^$_");
+                re.Append(vtag.StartTrigger.ToString()+ "_$^cdy^$_");
+                re.Append(vtag.Duration + "_$^cdy^$_");
+                re.Append((int)vtag.Mode + ";");
             }
             else if(tag is Cdy.Ant.OneRangeAlarmTag)
             {
@@ -1154,8 +1157,15 @@ namespace InAntDevelopServer
             }
             else if (tag is Cdy.Ant.ScriptTag)
             {
+                var ccs = content.Split("_$^cdy^$_");
                 var vtag = tag as Cdy.Ant.ScriptTag;
-                vtag.Expresse = content;
+                vtag.Expresse = ccs[0];
+                if (ccs.Length > 1)
+                    vtag.StartTrigger = ScriptTag.LoadTriggerFromString(ccs[1]);
+                if (ccs.Length > 2)
+                    vtag.Duration = int.Parse(ccs[2]);
+                if (ccs.Length > 3)
+                    vtag.Mode = (ExecuteMode)(int.Parse(ccs[3]));
             }
             else if (tag is Cdy.Ant.OneRangeAlarmTag)
             {

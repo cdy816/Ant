@@ -355,6 +355,11 @@
             </summary>
             <param name="parameter"></param>
         </member>
+        <member name="T:InAntStudio.ResMarkerExtension">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="M:InAntStudio.ResMarkerExtension.#ctor">
             <summary>
             
@@ -3246,6 +3251,11 @@
             
             </summary>
         </member>
+        <member name="T:InAntStudio.AlarmTagConfigViewModel">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="P:InAntStudio.AlarmTagConfigViewModel.LinkTag">
             <summary>
             
@@ -3257,6 +3267,11 @@
             </summary>
         </member>
         <member name="M:InAntStudio.AlarmTagConfigViewModel.Init">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:InAntStudio.MarsTagType">
             <summary>
             
             </summary>
@@ -3692,10 +3707,76 @@
             
             </summary>
         </member>
+        <member name="M:InAntStudio.ScriptTagConfigViewModel.#cctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ScriptTagConfigViewModel.TimerEditCommand">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ScriptTagConfigViewModel.TriggerTypes">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ScriptTagConfigViewModel.ExecuteModels">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="P:InAntStudio.ScriptTagConfigViewModel.Express">
             <summary>
             
             </summary>
+        </member>
+        <member name="P:InAntStudio.ScriptTagConfigViewModel.ExecuteMode">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ScriptTagConfigViewModel.Duration">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ScriptTagConfigViewModel.StartTriggerType">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ScriptTagConfigViewModel.IsTimerTrigger">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ScriptTagConfigViewModel.IsRepeatModel">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ScriptTagConfigViewModel.IsSupportRepeatModel">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ScriptTagConfigViewModel.TimerTriggerTimers">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ScriptTagConfigViewModel.StartTrigger">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.ScriptTagConfigViewModel.ChangedStartTrigger(Cdy.Ant.TriggerType)">
+            <summary>
+            
+            </summary>
+            <param name="type"></param>
         </member>
         <member name="P:InAntStudio.ScriptTagConfigViewModel.ExpressEditCommand">
             <summary>
@@ -3711,6 +3792,58 @@
             <summary>
             
             </summary>
+        </member>
+        <member name="T:InAntStudio.TimerEditViewModel">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.TimerEditViewModel.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.TimerEditViewModel.Year">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.TimerEditViewModel.Month">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.TimerEditViewModel.Day">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.TimerEditViewModel.Hour">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.TimerEditViewModel.Minute">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.TimerEditViewModel.Second">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.TimerEditViewModel.GetResult">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:InAntStudio.TimerEditViewModel.SetTarget(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="val"></param>
         </member>
         <member name="T:InAntStudio.DatabaseViewModel">
             <summary>
@@ -4216,6 +4349,19 @@
             </summary>
         </member>
         <member name="M:InAntStudio.ThreeRangeTagConfigView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:InAntStudio.TimerEditView">
+            <summary>
+            TimerEditView.xaml 的交互逻辑
+            </summary>
+            <summary>
+            TimerEditView
+            </summary>
+        </member>
+        <member name="M:InAntStudio.TimerEditView.InitializeComponent">
             <summary>
             InitializeComponent
             </summary>

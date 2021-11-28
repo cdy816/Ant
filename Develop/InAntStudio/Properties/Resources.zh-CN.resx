@@ -205,6 +205,9 @@
     <value>数据库选择</value>
     <comment>List database View Title</comment>
   </data>
+  <data name="Day" xml:space="preserve">
+    <value>日</value>
+  </data>
   <data name="DeadAera" xml:space="preserve">
     <value>死区</value>
   </data>
@@ -247,6 +250,9 @@
   <data name="erro" xml:space="preserve">
     <value>错误</value>
   </data>
+  <data name="ExecuteMode" xml:space="preserve">
+    <value>执行模式</value>
+  </data>
   <data name="Export" xml:space="preserve">
     <value>导出</value>
   </data>
@@ -279,6 +285,9 @@
   </data>
   <data name="HotReRun_Tooltip" xml:space="preserve">
     <value>重新运行数据库，生效修改的内容</value>
+  </data>
+  <data name="Hour" xml:space="preserve">
+    <value>时</value>
   </data>
   <data name="Id" xml:space="preserve">
     <value>编号</value>
@@ -362,11 +371,17 @@
   <data name="MessageService" xml:space="preserve">
     <value>消息服务</value>
   </data>
+  <data name="Minute" xml:space="preserve">
+    <value>分</value>
+  </data>
   <data name="MinValue" xml:space="preserve">
     <value>最小值</value>
   </data>
   <data name="Modify" xml:space="preserve">
     <value>修改</value>
+  </data>
+  <data name="Month" xml:space="preserve">
+    <value>月</value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>名称</value>
@@ -452,6 +467,9 @@
   <data name="Registor" xml:space="preserve">
     <value>寄存器</value>
   </data>
+  <data name="RelativeTimeInfo" xml:space="preserve">
+    <value>这里定义相对时间，例如：小时中输入9，则表示每天的9点执行。空值表示忽略该时间项。</value>
+  </data>
   <data name="Remote" xml:space="preserve">
     <value>远程</value>
   </data>
@@ -463,6 +481,9 @@
   </data>
   <data name="ReName" xml:space="preserve">
     <value>重命名</value>
+  </data>
+  <data name="RepeatDuration" xml:space="preserve">
+    <value>间隔周期</value>
   </data>
   <data name="ReplaceAll" xml:space="preserve">
     <value>替换全部</value>
@@ -484,6 +505,9 @@
   </data>
   <data name="Script" xml:space="preserve">
     <value>脚本片段</value>
+  </data>
+  <data name="Second" xml:space="preserve">
+    <value>秒</value>
   </data>
   <data name="Security" xml:space="preserve">
     <value>安全</value>
@@ -546,6 +570,9 @@
   <data name="StartPort" xml:space="preserve">
     <value>开始服务端口</value>
   </data>
+  <data name="StartTrigger" xml:space="preserve">
+    <value>执行条件</value>
+  </data>
   <data name="Start_Tooltip" xml:space="preserve">
     <value>运行数据库</value>
   </data>
@@ -579,6 +606,9 @@
   <data name="Timer" xml:space="preserve">
     <value>定时</value>
   </data>
+  <data name="TimerCondition" xml:space="preserve">
+    <value>时间条件</value>
+  </data>
   <data name="Type" xml:space="preserve">
     <value>类型</value>
   </data>
@@ -611,5 +641,8 @@
   </data>
   <data name="Write" xml:space="preserve">
     <value>写</value>
+  </data>
+  <data name="Year" xml:space="preserve">
+    <value>年</value>
   </data>
 </root>

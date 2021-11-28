@@ -21,7 +21,6 @@ namespace InAntRun
 
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 
-
             if (args.Length > 0)
             {
                 try

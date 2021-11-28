@@ -816,7 +816,7 @@ namespace InAntStuidoServer
         /// <param name="name"></param>
         public static bool StopDatabase(string name)
         {
-            using (var client = new NamedPipeClientStream(".", name, PipeDirection.InOut))
+            using (var client = new NamedPipeClientStream(".", "Ant" + name, PipeDirection.InOut))
             {
                 try
                 {
@@ -863,7 +863,7 @@ namespace InAntStuidoServer
         {
             lock (mLockObj)
             {
-                using (var client = new NamedPipeClientStream(".", name, PipeDirection.InOut))
+                using (var client = new NamedPipeClientStream(".", "Ant" + name, PipeDirection.InOut))
                 {
                     try
                     {

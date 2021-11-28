@@ -136,6 +136,7 @@ namespace AntRuntime
         public void Start()
         {
             LoggerService.Service.Info("Runner", "Start the " + this.Name + " ... ");
+
             alarmEnginer.Start();
           
             mSecurityRunner?.Start();
@@ -160,7 +161,7 @@ namespace AntRuntime
         /// </summary>
         public void Stop()
         {
-            LoggerService.Service.Info("Runner", "Stop the" + this.Name + " ... ");
+            LoggerService.Service.Info("Runner", "Stop the " + this.Name + " ... ");
 
             mDataApi?.Stop();
           

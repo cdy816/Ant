@@ -719,6 +719,9 @@ namespace InAntStudio
         #endregion ...Interfaces...
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public abstract class AlarmTagConfigViewModel : TagDetailConfigViewModelBase
     {
 
@@ -791,6 +794,9 @@ namespace InAntStudio
         #endregion ...Interfaces...
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public enum MarsTagType
     {
         /// <summary>
@@ -2275,6 +2281,12 @@ namespace InAntStudio
         private Cdy.Ant.ScriptTag mTag;
         private ICommand mExpressEditCommand;
         private ICommand mExpressClearCommand;
+        private ICommand mTimerEditCommand;
+
+        static string[] mExecuteModels;
+
+        static string[] mTriggerTypes;
+
         #endregion ...Variables...
 
         #region ... Events     ...
@@ -2283,9 +2295,62 @@ namespace InAntStudio
 
         #region ... Constructor...
 
+        /// <summary>
+        /// 
+        /// </summary>
+        static ScriptTagConfigViewModel()
+        {
+            mExecuteModels = Enum.GetNames(typeof(Cdy.Ant.ExecuteMode));
+            mTriggerTypes = Enum.GetNames(typeof(Cdy.Ant.TriggerType));
+        }
+
         #endregion ...Constructor...
 
         #region ... Properties ...
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public ICommand TimerEditCommand
+        {
+            get
+            {
+                if(mTimerEditCommand==null)
+                {
+                    mTimerEditCommand = new RelayCommand(() => {
+                        TimerEditViewModel mm = new TimerEditViewModel();
+                        mm.SetTarget(TimerTriggerTimers);
+                        if(mm.ShowDialog().Value)
+                        {
+                            TimerTriggerTimers = mm.GetResult();
+                        }
+                    });
+                }
+                return mTimerEditCommand;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string[] TriggerTypes
+        {
+            get
+            {
+                return mTriggerTypes;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string[] ExecuteModels
+        {
+            get
+            {
+                return mExecuteModels;
+            }
+        }
 
         /// <summary>
         /// 
@@ -2307,10 +2372,163 @@ namespace InAntStudio
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        public int ExecuteMode
+        {
+            get
+            {
+                return (int)mTag.Mode;
+            }
+            set
+            {
+                if ((int)mTag.Mode != value)
+                {
+                    mTag.Mode = (Cdy.Ant.ExecuteMode)value;
+                    IsChanged = true;
+                    OnPropertyChanged("ExecuteMode");
+                    OnPropertyChanged("IsRepeatModel");
+                }
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public int Duration
+        {
+            get
+            {
+                return mTag.Duration;
+            }
+            set
+            {
+                if (mTag.Duration != value)
+                {
+                    mTag.Duration = value;
+                    IsChanged = true;
+                    OnPropertyChanged("Duration");
+                }
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public int StartTriggerType
+        {
+            get
+            {
+                return (int)mTag.StartTrigger.Type;
+            }
+            set
+            {
+                if((int)mTag.StartTrigger.Type != value)
+                {
+                    ChangedStartTrigger((TriggerType)value);
+                    IsChanged = true;
+                    OnPropertyChanged("StartTriggerType");
+                    OnPropertyChanged("StartTrigger");
+                    OnPropertyChanged("IsTimerTrigger");
+                    OnPropertyChanged("TimerTriggerTimers");
+                    OnPropertyChanged("IsSupportRepeatModel");
+                }
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public bool IsTimerTrigger
+        {
+            get
+            {
+                return mTag.StartTrigger is TimerTrigger;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public bool IsRepeatModel
+        {
+            get
+            {
+                return mTag.Mode == Cdy.Ant.ExecuteMode.Repeat;
+            }
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public bool IsSupportRepeatModel
+        {
+            get
+            {
+                return mTag.StartTrigger.Type != TriggerType.TagChanged;
+            }
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string TimerTriggerTimers
+        {
+            get
+            {
+                return mTag.StartTrigger is TimerTrigger?(mTag.StartTrigger as TimerTrigger).Timer:"";
+            }
+            set
+            {
+                if (mTag.StartTrigger is TimerTrigger)
+                {
+                    (mTag.StartTrigger as TimerTrigger).Timer = value;
+                    IsChanged = true;
+                }
+               
+                OnPropertyChanged("TimerTriggerTimers");
+            }
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public Cdy.Ant.TriggerBase StartTrigger
+        {
+            get
+            {
+                return mTag.StartTrigger;
+            }
+        }
+
 
         #endregion ...Properties...
 
         #region ... Methods    ...
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="type"></param>
+        private void ChangedStartTrigger(Cdy.Ant.TriggerType type)
+        {
+            if(type == TriggerType.Start)
+            {
+                mTag.StartTrigger = new Cdy.Ant.StartTrigger();
+            }
+            else if(type == TriggerType.TagChanged)
+            {
+                mTag.StartTrigger = new Cdy.Ant.TagChangedTrigger();
+            }
+            else if(type == TriggerType.Timer)
+            {
+                mTag.StartTrigger = new Cdy.Ant.TimerTrigger() { Timer = "--|9::"};
+            }
+        }
 
         /// <summary>
         /// 
@@ -2367,6 +2585,215 @@ namespace InAntStudio
 
         #endregion ...Interfaces...
     }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public class TimerEditViewModel : WindowViewModelBase
+    {
+
+        #region ... Variables  ...
+        private string mSecond="";
+        private string mYear="";
+        private string mMonth="";
+        private string mHour="";
+        private string mDay="";
+        private string mMinute="";
+        #endregion ...Variables...
+
+        #region ... Events     ...
+
+        #endregion ...Events...
+
+        #region ... Constructor...
+        /// <summary>
+        /// 
+        /// </summary>
+        public TimerEditViewModel()
+        {
+            Title = Res.Get("TimerCondition");
+            DefaultWidth = 480;
+            DefaultHeight = 300;
+        }
+        #endregion ...Constructor...
+
+        #region ... Properties ...
+
+        /// <summary>
+            /// 
+            /// </summary>
+        public string Year
+        {
+            get
+            {
+                return mYear;
+            }
+            set
+            {
+                if (mYear != value)
+                {
+                    mYear = value;
+                    OnPropertyChanged("Year");
+                }
+            }
+        }
+
+        /// <summary>
+            /// 
+            /// </summary>
+        public string Month
+        {
+            get
+            {
+                return mMonth;
+            }
+            set
+            {
+                if (mMonth != value)
+                {
+                    mMonth = value;
+                    OnPropertyChanged("Month");
+                }
+            }
+        }
+
+        /// <summary>
+            /// 
+            /// </summary>
+        public string Day
+        {
+            get
+            {
+                return mDay;
+            }
+            set
+            {
+                if (mDay != value)
+                {
+                    mDay = value;
+                    OnPropertyChanged("Day");
+                }
+            }
+        }
+
+        /// <summary>
+            /// 
+            /// </summary>
+        public string Hour
+        {
+            get
+            {
+                return mHour;
+            }
+            set
+            {
+                if (mHour != value)
+                {
+                    mHour = value;
+                    OnPropertyChanged("Hour");
+                }
+            }
+        }
+
+        /// <summary>
+            /// 
+            /// </summary>
+        public string Minute
+        {
+            get
+            {
+                return mMinute;
+            }
+            set
+            {
+                if (mMinute != value)
+                {
+                    mMinute = value;
+                    OnPropertyChanged("Minute");
+                }
+            }
+        }
+
+        /// <summary>
+            /// 
+            /// </summary>
+        public string Second
+        {
+            get
+            {
+                return mSecond;
+            }
+            set
+            {
+                if (mSecond != value)
+                {
+                    mSecond = value;
+                    OnPropertyChanged("Second");
+                }
+            }
+        }
+
+
+
+        #endregion ...Properties...
+
+        #region ... Methods    ...
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public string GetResult()
+        {
+            return mYear + "-" + mMonth + "-" + mDay + "|" + mHour + ":" + mMinute + ":" + mSecond;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="val"></param>
+        public void SetTarget(string val)
+        {
+            if (string.IsNullOrEmpty(val)) return;
+            string[] ss = val.Split("|");
+            foreach(var vv in ss)
+            {
+                if(vv.Contains("-"))
+                {
+                    var vvv = vv.Split("-").Reverse().ToArray();
+                    mDay = vvv[0];
+                    if(vvv.Length>1)
+                    {
+                        mMonth = vvv[1];
+                    }
+                    if (vvv.Length > 2)
+                    {
+                        mYear = vvv[2];
+                    }
+                }
+                else
+                {
+                    var vvv = vv.Split(":").Reverse().ToArray();
+                    mSecond = vvv[0];
+                    if (vvv.Length > 1)
+                    {
+                        mMinute = vvv[1];
+                    }
+                    if (vvv.Length > 2)
+                    {
+                        mHour = vvv[2];
+                    }
+                }
+            }
+        }
+
+        #endregion ...Methods...
+
+        #region ... Interfaces ...
+
+        #endregion ...Interfaces...
+    }
+
 
 
     /// <summary>

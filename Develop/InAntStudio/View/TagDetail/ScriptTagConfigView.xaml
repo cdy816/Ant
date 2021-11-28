@@ -6,15 +6,58 @@
              xmlns:local="clr-namespace:InAntStudio"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="32" />
-        </Grid.ColumnDefinitions>
-        <TextBox Text="{Binding Express,Mode=TwoWay,UpdateSourceTrigger=LostFocus}" CaretBrush="White" Margin="2" Height="60" HorizontalAlignment="Stretch" Background="#0FFFFFFF" Foreground="White"  AcceptsReturn="True" VerticalScrollBarVisibility="Auto"/>
-        <StackPanel Grid.Column="1" Margin="2">
-            <Button Content="..." VerticalContentAlignment="Top" Command="{Binding ExpressEditCommand}" />
-            <Button Content="X" Command="{Binding ExpressClearCommand}"  Margin="0,2"/>
-        </StackPanel>
+    <Grid Grid.IsSharedSizeScope="True">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="28" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="120" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="{local:ResMarker StartTrigger}" Margin="10,0" VerticalAlignment="Center" Foreground="{DynamicResource Window.Forground}"/>
+            <ComboBox ItemsSource="{Binding TriggerTypes}" SelectedIndex="{Binding StartTriggerType,Mode=TwoWay}" Grid.Column="1" Width="100"  HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <StackPanel Orientation="Horizontal" Grid.Column="2" Visibility="{Binding IsTimerTrigger,Converter={StaticResource bool2VisibilityConverter}}">
+                <TextBlock Text="{local:ResMarker TimerCondition}" VerticalAlignment="Center"  Foreground="{DynamicResource Window.Forground}" Margin="10,0,0,0"/>
+                <TextBox Background="#1FFFFFFF" Foreground="{DynamicResource Window.Forground}" CaretBrush="White" Text="{Binding TimerTriggerTimers,Mode=TwoWay}"  Margin="10,0,0,0" Width="200" VerticalAlignment="Center" HorizontalAlignment="Left" />
+                <Button Content="..." VerticalContentAlignment="Top" Command="{Binding TimerEditCommand}" VerticalAlignment="Center"  Width="32" Margin="5,0"/>
+                <TextBlock Text="{local:ResMarker RelativeTimeInfo}" Foreground="{StaticResource Window.Forground}" Grid.Column="1" Grid.Row="6" VerticalAlignment="Center"  Margin="10,0"  TextWrapping="Wrap" />
+            </StackPanel>
+            
+        </Grid>
+        <Grid Grid.Row="1" Visibility="{Binding IsSupportRepeatModel,Converter={StaticResource bool2VisibilityConverter}}" Height="28">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="120" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="{local:ResMarker ExecuteMode}" Margin="10,0" VerticalAlignment="Center" Foreground="{DynamicResource Window.Forground}"/>
+            <ComboBox ItemsSource="{Binding ExecuteModels}" SelectedIndex="{Binding ExecuteMode,Mode=TwoWay}" Grid.Column="1" Width="100"  HorizontalAlignment="Left" VerticalAlignment="Center"/>
+
+
+            <TextBlock Text="{local:ResMarker RepeatDuration}" Visibility="{Binding IsRepeatModel,Converter={StaticResource bool2VisibilityConverter}}" Grid.Column="2" VerticalAlignment="Center" Margin="10,0" Foreground="{DynamicResource Window.Forground}"/>
+            <StackPanel Orientation="Horizontal" Grid.Column="3" Visibility="{Binding IsRepeatModel,Converter={StaticResource bool2VisibilityConverter}}">
+                <TextBox  Background="#1FFFFFFF" Foreground="{DynamicResource Window.Forground}" CaretBrush="White" Text="{Binding Duration,Mode=TwoWay}" Grid.Column="3" Width="64"  HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                <TextBlock Text="ms"  VerticalAlignment="Center" Foreground="{DynamicResource Window.Forground}" Margin="10,0"/>
+                
+            </StackPanel>
+            
+        </Grid>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="32" />
+            </Grid.ColumnDefinitions>
+            <TextBox Text="{Binding Express,Mode=TwoWay,UpdateSourceTrigger=LostFocus}" CaretBrush="White" Margin="2" MinHeight="60" HorizontalAlignment="Stretch" Background="#0FFFFFFF" Foreground="White"  AcceptsReturn="True" VerticalScrollBarVisibility="Auto"/>
+            <StackPanel Grid.Column="1" Margin="2">
+                <Button Content="..." VerticalContentAlignment="Top" Command="{Binding ExpressEditCommand}" />
+                <Button Content="X" Command="{Binding ExpressClearCommand}"  Margin="0,2"/>
+            </StackPanel>
+        </Grid>
+        
     </Grid>
 </UserControl>

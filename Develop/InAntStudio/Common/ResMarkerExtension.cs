@@ -16,6 +16,9 @@ using System.Windows.Markup;
 
 namespace InAntStudio
 {
+    /// <summary>
+    /// 
+    /// </summary>
     [MarkupExtensionReturnType(typeof(object))]
     [ContentProperty("Key")]
     public class ResMarkerExtension : MarkupExtension
@@ -109,7 +112,7 @@ namespace InAntStudio
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
             var vv = (serviceProvider.GetService(typeof(System.Xaml.IRootObjectProvider)) as System.Xaml.IRootObjectProvider);
-            if (vv != null)
+            if (vv != null && vv.RootObject!=null)
             {
                 var root = vv.RootObject.GetType().Assembly;
                 var target = serviceProvider.GetService(typeof(System.Windows.Markup.IProvideValueTarget)) as System.Windows.Markup.IProvideValueTarget;
@@ -135,7 +138,11 @@ namespace InAntStudio
             else
             {
                 System.Globalization.CultureInfo cinfo = Thread.CurrentThread.CurrentUICulture;
-                return Properties.Resources.ResourceManager.GetString(Key, cinfo)+ mAppendChar;
+                var res = Properties.Resources.ResourceManager.GetString(Key, cinfo);
+                if (!string.IsNullOrEmpty(res))
+                    return res + mAppendChar;
+                else
+                    return Key + mAppendChar;
             }
         }
 
