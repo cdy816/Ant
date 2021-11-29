@@ -1,10 +1,12 @@
 ﻿using Cdy.Ant;
 using Cdy.Ant.Tag;
 using Microsoft.CodeAnalysis.Scripting;
+using Microsoft.CodeAnalysis.Scripting.Hosting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.Loader;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -119,21 +121,6 @@ namespace AntRuntime.Enginer
             base.OnPropertyChangedForRuntime(name, value);
         }
 
-        public static void LoadRefernceDll(string sfile)
-        {
-            //using (var dependencyFileStream = System.IO.File.OpenRead(sfile))
-            //{
-            //    using (DependencyContextJsonReader dependencyContextJsonReader = new DependencyContextJsonReader())
-            //    {
-            //        //得到对应的实体文件
-            //        var dependencyContext = dependencyContextJsonReader.Read(dependencyFileStream);
-            //        //定义的运行环境,没有,则为全平台运行.
-            //        string currentRuntimeIdentifier = dependencyContext.Target.Runtime;
-            //        //运行时所需要的dll文件
-            //        var assemblyNames = dependencyContext.RuntimeLibraries;
-            //    }
-            //}
-        }
 
         /// <summary>
         /// 
@@ -146,29 +133,6 @@ namespace AntRuntime.Enginer
                 if (ScriptExtend.extend.ExtendDlls.Count > 0)
                 {
                     sop = sop.AddReferences(ScriptExtend.extend.ExtendDlls.Select(e => Microsoft.CodeAnalysis.MetadataReference.CreateFromFile(e)));
-
-                    foreach(var vv in ScriptExtend.extend.ExtendDlls)
-                    {
-                        try
-                        {
-                            var ass = Assembly.LoadFrom(vv);
-                            var reass = ass.GetReferencedAssemblies();
-
-                            //foreach(var vva in reass)
-                            //{
-                            //    Assembly.Load(vva);
-                            //}
-
-                            //string sfile = System.IO.Path.GetFileNameWithoutExtension(vv) + ".deps.json";
-                            //LoadRefernceDll(sfile);
-
-                        }
-                        catch(Exception eex)
-                        {
-                            LoggerService.Service.Erro("ScriptAlarmTagRun", eex.Message);
-                        }
-                    }
-
                 }
                 sop = sop.AddReferences(typeof(System.Collections.Generic.ReferenceEqualityComparer).Assembly).AddReferences(typeof(ScriptExtend).Assembly).AddReferences(typeof(ScriptAlarmTagRun).Assembly).WithImports("AntRuntime.Enginer", "Cdy.Ant.Tag", "Cdy.Ant", "System", "System.Collections.Generic", "System.Linq", "System.Text");
             }
@@ -196,7 +160,22 @@ namespace AntRuntime.Enginer
                 Tag = new TagScriptImp() { Owner = this };
                 Logger = new LoggerImp();
 
-                var vsp = Microsoft.CodeAnalysis.CSharp.Scripting.CSharpScript.Create(mDTag.Expresse, sop, typeof(ScriptAlarmTagRun));
+                InteractiveAssemblyLoader ass = new InteractiveAssemblyLoader();
+
+                foreach (var vv in ScriptExtend.extend.ExtendDlls)
+                {
+                    try
+                    {
+                        var assb = new PluginLoadContext(vv).LoadFromAssemblyPath(vv);
+                        ass.RegisterDependency(assb);
+                    }
+                    catch (Exception eex)
+                    {
+                        LoggerService.Service.Erro("ScriptAlarmTagRun", eex.Message);
+                    }
+                }
+
+                var vsp = Microsoft.CodeAnalysis.CSharp.Scripting.CSharpScript.Create(mDTag.Expresse, sop, typeof(ScriptAlarmTagRun),ass);
                 try
                 {
                     var cp = vsp.Compile();
@@ -561,7 +540,9 @@ namespace AntRuntime.Enginer
             MessageService.Service.RestoreMessage(mCurrentMessageId, value);
         }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
         public override void Dispose()
         {
             if (mTimer != null)
@@ -579,6 +560,41 @@ namespace AntRuntime.Enginer
 
         #endregion ...Interfaces...
 
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+   public class PluginLoadContext : AssemblyLoadContext
+    {
+        private AssemblyDependencyResolver _resolver;
+
+        public PluginLoadContext(string pluginPath)
+        {
+            _resolver = new AssemblyDependencyResolver(pluginPath);
+        }
+
+        protected override Assembly Load(AssemblyName assemblyName)
+        {
+            string assemblyPath = _resolver.ResolveAssemblyToPath(assemblyName);
+            if (assemblyPath != null)
+            {
+                return LoadFromAssemblyPath(assemblyPath);
+            }
+
+            return null;
+        }
+
+        protected override IntPtr LoadUnmanagedDll(string unmanagedDllName)
+        {
+            string libraryPath = _resolver.ResolveUnmanagedDllToPath(unmanagedDllName);
+            if (libraryPath != null)
+            {
+                return LoadUnmanagedDllFromPath(libraryPath);
+            }
+
+            return IntPtr.Zero;
+        }
     }
 
     /// <summary>

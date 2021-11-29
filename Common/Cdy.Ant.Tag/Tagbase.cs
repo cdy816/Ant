@@ -487,7 +487,7 @@ namespace Cdy.Ant
         {
             var re = base.LoadFrom(vals);
             LinkTag = re[0].Replace("|", ",");
-            return vals.Length > 1 ? vals.Slice(1) : null;
+            return re.Length > 1 ? re.Slice(1) : null;
         }
 
         /// <summary>
@@ -951,19 +951,19 @@ namespace Cdy.Ant
             {
                 HighHighValue = null;
             }
-            re = re.Slice(4);
+            re = re.Slice(3);
             HighValue = new AnalogAlarmItem().LoadFrom(re);
             if (HighValue.IsEmpty())
             {
                 HighValue = null;
             }
-            re = re.Slice(4);
+            re = re.Slice(3);
             LowValue = new AnalogAlarmItem().LoadFrom(re);
             if (LowValue.IsEmpty())
             {
                 LowValue = null;
             }
-            re = re.Slice(4);
+            re = re.Slice(3);
             LowLowValue = new AnalogAlarmItem().LoadFrom(re);
             if (LowLowValue.IsEmpty())
             {
@@ -1980,7 +1980,7 @@ namespace Cdy.Ant
         /// <returns></returns>
         public override string ToString()
         {
-            return base.ToString()+Expresse.Replace(",", "&#44");
+            return base.ToString()+"," + StartTrigger.ToString()+","+Mode+","+Duration+"," +Expresse.Replace(",", "&#44").Replace("\r", "&#13").Replace("\n", "&#10");
         }
 
         /// <summary>
@@ -1991,7 +1991,10 @@ namespace Cdy.Ant
         protected override Span<string> LoadFrom(Span<string> vals)
         {
             var re = base.LoadFrom(vals);
-            Expresse = re[0].Replace("&#44", ",");
+            StartTrigger = LoadTriggerFromString(re[0]);
+            Mode = (ExecuteMode)Enum.Parse(typeof(ExecuteMode),re[1]);
+            Duration = int.Parse(re[2]);
+            Expresse = re[3].Replace("&#44", ",").Replace("&#13", "\r").Replace("&#10", "\n");
             return re;
         }
 

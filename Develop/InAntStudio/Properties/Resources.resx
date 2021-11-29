@@ -485,6 +485,9 @@
   <data name="RepeatDuration" xml:space="preserve">
     <value>RepeatDuration</value>
   </data>
+  <data name="Replace" xml:space="preserve">
+    <value>Replace</value>
+  </data>
   <data name="ReplaceAll" xml:space="preserve">
     <value>Replace all</value>
   </data>

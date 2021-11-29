@@ -485,6 +485,9 @@
   <data name="RepeatDuration" xml:space="preserve">
     <value>间隔周期</value>
   </data>
+  <data name="Replace" xml:space="preserve">
+    <value>替换</value>
+  </data>
   <data name="ReplaceAll" xml:space="preserve">
     <value>替换全部</value>
   </data>
