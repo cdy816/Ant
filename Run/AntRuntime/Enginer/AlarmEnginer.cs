@@ -476,6 +476,37 @@ namespace AntRuntime.Enginer
             return new Dictionary<string, string>();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="tags"></param>
+        /// <returns></returns>
+        public IEnumerable<string> GetAlarmStatue(IEnumerable<string> tags)
+        {
+            List<string> re = new List<string>();
+            foreach(var vv in tags)
+            {
+                var vtag = GetTag(vv);
+                if(vtag!=null && vtag.Count()>0)
+                {
+                    var vvv = vtag.First();
+                    if(vvv is AlarmTagRunBase)
+                    {
+                        re.Add((vvv as AlarmTagRunBase).CurrentStatue.ToString());
+                    }
+                    else
+                    {
+                        re.Add("");
+                    }
+                }
+                else
+                {
+                    re.Add("");
+                }
+            }
+            return re;
+        }
+
         #endregion ...Methods...
 
         #region ... Interfaces ...

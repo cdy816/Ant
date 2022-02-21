@@ -18,6 +18,13 @@ namespace Cdy.Ant.Tag
         /// <param name="propertys"></param>
         /// <returns></returns>
         bool ModifyTag(string tagname, Dictionary<string, string> propertys);
+
+        /// <summary>
+        /// 获取当前的运行状态
+        /// </summary>
+        /// <param name="tags"></param>
+        /// <returns></returns>
+        IEnumerable<string> GetAlarmStatue(IEnumerable<string> tags); 
                 
         /// <summary>
         /// 

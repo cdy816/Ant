@@ -1057,6 +1057,13 @@
             <param name="propertys"></param>
             <returns></returns>
         </member>
+        <member name="M:Cdy.Ant.Tag.IRuntimeTagService.GetAlarmStatue(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            获取当前的运行状态
+            </summary>
+            <param name="tags"></param>
+            <returns></returns>
+        </member>
         <member name="M:Cdy.Ant.Tag.IRuntimeTagService.ListTagDefines(System.String)">
             <summary>
             
