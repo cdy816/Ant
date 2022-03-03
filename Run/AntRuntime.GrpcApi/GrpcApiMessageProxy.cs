@@ -7,19 +7,19 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace AntRutime.WebApi
+namespace AntRuntime.GrpcApi
 {
     /// <summary>
     /// 
     /// </summary>
-    public class WebApiMessageProxy : IMessageServiceProxy
+    public class GrpcApiMessageProxy : IMessageServiceProxy
     {
 
         #region ... Variables  ...
         /// <summary>
         /// 
         /// </summary>
-        public static  IMessageQuery MessageService;
+        public static  IMessageQuery MessageService=null;
         #endregion ...Variables...
 
         #region ... Events     ...
@@ -37,39 +37,16 @@ namespace AntRutime.WebApi
         /// </summary>
         public static int Port { get; set; } = 15331;
 
-        /// <summary>
-        /// 
-        /// </summary>
-        public static bool UseHttps { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public string TypeName => "WebApi";
+        public string TypeName => "GrpcApi";
 
         #endregion ...Properties...
 
         #region ... Methods    ...
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="args"></param>
-        /// <returns></returns>
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-           Host.CreateDefaultBuilder(args)
-               .ConfigureWebHostDefaults(webBuilder =>
-               {
-                   if (UseHttps)
-                   {
-                       webBuilder.UseUrls("https://0.0.0.0:" + Port);
-                   }
-                   else
-                   {
-                       webBuilder.UseUrls("http://0.0.0.0:" + Port);
-                   }
-                   webBuilder.UseStartup<Startup>();
-               });
 
         /// <summary>
         /// 
@@ -86,7 +63,13 @@ namespace AntRutime.WebApi
         public void Start()
         {
             Task.Run(() => {
-                CreateHostBuilder(null).Build().Run();
+                var builder = WebApplication.CreateBuilder();
+
+                builder.Services.AddGrpc();
+                var app = builder.Build();
+                app.MapGrpcService<Services.MessageService>();
+                app.MapGet("/", () => "Message Grpc Service.");
+                app.Run();
             });
         }
 
@@ -96,7 +79,7 @@ namespace AntRutime.WebApi
         /// <returns></returns>
         public IMessageServiceProxy NewApi()
         {
-            return new WebApiMessageProxy();
+            return new GrpcApiMessageProxy();
         }
 
         /// <summary>
@@ -105,10 +88,6 @@ namespace AntRutime.WebApi
         /// <param name="xe"></param>
         public void Load(XElement xe)
         {
-            if (xe.Attribute("UseHttps") != null)
-            {
-                UseHttps = bool.Parse(xe.Attribute("UseHttps").Value);
-            }
             Port = int.Parse(xe.Attribute("Port").Value);
         }
 

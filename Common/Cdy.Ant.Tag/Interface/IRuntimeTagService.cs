@@ -20,6 +20,12 @@ namespace Cdy.Ant.Tag
         bool ModifyTag(string tagname, Dictionary<string, string> propertys);
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        IEnumerable<string> ListTagNames();
+
+        /// <summary>
         /// 获取当前的运行状态
         /// </summary>
         /// <param name="tags"></param>

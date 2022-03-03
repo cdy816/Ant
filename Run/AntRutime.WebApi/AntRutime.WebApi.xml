@@ -213,6 +213,13 @@
             
             </summary>
         </member>
+        <member name="M:AntRutime.WebApi.Controllers.TagController.ListTags(AntRutime.WebApi.Controllers.TagRequestBase)">
+            <summary>
+            
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
         <member name="M:AntRutime.WebApi.Controllers.TagController.ModifyTag(AntRutime.WebApi.Controllers.ModifyTagRequest)">
             <summary>
             修改变量配置
@@ -255,6 +262,16 @@
         <member name="P:AntRutime.WebApi.Controllers.QueryTagPropertyResponse.PropertyValues">
             <summary>
             属性、值集合
+            </summary>
+        </member>
+        <member name="T:AntRutime.WebApi.Controllers.ListTagsResult">
+            <summary>
+            枚举变量返回
+            </summary>
+        </member>
+        <member name="P:AntRutime.WebApi.Controllers.ListTagsResult.Tags">
+            <summary>
+            
             </summary>
         </member>
         <member name="T:AntRutime.WebApi.LoginUser">
@@ -335,12 +352,39 @@
             <param name="args"></param>
             <returns></returns>
         </member>
+        <member name="T:AntRutime.WebApi.Startup">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:AntRutime.WebApi.Startup.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            
+            </summary>
+            <param name="configuration"></param>
+        </member>
+        <member name="P:AntRutime.WebApi.Startup.Configuration">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:AntRutime.WebApi.Startup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            
+            </summary>
+            <param name="services"></param>
+        </member>
         <member name="M:AntRutime.WebApi.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IWebHostEnvironment)">
             <summary>
             
             </summary>
             <param name="app"></param>
             <param name="env"></param>
+        </member>
+        <member name="T:AntRutime.WebApi.DatetimeJsonConverter">
+            <summary>
+            
+            </summary>
         </member>
         <member name="M:AntRutime.WebApi.DatetimeJsonConverter.Read(System.Text.Json.Utf8JsonReader@,System.Type,System.Text.Json.JsonSerializerOptions)">
             <summary>
@@ -358,6 +402,16 @@
             <param name="writer"></param>
             <param name="value"></param>
             <param name="options"></param>
+        </member>
+        <member name="T:AntRutime.WebApi.WebApiMessageProxy">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:AntRutime.WebApi.WebApiMessageProxy.MessageService">
+            <summary>
+            
+            </summary>
         </member>
         <member name="P:AntRutime.WebApi.WebApiMessageProxy.Port">
             <summary>

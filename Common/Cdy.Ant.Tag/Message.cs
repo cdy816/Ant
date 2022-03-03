@@ -34,12 +34,12 @@ namespace Cdy.Ant
         /// <summary>
         /// 服务器
         /// </summary>
-        public string Server { get; set; }
+        public string Server { get; set; } = "";
 
         /// <summary>
         /// 生产者变量
         /// </summary>
-        public string SourceTag { get; set; }
+        public string SourceTag { get; set; } = "";
 
         /// <summary>
         /// 消息产生时间
@@ -52,7 +52,7 @@ namespace Cdy.Ant
         /// 
         /// </summary>
         public string MessageBody
-        { get; set; }
+        { get; set; } = "";
 
         /// <summary>
         /// 消息类型，0:报警,1:通知消息
@@ -69,34 +69,108 @@ namespace Cdy.Ant
         /// <summary>
         /// 附加字段1
         /// </summary>
-        public string AppendContent1 { get; set; }
+        public string AppendContent1 { get; set; } = "";
 
         /// <summary>
         /// 附加字段2
         /// </summary>
-        public string AppendContent2 { get; set; }
+        public string AppendContent2 { get; set; } = "";
 
 
         /// <summary>
         /// 附加字段3
         /// </summary>
-        public string AppendContent3 { get; set; }
+        public string AppendContent3 { get; set; } = "";
 
 
         /// <summary>
         /// 删除备注
         /// </summary>
-        public string DeleteNote { get; set; }
+        public string DeleteNote { get; set; } = "";
 
         /// <summary>
         /// 删除人
         /// </summary>
-        public string DeleteUser { get; set; }
+        public string DeleteUser { get; set; } = "";
 
         /// <summary>
         /// 删除时间
         /// </summary>
         public DateTime DeleteTime { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            StringBuilder re=new StringBuilder();
+
+            re.Append((int)Type).Append("^").Append(Id).Append("^").Append(Server).Append("^").Append(SourceTag).Append("^").Append(CreateTime.Ticks).Append("^").Append(MessageBody).Append("^");
+            re.Append(AppendContent1).Append("^").Append(AppendContent2).Append("^").Append(AppendContent3).Append("^").Append(DeleteNote).Append("^").Append(DeleteUser).Append("^").Append(DeleteTime.Ticks);
+            if(DisposalMessages!=null)
+            {
+                re.Append("^");
+                foreach(DisposalItem item in DisposalMessages)
+                {
+                    re.Append(item.ToString()).Append("|");
+                }
+                re.Append("");
+            }
+            else
+            {
+                re.Append("^");
+            }
+            return re.ToString();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="val"></param>
+        public virtual Message LoadFromString(string[] val)
+        {
+            Id = long.Parse(val[1]);
+            Server = val[2];
+            SourceTag = val[3];
+            CreateTime = DateTime.FromBinary(long.Parse(val[4]));
+            MessageBody = val[5];
+            AppendContent1 = val[6];
+            AppendContent2 = val[7];
+            AppendContent3 = val[8];
+            DeleteNote = val[9];
+            DeleteUser = val[10];
+            DeleteTime = DateTime.FromBinary(long.Parse(val[11]));
+            if(!string.IsNullOrEmpty(val[12]))
+            {
+                DisposalMessages = new List<DisposalItem>();
+                var vss = val[12].Split("|");
+                foreach(var vss2 in vss)
+                {
+                    DisposalMessages.Add(DisposalItem.LoadFromString(vss2));
+                }
+            }
+            return this;
+
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="val"></param>
+        /// <returns></returns>
+        public static Message LoadFromString(string val)
+        {
+            string[] sval = val.Split("^");
+            if(sval[0]=="0")
+            {
+                return new AlarmMessage().LoadFromString(sval);
+            }
+            else
+            {
+                return new InfoMessage().LoadFromString(sval);
+            }
+        }
 
     }
 
@@ -129,17 +203,17 @@ namespace Cdy.Ant
         /// <summary>
         /// 报警值
         /// </summary>
-        public string AlarmValue { get; set; }
+        public string AlarmValue { get; set; } = "";
 
         /// <summary>
         /// 报警时的报警条件
         /// </summary>
-        public string AlarmCondition { get; set; }
+        public string AlarmCondition { get; set; } = "";
 
         /// <summary>
         /// 关联变量
         /// </summary>
-        public string LinkTag { get; set; }
+        public string LinkTag { get; set; } = "";
 
         /// <summary>
         /// 恢复时间
@@ -149,7 +223,7 @@ namespace Cdy.Ant
         /// <summary>
         /// 恢复值
         /// </summary>
-        public string RestoreValue { get; set; }
+        public string RestoreValue { get; set; } = "";
 
         /// <summary>
         /// 确认时间
@@ -159,12 +233,46 @@ namespace Cdy.Ant
         /// <summary>
         /// 确认内容,允许确认者备注内容
         /// </summary>
-        public string AckMessage { get; set; }
+        public string AckMessage { get; set; } = "";
 
         /// <summary>
         /// 确认人
         /// </summary>
-        public string AckUser { get; set; }
+        public string AckUser { get; set; } = "";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            var re = base.ToString();
+            StringBuilder sb = new StringBuilder();
+            sb.Append((int)AlarmLevel).Append("^").Append(AlarmValue).Append("^").Append(AlarmCondition).Append("^").Append(LinkTag).Append("^").Append(RestoreTime.Ticks).Append("^").Append(RestoreValue).Append("^").Append(AckTime.Ticks).Append("^").Append(AckMessage).Append("^").Append(AckUser);
+            return re + "^"+sb.ToString();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="val"></param>
+        public override Message LoadFromString(string[] val)
+        {
+            base.LoadFromString(val);
+            AlarmLevel = (AlarmLevel)(int.Parse(val[13]));
+            AlarmValue =val[14];
+            AlarmCondition = val[15];
+            LinkTag = val[16];
+            RestoreTime = DateTime.FromBinary((long.Parse(val[17])));
+            RestoreValue = val[18];
+            AckTime = DateTime.FromBinary((long.Parse(val[19])));
+            AckMessage = val[20];
+            AckUser = val[21];
+            return this;
+        }
+
+        
+
     }
 
     /// <summary>
@@ -184,11 +292,37 @@ namespace Cdy.Ant
         /// <summary>
         /// 用户
         /// </summary>
-        public string User { get; set; }
+        public string User { get; set; } = "";
         /// <summary>
         /// 消息内容
         /// </summary>
-        public string Message { get; set; }
+        public string Message { get; set; } = "";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return MessageId+","+Time.Ticks.ToString()+","+User+""+Message;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sval"></param>
+        /// <returns></returns>
+        public static DisposalItem LoadFromString(string sval)
+        {
+            DisposalItem re = new DisposalItem();
+            var vals = sval.Split(",");
+            re.MessageId = Convert.ToInt64(vals[0]);
+            re.Time = DateTime.FromBinary(Convert.ToInt64(vals[1]));
+            re.User = vals[2];
+            re.Message = vals[3];
+            return re;
+        }
+
     }
 
 

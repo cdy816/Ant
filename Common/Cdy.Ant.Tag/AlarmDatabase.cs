@@ -8,6 +8,9 @@ using System.Xml.Linq;
 namespace Cdy.Ant
 {
 
+    /// <summary>
+    /// 
+    /// </summary>
     public class Setting
     {
         //public int WebServerPort { get; set; } = 18000;

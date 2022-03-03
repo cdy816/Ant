@@ -453,9 +453,10 @@ namespace AntRuntime.Enginer
         public bool ModifyTag(string tagname, Dictionary<string, string> propertys)
         {
             var tags = GetTag(tagname);
-            if(tags!=null)
+            if (tags != null)
             {
-                tags.First().ModifyProperty(propertys);
+                foreach (var tag in tags)
+                    tag.ModifyProperty(propertys);
                 return true;
             }
             return false;
@@ -505,6 +506,15 @@ namespace AntRuntime.Enginer
                 }
             }
             return re;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<string> ListTagNames()
+        {
+            return mRunTags.Values.Select(e=>e.Name).Distinct();
         }
 
         #endregion ...Methods...

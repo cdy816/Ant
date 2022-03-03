@@ -4,6 +4,11 @@
         <name>Cdy.Ant.Tag</name>
     </assembly>
     <members>
+        <member name="T:Cdy.Ant.Setting">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="P:Cdy.Ant.Setting.ApiType">
             <summary>
             
@@ -1057,6 +1062,12 @@
             <param name="propertys"></param>
             <returns></returns>
         </member>
+        <member name="M:Cdy.Ant.Tag.IRuntimeTagService.ListTagNames">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:Cdy.Ant.Tag.IRuntimeTagService.GetAlarmStatue(System.Collections.Generic.IEnumerable{System.String})">
             <summary>
             获取当前的运行状态
@@ -1383,6 +1394,25 @@
             删除时间
             </summary>
         </member>
+        <member name="M:Cdy.Ant.Message.ToString">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.Message.LoadFromString(System.String[])">
+            <summary>
+            
+            </summary>
+            <param name="val"></param>
+        </member>
+        <member name="M:Cdy.Ant.Message.LoadFromString(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="val"></param>
+            <returns></returns>
+        </member>
         <member name="T:Cdy.Ant.InfoMessage">
             <summary>
             提示消息
@@ -1448,6 +1478,18 @@
             确认人
             </summary>
         </member>
+        <member name="M:Cdy.Ant.AlarmMessage.ToString">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.AlarmMessage.LoadFromString(System.String[])">
+            <summary>
+            
+            </summary>
+            <param name="val"></param>
+        </member>
         <member name="T:Cdy.Ant.DisposalItem">
             <summary>
             处置内容
@@ -1472,6 +1514,19 @@
             <summary>
             消息内容
             </summary>
+        </member>
+        <member name="M:Cdy.Ant.DisposalItem.ToString">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.DisposalItem.LoadFromString(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="sval"></param>
+            <returns></returns>
         </member>
         <member name="T:Cdy.Ant.PathHelper">
             <summary>

@@ -126,6 +126,10 @@ namespace InAntStudio.ViewModel
                         mMessageConfig.Load(mSetting.ProxyData);
                         MessageConfigModel = mMessageConfig.Config();
                     }
+                    else
+                    {
+                        MessageConfigModel = mMessageConfig.Config();
+                    }
                     mProxyKey = value;
                     
                 }

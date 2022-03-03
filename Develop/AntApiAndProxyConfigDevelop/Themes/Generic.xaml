@@ -8,6 +8,10 @@
         <local:WebApiDevelopView />
     </DataTemplate>
 
+    <DataTemplate DataType="{x:Type local:GrpcApiDevelop}">
+        <local:GrpcApiDevelopView />
+    </DataTemplate>
+
     <BooleanToVisibilityConverter x:Key="bvc" />
 
     <SolidColorBrush x:Key="Button.Static.Background" Color="#FFDDDDDD"/>

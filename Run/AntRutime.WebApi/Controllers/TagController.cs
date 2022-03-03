@@ -18,6 +18,24 @@ namespace AntRutime.WebApi.Controllers
     [OpenApiTag("变量服务", Description = "变量服务")]
     public class TagController : ControllerBase
     {
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public ListTagsResult ListTags([FromBody] TagRequestBase request)
+        {
+            var service = ServiceLocator.Locator.Resolve<IRuntimeSecurity>();
+            if (service.CheckLogin(request.Token) && service.IsAdmin(request.Token))
+            {
+                var re = ServiceLocator.Locator.Resolve<IRuntimeTagService>().ListTagNames();
+                return new ListTagsResult() { Result = true, Tags = re };
+            }
+            return new ListTagsResult() { Result = false, ErroMessage = "Login failed!" };
+        }
+
         /// <summary>
         /// 修改变量配置
         /// </summary>
@@ -109,6 +127,17 @@ namespace AntRutime.WebApi.Controllers
         /// 属性、值集合
         /// </summary>
         public Dictionary<string, string> PropertyValues { get; set; }
+    }
+
+    /// <summary>
+    /// 枚举变量返回
+    /// </summary>
+    public class ListTagsResult:ResponseBase
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        public IEnumerable<string> Tags { get; set; }
     }
 
 }

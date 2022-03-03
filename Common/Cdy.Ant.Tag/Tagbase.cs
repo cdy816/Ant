@@ -81,7 +81,7 @@ namespace Cdy.Ant
         /// <returns></returns>
         public Tagbase CreatTag(TagType typ)
         {
-            switch(typ)
+            switch (typ)
             {
                 case TagType.AnalogAlarm:
                     return new AnalogAlarmTag();
@@ -99,6 +99,8 @@ namespace Cdy.Ant
                     return new ThreeRangeAlarmTag();
                 case TagType.TwoRange:
                     return new TwoRangeAlarmTag();
+                default:
+                    break;
             }
             return null;
         }

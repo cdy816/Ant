@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31515.178
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32210.238
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Run", "Run", "{2DAF4C7E-14B0-4A5C-87E9-F2BE612EDEC5}"
 EndProject
@@ -29,7 +29,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AntRutime.WebApi", "Run\Ant
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AntApiAndProxyConfigDevelop", "Develop\AntApiAndProxyConfigDevelop\AntApiAndProxyConfigDevelop.csproj", "{AF5F921F-3305-4FA2-BDD2-FEFD88747D7E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cdy.Ant.CRUD", "Common\Cdy.Ant.CRUD\Cdy.Ant.CRUD.csproj", "{D2F27AE4-A4AF-4ECB-A2ED-65AC1249B71C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cdy.Ant.CRUD", "Common\Cdy.Ant.CRUD\Cdy.Ant.CRUD.csproj", "{D2F27AE4-A4AF-4ECB-A2ED-65AC1249B71C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AntRuntime.GrpcApi", "Run\AntRuntime.GrpcApi\AntRuntime.GrpcApi.csproj", "{CA50731A-A3E0-4C40-B35A-EE5188AED609}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -81,6 +83,10 @@ Global
 		{D2F27AE4-A4AF-4ECB-A2ED-65AC1249B71C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D2F27AE4-A4AF-4ECB-A2ED-65AC1249B71C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D2F27AE4-A4AF-4ECB-A2ED-65AC1249B71C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA50731A-A3E0-4C40-B35A-EE5188AED609}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA50731A-A3E0-4C40-B35A-EE5188AED609}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA50731A-A3E0-4C40-B35A-EE5188AED609}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA50731A-A3E0-4C40-B35A-EE5188AED609}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -97,6 +103,7 @@ Global
 		{7058FA5E-AD37-4B59-9E52-8A04FCF9874F} = {2DAF4C7E-14B0-4A5C-87E9-F2BE612EDEC5}
 		{AF5F921F-3305-4FA2-BDD2-FEFD88747D7E} = {D0FD1ABD-FC41-4C7B-B465-EDD657120D4A}
 		{D2F27AE4-A4AF-4ECB-A2ED-65AC1249B71C} = {40A33EC7-14EA-48CF-A06B-C1C3941D176A}
+		{CA50731A-A3E0-4C40-B35A-EE5188AED609} = {2DAF4C7E-14B0-4A5C-87E9-F2BE612EDEC5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D298DE71-994E-4E0F-94CD-1FD0C85FE2DD}

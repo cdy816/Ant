@@ -1,0 +1,131 @@
+syntax = "proto3";
+
+option csharp_namespace = "AntRuntime.GrpcApi";
+
+package MessageService;
+
+// The greeting service definition.
+service Message {
+
+
+  // Sends a greeting
+   rpc Login(LoginRequest) returns (LoginReply);
+
+   rpc Logout(LogoutRequest) returns (BoolMessageReply);
+
+   rpc GetMessage(GetMessageRequest) returns (GetMessageResponse);
+   rpc GetAlarmMessage(GetMessageRequest) returns (GetMessageResponse);
+   rpc GetInfoMessage(GetMessageRequest) returns (GetMessageResponse);
+
+   rpc GetRecentMessage(GetMessageRecentRequest) returns (GetMessageResponse);
+   rpc GetRecentAlarmMessage(GetMessageRecentRequest) returns (GetMessageResponse);
+   rpc GetInfoAlarmMessage(GetMessageRecentRequest) returns (GetMessageResponse);
+
+   rpc AckMessage(AckMessageRequest) returns (BoolMessageReply);
+
+   rpc DeleteMessage(DeleteMessageRequest) returns (BoolMessageReply);
+
+   rpc ListTagName(ListTagNameRequest) returns (ListTagNameReply);
+
+   rpc QueryTagPropery(QueryTagProperyRequest) returns (QueryTagProperyReply);
+
+   rpc ModityTagProperty(ModityTagPropertyRequest) returns (BoolMessageReply);
+
+
+}
+
+message LogoutRequest
+{
+    string Token=1;
+}
+
+message ModityTagPropertyRequest
+{
+    string Token=1;
+    string Tag=2;
+    repeated KeyValue Propertys=3;
+}
+
+message QueryTagProperyRequest
+{
+    string Token=1;
+    string Tag=2;
+}
+
+message QueryTagProperyReply
+{
+    repeated KeyValue Propertys=1;
+}
+
+message ListTagNameRequest
+{
+    string Token=1;
+}
+
+
+message ListTagNameReply
+{
+    repeated string Tags=1;
+}
+
+message KeyValue
+{
+    string Key=1;
+    string Value=2;
+}
+
+message AckMessageRequest
+{
+    string Token=1;
+    repeated int64 MessageIds=2;
+    string AckContent=3;
+    string User=4;
+}
+
+
+message BoolMessageReply
+{
+    bool Result=1;
+}
+
+
+message DeleteMessageRequest
+{
+    string Token=1;
+    repeated int64 MessageIds=2;
+    string DeleteNote=3;
+    string User=4;
+}
+
+
+message LoginRequest
+{
+    string userName=1;
+    string password=2;
+}
+
+message LoginReply
+{
+    string loginId=1;
+    bool Result=2;
+}
+
+message GetMessageRequest
+{
+    string Token=1;
+    int64 StartTime=2;
+    int64 EndTime=3;
+    repeated string Filters=4;
+}
+
+message GetMessageRecentRequest
+{
+    string Token=1;
+    int64 Time=2;
+    repeated string Filters=3;
+}
+
+message GetMessageResponse
+{
+    repeated string messages=1;
+}
