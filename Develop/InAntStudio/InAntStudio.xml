@@ -2047,6 +2047,11 @@
             
             </summary>
         </member>
+        <member name="P:InAntStudio.ViewModel.ExpressionEditViewModel.ScriptView">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="P:InAntStudio.ViewModel.ExpressionEditViewModel.Expresse">
             <summary>
             
@@ -2061,6 +2066,27 @@
             <summary>
             
             </summary>
+        </member>
+        <member name="M:InAntStudio.ViewModel.ExpressionEditViewModel.MScriptView_Drop(System.Object,System.Windows.DragEventArgs)">
+            <summary>
+            
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:InAntStudio.ViewModel.ExpressionEditViewModel.AppendScript(System.String)">
+            <summary>
+            追加脚本
+            </summary>
+            <param name="txt"></param>
+        </member>
+        <member name="M:InAntStudio.ViewModel.ExpressionEditViewModel.MScriptView_DragEnter(System.Object,System.Windows.DragEventArgs)">
+            <summary>
+            
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
         </member>
         <member name="M:InAntStudio.ViewModel.ExpressionEditViewModel.InsertTextDelegate(System.String)">
             <summary>
@@ -2082,6 +2108,17 @@
             <summary>
             
             </summary>
+        </member>
+        <member name="M:InAntStudio.ViewModel.ExpressionEditViewModel.SaveScript">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.ViewModel.ExpressionEditViewModel.RemoveScript(InAntStudio.ViewModel.ScriptItem)">
+            <summary>
+            
+            </summary>
+            <param name="item"></param>
         </member>
         <member name="M:InAntStudio.ViewModel.ExpressionEditViewModel.GetExpressResult">
             <summary>
@@ -2135,6 +2172,16 @@
             
             </summary>
         </member>
+        <member name="P:InAntStudio.ViewModel.ScriptItem.IsNameModify">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ViewModel.ScriptItem.IsDescModify">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="P:InAntStudio.ViewModel.ScriptItem.Body">
             <summary>
             
@@ -2150,11 +2197,37 @@
             
             </summary>
         </member>
+        <member name="P:InAntStudio.ViewModel.ScriptItem.RemoveCommand">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ViewModel.ScriptItem.ModifyNameCommand">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ViewModel.ScriptItem.ModifyDescCommand">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="M:InAntStudio.ViewModel.ScriptItem.LoadFromXML(System.Xml.Linq.XElement)">
             <summary>
             
             </summary>
             <param name="xe"></param>
+        </member>
+        <member name="M:InAntStudio.ViewModel.ScriptItem.Update">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.ViewModel.ScriptItem.SaveToXML">
+            <summary>
+            
+            </summary>
+            <returns></returns>
         </member>
         <member name="T:InAntStudio.ViewModel.CommandItem">
             <summary>
@@ -2432,6 +2505,26 @@
             </summary>
             <param name="model"></param>
             <returns></returns>
+        </member>
+        <member name="T:InAntStudio.ViewModel.ScriptNewViewModel">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.ViewModel.ScriptNewViewModel.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ViewModel.ScriptNewViewModel.Name">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ViewModel.ScriptNewViewModel.Description">
+            <summary>
+            
+            </summary>
         </member>
         <member name="T:InAntStudio.ViewModel.TagGroupDetailViewModel">
             <summary>
@@ -4166,6 +4259,19 @@
             InitializeComponent
             </summary>
         </member>
+        <member name="T:InAntStudio.View.ScriptNewView">
+            <summary>
+            ScriptNewView.xaml 的交互逻辑
+            </summary>
+            <summary>
+            ScriptNewView
+            </summary>
+        </member>
+        <member name="M:InAntStudio.View.ScriptNewView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
         <member name="T:InAntStudio.View.TagGroupDetailView">
             <summary>
             TagGroupDetailView.xaml 的交互逻辑
@@ -4269,6 +4375,19 @@
             <summary>
             
             </summary>
+        </member>
+        <member name="M:InAntStudio.ExpressionEditView.TextBox_KeyUp(System.Object,System.Windows.Input.KeyEventArgs)">
+            <summary>
+            
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:InAntStudio.ExpressionEditView.ProcessDrag(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="text"></param>
         </member>
         <member name="M:InAntStudio.ExpressionEditView.InitializeComponent">
             <summary>

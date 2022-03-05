@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Collections.Immutable;
 using InAntStudio.ViewModel;
 using Cdy.Ant.Tag;
+using System.Windows.Input;
 
 namespace InAntStudio
 {
@@ -28,7 +29,7 @@ namespace InAntStudio
         {
             InitializeComponent();
             this.Loaded += ExpressionEditView_Loaded;
-            
+
         }
 
         /// <summary>
@@ -40,6 +41,7 @@ namespace InAntStudio
         {
             this.Loaded -= ExpressionEditView_Loaded;
             (this.DataContext as ExpressionEditViewModel).ExpressEditor = rc;
+            (this.DataContext as ExpressionEditViewModel).ScriptView = sc;
             Init();
         }
 
@@ -110,6 +112,66 @@ namespace InAntStudio
                 bd.Height = 74;
                 tb.RenderTransform = tg;
             }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void TextBox_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                (sender as TextBox).MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
+                e.Handled = true;
+            }
+        }
+
+        private Point mMouseDownPoint;
+        private bool mIsMouseDown = false;
+        private bool mIsDrag = false;
+
+        private void mb_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            mMouseDownPoint = e.GetPosition(sender as FrameworkElement);
+            mIsMouseDown = true;
+            e.Handled= true;
+        }
+
+        private void mb_PreviewMouseMove(object sender, MouseEventArgs e)
+        {
+            if(e.LeftButton == MouseButtonState.Pressed && mIsMouseDown && !mIsDrag)
+            {
+                var vp = e.GetPosition((FrameworkElement)sender);
+                if((vp - mMouseDownPoint).Length>10)
+                {
+                    mIsDrag = true;
+                    ProcessDrag(((sender as FrameworkElement).DataContext as ScriptItem).Body);
+                }
+                e.Handled =(true);
+            }
+        }
+
+        private void mb_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            mIsDrag = false;
+            mIsMouseDown = false;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="text"></param>
+        private void ProcessDrag(string text)
+        {
+            DragDrop.DoDragDrop(this, text, DragDropEffects.Copy|DragDropEffects.All);
+        }
+
+        private void mb_MouseLeave(object sender, MouseEventArgs e)
+        {
+            mIsDrag = false;
+            mIsMouseDown = false;
         }
     }
 }

@@ -290,16 +290,25 @@
             </DataTemplate>
 
             <DataTemplate DataType="{x:Type model:ScriptItem}">
-                <Grid ToolTip="{local:ResMarker DoubleClickToInsert}" x:Name="mb" Background="Transparent" Cursor="Hand" Margin="2,2">
+                <Grid ToolTip="{local:ResMarker DoubleClickToInsert}" x:Name="mb" Background="Transparent" Cursor="Hand" Margin="2,2" PreviewMouseLeftButtonDown="mb_PreviewMouseLeftButtonDown" PreviewMouseMove="mb_PreviewMouseMove" PreviewMouseLeftButtonUp="mb_PreviewMouseLeftButtonUp" MouseLeave="mb_MouseLeave">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="20" />
                         <RowDefinition Height="20" />
                     </Grid.RowDefinitions>
                     <TextBlock Text="{Binding Name}" />
+                    <TextBox Text="{Binding Name,UpdateSourceTrigger=LostFocus}" Visibility="{Binding IsNameModify,Converter={StaticResource bool2VisibilityConverter}}" KeyUp="TextBox_KeyUp" />
                     <TextBlock Margin="2,0,0,0" Text="{Binding Desc}" Grid.Row="1"  Opacity="0.5"  ToolTip="{Binding Desc}"/>
+                    <TextBox Margin="2,0,0,0" Grid.Row="1" Text="{Binding Desc,UpdateSourceTrigger=LostFocus}" Visibility="{Binding IsDescModify,Converter={StaticResource bool2VisibilityConverter}}"  KeyUp="TextBox_KeyUp" />
                     <Grid.InputBindings>
                         <MouseBinding Gesture="LeftDoubleClick" Command="{Binding InsertCommand}" />
                     </Grid.InputBindings>
+                    <Grid.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Command="{Binding ModifyNameCommand}" Header="{local:ResMarker ModifyName}" />
+                            <MenuItem Command="{Binding ModifyDescCommand}" Header="{local:ResMarker ModifyDesc}"/>
+                            <MenuItem Command="{Binding RemoveCommand}" Header="{local:ResMarker Remove}"/>
+                        </ContextMenu>
+                    </Grid.ContextMenu>
                 </Grid>
                 <DataTemplate.Triggers>
                     <Trigger Property="IsMouseOver" Value="True" >
@@ -408,13 +417,13 @@
                 
             </TabItem>
            
-            <TabItem Header="{local:ResMarker Script}">
+            <TabItem Header="{local:ResMarker Script}" >
                 <TabItem.HeaderTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding}" Background="Transparent" Foreground="{DynamicResource  Window.Forground}" />
                     </DataTemplate>
                 </TabItem.HeaderTemplate>
-                <ItemsControl ItemsSource="{Binding Scripts}">
+                <ItemsControl ItemsSource="{Binding Scripts}" Background="Transparent" x:Name="sc" AllowDrop="True">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <VirtualizingStackPanel Orientation="Vertical" />

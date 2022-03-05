@@ -101,6 +101,11 @@
         <local:TimerEditView />
     </DataTemplate>
 
+
+    <DataTemplate DataType="{x:Type viewmodel:ScriptNewViewModel}">
+        <view:ScriptNewView />
+    </DataTemplate>
+
     <BooleanToVisibilityConverter x:Key="bvc" />
 
     <SolidColorBrush x:Key="Button.Static.Background" Color="#FFDDDDDD"/>

@@ -232,6 +232,9 @@
   <data name="DisConnect" xml:space="preserve">
     <value>断开连接</value>
   </data>
+  <data name="DoubleClickToInsert" xml:space="preserve">
+    <value>双击或拖放插入脚本</value>
+  </data>
   <data name="Driver" xml:space="preserve">
     <value>驱动</value>
   </data>
@@ -380,6 +383,12 @@
   <data name="Modify" xml:space="preserve">
     <value>修改</value>
   </data>
+  <data name="ModifyDesc" xml:space="preserve">
+    <value>修改描述</value>
+  </data>
+  <data name="ModifyName" xml:space="preserve">
+    <value>修改名称</value>
+  </data>
   <data name="Month" xml:space="preserve">
     <value>月</value>
   </data>
@@ -394,6 +403,9 @@
   </data>
   <data name="NewDatabaseFailed" xml:space="preserve">
     <value>新建数据库失败!</value>
+  </data>
+  <data name="NewScript" xml:space="preserve">
+    <value>新建脚本</value>
   </data>
   <data name="NoneCompress" xml:space="preserve">
     <value>无</value>

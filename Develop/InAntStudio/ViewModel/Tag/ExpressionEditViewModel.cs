@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using System.Xml.Linq;
 
@@ -165,6 +166,31 @@ namespace InAntStudio.ViewModel
             }
         }
 
+        private FrameworkElement mScriptView;
+        /// <summary>
+        /// 
+        /// </summary>
+        public FrameworkElement ScriptView
+        {
+            get
+            {
+                return mScriptView;
+            }
+            set
+            {
+                if (mScriptView != null)
+                {
+                    mScriptView.PreviewDragEnter -= MScriptView_DragEnter;
+                    mScriptView.PreviewDrop -= MScriptView_Drop;
+                }
+                mScriptView = value;
+                if (mScriptView != null)
+                {
+                    mScriptView.PreviewDragEnter += MScriptView_DragEnter;
+                    mScriptView.PreviewDrop += MScriptView_Drop;
+                }
+            }
+        }
 
         /// <summary>
         /// 
@@ -231,6 +257,83 @@ namespace InAntStudio.ViewModel
         #endregion ...Properties...
 
         #region ... Methods    ...
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        /// <exception cref="NotImplementedException"></exception>
+        private void MScriptView_Drop(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.Text))
+            {
+                string txt = (string)e.Data.GetData(DataFormats.Text);
+                if (txt != null)
+                {
+                    if ((e.OriginalSource as FrameworkElement).DataContext is ScriptItem)
+                    {
+                        UpdateScript(((e.OriginalSource as FrameworkElement).DataContext as ScriptItem), txt);
+                    }
+                    else
+                    {
+                        AppendScript(txt);
+                    }
+                }
+            }
+            else if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                string sfile = (string)e.Data.GetData(DataFormats.FileDrop);
+                if (sfile != null)
+                {
+                    if(System.IO.File.Exists(sfile)&&(sfile.EndsWith(".txt")||sfile.EndsWith(".cs")))
+                    {
+                        if ((e.OriginalSource as FrameworkElement).DataContext is ScriptItem)
+                        {
+                            UpdateScript(((e.OriginalSource as FrameworkElement).DataContext as ScriptItem), System.IO.File.ReadAllText(sfile));
+                        }
+                        else
+                        {
+                            AppendScript(System.IO.File.ReadAllText(sfile));
+                        }
+                      
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// 追加脚本
+        /// </summary>
+        /// <param name="txt"></param>
+        private void AppendScript(string txt)
+        {
+            ScriptNewViewModel mm = new ScriptNewViewModel();
+            if(mm.ShowDialog().Value)
+            {
+                mScripts.Add(new ScriptItem() { Name = mm.Name, Desc = mm.Description, Body = txt ,Parent=this});
+                SaveScript();
+            }
+        }
+
+        private void UpdateScript(ScriptItem item,string txt)
+        {
+            item.Body = txt;
+            SaveScript();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void MScriptView_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.Text) || e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                e.Effects = DragDropEffects.Copy;
+            }
+        }
 
         /// <summary>
         /// 
@@ -302,6 +405,31 @@ namespace InAntStudio.ViewModel
                 }
                
             }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public void SaveScript()
+        {
+            string sfile = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(this.GetType().Assembly.Location), "AntScript.xml");
+            XElement xe = new XElement("ScriptDocument");
+            xe.SetAttributeValue("Version", "0.1");
+            foreach(var vv in mScripts)
+            {
+                xe.Add(vv.SaveToXML());
+            }
+            xe.Save(sfile);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="item"></param>
+        public void RemoveScript(ScriptItem item)
+        {
+            if(mScripts.Contains(item))
+            mScripts.Remove(item);
         }
 
         /// <summary>
@@ -381,17 +509,44 @@ namespace InAntStudio.ViewModel
     /// <summary>
     /// 脚本片段
     /// </summary>
-    public class ScriptItem
+    public class ScriptItem:ViewModelBase
     {
         private ICommand mInsertCommand;
+
+        private ICommand mModifyNameCommand;
+
+        private ICommand mModifyDescCommand;
+
+        private ICommand mRemoveCommand;
+
+        private string mName;
+
+        private string mDesc;
+
+        private bool mIsNameModify = false;
+        private bool mIsDescModify = false;
+
+
         /// <summary>
         /// 
         /// </summary>
-        public string Name { get; set; }
+        public string Name { get { return mName; } set { mName = value;OnPropertyChanged("Name"); IsNameModify = false; Update(); } }
+
+
         /// <summary>
         /// 
         /// </summary>
-        public string Desc { get; set; }
+        public string Desc { get { return mDesc; } set { mDesc = value; OnPropertyChanged("Desc"); IsDescModify = false; Update(); } }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public bool IsNameModify { get { return mIsNameModify; } set { mIsNameModify = value; OnPropertyChanged("IsNameModify"); } }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public bool IsDescModify { get { return mIsDescModify; } set { mIsDescModify = value; OnPropertyChanged("IsDescModify"); } }
 
         /// <summary>
         /// 
@@ -426,22 +581,96 @@ namespace InAntStudio.ViewModel
         /// <summary>
         /// 
         /// </summary>
+        public ICommand RemoveCommand
+        {
+            get
+            {
+                if(mRemoveCommand==null)
+                {
+                    mRemoveCommand = new RelayCommand(() =>
+                    {
+                        Parent.RemoveScript(this);
+                    });
+                }
+                return mRemoveCommand;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public ICommand ModifyNameCommand
+        {
+            get
+            {
+                if (mModifyNameCommand == null)
+                {
+                    mModifyNameCommand = new RelayCommand(() => {
+                        IsNameModify = true;
+                    });
+                }
+                return mModifyNameCommand;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public ICommand ModifyDescCommand
+        {
+            get
+            {
+                if (mModifyDescCommand == null)
+                {
+                    mModifyDescCommand = new RelayCommand(() => {
+                        IsDescModify = true;
+                    });
+                }
+                return mModifyDescCommand;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="xe"></param>
         public ScriptItem LoadFromXML(XElement xe)
         {
             if (xe.Attribute("Name") != null)
             {
-                this.Name = xe.Attribute("Name").Value;
+                this.mName = xe.Attribute("Name").Value;
             }
 
             if (xe.Attribute("Desc") != null)
             {
-                this.Desc = xe.Attribute("Desc").Value;
+                this.mDesc = xe.Attribute("Desc").Value;
             }
 
             this.Body = xe.Value;
 
             return this;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public void Update()
+        {
+            Parent?.SaveScript();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public XElement SaveToXML()
+        {
+            XElement xe = new XElement("Script");
+            xe.SetAttributeValue("Name", this.Name);
+            xe.SetAttributeValue("Desc",this.Desc);
+            XCData xd = new XCData(Body);
+            xe.Add(xd);
+            return xe;
         }
     }
 

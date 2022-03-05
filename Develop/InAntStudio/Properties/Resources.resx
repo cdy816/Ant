@@ -232,6 +232,9 @@
   <data name="DisConnect" xml:space="preserve">
     <value>DisConnect</value>
   </data>
+  <data name="DoubleClickToInsert" xml:space="preserve">
+    <value>Double click or Drag&amp;Drop to insert script</value>
+  </data>
   <data name="Driver" xml:space="preserve">
     <value>Driver</value>
   </data>
@@ -380,6 +383,12 @@
   <data name="Modify" xml:space="preserve">
     <value>Modify</value>
   </data>
+  <data name="ModifyDesc" xml:space="preserve">
+    <value>ModifyDesc</value>
+  </data>
+  <data name="ModifyName" xml:space="preserve">
+    <value>ModifyName</value>
+  </data>
   <data name="Month" xml:space="preserve">
     <value>Month</value>
   </data>
@@ -394,6 +403,9 @@
   </data>
   <data name="NewDatabaseFailed" xml:space="preserve">
     <value>New database failed!</value>
+  </data>
+  <data name="NewScript" xml:space="preserve">
+    <value>New script</value>
   </data>
   <data name="NoneCompress" xml:space="preserve">
     <value>None</value>

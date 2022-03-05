@@ -147,7 +147,7 @@
       </Function>
     </Command>
 
-    <Command Name="Resorce" Desc="恢复报警">
+    <Command Name="Restore" Desc="恢复报警">
       <Function Body="Message.Resorce"  ReturnType="object">
         <Parameter Name="value" Type="string"  Desc="恢复值" Value="" />
       </Function>
