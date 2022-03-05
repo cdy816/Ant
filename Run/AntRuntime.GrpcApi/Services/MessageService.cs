@@ -244,7 +244,7 @@ namespace AntRuntime.GrpcApi.Services
         /// <param name="request"></param>
         /// <param name="context"></param>
         /// <returns></returns>
-        public override Task<GetMessageResponse> GetInfoAlarmMessage(GetMessageRecentRequest request, ServerCallContext context)
+        public override Task<GetMessageResponse> GetRecentInfoMessage(GetMessageRecentRequest request, ServerCallContext context)
         {
             var service = ServiceLocator.Locator.Resolve<IRuntimeSecurity>();
             if (service.CheckLogin(request.Token))

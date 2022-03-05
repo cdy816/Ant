@@ -184,8 +184,38 @@ namespace Cdy.Ant
         /// </summary>
         public override MessgeType Type => MessgeType.InfoMessage;
     }
+    /// <summary>
+    /// 0:提示信息,1:预警,2:一般,3:重要,4:紧急,5:非常紧急
+    /// </summary>
+    public enum AlarmLevel
+    {
+        /// <summary>
+        /// 提示信息
+        /// </summary>
+        Info = 0,
+        /// <summary>
+        /// 预警
+        /// </summary>
+        EarlyWarning = 1,
+        /// <summary>
+        /// 一般
+        /// </summary>
+        Normal = 2,
+        /// <summary>
+        /// 重要
+        /// </summary>
+        Critical = 3,
+        /// <summary>
+        /// 紧急
+        /// </summary>
+        Urgency = 4,
 
+        /// <summary>
+        /// 非常紧急
+        /// </summary>
+        VeryUrgency = 5,
 
+    }
     /// <summary>
     /// 报警消息
     /// </summary>

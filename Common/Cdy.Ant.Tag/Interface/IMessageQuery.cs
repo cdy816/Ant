@@ -49,6 +49,32 @@ namespace Cdy.Ant.Tag
         /// 值
         /// </summary>
         public string Value { get; set; }
+
+        private string GetOpeString(FilterOperate ope)
+        {
+            switch (ope)
+            {
+                case FilterOperate.Equals:
+                    return "==";
+                case FilterOperate.Contains:
+                    return "..";
+                case FilterOperate.Great:
+                    return ">";
+                case FilterOperate.Low:
+                    return "<";
+                default:
+                    return "";
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return PropertyName + GetOpeString(Opetate) + Value;
+        }
     }
 
     /// <summary>
