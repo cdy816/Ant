@@ -1,0 +1,29 @@
+﻿<Window x:Class="AntRuntime.GrpcClient.Demo.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AntRuntime.GrpcClient.Demo"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="64"/>
+            <RowDefinition Height="401*"/>
+        </Grid.RowDefinitions>
+        <Label Content="服务器:" HorizontalAlignment="Left" Margin="12,5,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="ipa" HorizontalAlignment="Left" Margin="71,9,0,0" TextWrapping="Wrap" Text="127.0.0.1" VerticalAlignment="Top" Width="139"/>
+        <Label Content="端口:" HorizontalAlignment="Left" Margin="224,5,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="port" HorizontalAlignment="Left" Margin="274,9,0,0" TextWrapping="Wrap" Text="15331" VerticalAlignment="Top" Width="92"/>
+        <Button x:Name="conn" Content="连接" HorizontalAlignment="Left" Margin="716,10,0,0" VerticalAlignment="Top" Width="52" Click="conn_Click"/>
+        <TextBox x:Name="msgShow" Margin="9,10,10,10" Grid.Row="1" TextWrapping="Wrap" Text=""/>
+        <RadioButton x:Name="allmsg" GroupName="gg" IsChecked="True" Content="所有消息" HorizontalAlignment="Left" Margin="19,40,0,0" VerticalAlignment="Top" Checked="allmsg_Checked"/>
+        <RadioButton x:Name="alarmmsg" GroupName="gg" Content="报警" HorizontalAlignment="Left" Margin="107,40,0,0" VerticalAlignment="Top" Checked="alarmmsg_Checked"/>
+        <RadioButton x:Name="infomsg" GroupName="gg" Content="日志信息" HorizontalAlignment="Left" Margin="177,40,0,0" VerticalAlignment="Top" Checked="infomsg_Checked"/>
+        <Label Content="用户名:" HorizontalAlignment="Left" Margin="390,7,0,0" VerticalAlignment="Top"/>
+        <Label Content="密码:" HorizontalAlignment="Left" Margin="550,8,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="user" HorizontalAlignment="Left" Margin="443,11,0,0" TextWrapping="Wrap" Text="Admin" VerticalAlignment="Top" Width="97"/>
+        <TextBox x:Name="pass" HorizontalAlignment="Left" Margin="592,11,0,0" TextWrapping="Wrap" Text="Admin" VerticalAlignment="Top" Width="97"/>
+
+    </Grid>
+</Window>

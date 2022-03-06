@@ -132,7 +132,7 @@ namespace AntRuntime
         /// 
         /// </summary>
         /// <param name="msg"></param>
-        public void RaiseMessage(Cdy.Ant.Message msg)
+        public void RaiseMessage(Cdy.Ant.Tag.Message msg)
         {
             lock (mMemoryBuffer)
             {
@@ -202,7 +202,7 @@ namespace AntRuntime
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public Cdy.Ant.Message Query(long id)
+        public Cdy.Ant.Tag.Message Query(long id)
         {
             var vtime = RestoreTimeFromId(id);
             if(vtime>mMemoryBuffer.OldestMessageTime)
@@ -221,7 +221,7 @@ namespace AntRuntime
         /// <param name="stime"></param>
         /// <param name="etime"></param>
         /// <returns></returns>
-        public IEnumerable<Cdy.Ant.Message> Query(DateTime stime, DateTime etime)
+        public IEnumerable<Cdy.Ant.Tag.Message> Query(DateTime stime, DateTime etime)
         {
             if(etime<mMemoryBuffer.OldestMessageTime)
             {
@@ -233,7 +233,7 @@ namespace AntRuntime
             }
             else
             {
-                List<Cdy.Ant.Message> re = new List<Cdy.Ant.Message>();
+                List<Cdy.Ant.Tag.Message> re = new List<Cdy.Ant.Tag.Message>();
                 re.AddRange(HisMessageService.Service.Query(stime, mMemoryBuffer.OldestMessageTime));
                 re.AddRange(mMemoryBuffer.Query(mMemoryBuffer.OldestMessageTime, etime));
                 return re;
@@ -246,7 +246,7 @@ namespace AntRuntime
         /// <param name="stime"></param>
         /// <param name="etime"></param>
         /// <returns></returns>
-        public IEnumerable<Cdy.Ant.Message> QueryAll(DateTime stime, DateTime etime)
+        public IEnumerable<Cdy.Ant.Tag.Message> QueryAll(DateTime stime, DateTime etime)
         {
             if (etime < mMemoryBuffer.OldestMessageTime)
             {
@@ -258,7 +258,7 @@ namespace AntRuntime
             }
             else
             {
-                List<Cdy.Ant.Message> re = new List<Cdy.Ant.Message>();
+                List<Cdy.Ant.Tag.Message> re = new List<Cdy.Ant.Tag.Message>();
                 re.AddRange(HisMessageService.Service.QueryAll(stime, mMemoryBuffer.OldestMessageTime));
                 re.AddRange(mMemoryBuffer.QueryAll(mMemoryBuffer.OldestMessageTime, etime));
                 return re;
@@ -272,7 +272,7 @@ namespace AntRuntime
         /// <param name="etime"></param>
         /// <param name="Filters"></param>
         /// <returns></returns>
-        public IEnumerable<Cdy.Ant.Message> Query(DateTime stime, DateTime etime, IEnumerable<QueryFilter> Filters)
+        public IEnumerable<Cdy.Ant.Tag.Message> Query(DateTime stime, DateTime etime, IEnumerable<QueryFilter> Filters)
         {
             if (etime < mMemoryBuffer.OldestMessageTime)
             {
@@ -284,7 +284,7 @@ namespace AntRuntime
             }
             else
             {
-                List<Cdy.Ant.Message> re = new List<Cdy.Ant.Message>();
+                List<Cdy.Ant.Tag.Message> re = new List<Cdy.Ant.Tag.Message>();
                 re.AddRange(HisMessageService.Service.Query(stime, mMemoryBuffer.OldestMessageTime, Filters));
                 re.AddRange(mMemoryBuffer.Query(mMemoryBuffer.OldestMessageTime, etime, Filters));
                 return re;

@@ -234,9 +234,9 @@ namespace AntRuntime.Message
         /// 
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<Cdy.Ant.Message> GetMessages(DateTime starttime,DateTime endtime)
+        public IEnumerable<Cdy.Ant.Tag.Message> GetMessages(DateTime starttime,DateTime endtime)
         {
-            SortedDictionary<long, Cdy.Ant.Message> ltmp = new SortedDictionary<long, Cdy.Ant.Message>();
+            SortedDictionary<long, Cdy.Ant.Tag.Message> ltmp = new SortedDictionary<long, Cdy.Ant.Tag.Message>();
 
             if (AlarmArea != null && AlarmArea.AlarmMessage != null)
             {
@@ -263,9 +263,9 @@ namespace AntRuntime.Message
         /// 
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<Cdy.Ant.Message> GetMessages()
+        public IEnumerable<Cdy.Ant.Tag.Message> GetMessages()
         {
-            SortedDictionary<long, Cdy.Ant.Message> ltmp = new SortedDictionary<long, Cdy.Ant.Message>();
+            SortedDictionary<long, Cdy.Ant.Tag.Message> ltmp = new SortedDictionary<long, Cdy.Ant.Tag.Message>();
 
             if (AlarmArea != null && AlarmArea.AlarmMessage != null)
             {
@@ -385,7 +385,7 @@ namespace AntRuntime.Message
     public class AlarmMessageAreaBuffer:IDisposable
     {
 
-        private Dictionary<long, Cdy.Ant.AlarmMessage> mAlarmMessages = new Dictionary<long, Cdy.Ant.AlarmMessage>();
+        private Dictionary<long, Cdy.Ant.Tag.AlarmMessage> mAlarmMessages = new Dictionary<long, Cdy.Ant.Tag.AlarmMessage>();
 
         private IntPtr mDataPointer;
 
@@ -437,7 +437,7 @@ namespace AntRuntime.Message
         /// <summary>
         /// 
         /// </summary>
-        public Dictionary<long,Cdy.Ant.AlarmMessage> AlarmMessage
+        public Dictionary<long, Cdy.Ant.Tag.AlarmMessage> AlarmMessage
         {
             get
             {
@@ -485,8 +485,8 @@ namespace AntRuntime.Message
             offset += 4;
 
             //List<long> lids = new List<long>(mcount);
-            mAlarmMessages = new Dictionary<long, Cdy.Ant.AlarmMessage>();
-            var mtmp = new List<Cdy.Ant.AlarmMessage>(mcount);
+            mAlarmMessages = new Dictionary<long, Cdy.Ant.Tag.AlarmMessage>();
+            var mtmp = new List<Cdy.Ant.Tag.AlarmMessage>(mcount);
             //for (int i = 0; i < mcount; i++)
             //{
             //    lids.Add(MemoryHelper.ReadInt64(pointer, offset));
@@ -516,7 +516,7 @@ namespace AntRuntime.Message
                     if (!string.IsNullOrEmpty(msgbd))
                     {
                         var almmsg = msgbd.Split(new char[] { ',' });
-                        Cdy.Ant.AlarmMessage am = new Cdy.Ant.AlarmMessage();
+                        Cdy.Ant.Tag.AlarmMessage am = new Cdy.Ant.Tag.AlarmMessage();
                         //[Id+Server(64)+sourcetag(64)+createtime(8)+MessageBody(128)+AppendContent1(64)+AppendContent2(64)+AppendContent3(64)+AlarmLevel(1)+AlarmValue(64)+AlarmCondition(64)+LinkTag(64)]
                         am.Id = long.Parse(almmsg[0]); ;
                         am.Server = almmsg[1];
@@ -795,7 +795,7 @@ namespace AntRuntime.Message
     public class CommonMessageAreaBuffer:IDisposable
     {
 
-        private Dictionary<long, Cdy.Ant.Message> mAlarmMessages = new Dictionary<long, Cdy.Ant.Message>();
+        private Dictionary<long, Cdy.Ant.Tag.Message> mAlarmMessages = new Dictionary<long, Cdy.Ant.Tag.Message>();
         /// <summary>
         /// 
         /// </summary>
@@ -830,7 +830,7 @@ namespace AntRuntime.Message
         /// <summary>
         /// 
         /// </summary>
-        public Dictionary<long, Cdy.Ant.Message> Message
+        public Dictionary<long, Cdy.Ant.Tag.Message> Message
         {
             get
             {
@@ -883,14 +883,14 @@ namespace AntRuntime.Message
                 ms.Position = 0;
                 var tr = new System.IO.StreamReader(ms,Encoding.UTF8);
                 int i = 0;
-                var mtmp = new List<Cdy.Ant.InfoMessage>(mcount);
+                var mtmp = new List<Cdy.Ant.Tag.InfoMessage>(mcount);
                 while (!tr.EndOfStream)
                 {
                     string msgbd = tr.ReadLine();
                     if (!string.IsNullOrEmpty(msgbd))
                     {
                         var almmsg = msgbd.Split(new char[] { ',' });
-                        Cdy.Ant.InfoMessage am = new Cdy.Ant.InfoMessage();
+                        Cdy.Ant.Tag.InfoMessage am = new Cdy.Ant.Tag.InfoMessage();
                         //messageid(8)+source(64)+sourcetag(64)+createtime(8)+MessageBody(128)+AppendContent1(64)+AppendContent2(64)+AppendContent3(64)
                         am.Id = long.Parse(almmsg[0]);
                         am.Server = almmsg[1];

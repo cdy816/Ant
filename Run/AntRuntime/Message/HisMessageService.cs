@@ -191,7 +191,7 @@ namespace AntRuntime
         /// 
         /// </summary>
         /// <param name="lid"></param>
-        public Cdy.Ant.Message Query(long lid)
+        public Cdy.Ant.Tag.Message Query(long lid)
         {
             HisFileMessageBuffer hh;
             var time = RestoreTimeFromId(lid);
@@ -219,7 +219,7 @@ namespace AntRuntime
         /// <param name="etime"></param>
         /// <param name="filter"></param>
         /// <returns></returns>
-        public IEnumerable<Cdy.Ant.Message> Query(DateTime stime,DateTime etime, IEnumerable<QueryFilter> Filters)
+        public IEnumerable<Cdy.Ant.Tag.Message> Query(DateTime stime,DateTime etime, IEnumerable<QueryFilter> Filters)
         {
             var re = Query(stime, etime);
             if (Filters != null && Filters.Count() > 0)
@@ -236,7 +236,7 @@ namespace AntRuntime
         /// <param name="etime"></param>
         /// <param name="Filters"></param>
         /// <returns></returns>
-        public IEnumerable<Cdy.Ant.Message> QueryAll(DateTime stime, DateTime etime, IEnumerable<QueryFilter> Filters)
+        public IEnumerable<Cdy.Ant.Tag.Message> QueryAll(DateTime stime, DateTime etime, IEnumerable<QueryFilter> Filters)
         {
             var re = QueryAll(stime, etime);
             if (Filters != null && Filters.Count() > 0)
@@ -251,7 +251,7 @@ namespace AntRuntime
         /// <param name="stime"></param>
         /// <param name="etime"></param>
         /// <returns></returns>
-        public IEnumerable<Cdy.Ant.Message> Query(DateTime stime, DateTime etime)
+        public IEnumerable<Cdy.Ant.Tag.Message> Query(DateTime stime, DateTime etime)
         {
             Dictionary<HisFileMessageBuffer,Tuple<DateTime,DateTime>> mReaders = new Dictionary<HisFileMessageBuffer, Tuple<DateTime, DateTime>>();
 
@@ -295,7 +295,7 @@ namespace AntRuntime
                 }
                 st = st.Date.AddDays(1);
             }
-            List<Cdy.Ant.Message> re = new List<Cdy.Ant.Message>();
+            List<Cdy.Ant.Tag.Message> re = new List<Cdy.Ant.Tag.Message>();
             foreach (var vv in mReaders)
             {
                 var vtmp = vv.Key.ReadFromFile(vv.Value.Item1,vv.Value.Item2);
@@ -315,7 +315,7 @@ namespace AntRuntime
         /// <param name="stime"></param>
         /// <param name="etime"></param>
         /// <returns></returns>
-        public IEnumerable<Cdy.Ant.Message> QueryAll(DateTime stime, DateTime etime)
+        public IEnumerable<Cdy.Ant.Tag.Message> QueryAll(DateTime stime, DateTime etime)
         {
             Dictionary<HisFileMessageBuffer, Tuple<DateTime, DateTime>> mReaders = new Dictionary<HisFileMessageBuffer, Tuple<DateTime, DateTime>>();
 
@@ -359,7 +359,7 @@ namespace AntRuntime
                 }
                 st = st.Date.AddDays(1);
             }
-            List<Cdy.Ant.Message> re = new List<Cdy.Ant.Message>();
+            List<Cdy.Ant.Tag.Message> re = new List<Cdy.Ant.Tag.Message>();
             foreach (var vv in mReaders)
             {
                 var vtmp = vv.Key.ReadFromFile(vv.Value.Item1, vv.Value.Item2);
@@ -451,7 +451,7 @@ namespace AntRuntime
         /// <param name="messages"></param>
         /// <param name="Filters"></param>
         /// <returns></returns>
-        public static IEnumerable<Cdy.Ant.Message> Filter(this IEnumerable<Cdy.Ant.Message> messages, IEnumerable<QueryFilter> Filters)
+        public static IEnumerable<Cdy.Ant.Tag.Message> Filter(this IEnumerable<Cdy.Ant.Tag.Message> messages, IEnumerable<QueryFilter> Filters)
         {
             if (messages == null) return null;
             if (Filters == null || Filters.Count() == 0) return messages;
@@ -680,9 +680,9 @@ namespace AntRuntime
                             }
                             break;
                         case "alarmlevel":
-                            if(e is Cdy.Ant.AlarmMessage)
+                            if(e is Cdy.Ant.Tag.AlarmMessage)
                             {
-                                var alm = e as Cdy.Ant.AlarmMessage;
+                                var alm = e as Cdy.Ant.Tag.AlarmMessage;
                                 var als = alm.AlarmLevel.ToString();
                                 switch (vv.Opetate)
                                 {
@@ -703,9 +703,9 @@ namespace AntRuntime
                             }
                             break;
                         case "alarmvalue":
-                            if (e is Cdy.Ant.AlarmMessage)
+                            if (e is Cdy.Ant.Tag.AlarmMessage)
                             {
-                                var alm = e as Cdy.Ant.AlarmMessage;
+                                var alm = e as Cdy.Ant.Tag.AlarmMessage;
                                 var als = alm.AlarmValue.ToString();
                                 switch (vv.Opetate)
                                 {
@@ -743,9 +743,9 @@ namespace AntRuntime
                             }
                             break;
                         case "alarmcondition":
-                            if (e is Cdy.Ant.AlarmMessage)
+                            if (e is Cdy.Ant.Tag.AlarmMessage)
                             {
-                                var alm = e as Cdy.Ant.AlarmMessage;
+                                var alm = e as Cdy.Ant.Tag.AlarmMessage;
                                 var als = alm.AlarmCondition.ToString();
                                 switch (vv.Opetate)
                                 {
@@ -766,9 +766,9 @@ namespace AntRuntime
                             }
                             break;
                         case "linktag":
-                            if (e is Cdy.Ant.AlarmMessage)
+                            if (e is Cdy.Ant.Tag.AlarmMessage)
                             {
-                                var alm = e as Cdy.Ant.AlarmMessage;
+                                var alm = e as Cdy.Ant.Tag.AlarmMessage;
                                 var als = alm.LinkTag.ToString();
                                 switch (vv.Opetate)
                                 {
@@ -789,9 +789,9 @@ namespace AntRuntime
                             }
                             break;
                         case "ackmessage":
-                            if (e is Cdy.Ant.AlarmMessage)
+                            if (e is Cdy.Ant.Tag.AlarmMessage)
                             {
-                                var alm = e as Cdy.Ant.AlarmMessage;
+                                var alm = e as Cdy.Ant.Tag.AlarmMessage;
                                 var als = alm.AckMessage.ToString();
                                 switch (vv.Opetate)
                                 {
@@ -812,9 +812,9 @@ namespace AntRuntime
                             }
                             break;
                         case "ackuser":
-                            if (e is Cdy.Ant.AlarmMessage)
+                            if (e is Cdy.Ant.Tag.AlarmMessage)
                             {
-                                var alm = e as Cdy.Ant.AlarmMessage;
+                                var alm = e as Cdy.Ant.Tag.AlarmMessage;
                                 var als = alm.AckUser.ToString();
                                 switch (vv.Opetate)
                                 {
@@ -835,9 +835,9 @@ namespace AntRuntime
                             }
                             break;
                         case "acktime":
-                            if (e is Cdy.Ant.AlarmMessage)
+                            if (e is Cdy.Ant.Tag.AlarmMessage)
                             {
-                                var alm = e as Cdy.Ant.AlarmMessage;
+                                var alm = e as Cdy.Ant.Tag.AlarmMessage;
                                 var als = alm.AckTime;
                                 
                                 var dt = DateTime.Parse(vv.Value);
@@ -863,9 +863,9 @@ namespace AntRuntime
                             }
                             break;
                         case "restoretime":
-                            if (e is Cdy.Ant.AlarmMessage)
+                            if (e is Cdy.Ant.Tag.AlarmMessage)
                             {
-                                var alm = e as Cdy.Ant.AlarmMessage;
+                                var alm = e as Cdy.Ant.Tag.AlarmMessage;
                                 var als = alm.RestoreTime;
                                 var dt = DateTime.Parse(vv.Value);
                                 switch (vv.Opetate)
@@ -890,9 +890,9 @@ namespace AntRuntime
                             }
                             break;
                         case "restorevalue":
-                            if (e is Cdy.Ant.AlarmMessage)
+                            if (e is Cdy.Ant.Tag.AlarmMessage)
                             {
-                                var alm = e as Cdy.Ant.AlarmMessage;
+                                var alm = e as Cdy.Ant.Tag.AlarmMessage;
                                 var als = alm.RestoreValue.ToString();
                                 switch (vv.Opetate)
                                 {

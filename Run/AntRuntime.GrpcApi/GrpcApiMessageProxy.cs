@@ -20,6 +20,9 @@ namespace AntRuntime.GrpcApi
         /// 
         /// </summary>
         public static  IMessageQuery MessageService=null;
+
+        WebApplication app;
+
         #endregion ...Variables...
 
         #region ... Events     ...
@@ -62,15 +65,35 @@ namespace AntRuntime.GrpcApi
         /// </summary>
         public void Start()
         {
-            Task.Run(() => {
+            Task.Run(() =>
+            {
                 var builder = WebApplication.CreateBuilder();
-
+               
+                if (IsWin7)
+                {
+                    builder.WebHost.UseUrls("http://0.0.0.0:" + Port);
+                }
+                else
+                {
+                    builder.WebHost.UseUrls("https://0.0.0.0:" + Port);
+                }
                 builder.Services.AddGrpc();
-                var app = builder.Build();
+                app = builder.Build();
                 app.MapGrpcService<Services.MessageService>();
                 app.MapGet("/", () => "Message Grpc Service.");
                 app.Run();
             });
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public static bool IsWin7
+        {
+            get
+            {
+                return Environment.OSVersion.Version.Major < 8 && Environment.OSVersion.Platform == PlatformID.Win32NT;
+            }
         }
 
         /// <summary>
@@ -96,7 +119,10 @@ namespace AntRuntime.GrpcApi
         /// </summary>
         public void Stop()
         {
-            //
+            if(app != null)
+            {
+                app.StopAsync();
+            }
         }
 
         #endregion ...Methods...

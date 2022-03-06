@@ -1088,6 +1088,225 @@
             <param name="tagname"></param>
             <returns></returns>
         </member>
+        <member name="T:Cdy.Ant.Tag.MessgeType">
+            <summary>
+            消息类型，0:报警,1:通知消息
+            </summary>
+        </member>
+        <member name="F:Cdy.Ant.Tag.MessgeType.Alarm">
+            <summary>
+            报警
+            </summary>
+        </member>
+        <member name="F:Cdy.Ant.Tag.MessgeType.InfoMessage">
+            <summary>
+            通知消息
+            </summary>
+        </member>
+        <member name="T:Cdy.Ant.Tag.Message">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.Tag.Message.Id">
+            <summary>
+            ID编号
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.Tag.Message.Server">
+            <summary>
+            服务器
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.Tag.Message.SourceTag">
+            <summary>
+            生产者变量
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.Tag.Message.CreateTime">
+            <summary>
+            消息产生时间
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.Tag.Message.MessageBody">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.Tag.Message.Type">
+            <summary>
+            消息类型，0:报警,1:通知消息
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.Tag.Message.DisposalMessages">
+            <summary>
+            消息处置内容
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.Tag.Message.AppendContent1">
+            <summary>
+            附加字段1
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.Tag.Message.AppendContent2">
+            <summary>
+            附加字段2
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.Tag.Message.AppendContent3">
+            <summary>
+            附加字段3
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.Tag.Message.DeleteNote">
+            <summary>
+            删除备注
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.Tag.Message.DeleteUser">
+            <summary>
+            删除人
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.Tag.Message.DeleteTime">
+            <summary>
+            删除时间
+            </summary>
+        </member>
+        <member name="M:Cdy.Ant.Tag.Message.ToString">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.Tag.Message.LoadFromString(System.String[])">
+            <summary>
+            
+            </summary>
+            <param name="val"></param>
+        </member>
+        <member name="M:Cdy.Ant.Tag.Message.LoadFromString(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="val"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Cdy.Ant.Tag.InfoMessage">
+            <summary>
+            提示消息
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.Tag.InfoMessage.Type">
+            <summary>
+            消息类型，0:报警,1:通知消息
+            </summary>
+        </member>
+        <member name="T:Cdy.Ant.Tag.AlarmMessage">
+            <summary>
+            报警消息
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.Tag.AlarmMessage.Type">
+            <summary>
+            消息类型，0:报警,1:通知消息
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.Tag.AlarmMessage.AlarmLevel">
+            <summary>
+            报警级别,0:提示信息,1:预警,2:一般,3:重要,4:紧急,5:非常紧急
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.Tag.AlarmMessage.AlarmValue">
+            <summary>
+            报警值
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.Tag.AlarmMessage.AlarmCondition">
+            <summary>
+            报警时的报警条件
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.Tag.AlarmMessage.LinkTag">
+            <summary>
+            关联变量
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.Tag.AlarmMessage.RestoreTime">
+            <summary>
+            恢复时间
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.Tag.AlarmMessage.RestoreValue">
+            <summary>
+            恢复值
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.Tag.AlarmMessage.AckTime">
+            <summary>
+            确认时间
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.Tag.AlarmMessage.AckMessage">
+            <summary>
+            确认内容,允许确认者备注内容
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.Tag.AlarmMessage.AckUser">
+            <summary>
+            确认人
+            </summary>
+        </member>
+        <member name="M:Cdy.Ant.Tag.AlarmMessage.ToString">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.Tag.AlarmMessage.LoadFromString(System.String[])">
+            <summary>
+            
+            </summary>
+            <param name="val"></param>
+        </member>
+        <member name="T:Cdy.Ant.Tag.DisposalItem">
+            <summary>
+            处置内容
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.Tag.DisposalItem.MessageId">
+            <summary>
+            消息ID
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.Tag.DisposalItem.Time">
+            <summary>
+            处置时间
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.Tag.DisposalItem.User">
+            <summary>
+            用户
+            </summary>
+        </member>
+        <member name="P:Cdy.Ant.Tag.DisposalItem.Message">
+            <summary>
+            消息内容
+            </summary>
+        </member>
+        <member name="M:Cdy.Ant.Tag.DisposalItem.ToString">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.Tag.DisposalItem.LoadFromString(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="sval"></param>
+            <returns></returns>
+        </member>
         <member name="T:Cdy.Ant.ITagManager">
             <summary>
             
@@ -1313,225 +1532,6 @@
             <param name="data"></param>
             <param name="Key_64"></param>
             <param name="Iv_64"></param>
-            <returns></returns>
-        </member>
-        <member name="T:Cdy.Ant.MessgeType">
-            <summary>
-            消息类型，0:报警,1:通知消息
-            </summary>
-        </member>
-        <member name="F:Cdy.Ant.MessgeType.Alarm">
-            <summary>
-            报警
-            </summary>
-        </member>
-        <member name="F:Cdy.Ant.MessgeType.InfoMessage">
-            <summary>
-            通知消息
-            </summary>
-        </member>
-        <member name="T:Cdy.Ant.Message">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:Cdy.Ant.Message.Id">
-            <summary>
-            ID编号
-            </summary>
-        </member>
-        <member name="P:Cdy.Ant.Message.Server">
-            <summary>
-            服务器
-            </summary>
-        </member>
-        <member name="P:Cdy.Ant.Message.SourceTag">
-            <summary>
-            生产者变量
-            </summary>
-        </member>
-        <member name="P:Cdy.Ant.Message.CreateTime">
-            <summary>
-            消息产生时间
-            </summary>
-        </member>
-        <member name="P:Cdy.Ant.Message.MessageBody">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:Cdy.Ant.Message.Type">
-            <summary>
-            消息类型，0:报警,1:通知消息
-            </summary>
-        </member>
-        <member name="P:Cdy.Ant.Message.DisposalMessages">
-            <summary>
-            消息处置内容
-            </summary>
-        </member>
-        <member name="P:Cdy.Ant.Message.AppendContent1">
-            <summary>
-            附加字段1
-            </summary>
-        </member>
-        <member name="P:Cdy.Ant.Message.AppendContent2">
-            <summary>
-            附加字段2
-            </summary>
-        </member>
-        <member name="P:Cdy.Ant.Message.AppendContent3">
-            <summary>
-            附加字段3
-            </summary>
-        </member>
-        <member name="P:Cdy.Ant.Message.DeleteNote">
-            <summary>
-            删除备注
-            </summary>
-        </member>
-        <member name="P:Cdy.Ant.Message.DeleteUser">
-            <summary>
-            删除人
-            </summary>
-        </member>
-        <member name="P:Cdy.Ant.Message.DeleteTime">
-            <summary>
-            删除时间
-            </summary>
-        </member>
-        <member name="M:Cdy.Ant.Message.ToString">
-            <summary>
-            
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Cdy.Ant.Message.LoadFromString(System.String[])">
-            <summary>
-            
-            </summary>
-            <param name="val"></param>
-        </member>
-        <member name="M:Cdy.Ant.Message.LoadFromString(System.String)">
-            <summary>
-            
-            </summary>
-            <param name="val"></param>
-            <returns></returns>
-        </member>
-        <member name="T:Cdy.Ant.InfoMessage">
-            <summary>
-            提示消息
-            </summary>
-        </member>
-        <member name="P:Cdy.Ant.InfoMessage.Type">
-            <summary>
-            消息类型，0:报警,1:通知消息
-            </summary>
-        </member>
-        <member name="T:Cdy.Ant.AlarmMessage">
-            <summary>
-            报警消息
-            </summary>
-        </member>
-        <member name="P:Cdy.Ant.AlarmMessage.Type">
-            <summary>
-            消息类型，0:报警,1:通知消息
-            </summary>
-        </member>
-        <member name="P:Cdy.Ant.AlarmMessage.AlarmLevel">
-            <summary>
-            报警级别,0:提示信息,1:预警,2:一般,3:重要,4:紧急,5:非常紧急
-            </summary>
-        </member>
-        <member name="P:Cdy.Ant.AlarmMessage.AlarmValue">
-            <summary>
-            报警值
-            </summary>
-        </member>
-        <member name="P:Cdy.Ant.AlarmMessage.AlarmCondition">
-            <summary>
-            报警时的报警条件
-            </summary>
-        </member>
-        <member name="P:Cdy.Ant.AlarmMessage.LinkTag">
-            <summary>
-            关联变量
-            </summary>
-        </member>
-        <member name="P:Cdy.Ant.AlarmMessage.RestoreTime">
-            <summary>
-            恢复时间
-            </summary>
-        </member>
-        <member name="P:Cdy.Ant.AlarmMessage.RestoreValue">
-            <summary>
-            恢复值
-            </summary>
-        </member>
-        <member name="P:Cdy.Ant.AlarmMessage.AckTime">
-            <summary>
-            确认时间
-            </summary>
-        </member>
-        <member name="P:Cdy.Ant.AlarmMessage.AckMessage">
-            <summary>
-            确认内容,允许确认者备注内容
-            </summary>
-        </member>
-        <member name="P:Cdy.Ant.AlarmMessage.AckUser">
-            <summary>
-            确认人
-            </summary>
-        </member>
-        <member name="M:Cdy.Ant.AlarmMessage.ToString">
-            <summary>
-            
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Cdy.Ant.AlarmMessage.LoadFromString(System.String[])">
-            <summary>
-            
-            </summary>
-            <param name="val"></param>
-        </member>
-        <member name="T:Cdy.Ant.DisposalItem">
-            <summary>
-            处置内容
-            </summary>
-        </member>
-        <member name="P:Cdy.Ant.DisposalItem.MessageId">
-            <summary>
-            消息ID
-            </summary>
-        </member>
-        <member name="P:Cdy.Ant.DisposalItem.Time">
-            <summary>
-            处置时间
-            </summary>
-        </member>
-        <member name="P:Cdy.Ant.DisposalItem.User">
-            <summary>
-            用户
-            </summary>
-        </member>
-        <member name="P:Cdy.Ant.DisposalItem.Message">
-            <summary>
-            消息内容
-            </summary>
-        </member>
-        <member name="M:Cdy.Ant.DisposalItem.ToString">
-            <summary>
-            
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Cdy.Ant.DisposalItem.LoadFromString(System.String)">
-            <summary>
-            
-            </summary>
-            <param name="sval"></param>
             <returns></returns>
         </member>
         <member name="T:Cdy.Ant.PathHelper">

@@ -117,7 +117,7 @@ namespace AntRuntime.GrpcApi.Services
 
                 foreach (var vv in GrpcApiMessageProxy.MessageService.Query(DateTime.FromBinary(request.StartTime), DateTime.FromBinary(request.EndTime), filters.GetFiltersFromString()))
                 {
-                    if (vv is Cdy.Ant.AlarmMessage)
+                    if (vv is Cdy.Ant.Tag.AlarmMessage)
                     {
                         re.Add(vv.ToString());
                     }
@@ -154,7 +154,7 @@ namespace AntRuntime.GrpcApi.Services
 
                 foreach (var vv in GrpcApiMessageProxy.MessageService.Query(DateTime.FromBinary(request.StartTime), DateTime.FromBinary(request.EndTime), filters.GetFiltersFromString()))
                 {
-                    if (vv is Cdy.Ant.InfoMessage)
+                    if (vv is Cdy.Ant.Tag.InfoMessage)
                     {
                         re.Add(vv.ToString());
                     }
@@ -259,7 +259,7 @@ namespace AntRuntime.GrpcApi.Services
 
                 foreach (var vv in GrpcApiMessageProxy.MessageService.Query(DateTime.FromBinary(request.Time), DateTime.Now, filters.GetFiltersFromString()))
                 {
-                    if (vv is Cdy.Ant.InfoMessage)
+                    if (vv is Cdy.Ant.Tag.InfoMessage)
                     {
                         re.Add(vv.ToString());
                     }
@@ -296,7 +296,7 @@ namespace AntRuntime.GrpcApi.Services
 
                 foreach (var vv in GrpcApiMessageProxy.MessageService.Query(DateTime.FromBinary(request.Time), DateTime.Now, filters.GetFiltersFromString()))
                 {
-                    if (vv is Cdy.Ant.AlarmMessage)
+                    if (vv is Cdy.Ant.Tag.AlarmMessage)
                     {
                         re.Add(vv.ToString());
                     }

@@ -134,7 +134,7 @@ namespace AntRuntime.Enginer
                 {
                     sop = sop.AddReferences(ScriptExtend.extend.ExtendDlls.Select(e => Microsoft.CodeAnalysis.MetadataReference.CreateFromFile(e)));
                 }
-                sop = sop.AddReferences(typeof(System.Collections.Generic.ReferenceEqualityComparer).Assembly).AddReferences(typeof(ScriptExtend).Assembly).AddReferences(typeof(ScriptAlarmTagRun).Assembly).WithImports("AntRuntime.Enginer", "Cdy.Ant.Tag", "Cdy.Ant", "System", "System.Collections.Generic", "System.Linq", "System.Text");
+                sop = sop.AddReferences(typeof(System.Collections.Generic.ReferenceEqualityComparer).Assembly).AddReferences(typeof(ScriptExtend).Assembly).AddReferences(typeof(ScriptAlarmTagRun).Assembly).WithImports("AntRuntime.Enginer", "Cdy.Ant", "System", "System.Collections.Generic", "System.Linq", "System.Text");
             }
             catch (Exception ex)
             {
@@ -453,7 +453,7 @@ namespace AntRuntime.Enginer
         public void Alarm(string source, Cdy.Ant.AlarmLevel level, string messageBody, string value, string alarmCondition)
         {
             DateTime dt = DateTime.Now;
-            Cdy.Ant.AlarmMessage msg = new Cdy.Ant.AlarmMessage();
+            Cdy.Ant.Tag.AlarmMessage msg = new Cdy.Ant.Tag.AlarmMessage();
             msg.CreateTime = dt;
             msg.Server = source;
             msg.SourceTag = TagName;
@@ -491,7 +491,7 @@ namespace AntRuntime.Enginer
         public void Alarm(string source, Cdy.Ant.AlarmLevel level, string messageBody, string value, string alarmCondition,string linktag)
         {
             DateTime dt = DateTime.Now;
-            Cdy.Ant.AlarmMessage msg = new Cdy.Ant.AlarmMessage();
+            Cdy.Ant.Tag.AlarmMessage msg = new Cdy.Ant.Tag.AlarmMessage();
             msg.CreateTime = dt;
             msg.Server = source;
             msg.SourceTag = TagName;
@@ -516,7 +516,7 @@ namespace AntRuntime.Enginer
         public void Info(string message)
         {
             DateTime dt = DateTime.Now;
-            Cdy.Ant.InfoMessage msg = new InfoMessage();
+            Cdy.Ant.Tag.InfoMessage msg = new InfoMessage();
             msg.CreateTime = dt;
             msg.Server = this.Source;
             msg.SourceTag = TagName;
@@ -907,7 +907,7 @@ namespace AntRuntime.Enginer
         /// <param name="startTime">开始时间</param>
         /// <param name="endTime">结束时间</param>
         /// <returns></returns>
-        public  IEnumerable<Cdy.Ant.Message> QueryMessage(DateTime startTime, DateTime endTime)
+        public  IEnumerable<Cdy.Ant.Tag.Message> QueryMessage(DateTime startTime, DateTime endTime)
         {
             return MessageService.Service.Query(startTime,endTime);
         }
@@ -919,7 +919,7 @@ namespace AntRuntime.Enginer
         /// <param name="endTime">结束时间</param>
         /// <param name="filters">过滤条件</param>
         /// <returns></returns>
-        public  IEnumerable<Cdy.Ant.Message> QueryMessage(DateTime startTime, DateTime endTime,params string[] filters)
+        public  IEnumerable<Cdy.Ant.Tag.Message> QueryMessage(DateTime startTime, DateTime endTime,params string[] filters)
         {
             return MessageService.Service.Query(startTime, endTime,filters.GetFiltersFromString());
         }
@@ -930,9 +930,9 @@ namespace AntRuntime.Enginer
         /// <param name="startTime">开始时间</param>
         /// <param name="endTime">结束时间</param>
         /// <returns></returns>
-        public  IEnumerable<Cdy.Ant.AlarmMessage> QueryAlarmMessage(DateTime startTime, DateTime endTime)
+        public  IEnumerable<Cdy.Ant.Tag.AlarmMessage> QueryAlarmMessage(DateTime startTime, DateTime endTime)
         {
-            return MessageService.Service.Query(startTime, endTime).Where(e=>e is Cdy.Ant.AlarmMessage).Select(e=>e as Cdy.Ant.AlarmMessage);
+            return MessageService.Service.Query(startTime, endTime).Where(e=>e is Cdy.Ant.Tag.AlarmMessage).Select(e=>e as Cdy.Ant.Tag.AlarmMessage);
         }
 
         /// <summary>
@@ -942,9 +942,9 @@ namespace AntRuntime.Enginer
         /// <param name="endTime">结束时间</param>
         /// <param name="filters">过滤条件</param>
         /// <returns></returns>
-        public  IEnumerable<Cdy.Ant.AlarmMessage> QueryAlarmMessage(DateTime startTime, DateTime endTime, params string[] filters)
+        public  IEnumerable<Cdy.Ant.Tag.AlarmMessage> QueryAlarmMessage(DateTime startTime, DateTime endTime, params string[] filters)
         {
-            return MessageService.Service.Query(startTime, endTime,filters.GetFiltersFromString()).Where(e => e is Cdy.Ant.AlarmMessage).Select(e => e as Cdy.Ant.AlarmMessage);
+            return MessageService.Service.Query(startTime, endTime,filters.GetFiltersFromString()).Where(e => e is Cdy.Ant.Tag.AlarmMessage).Select(e => e as Cdy.Ant.Tag.AlarmMessage);
         }
 
 

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Cdy.Ant
+namespace Cdy.Ant.Tag
 {
     /// <summary>
     /// 消息类型，0:报警,1:通知消息

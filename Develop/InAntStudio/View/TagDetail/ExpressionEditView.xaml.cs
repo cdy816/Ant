@@ -80,7 +80,7 @@ namespace InAntStudio
                 MetadataReference.CreateFromFile(typeof(object).Assembly.Location),
                 MetadataReference.CreateFromFile(typeof(System.Text.RegularExpressions.Regex).Assembly.Location),
                 MetadataReference.CreateFromFile(typeof(System.Linq.Enumerable).Assembly.Location),
-            }),new string[] { "Cdy.Ant.Tag","Cdy.Ant" }, ass.Select(e=>e.Location).ToArray());
+            }),new string[] { "Cdy.Ant.Tag.Inner", "Cdy.Ant" }, ass.Select(e=>e.Location).ToArray());
 
 
             var colors = new ClassificationHighlightColors();

@@ -246,7 +246,7 @@ namespace AntRuntime
         /// 
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<Cdy.Ant.Message> ReadFromFile()
+        public IEnumerable<Cdy.Ant.Tag.Message> ReadFromFile()
         {
             return ReadFromFile(Starttime, Endtime);
         }
@@ -286,7 +286,7 @@ namespace AntRuntime
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public Cdy.Ant.Message Query(long id,int hour)
+        public Cdy.Ant.Tag.Message Query(long id,int hour)
         {
             if(mBuffers.ContainsKey(hour))
             {
@@ -368,13 +368,13 @@ namespace AntRuntime
         /// 
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<Cdy.Ant.Message> ReadFromFile(DateTime startTime, DateTime endTime)
+        public IEnumerable<Cdy.Ant.Tag.Message> ReadFromFile(DateTime startTime, DateTime endTime)
         {
             string sfile = GetDataFile();
             string sdir = System.IO.Path.GetDirectoryName(sfile);
             if (!System.IO.Directory.Exists(sdir)) System.IO.Directory.CreateDirectory(sdir);
 
-            List<Cdy.Ant.Message> ll = new List<Cdy.Ant.Message>();
+            List<Cdy.Ant.Tag.Message> ll = new List<Cdy.Ant.Tag.Message>();
             if (System.IO.File.Exists(sfile))
             {
                 using (var vv = System.IO.File.Open(sfile, System.IO.FileMode.Open, System.IO.FileAccess.Read, System.IO.FileShare.ReadWrite))

@@ -139,7 +139,7 @@ namespace AntRuntime.Enginer
         public void Alarm(string source,Cdy.Ant.AlarmLevel level,string messageBody,string value,string alarmCondition)
         {
             DateTime dt = DateTime.Now;
-            Cdy.Ant.AlarmMessage msg = new Cdy.Ant.AlarmMessage();
+            Cdy.Ant.Tag.AlarmMessage msg = new Cdy.Ant.Tag.AlarmMessage();
             msg.CreateTime = dt;
             msg.Server = source;
             msg.SourceTag = TagName;

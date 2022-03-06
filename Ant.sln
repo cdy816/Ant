@@ -33,7 +33,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cdy.Ant.CRUD", "Common\Cdy.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AntRuntime.GrpcApi", "Run\AntRuntime.GrpcApi\AntRuntime.GrpcApi.csproj", "{CA50731A-A3E0-4C40-B35A-EE5188AED609}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AntRuntime.GrpcApi.Client", "Run\AntRuntime.GrpcApi.Client\AntRuntime.GrpcApi.Client.csproj", "{BF86A6D9-2E81-41BB-A363-34F49B2D4FEB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AntRuntime.GrpcApi.Client", "Run\AntRuntime.GrpcApi.Client\AntRuntime.GrpcApi.Client.csproj", "{BF86A6D9-2E81-41BB-A363-34F49B2D4FEB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Demo", "Demo", "{59DFEBFA-53D5-4CAD-932C-E9F51A7DBCA8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AntRuntime.GrpcClient.Demo", "Demo\AntRuntime.GrpcClient.Demo\AntRuntime.GrpcClient.Demo.csproj", "{C1F611EF-61FC-4426-837F-6FFBB598E7F5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -93,6 +97,10 @@ Global
 		{BF86A6D9-2E81-41BB-A363-34F49B2D4FEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BF86A6D9-2E81-41BB-A363-34F49B2D4FEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BF86A6D9-2E81-41BB-A363-34F49B2D4FEB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C1F611EF-61FC-4426-837F-6FFBB598E7F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1F611EF-61FC-4426-837F-6FFBB598E7F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1F611EF-61FC-4426-837F-6FFBB598E7F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1F611EF-61FC-4426-837F-6FFBB598E7F5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -111,6 +119,7 @@ Global
 		{D2F27AE4-A4AF-4ECB-A2ED-65AC1249B71C} = {40A33EC7-14EA-48CF-A06B-C1C3941D176A}
 		{CA50731A-A3E0-4C40-B35A-EE5188AED609} = {2DAF4C7E-14B0-4A5C-87E9-F2BE612EDEC5}
 		{BF86A6D9-2E81-41BB-A363-34F49B2D4FEB} = {2DAF4C7E-14B0-4A5C-87E9-F2BE612EDEC5}
+		{C1F611EF-61FC-4426-837F-6FFBB598E7F5} = {59DFEBFA-53D5-4CAD-932C-E9F51A7DBCA8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D298DE71-994E-4E0F-94CD-1FD0C85FE2DD}

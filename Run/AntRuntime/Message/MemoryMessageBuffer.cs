@@ -14,7 +14,7 @@ namespace AntRuntime
     /// <summary>
     /// 
     /// </summary>
-    public class MemoryMessageHourBuffer:Dictionary<long,Cdy.Ant.Message>
+    public class MemoryMessageHourBuffer:Dictionary<long, Cdy.Ant.Tag.Message>
     {
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace AntRuntime
         /// 
         /// </summary>
         /// <param name="msg"></param>
-        public void AddMessage(Cdy.Ant.Message msg)
+        public void AddMessage(Cdy.Ant.Tag.Message msg)
         {
             this.Add(msg.Id, msg);
             IsDirty = true;
@@ -68,7 +68,7 @@ namespace AntRuntime
         /// <param name="stime"></param>
         /// <param name="etime"></param>
         /// <returns></returns>
-        public IEnumerable<Cdy.Ant.Message> Query(DateTime stime, DateTime etime)
+        public IEnumerable<Cdy.Ant.Tag.Message> Query(DateTime stime, DateTime etime)
         {
             long sid = GetId(stime);
             long eid = GetId(etime);
@@ -82,7 +82,7 @@ namespace AntRuntime
         /// <param name="etime"></param>
         /// <param name="Filters"></param>
         /// <returns></returns>
-        public IEnumerable<Cdy.Ant.Message> Query(DateTime stime, DateTime etime, IEnumerable<QueryFilter> Filters)
+        public IEnumerable<Cdy.Ant.Tag.Message> Query(DateTime stime, DateTime etime, IEnumerable<QueryFilter> Filters)
         {
             return Query(stime, etime).Filter(Filters);
         }
@@ -171,7 +171,7 @@ namespace AntRuntime
         /// 
         /// </summary>
         /// <param name="msg"></param>
-        public void AddMessage(Cdy.Ant.Message msg)
+        public void AddMessage(Cdy.Ant.Tag.Message msg)
         {
             
             NewestMessageTime = msg.CreateTime;
@@ -425,7 +425,7 @@ namespace AntRuntime
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public Cdy.Ant.Message Query(long id)
+        public Cdy.Ant.Tag.Message Query(long id)
         {
             if(mLastHourBuffer.ContainsKey(id))
             {
@@ -453,12 +453,12 @@ namespace AntRuntime
         /// <param name="stime"></param>
         /// <param name="etime"></param>
         /// <returns></returns>
-        public IEnumerable<Cdy.Ant.Message> Query(DateTime stime, DateTime etime)
+        public IEnumerable<Cdy.Ant.Tag.Message> Query(DateTime stime, DateTime etime)
         {
             long sid = GetId(stime);
             long eid = GetId(etime);
 
-            List<Cdy.Ant.Message> re = new List<Cdy.Ant.Message>();
+            List<Cdy.Ant.Tag.Message> re = new List<Cdy.Ant.Tag.Message>();
 
             lock (mBufferItems)
             {
@@ -478,12 +478,12 @@ namespace AntRuntime
         /// <param name="stime"></param>
         /// <param name="etime"></param>
         /// <returns></returns>
-        public IEnumerable<Cdy.Ant.Message> QueryAll(DateTime stime, DateTime etime)
+        public IEnumerable<Cdy.Ant.Tag.Message> QueryAll(DateTime stime, DateTime etime)
         {
             long sid = GetId(stime);
             long eid = GetId(etime);
 
-            List<Cdy.Ant.Message> re = new List<Cdy.Ant.Message>();
+            List<Cdy.Ant.Tag.Message> re = new List<Cdy.Ant.Tag.Message>();
 
             lock (mBufferItems)
             {
@@ -503,7 +503,7 @@ namespace AntRuntime
         /// <param name="etime"></param>
         /// <param name="Filters"></param>
         /// <returns></returns>
-        public IEnumerable<Cdy.Ant.Message> Query(DateTime stime, DateTime etime, IEnumerable<QueryFilter> Filters)
+        public IEnumerable<Cdy.Ant.Tag.Message> Query(DateTime stime, DateTime etime, IEnumerable<QueryFilter> Filters)
         {
             return Query(stime,etime).Filter(Filters);
         }
@@ -516,7 +516,7 @@ namespace AntRuntime
         /// <param name="etime"></param>
         /// <param name="Filters"></param>
         /// <returns></returns>
-        public IEnumerable<Cdy.Ant.Message> QueryAll(DateTime stime, DateTime etime, IEnumerable<QueryFilter> Filters)
+        public IEnumerable<Cdy.Ant.Tag.Message> QueryAll(DateTime stime, DateTime etime, IEnumerable<QueryFilter> Filters)
         {
             return QueryAll(stime, etime).Filter(Filters);
         }

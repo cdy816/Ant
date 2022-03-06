@@ -1,5 +1,4 @@
-﻿using Cdy.Ant;
-using Cdy.Ant.Tag;
+﻿using Cdy.Ant.Tag;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NSwag.Annotations;
@@ -8,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AntRutime;
+using Cdy.Ant;
 
 namespace AntRutime.WebApi.Controllers
 {
@@ -34,13 +34,13 @@ namespace AntRutime.WebApi.Controllers
                 List<object> re = new List<object>();
                 foreach (var vv in WebApiMessageProxy.MessageService.Query(request.StartTime, request.EndTime, request.Filter.GetFiltersFromString()))
                 {
-                    if (vv is Cdy.Ant.AlarmMessage)
+                    if (vv is Cdy.Ant.Tag.AlarmMessage)
                     {
-                        re.Add(vv as Cdy.Ant.AlarmMessage);
+                        re.Add(vv as Cdy.Ant.Tag.AlarmMessage);
                     }
                     else
                     {
-                        re.Add(vv as Cdy.Ant.InfoMessage);
+                        re.Add(vv as Cdy.Ant.Tag.InfoMessage);
                     }
                 }
                 return new MessageResponse() { Result = true, Message = re };
@@ -62,12 +62,12 @@ namespace AntRutime.WebApi.Controllers
             var service = ServiceLocator.Locator.Resolve<IRuntimeSecurity>();
             if (service.CheckLogin(request.Token))
             {
-                List<Cdy.Ant.AlarmMessage> re = new List<Cdy.Ant.AlarmMessage>();
+                List<Cdy.Ant.Tag.AlarmMessage> re = new List<Cdy.Ant.Tag.AlarmMessage>();
                 foreach (var vv in WebApiMessageProxy.MessageService.Query(request.StartTime, request.EndTime, request.Filter.GetFiltersFromString()))
                 {
-                    if (vv is Cdy.Ant.AlarmMessage)
+                    if (vv is Cdy.Ant.Tag.AlarmMessage)
                     {
-                        re.Add(vv as Cdy.Ant.AlarmMessage);
+                        re.Add(vv as Cdy.Ant.Tag.AlarmMessage);
                     }
                 }
                 return new AlarmMessageResponse() { Result = true, Message = re };
@@ -89,12 +89,12 @@ namespace AntRutime.WebApi.Controllers
             var service = ServiceLocator.Locator.Resolve<IRuntimeSecurity>();
             if (service.CheckLogin(request.Token))
             {
-                List<Cdy.Ant.InfoMessage> re = new List<Cdy.Ant.InfoMessage>();
+                List<Cdy.Ant.Tag.InfoMessage> re = new List<Cdy.Ant.Tag.InfoMessage>();
                 foreach (var vv in WebApiMessageProxy.MessageService.Query(request.StartTime, request.EndTime, request.Filter.GetFiltersFromString()))
                 {
-                    if (vv is Cdy.Ant.InfoMessage)
+                    if (vv is Cdy.Ant.Tag.InfoMessage)
                     {
-                        re.Add(vv as Cdy.Ant.InfoMessage);
+                        re.Add(vv as Cdy.Ant.Tag.InfoMessage);
                     }
                 }
                 return new InfoMessageResponse() { Result = true, Message = re };
@@ -120,13 +120,13 @@ namespace AntRutime.WebApi.Controllers
                 List<object> re = new List<object>();
                 foreach (var vv in WebApiMessageProxy.MessageService.Query(request.StartTime, DateTime.Now, request.Filter.GetFiltersFromString()))
                 {
-                    if (vv is Cdy.Ant.AlarmMessage)
+                    if (vv is Cdy.Ant.Tag.AlarmMessage)
                     {
-                        re.Add(vv as Cdy.Ant.AlarmMessage);
+                        re.Add(vv as Cdy.Ant.Tag.AlarmMessage);
                     }
                     else
                     {
-                        re.Add(vv as Cdy.Ant.InfoMessage);
+                        re.Add(vv as Cdy.Ant.Tag.InfoMessage);
                     }
                 }
                 return new MessageResponse() { Result = true, Message = re };
@@ -149,12 +149,12 @@ namespace AntRutime.WebApi.Controllers
             var service = ServiceLocator.Locator.Resolve<IRuntimeSecurity>();
             if (service.CheckLogin(request.Token))
             {
-                List<Cdy.Ant.AlarmMessage> re = new List<Cdy.Ant.AlarmMessage>();
+                List<Cdy.Ant.Tag.AlarmMessage> re = new List<Cdy.Ant.Tag.AlarmMessage>();
                 foreach (var vv in WebApiMessageProxy.MessageService.Query(request.StartTime, DateTime.Now, request.Filter.GetFiltersFromString()))
                 {
-                    if (vv is Cdy.Ant.AlarmMessage)
+                    if (vv is Cdy.Ant.Tag.AlarmMessage)
                     {
-                        re.Add(vv as Cdy.Ant.AlarmMessage);
+                        re.Add(vv as Cdy.Ant.Tag.AlarmMessage);
                     }
                 }
                 return new AlarmMessageResponse() { Result = true, Message = re };
@@ -177,12 +177,12 @@ namespace AntRutime.WebApi.Controllers
             var service = ServiceLocator.Locator.Resolve<IRuntimeSecurity>();
             if (service.CheckLogin(request.Token))
             {
-                List<Cdy.Ant.InfoMessage> re = new List<Cdy.Ant.InfoMessage>();
+                List<Cdy.Ant.Tag.InfoMessage> re = new List<Cdy.Ant.Tag.InfoMessage>();
                 foreach (var vv in WebApiMessageProxy.MessageService.Query(request.StartTime, DateTime.Now, request.Filter.GetFiltersFromString()))
                 {
-                    if (vv is Cdy.Ant.InfoMessage)
+                    if (vv is Cdy.Ant.Tag.InfoMessage)
                     {
-                        re.Add(vv as Cdy.Ant.InfoMessage);
+                        re.Add(vv as Cdy.Ant.Tag.InfoMessage);
                     }
                 }
                 return new InfoMessageResponse() { Result = true, Message = re };

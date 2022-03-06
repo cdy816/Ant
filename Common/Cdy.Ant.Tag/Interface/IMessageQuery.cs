@@ -166,7 +166,7 @@ namespace Cdy.Ant.Tag
         /// <param name="stime"></param>
         /// <param name="etime"></param>
         /// <returns></returns>
-        IEnumerable<Cdy.Ant.Message> Query(DateTime stime, DateTime etime);
+        IEnumerable<Cdy.Ant.Tag.Message> Query(DateTime stime, DateTime etime);
 
 
         /// <summary>
@@ -177,7 +177,7 @@ namespace Cdy.Ant.Tag
         /// <param name="Filters"></param>
         /// <returns></returns>
 
-        IEnumerable<Cdy.Ant.Message> Query(DateTime stime, DateTime etime,IEnumerable<QueryFilter> Filters);
+        IEnumerable<Cdy.Ant.Tag.Message> Query(DateTime stime, DateTime etime,IEnumerable<QueryFilter> Filters);
 
     }
 }

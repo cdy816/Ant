@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Cdy.Ant.Tag
+namespace Cdy.Ant.Tag.Inner
 {
     /// <summary>
     /// 
@@ -217,7 +217,7 @@ namespace Cdy.Ant.Tag
         /// <param name="startTime">开始时间</param>
         /// <param name="endTime">结束时间</param>
         /// <returns></returns>
-        public static IEnumerable<Cdy.Ant.Message> QueryMessage(DateTime startTime, DateTime endTime)
+        public static IEnumerable<Cdy.Ant.Tag.Message> QueryMessage(DateTime startTime, DateTime endTime)
         {
             return null;
         }
@@ -228,7 +228,7 @@ namespace Cdy.Ant.Tag
         /// <param name="startTime">开始时间</param>
         /// <param name="endTime">结束时间</param>
         /// <returns></returns>
-        public static IEnumerable<Cdy.Ant.AlarmMessage> QueryAlarmMessage(DateTime startTime, DateTime endTime)
+        public static IEnumerable<Cdy.Ant.Tag.AlarmMessage> QueryAlarmMessage(DateTime startTime, DateTime endTime)
         {
             return null;
         }
@@ -240,7 +240,7 @@ namespace Cdy.Ant.Tag
         /// <param name="endTime">结束时间</param>
         /// <param name="filters">过滤条件</param>
         /// <returns></returns>
-        public static IEnumerable<Cdy.Ant.Message> QueryMessage(DateTime startTime, DateTime endTime, params string[] filters)
+        public static IEnumerable<Cdy.Ant.Tag.Message> QueryMessage(DateTime startTime, DateTime endTime, params string[] filters)
         {
             return null;
         }
@@ -252,7 +252,7 @@ namespace Cdy.Ant.Tag
         /// <param name="endTime">结束时间</param>
         /// <param name="filters">过滤条件</param>
         /// <returns></returns>
-        public static IEnumerable<Cdy.Ant.AlarmMessage> QueryAlarmMessage(DateTime startTime, DateTime endTime, params string[] filters)
+        public static IEnumerable<Cdy.Ant.Tag.AlarmMessage> QueryAlarmMessage(DateTime startTime, DateTime endTime, params string[] filters)
         {
             return null;
         }
