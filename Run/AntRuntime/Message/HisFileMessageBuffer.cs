@@ -288,21 +288,21 @@ namespace AntRuntime
         /// <returns></returns>
         public Cdy.Ant.Tag.Message Query(long id,int hour)
         {
-            if(mBuffers.ContainsKey(hour))
+            lock (mBuffers)
             {
-                var bb = mBuffers[hour];
-                if(bb.AlarmArea.AlarmMessage.ContainsKey(id))
+                if (mBuffers.ContainsKey(hour))
                 {
-                    return bb.AlarmArea.AlarmMessage[id];
-                }
+                    var bb = mBuffers[hour];
+                    if (bb.AlarmArea.AlarmMessage.ContainsKey(id))
+                    {
+                        return bb.AlarmArea.AlarmMessage[id];
+                    }
 
-                if(bb.CommonArea.Message.ContainsKey(id))
-                {
-                    return bb.CommonArea.Message[id];
+                    if (bb.CommonArea.Message.ContainsKey(id))
+                    {
+                        return bb.CommonArea.Message[id];
+                    }
                 }
-
-                //var res = bb.CommonArea.Message.Where(e => e.Id == id);
-                //if (res.Count() > 0) return res.First();
             }
             return null;
         }
@@ -316,6 +316,7 @@ namespace AntRuntime
             var vv = ReadMessgeBlock(hour);
             if(vv!=null)
             {
+                lock(mBuffers)
                 mBuffers.Add(hour, vv);
             }
         }
@@ -338,15 +339,15 @@ namespace AntRuntime
                 using (var vv = System.IO.File.Open(sfile, System.IO.FileMode.Open, System.IO.FileAccess.Read, System.IO.FileShare.ReadWrite))
                 {
 
-                    int endhour = endTime.Day > startTime.Day ? endTime.Hour + 24 : endTime.Hour;
+                    double endhour = (endTime - startTime).TotalHours;
 
                     List<int> itmp = new List<int>();
 
-                    for (int i = startTime.Hour; i < endhour; i++)
+                    for (int i = 0; i <= endhour; i++)
                     {
-                        if (!dd.ContainsKey(i))
+                        if (!dd.ContainsKey(startTime.Hour+i))
                         {
-                            itmp.Add(i);
+                            itmp.Add(startTime.Hour + i);
                         }
                     }
 
@@ -380,16 +381,16 @@ namespace AntRuntime
                 using (var vv = System.IO.File.Open(sfile, System.IO.FileMode.Open, System.IO.FileAccess.Read, System.IO.FileShare.ReadWrite))
                 {
 
-                    //Dictionary<int, MessageBlockBuffer> dd = new Dictionary<int, MessageBlockBuffer>();
+
+                    double endhour = (endTime - startTime).TotalHours;
+
                     List<int> itmp = new List<int>();
 
-                    int endhour = endTime.Day > startTime.Day ? endTime.Hour + 24 : endTime.Hour;
-
-                    for (int i = startTime.Hour; i < endhour; i++)
+                    for (int i = 0; i <= endhour; i++)
                     {
-                        if (!mBuffers.ContainsKey(i))
+                        if (!mBuffers.ContainsKey(startTime.Hour + i))
                         {
-                            itmp.Add(i);
+                            itmp.Add(startTime.Hour + i);
                         }
                     }
 
@@ -402,10 +403,10 @@ namespace AntRuntime
                         }
                     }
 
-                    for (int i = Starttime.Hour; i < endhour; i++)
+                    for (int i = 0; i <= endhour; i++)
                     {
-                        if(mBuffers.ContainsKey(i))
-                        ll.AddRange(mBuffers[i].GetMessages(startTime, endTime));
+                        if(mBuffers.ContainsKey(Starttime.Hour+i))
+                        ll.AddRange(mBuffers[Starttime.Hour+i].GetMessages(startTime, endTime));
                     }
                 }
                 LastAccessTime = DateTime.Now;
