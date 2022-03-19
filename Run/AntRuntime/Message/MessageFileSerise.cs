@@ -908,7 +908,7 @@ namespace AntRuntime.Message
 
                 offset += dsize;
 
-                DeleteOffset = offset;
+                DeleteOffset = offset - offt;
 
                 for (i = 0; i < mcount; i++)
                 {

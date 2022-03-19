@@ -70,6 +70,10 @@ namespace Cdy.Ant
             {
                 return mDataPath;
             }
+            set
+            {
+                mDataPath = value;
+            }
         }
 
 

@@ -320,8 +320,11 @@ namespace AntRuntime
             if (mLastHourBuffer != null && mLastHourBuffer.ContainsKey(id))
             {
                 var tmp = mLastHourBuffer[id];
-                (tmp as AlarmMessage).RestoreTime = DateTime.Now;
-                (tmp as AlarmMessage).RestoreValue = value;
+                if (tmp is AlarmMessage)
+                {
+                    (tmp as AlarmMessage).RestoreTime = DateTime.Now;
+                    (tmp as AlarmMessage).RestoreValue = value;
+                }
                 mLastHourBuffer.IsDirty = true;
             }
             else
@@ -336,8 +339,11 @@ namespace AntRuntime
                         if (vbmp.ContainsKey(id))
                         {
                             var tmp = vbmp[id];
-                            (tmp as AlarmMessage).RestoreTime = DateTime.Now;
-                            (tmp as AlarmMessage).RestoreValue = value;
+                            if (tmp is AlarmMessage)
+                            {
+                                (tmp as AlarmMessage).RestoreTime = DateTime.Now;
+                                (tmp as AlarmMessage).RestoreValue = value;
+                            }
                             vbmp.IsDirty = true;
                         }
                     }
@@ -351,14 +357,17 @@ namespace AntRuntime
         /// <param name="id"></param>
         /// <param name="content"></param>
         /// <param name="user"></param>
-        public void AckMessage(long id,string content,string user)
+        public void AckMessage(long id, string content, string user)
         {
-            if (mLastHourBuffer!=null && mLastHourBuffer.ContainsKey(id))
+            if (mLastHourBuffer != null && mLastHourBuffer.ContainsKey(id))
             {
                 var tmp = mLastHourBuffer[id];
-                (tmp as AlarmMessage).AckTime = DateTime.Now;
-                (tmp as AlarmMessage).AckUser = user;
-                (tmp as AlarmMessage).AckMessage = content;
+                if (tmp is AlarmMessage)
+                {
+                    (tmp as AlarmMessage).AckTime = DateTime.Now;
+                    (tmp as AlarmMessage).AckUser = user;
+                    (tmp as AlarmMessage).AckMessage = content;
+                }
                 mLastHourBuffer.IsDirty = true;
             }
             else
@@ -373,9 +382,12 @@ namespace AntRuntime
                         if (vbmp.ContainsKey(id))
                         {
                             var tmp = vbmp[id];
-                            (tmp as AlarmMessage).AckTime = DateTime.Now;
-                            (tmp as AlarmMessage).AckUser = user;
-                            (tmp as AlarmMessage).AckMessage = content;
+                            if (tmp is AlarmMessage)
+                            {
+                                (tmp as AlarmMessage).AckTime = DateTime.Now;
+                                (tmp as AlarmMessage).AckUser = user;
+                                (tmp as AlarmMessage).AckMessage = content;
+                            }
                             vbmp.IsDirty = true;
                         }
                     }
@@ -395,9 +407,9 @@ namespace AntRuntime
             if (mLastHourBuffer != null && mLastHourBuffer.ContainsKey(id))
             {
                 var tmp = mLastHourBuffer[id];
-                (tmp as AlarmMessage).DeleteTime = DateTime.Now;
-                (tmp as AlarmMessage).DeleteUser = user;
-                (tmp as AlarmMessage).DeleteNote = content;
+                tmp.DeleteTime = DateTime.Now;
+                tmp.DeleteUser = user;
+                tmp.DeleteNote = content;
                 mLastHourBuffer.IsDirty = true;
             }
             else
@@ -412,9 +424,9 @@ namespace AntRuntime
                         if (vbmp.ContainsKey(id))
                         {
                             var tmp = vbmp[id];
-                            (tmp as AlarmMessage).DeleteTime = DateTime.Now;
-                            (tmp as AlarmMessage).DeleteUser = user;
-                            (tmp as AlarmMessage).DeleteNote = content;
+                            tmp.DeleteTime = DateTime.Now;
+                            tmp.DeleteUser = user;
+                            tmp.DeleteNote = content;
                             vbmp.IsDirty = true;
                         }
                     }
@@ -507,6 +519,53 @@ namespace AntRuntime
                 if(mbuffer != null)
                 {
                     re.AddRange(mbuffer.Where(e => e.Key >= sid && e.Key <= eid && e.Value.DeleteTime == DateTime.MinValue).Select(e => e.Value));
+                }
+
+            }
+            return re;
+        }
+
+        /// <summary>
+        /// 查询已经删除的消息
+        /// </summary>
+        /// <param name="stime"></param>
+        /// <param name="etime"></param>
+        /// <returns></returns>
+        public IEnumerable<Cdy.Ant.Tag.Message> QueryDelete(DateTime stime, DateTime etime)
+        {
+            long sid = GetId(stime);
+            long eid = GetId(etime);
+
+            List<Cdy.Ant.Tag.Message> re = new List<Cdy.Ant.Tag.Message>();
+
+            double endhour = (etime - stime).TotalHours;
+
+            List<int> hours = new List<int>();
+
+            for (int i = 0; i <= endhour; i++)
+            {
+                hours.Add(stime.Hour + i);
+            }
+
+            MemoryMessageHourBuffer mbuffer;
+
+            foreach (var vv in hours)
+            {
+                lock (mBufferItems)
+                {
+                    if (mBufferItems.ContainsKey(vv))
+                    {
+                        mbuffer = mBufferItems[vv];
+                    }
+                    else
+                    {
+                        mbuffer = null;
+                    }
+                }
+
+                if (mbuffer != null)
+                {
+                    re.AddRange(mbuffer.Where(e => e.Key >= sid && e.Key <= eid && e.Value.DeleteTime != DateTime.MinValue).Select(e => e.Value));
                 }
 
             }

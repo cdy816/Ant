@@ -28,7 +28,7 @@ namespace AntRuntime
 
         private object mLockObj = new object();
 
-        private MemoryMessageBuffer mMemoryBuffer = new MemoryMessageBuffer();
+        private MemoryMessageBuffer mMemoryBuffer = new MemoryMessageBuffer() { NewestMessageTime=DateTime.Now,OldestMessageTime=DateTime.Now};
 
         #endregion ...Variables...
 
@@ -77,6 +77,15 @@ namespace AntRuntime
         public void FlushDirtyBufferToDisk()
         {
             mMemoryBuffer.FlushDirtyBufferToDisk();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public void FlushDirtyToDiskAll()
+        {
+            FlushDirtyBufferToDisk();
+            HisMessageService.Service.SaveChangedMessageToDisk();
         }
 
         /// <summary>
@@ -236,6 +245,31 @@ namespace AntRuntime
                 List<Cdy.Ant.Tag.Message> re = new List<Cdy.Ant.Tag.Message>();
                 re.AddRange(HisMessageService.Service.Query(stime, mMemoryBuffer.OldestMessageTime));
                 re.AddRange(mMemoryBuffer.Query(mMemoryBuffer.OldestMessageTime, etime));
+                return re;
+            }
+        }
+
+        /// <summary>
+        /// 查询删除的消息
+        /// </summary>
+        /// <param name="stime"></param>
+        /// <param name="etime"></param>
+        /// <returns></returns>
+        public IEnumerable<Cdy.Ant.Tag.Message> QueryDelete(DateTime stime, DateTime etime)
+        {
+            if (etime < mMemoryBuffer.OldestMessageTime)
+            {
+                return HisMessageService.Service.QueryDelete(stime, etime);
+            }
+            else if (stime > mMemoryBuffer.OldestMessageTime)
+            {
+                return mMemoryBuffer.QueryDelete(stime, etime);
+            }
+            else
+            {
+                List<Cdy.Ant.Tag.Message> re = new List<Cdy.Ant.Tag.Message>();
+                re.AddRange(HisMessageService.Service.QueryDelete(stime, mMemoryBuffer.OldestMessageTime));
+                re.AddRange(mMemoryBuffer.QueryDelete(mMemoryBuffer.OldestMessageTime, etime));
                 return re;
             }
         }

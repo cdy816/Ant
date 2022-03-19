@@ -72,7 +72,7 @@ namespace AntRuntime
         }
 
         /// <summary>
-        /// 删除长时间不实用的缓存
+        /// 删除长时间不使用的缓存
         /// </summary>
         public void OldBufferRemoveProcess()
         {
@@ -228,6 +228,21 @@ namespace AntRuntime
                 return re;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="stime"></param>
+        /// <param name="etime"></param>
+        /// <param name="Filters"></param>
+        /// <returns></returns>
+        public IEnumerable<Cdy.Ant.Tag.Message> QueryDelete(DateTime stime, DateTime etime, IEnumerable<QueryFilter> Filters)
+        {
+            var re = QueryDelete(stime, etime);
+            if (Filters != null && Filters.Count() > 0)
+                return re.Filter(Filters);
+            else
+                return re;
+        }
 
         /// <summary>
         /// 
@@ -302,6 +317,70 @@ namespace AntRuntime
                 if (vtmp != null)
                 {
                     re.AddRange(vtmp.Where(e=>e.DeleteTime==DateTime.MinValue));
+                }
+            }
+
+            return re;
+        }
+
+
+        /// <summary>
+        /// 查询删除的消息
+        /// </summary>
+        /// <param name="stime"></param>
+        /// <param name="etime"></param>
+        /// <returns></returns>
+        public IEnumerable<Cdy.Ant.Tag.Message> QueryDelete(DateTime stime, DateTime etime)
+        {
+            Dictionary<HisFileMessageBuffer, Tuple<DateTime, DateTime>> mReaders = new Dictionary<HisFileMessageBuffer, Tuple<DateTime, DateTime>>();
+
+            DateTime st = stime;
+            while (st.Day <= etime.Day)
+            {
+                if (st.Day == etime.Day)
+                {
+                    if (mBufferedFiles.ContainsKey(st.Date))
+                    {
+                        var vv = mBufferedFiles[st.Date];
+                        mReaders.Add(vv, new Tuple<DateTime, DateTime>(st, etime));
+                    }
+                    else
+                    {
+                        lock (mLockObj)
+                        {
+                            var vv = new HisFileMessageBuffer() { Starttime = st, Endtime = etime, DatabaseName = DatabaseName, AlarmDate = st.Date, LastAccessTime = DateTime.Now };
+                            mBufferedFiles.Add(vv.AlarmDate, vv);
+                            mReaders.Add(vv, new Tuple<DateTime, DateTime>(st, etime));
+                        }
+                    }
+                    break;
+                }
+                else
+                {
+                    if (mBufferedFiles.ContainsKey(st.Date))
+                    {
+                        var vv = mBufferedFiles[st.Date];
+                        mReaders.Add(vv, new Tuple<DateTime, DateTime>(st, st.Date.AddDays(1)));
+                    }
+                    else
+                    {
+                        lock (mLockObj)
+                        {
+                            var vv = new HisFileMessageBuffer() { Starttime = st, Endtime = st.Date.AddDays(1), DatabaseName = DatabaseName, AlarmDate = st.Date, LastAccessTime = DateTime.Now };
+                            mBufferedFiles.Add(vv.AlarmDate, vv);
+                            mReaders.Add(vv, new Tuple<DateTime, DateTime>(st, st.Date.AddDays(1)));
+                        }
+                    }
+                }
+                st = st.Date.AddDays(1);
+            }
+            List<Cdy.Ant.Tag.Message> re = new List<Cdy.Ant.Tag.Message>();
+            foreach (var vv in mReaders)
+            {
+                var vtmp = vv.Key.ReadFromFile(vv.Value.Item1, vv.Value.Item2);
+                if (vtmp != null)
+                {
+                    re.AddRange(vtmp.Where(e => e.DeleteTime != DateTime.MinValue));
                 }
             }
 

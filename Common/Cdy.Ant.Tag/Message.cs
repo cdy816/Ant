@@ -127,6 +127,32 @@ namespace Cdy.Ant.Tag
         /// <summary>
         /// 
         /// </summary>
+        /// <returns></returns>
+        public virtual string ToFormateString()
+        {
+            StringBuilder re = new StringBuilder();
+
+            re.Append((int)Type).Append("^").Append(Id).Append("^").Append(Server).Append("^").Append(SourceTag).Append("^").Append(CreateTime.ToString("yyyy-MM-dd HH:mm:ss.fff")).Append("^").Append(MessageBody).Append("^");
+            re.Append(AppendContent1).Append("^").Append(AppendContent2).Append("^").Append(AppendContent3).Append("^").Append(DeleteNote).Append("^").Append(DeleteUser).Append("^").Append(DeleteTime.ToString("yyyy-MM-dd HH:mm:ss.fff"));
+            if (DisposalMessages != null)
+            {
+                re.Append("^");
+                foreach (DisposalItem item in DisposalMessages)
+                {
+                    re.Append(item.ToString()).Append("|");
+                }
+                re.Append("");
+            }
+            else
+            {
+                re.Append("^");
+            }
+            return re.ToString();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="val"></param>
         public virtual Message LoadFromString(string[] val)
         {
@@ -251,6 +277,18 @@ namespace Cdy.Ant.Tag
             StringBuilder sb = new StringBuilder();
             sb.Append((int)AlarmLevel).Append("^").Append(AlarmValue).Append("^").Append(AlarmCondition).Append("^").Append(LinkTag).Append("^").Append(RestoreTime.Ticks).Append("^").Append(RestoreValue).Append("^").Append(AckTime.Ticks).Append("^").Append(AckMessage).Append("^").Append(AckUser);
             return re + "^"+sb.ToString();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public override string ToFormateString()
+        {
+            var re = base.ToFormateString();
+            StringBuilder sb = new StringBuilder();
+            sb.Append((int)AlarmLevel).Append("^").Append(AlarmValue).Append("^").Append(AlarmCondition).Append("^").Append(LinkTag).Append("^").Append(RestoreTime.ToString("yyyy-MM-dd HH:mm:ss.fff")).Append("^").Append(RestoreValue).Append("^").Append(AckTime.ToString("yyyy-MM-dd HH:mm:ss.fff")).Append("^").Append(AckMessage).Append("^").Append(AckUser);
+            return re + "^" + sb.ToString();
         }
 
         /// <summary>
