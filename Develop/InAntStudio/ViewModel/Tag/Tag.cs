@@ -203,6 +203,152 @@ namespace Cdy.Ant.Tag.Inner
             return null;
         }
 
+        /// <summary>
+        /// 查找大于指定值得值和时间
+        /// </summary>
+        /// <param name="tagname">变量名</param>
+        /// <param name="value">值</param>
+        /// <param name="startTime">开始时间</param>
+        /// <param name="endTime">结束时间</param>
+        /// <returns></returns>
+        public static Dictionary<DateTime, object> FindNumberTagValuesGreaterThan(string tagname, object value, DateTime startTime, DateTime endTime)
+        {
+            return null;
+        }
+
+        /// <summary>
+        /// 查找小于指定值得值和时间
+        /// </summary>
+        /// <param name="tagname">变量名</param>
+        /// <param name="value">值</param>
+        /// <param name="startTime">开始时间</param>
+        /// <param name="endTime">结束时间</param>
+        /// <returns></returns>
+        public static Dictionary<DateTime, object> FindNumberTagValuesLessThan(string tagname, object value, DateTime startTime, DateTime endTime)
+        {
+            return null;
+        }
+
+        /// <summary>
+        /// 查找等于指定值得值和时间
+        /// </summary>
+        /// <param name="tagname">变量名</param>
+        /// <param name="value">值</param>
+        /// <param name="deviation">偏差</param>
+        /// <param name="startTime">开始时间</param>
+        /// <param name="endTime">结束时间</param>
+        /// <returns></returns>
+        public static Dictionary<DateTime, object> FindNumberTagValuesEquals(string tagname, object value, double deviation, DateTime startTime, DateTime endTime)
+        {
+            return null;
+        }
+
+
+
+        /// <summary>
+        /// 查找枚举所有最大值
+        /// </summary>
+        /// <param name="tagname">变量名</param>
+        /// <param name="startTime">开始时间</param>
+        /// <param name="endTime">结束时间</param>
+        /// <returns></returns>
+        public static Dictionary<DateTime, object> FindNumberTagMaxValues(string tagname, DateTime startTime, DateTime endTime)
+        {
+            return null;
+        }
+
+
+        /// <summary>
+        /// 查找所有最小值
+        /// </summary>
+        /// <param name="tagname">变量名</param>
+        /// <param name="startTime">开始时间</param>
+        /// <param name="endTime">结束时间</param>
+        /// <returns></returns>
+        public static Dictionary<DateTime, object> FindNumberTagMinValues(string tagname, DateTime startTime, DateTime endTime)
+        {
+            return null;
+        }
+
+        /// <summary>
+        /// 计算平均值
+        /// </summary>
+        /// <param name="tagname">变量名</param>
+        /// <param name="startTime">开始时间</param>
+        /// <param name="endTime">结束时间</param>
+        /// <returns></returns>
+        public static double CalNumberTagAvgValue(string tagname, DateTime startTime, DateTime endTime)
+        {
+            return 0;
+        }
+
+        /// <summary>
+        /// 计算指定值保持时间
+        /// </summary>
+        /// <param name="tagname">变量名</param>
+        /// <param name="value">值</param>
+        /// <param name="deviation">偏差</param>
+        /// <param name="startTime">开始时间</param>
+        /// <param name="endTime">结束时间</param>
+        /// <returns></returns>
+        public static double CalNumberTagValueKeepTime(string tagname, object value, double deviation, DateTime startTime, DateTime endTime)
+        {
+            return 0;
+        }
+
+        /// <summary>
+        /// 计算大于指定值保持时间
+        /// </summary>
+        /// <param name="tagname">变量名</param>
+        /// <param name="value">值</param>
+        /// <param name="startTime">开始时间</param>
+        /// <param name="endTime">结束时间</param>
+        /// <returns></returns>
+        public static double CalNumberTagGreateThanValueKeepTime(string tagname, object value, DateTime startTime, DateTime endTime)
+        {
+            return 0;
+        }
+
+        /// <summary>
+        /// 计算小于指定值保持时间
+        /// </summary>
+        /// <param name="tagname">变量名</param>
+        /// <param name="value">值</param>
+        /// <param name="startTime">开始时间</param>
+        /// <param name="endTime">结束时间</param>
+        /// <returns></returns>
+        public static double CalNumberTagLessThanValueKeepTime(string tagname, object value, DateTime startTime, DateTime endTime)
+        {
+           return 0;
+        }
+
+        /// <summary>
+        /// 查找非数值型变量，等于指定值的时刻
+        /// </summary>
+        /// <param name="tagname">变量名</param>
+        /// <param name="value">值</param>
+        /// <param name="startTime">开始时间</param>
+        /// <param name="endTime">结束时间</param>
+        /// <returns></returns>
+        public static List<DateTime> FindNoNumberTagValues(string tagname, object value, DateTime startTime, DateTime endTime)
+        {
+            return null;
+        }
+
+
+        /// <summary>
+        /// 计算非数值型变量等于指定值保持时间
+        /// </summary>
+        /// <param name="tagname">变量名</param>
+        /// <param name="value">值</param>
+        /// <param name="startTime">开始时间</param>
+        /// <param name="endTime">结束时间</param>
+        /// <returns></returns>
+        public static double CalNoNumberTagValueKeepTime(string tagname, object value, DateTime startTime, DateTime endTime)
+        {
+            return 0;
+        }
+
     }
 
     /// <summary>

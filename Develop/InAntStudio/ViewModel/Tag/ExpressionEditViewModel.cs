@@ -374,7 +374,7 @@ namespace InAntStudio.ViewModel
                 }
             }
             if(mCommands.Count>0)
-            mCommands.First().IsSelected = true; ;
+            mCommands.Last().IsSelected = true; ;
 
         }
 

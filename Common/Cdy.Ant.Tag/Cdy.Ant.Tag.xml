@@ -743,6 +743,117 @@
             </summary>
             <param name="callback"></param>
         </member>
+        <member name="M:Cdy.Ant.IDataTagService.FindNumberTagValuesGreaterThan(System.String,System.Object,System.DateTime,System.DateTime)">
+            <summary>
+            查找大于指定值得值和时间
+            </summary>
+            <param name="tagname"></param>
+            <param name="value"></param>
+            <param name="startTime"></param>
+            <param name="endTime"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.IDataTagService.FindNumberTagValuesLessThan(System.String,System.Object,System.DateTime,System.DateTime)">
+            <summary>
+            查找小于指定值得值和时间
+            </summary>
+            <param name="tagname"></param>
+            <param name="value"></param>
+            <param name="startTime"></param>
+            <param name="endTime"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.IDataTagService.FindNumberTagValuesEquals(System.String,System.Object,System.Double,System.DateTime,System.DateTime)">
+            <summary>
+            查找等于指定值得值和时间
+            </summary>
+            <param name="tagname"></param>
+            <param name="value"></param>
+            <param name="interval">偏差</param>
+            <param name="startTime"></param>
+            <param name="endTime"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.IDataTagService.FindNumberTagMaxValues(System.String,System.DateTime,System.DateTime)">
+            <summary>
+            查找枚举所有最大值
+            </summary>
+            <param name="tagname"></param>
+            <param name="startTime"></param>
+            <param name="endTime"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.IDataTagService.FindNumberTagMinValues(System.String,System.DateTime,System.DateTime)">
+            <summary>
+            查找所有最小值
+            </summary>
+            <param name="tagname"></param>
+            <param name="startTime"></param>
+            <param name="endTime"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.IDataTagService.CalNumberTagAvgValue(System.String,System.DateTime,System.DateTime)">
+            <summary>
+            计算平均值
+            </summary>
+            <param name="tagname"></param>
+            <param name="startTime"></param>
+            <param name="endTime"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.IDataTagService.CalNumberTagValueKeepTime(System.String,System.Object,System.Double,System.DateTime,System.DateTime)">
+            <summary>
+            计算指定值保持时间
+            </summary>
+            <param name="tagname"></param>
+            <param name="value"></param>
+            <param name="interval"></param>
+            <param name="startTime"></param>
+            <param name="endTime"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.IDataTagService.CalNumberTagGreateThanValueKeepTime(System.String,System.Object,System.Double,System.DateTime,System.DateTime)">
+            <summary>
+            计算大于指定值保持时间
+            </summary>
+            <param name="tagname"></param>
+            <param name="value"></param>
+            <param name="interval"></param>
+            <param name="startTime"></param>
+            <param name="endTime"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.IDataTagService.CalNumberTagLessThanValueKeepTime(System.String,System.Object,System.Double,System.DateTime,System.DateTime)">
+            <summary>
+            计算小于指定值保持时间
+            </summary>
+            <param name="tagname"></param>
+            <param name="value"></param>
+            <param name="interval"></param>
+            <param name="startTime"></param>
+            <param name="endTime"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.IDataTagService.FindNoNumberTagValues(System.String,System.DateTime,System.DateTime,System.Object)">
+            <summary>
+            查找非数值型变量，等于指定值的时刻
+            </summary>
+            <param name="tagname"></param>
+            <param name="startTime"></param>
+            <param name="endTime"></param>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cdy.Ant.IDataTagService.CalNoNumberTagValueKeepTime(System.String,System.Object,System.DateTime,System.DateTime)">
+            <summary>
+            计算非数值型变量等于指定值保持时间
+            </summary>
+            <param name="tagname"></param>
+            <param name="value"></param>
+            <param name="startTime"></param>
+            <param name="endTime"></param>
+            <returns></returns>
+        </member>
         <member name="T:Cdy.Ant.Point3D">
             <summary>
             

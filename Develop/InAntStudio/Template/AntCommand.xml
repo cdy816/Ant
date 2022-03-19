@@ -121,7 +121,105 @@
         <Parameter Name="times" Type="List&lt;datetime&gt;"  Desc="时间点集合" Value="null" />
       </Function>
     </Command>
-    
+
+	  <Command Name="FindNumberTagValuesGreaterThan" Desc="查找大于指定值得值和时间">
+		  <Function Body="Tag.FindNumberTagValuesGreaterThan" ReturnType="Dictionary&lt;DateTime, object&gt;">
+			  <Parameter Name="tagName" Type="string" DesignType="tag" Desc="变量名称" Value="tag1" />
+			  <Parameter Name="value" Type="object"  Desc="值" Value="1" />
+			  <Parameter Name="startTime" Type="datetime"  Desc="开始时间" Value="DateTime.Now" />
+			  <Parameter Name="endTime" Type="datetime"  Desc="结束时间" Value="DateTime.Now" />
+		  </Function>
+	  </Command>
+
+	  <Command Name="FindNumberTagValuesLessThan" Desc="查找小于指定值得值和时间">
+		  <Function Body="Tag.FindNumberTagValuesLessThan" ReturnType="Dictionary&lt;DateTime, object&gt;">
+			  <Parameter Name="tagName" Type="string" DesignType="tag" Desc="变量名称" Value="tag1" />
+			  <Parameter Name="value" Type="object"  Desc="值" Value="1" />
+			  <Parameter Name="startTime" Type="datetime"  Desc="开始时间" Value="DateTime.Now" />
+			  <Parameter Name="endTime" Type="datetime"  Desc="结束时间" Value="DateTime.Now" />
+		  </Function>
+	  </Command>
+
+	  <Command Name="FindNumberTagValuesEquals" Desc="查找等于指定值得值和时间">
+		  <Function Body="Tag.FindNumberTagValuesLessThan" ReturnType="Dictionary&lt;DateTime, object&gt;">
+			  <Parameter Name="tagName" Type="string" DesignType="tag" Desc="变量名称" Value="tag1" />
+			  <Parameter Name="value" Type="object"  Desc="值" Value="1" />
+			  <Parameter Name="deviation" Type="double"  Desc="偏差" Value="1" />
+			  <Parameter Name="startTime" Type="datetime"  Desc="开始时间" Value="DateTime.Now" />
+			  <Parameter Name="endTime" Type="datetime"  Desc="结束时间" Value="DateTime.Now" />
+		  </Function>
+	  </Command>
+
+	  <Command Name="FindNumberTagMaxValues" Desc="查找枚举所有最大值">
+		  <Function Body="Tag.FindNumberTagMaxValues" ReturnType="Dictionary&lt;DateTime, object&gt;">
+			  <Parameter Name="tagName" Type="string" DesignType="tag" Desc="变量名称" Value="tag1" />
+			  <Parameter Name="startTime" Type="datetime"  Desc="开始时间" Value="DateTime.Now" />
+			  <Parameter Name="endTime" Type="datetime"  Desc="结束时间" Value="DateTime.Now" />
+		  </Function>
+	  </Command>
+
+	  <Command Name="FindNumberTagMinValues" Desc="查找所有最小值">
+		  <Function Body="Tag.FindNumberTagMinValues" ReturnType="Dictionary&lt;DateTime, object&gt;">
+			  <Parameter Name="tagName" Type="string" DesignType="tag" Desc="变量名称" Value="tag1" />
+			  <Parameter Name="startTime" Type="datetime"  Desc="开始时间" Value="DateTime.Now" />
+			  <Parameter Name="endTime" Type="datetime"  Desc="结束时间" Value="DateTime.Now" />
+		  </Function>
+	  </Command>
+
+	  <Command Name="CalNumberTagAvgValue" Desc="计算平均值">
+		  <Function Body="Tag.CalNumberTagAvgValue" ReturnType="double">
+			  <Parameter Name="tagName" Type="string" DesignType="tag" Desc="变量名称" Value="tag1" />
+			  <Parameter Name="startTime" Type="datetime"  Desc="开始时间" Value="DateTime.Now" />
+			  <Parameter Name="endTime" Type="datetime"  Desc="结束时间" Value="DateTime.Now" />
+		  </Function>
+	  </Command>
+
+	  <Command Name="CalNumberTagValueKeepTime" Desc="计算等于指定值保持时间">
+		  <Function Body="Tag.CalNumberTagValueKeepTime" ReturnType="double">
+			  <Parameter Name="tagName" Type="string" DesignType="tag" Desc="变量名称" Value="tag1" />
+			  <Parameter Name="value" Type="object"  Desc="值" Value="1" />
+			  <Parameter Name="deviation" Type="double"  Desc="值" Value="1" />
+			  <Parameter Name="startTime" Type="datetime"  Desc="开始时间" Value="DateTime.Now" />
+			  <Parameter Name="endTime" Type="datetime"  Desc="结束时间" Value="DateTime.Now" />
+		  </Function>
+	  </Command>
+
+	  <Command Name="CalNumberTagGreateThanValueKeepTime" Desc="计算大于指定值保持时间">
+		  <Function Body="Tag.CalNumberTagGreateThanValueKeepTime" ReturnType="double">
+			  <Parameter Name="tagName" Type="string" DesignType="tag" Desc="变量名称" Value="tag1" />
+			  <Parameter Name="value" Type="object"  Desc="值" Value="1" />
+			  <Parameter Name="startTime" Type="datetime"  Desc="开始时间" Value="DateTime.Now" />
+			  <Parameter Name="endTime" Type="datetime"  Desc="结束时间" Value="DateTime.Now" />
+		  </Function>
+	  </Command>
+
+	  <Command Name="CalNumberTagLessThanValueKeepTime" Desc="计算小于指定值保持时间">
+		  <Function Body="Tag.CalNumberTagLessThanValueKeepTime" ReturnType="double">
+			  <Parameter Name="tagName" Type="string" DesignType="tag" Desc="变量名称" Value="tag1" />
+			  <Parameter Name="value" Type="object"  Desc="值" Value="1" />
+			  <Parameter Name="startTime" Type="datetime"  Desc="开始时间" Value="DateTime.Now" />
+			  <Parameter Name="endTime" Type="datetime"  Desc="结束时间" Value="DateTime.Now" />
+		  </Function>
+	  </Command>
+
+	  <Command Name="FindNoNumberTagValues" Desc="查找非数值型变量等于指定值的时刻">
+		  <Function Body="Tag.FindNoNumberTagValues" ReturnType="List&lt;DateTime&gt;">
+			  <Parameter Name="tagName" Type="string" DesignType="tag" Desc="变量名称" Value="tag1" />
+			  <Parameter Name="startTime" Type="datetime"  Desc="开始时间" Value="DateTime.Now" />
+			  <Parameter Name="endTime" Type="datetime"  Desc="结束时间" Value="DateTime.Now" />
+			  <Parameter Name="value" Type="object"  Desc="值" Value="null" />
+		  </Function>
+	  </Command>
+
+	  <Command Name="CalNoNumberTagValueKeepTime" Desc="查找非数值型变量等于指定值的时刻">
+		  <Function Body="Tag.CalNoNumberTagValueKeepTime" ReturnType="List&lt;DateTime&gt;">
+			  <Parameter Name="tagName" Type="string" DesignType="tag" Desc="变量名称" Value="tag1" />
+			  <Parameter Name="value" Type="object"  Desc="值" Value="null" />
+			  <Parameter Name="startTime" Type="datetime"  Desc="开始时间" Value="DateTime.Now" />
+			  <Parameter Name="endTime" Type="datetime"  Desc="结束时间" Value="DateTime.Now" />
+		  </Function>
+	  </Command>
+	  
   </CommandGroup>
 
   <CommandGroup Name="Message">

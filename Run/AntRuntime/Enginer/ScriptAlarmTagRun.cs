@@ -889,6 +889,157 @@ namespace AntRuntime.Enginer
             var val = Convert.ToInt64(value);
             return (byte)(val >> index & 0x01);
         }
+
+        /// <summary>
+        /// 查找大于指定值得值和时间
+        /// </summary>
+        /// <param name="tagname"></param>
+        /// <param name="value"></param>
+        /// <param name="startTime"></param>
+        /// <param name="endTime"></param>
+        /// <returns></returns>
+        public Dictionary<DateTime, object> FindNumberTagValuesGreaterThan(string tagname, object value, DateTime startTime, DateTime endTime)
+        {
+            return Owner.TagService?.FindNumberTagValuesGreaterThan(tagname, value, startTime, endTime);
+        }
+
+        /// <summary>
+        /// 查找小于指定值得值和时间
+        /// </summary>
+        /// <param name="tagname"></param>
+        /// <param name="value"></param>
+        /// <param name="startTime"></param>
+        /// <param name="endTime"></param>
+        /// <returns></returns>
+        public Dictionary<DateTime, object> FindNumberTagValuesLessThan(string tagname, object value, DateTime startTime, DateTime endTime)
+        {
+            return Owner.TagService?.FindNumberTagValuesLessThan(tagname, value, startTime, endTime);
+        }
+
+        /// <summary>
+        /// 查找等于指定值得值和时间
+        /// </summary>
+        /// <param name="tagname"></param>
+        /// <param name="value"></param>
+        /// <param name="interval">偏差</param>
+        /// <param name="startTime"></param>
+        /// <param name="endTime"></param>
+        /// <returns></returns>
+        public Dictionary<DateTime, object> FindNumberTagValuesEquals(string tagname, object value, double interval, DateTime startTime, DateTime endTime)
+        {
+            return Owner.TagService?.FindNumberTagValuesEquals(tagname, value,interval, startTime, endTime);
+        }
+
+
+
+        /// <summary>
+        /// 查找枚举所有最大值
+        /// </summary>
+        /// <param name="tagname"></param>
+        /// <param name="startTime"></param>
+        /// <param name="endTime"></param>
+        /// <returns></returns>
+        public Dictionary<DateTime, object> FindNumberTagMaxValues(string tagname, DateTime startTime, DateTime endTime)
+        {
+            return Owner.TagService?.FindNumberTagMaxValues(tagname,  startTime, endTime);
+        }
+
+
+        /// <summary>
+        /// 查找所有最小值
+        /// </summary>
+        /// <param name="tagname"></param>
+        /// <param name="startTime"></param>
+        /// <param name="endTime"></param>
+        /// <returns></returns>
+        public Dictionary<DateTime, object> FindNumberTagMinValues(string tagname, DateTime startTime, DateTime endTime)
+        {
+            return Owner.TagService?.FindNumberTagMinValues(tagname, startTime, endTime);
+        }
+
+        /// <summary>
+        /// 计算平均值
+        /// </summary>
+        /// <param name="tagname"></param>
+        /// <param name="startTime"></param>
+        /// <param name="endTime"></param>
+        /// <returns></returns>
+        public double CalNumberTagAvgValue(string tagname, DateTime startTime, DateTime endTime)
+        {
+            var re = Owner.TagService?.CalNumberTagAvgValue(tagname, startTime, endTime);
+            return re!=null ? re.Value : double.MinValue;
+        }
+
+        /// <summary>
+        /// 计算指定值保持时间
+        /// </summary>
+        /// <param name="tagname"></param>
+        /// <param name="value"></param>
+        /// <param name="interval"></param>
+        /// <param name="startTime"></param>
+        /// <param name="endTime"></param>
+        /// <returns></returns>
+        public double CalNumberTagValueKeepTime(string tagname, object value, double interval, DateTime startTime, DateTime endTime)
+        {
+            var re = Owner.TagService?.CalNumberTagValueKeepTime(tagname,value,interval, startTime, endTime);
+            return re != null ? re.Value : double.MinValue;
+        }
+
+        /// <summary>
+        /// 计算大于指定值保持时间
+        /// </summary>
+        /// <param name="tagname"></param>
+        /// <param name="value"></param>
+        /// <param name="startTime"></param>
+        /// <param name="endTime"></param>
+        /// <returns></returns>
+        public double CalNumberTagGreateThanValueKeepTime(string tagname, object value, DateTime startTime, DateTime endTime)
+        {
+            var re = Owner.TagService?.CalNumberTagGreateThanValueKeepTime(tagname, value, 0, startTime, endTime);
+            return re != null ? re.Value : double.MinValue;
+        }
+
+        /// <summary>
+        /// 计算小于指定值保持时间
+        /// </summary>
+        /// <param name="tagname"></param>
+        /// <param name="value"></param>
+        /// <param name="startTime"></param>
+        /// <param name="endTime"></param>
+        /// <returns></returns>
+        public double CalNumberTagLessThanValueKeepTime(string tagname, object value, DateTime startTime, DateTime endTime)
+        {
+            var re = Owner.TagService?.CalNumberTagLessThanValueKeepTime(tagname, value, 0, startTime, endTime);
+            return re != null ? re.Value : double.MinValue;
+        }
+
+        /// <summary>
+        /// 查找非数值型变量，等于指定值的时刻
+        /// </summary>
+        /// <param name="tagname"></param>
+        /// <param name="value"></param>
+        /// <param name="startTime"></param>
+        /// <param name="endTime"></param>
+        /// <returns></returns>
+        public List<DateTime> FindNoNumberTagValues(string tagname, object value, DateTime startTime, DateTime endTime)
+        {
+            return Owner.TagService?.FindNoNumberTagValues(tagname, startTime, endTime,value);
+        }
+
+
+        /// <summary>
+        /// 计算非数值型变量等于指定值保持时间
+        /// </summary>
+        /// <param name="tagname"></param>
+        /// <param name="value"></param>
+        /// <param name="startTime"></param>
+        /// <param name="endTime"></param>
+        /// <returns></returns>
+        public double CalNoNumberTagValueKeepTime(string tagname, object value, DateTime startTime, DateTime endTime)
+        {
+            var re = Owner.TagService?.CalNoNumberTagValueKeepTime(tagname, value,  startTime, endTime);
+            return re != null ? re.Value : double.MinValue;
+        }
     }
 
     /// <summary>

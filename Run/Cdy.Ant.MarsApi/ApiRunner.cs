@@ -1022,6 +1022,257 @@ namespace Cdy.Ant.MarsApi
             return re;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="tagname"></param>
+        /// <param name="value"></param>
+        /// <param name="startTime"></param>
+        /// <param name="endTime"></param>
+        /// <returns></returns>
+        public Dictionary<DateTime, object> FindNumberTagValuesGreaterThan(string tagname, object value, DateTime startTime, DateTime endTime)
+        {
+            if (client.IsLogin)
+            {
+                var vtag = mTags[tagname];
+                if (vtag != null)
+                {
+                    return client.FindNumberTagValues(vtag.Id,startTime,endTime,NumberStatisticsType.GreatValue,value,0);
+                }
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="tagname"></param>
+        /// <param name="value"></param>
+        /// <param name="startTime"></param>
+        /// <param name="endTime"></param>
+        /// <returns></returns>
+        public Dictionary<DateTime, object> FindNumberTagValuesLessThan(string tagname, object value, DateTime startTime, DateTime endTime)
+        {
+            if (client.IsLogin)
+            {
+                var vtag = mTags[tagname];
+                if (vtag != null)
+                {
+                    return client.FindNumberTagValues(vtag.Id, startTime, endTime, NumberStatisticsType.LowValue, value, 0);
+                }
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="tagname"></param>
+        /// <param name="value"></param>
+        /// <param name="interval"></param>
+        /// <param name="startTime"></param>
+        /// <param name="endTime"></param>
+        /// <returns></returns>
+        public Dictionary<DateTime, object> FindNumberTagValuesEquals(string tagname, object value, double interval, DateTime startTime, DateTime endTime)
+        {
+            if (client.IsLogin)
+            {
+                var vtag = mTags[tagname];
+                if (vtag != null)
+                {
+                    return client.FindNumberTagValues(vtag.Id, startTime, endTime, NumberStatisticsType.EqualsValue, value, interval);
+                }
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="tagname"></param>
+        /// <param name="startTime"></param>
+        /// <param name="endTime"></param>
+        /// <returns></returns>
+        public Dictionary<DateTime, object> FindNumberTagMaxValues(string tagname, DateTime startTime, DateTime endTime)
+        {
+            if (client.IsLogin)
+            {
+                var vtag = mTags[tagname];
+                if (vtag != null)
+                {
+                    var res = client.FindNumberTagMaxMinValue(vtag.Id, startTime, endTime,NumberStatisticsType.Max);
+                    if(res != null)
+                    {
+                        Dictionary<DateTime, object> ret = new Dictionary<DateTime, object>();
+                        foreach(var vv in res.Item2)
+                        {
+                            ret.Add(vv,res.Item1);
+                        }
+                        return ret;
+                    }
+                }
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="tagname"></param>
+        /// <param name="startTime"></param>
+        /// <param name="endTime"></param>
+        /// <returns></returns>
+        public Dictionary<DateTime, object> FindNumberTagMinValues(string tagname, DateTime startTime, DateTime endTime)
+        {
+            if (client.IsLogin)
+            {
+                var vtag = mTags[tagname];
+                if (vtag != null)
+                {
+                    var res = client.FindNumberTagMaxMinValue(vtag.Id, startTime, endTime, NumberStatisticsType.Min);
+                    if (res != null)
+                    {
+                        Dictionary<DateTime, object> ret = new Dictionary<DateTime, object>();
+                        foreach (var vv in res.Item2)
+                        {
+                            ret.Add(vv, res.Item1);
+                        }
+                        return ret;
+                    }
+                }
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="tagname"></param>
+        /// <param name="startTime"></param>
+        /// <param name="endTime"></param>
+        /// <returns></returns>
+        public double CalNumberTagAvgValue(string tagname, DateTime startTime, DateTime endTime)
+        {
+            if (client.IsLogin)
+            {
+                var vtag = mTags[tagname];
+                if (vtag != null)
+                {
+                    return client.FindNumberTagAvgValue(vtag.Id, startTime, endTime);
+                }
+            }
+            return double.MinValue;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="tagname"></param>
+        /// <param name="value"></param>
+        /// <param name="interval"></param>
+        /// <param name="startTime"></param>
+        /// <param name="endTime"></param>
+        /// <returns></returns>
+        public double CalNumberTagValueKeepTime(string tagname, object value, double interval, DateTime startTime, DateTime endTime)
+        {
+            if (client.IsLogin)
+            {
+                var vtag = mTags[tagname];
+                if (vtag != null)
+                {
+                    return client.FindNumberTagValueDuration(vtag.Id, startTime, endTime,NumberStatisticsType.EqualsValue,value,interval);
+                }
+            }
+            return double.MinValue;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="tagname"></param>
+        /// <param name="startTime"></param>
+        /// <param name="endTime"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public List<DateTime> FindNoNumberTagValues(string tagname, DateTime startTime, DateTime endTime, object value)
+        {
+            if (client.IsLogin)
+            {
+                var vtag = mTags[tagname];
+                if (vtag != null)
+                {
+                    return client.FindNoNumberTagValues(vtag.Id, startTime, endTime,  value);
+                }
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="tagname"></param>
+        /// <param name="value"></param>
+        /// <param name="startTime"></param>
+        /// <param name="endTime"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public double CalNoNumberTagValueKeepTime(string tagname, object value, DateTime startTime, DateTime endTime)
+        {
+            if (client.IsLogin)
+            {
+                var vtag = mTags[tagname];
+                if (vtag != null)
+                {
+                    return client.FindNoNumberTagValueDuration(vtag.Id, startTime, endTime, value);
+                }
+            }
+            return double.MinValue;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="tagname"></param>
+        /// <param name="value"></param>
+        /// <param name="interval"></param>
+        /// <param name="startTime"></param>
+        /// <param name="endTime"></param>
+        /// <returns></returns>
+        public double CalNumberTagGreateThanValueKeepTime(string tagname, object value, double interval, DateTime startTime, DateTime endTime)
+        {
+            if (client.IsLogin)
+            {
+                var vtag = mTags[tagname];
+                if (vtag != null)
+                {
+                    return client.FindNumberTagValueDuration(vtag.Id, startTime, endTime, NumberStatisticsType.GreatValue, value, interval);
+                }
+            }
+            return double.MinValue;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="tagname"></param>
+        /// <param name="value"></param>
+        /// <param name="interval"></param>
+        /// <param name="startTime"></param>
+        /// <param name="endTime"></param>
+        /// <returns></returns>
+        public double CalNumberTagLessThanValueKeepTime(string tagname, object value, double interval, DateTime startTime, DateTime endTime)
+        {
+            if (client.IsLogin)
+            {
+                var vtag = mTags[tagname];
+                if (vtag != null)
+                {
+                    return client.FindNumberTagValueDuration(vtag.Id, startTime, endTime, NumberStatisticsType.LowValue, value, interval);
+                }
+            }
+            return double.MinValue;
+        }
+
 
         #endregion ...Methods...
 
