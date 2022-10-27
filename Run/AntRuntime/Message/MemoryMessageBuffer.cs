@@ -1,4 +1,5 @@
-﻿using AntRuntime.Message;
+﻿using AntRuntime.Enginer;
+using AntRuntime.Message;
 using Cdy.Ant;
 using Cdy.Ant.Tag;
 using System;
@@ -297,7 +298,7 @@ namespace AntRuntime
         /// <returns></returns>
         public long GetId(DateTime id)
         {
-            return id.Ticks * 10;
+            return TimerIdHelper.GetID(id);
         }
         /// <summary>
         /// 
@@ -306,8 +307,9 @@ namespace AntRuntime
         /// <returns></returns>
         public DateTime RestoreTimeFromId(long lid)
         {
-            var vid = lid / 10;
-            return DateTime.FromBinary(vid);
+            return TimerIdHelper.IDToTimer(lid);
+            //var vid = lid / 10;
+            //return DateTime.FromBinary(vid);
         }
 
         /// <summary>

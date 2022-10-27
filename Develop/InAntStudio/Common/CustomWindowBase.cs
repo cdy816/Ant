@@ -87,9 +87,12 @@ namespace InAntStudio
         private ContentControl mContentHost;
 
         private Grid mHead;
+        private Grid mMain;
 
         [DllImport("user32.dll")]
         internal static extern int SetWindowCompositionAttribute(IntPtr hwnd, ref WindowCompositionAttributeData data);
+
+        private Border mBorder;
 
         #endregion ...Variables...
 
@@ -253,7 +256,7 @@ namespace InAntStudio
         private void CustomWindowBase_Loaded(object sender, RoutedEventArgs e)
         {
             this.Loaded -= (CustomWindowBase_Loaded);
-            //EnableBlur();
+            EnableBlur();
             if (!string.IsNullOrEmpty(IconString))
             {
                 this.Icon = new BitmapImage(new Uri(IconString));
@@ -270,8 +273,11 @@ namespace InAntStudio
             mContentHost = this.GetTemplateChild("content_host") as ContentControl;
             mHead = this.GetTemplateChild("head") as Grid;
             mHead.MouseLeftButtonDown += MHead_MouseLeftButtonDown;
+
+            mMain = this.GetTemplateChild("main") as Grid;
+
             (this.GetTemplateChild("minB") as Button).Click += minB_Click;
-            if(this.IsEnableMax)
+            if (this.IsEnableMax)
             {
                 (this.GetTemplateChild("maxB") as Button).Click += maxB_Click;
             }
@@ -279,9 +285,31 @@ namespace InAntStudio
             {
                 (this.GetTemplateChild("maxB") as Button).Visibility = Visibility.Collapsed;
             }
-           
+
             (this.GetTemplateChild("closeB") as Button).Click += closeB_Click;
 
+            mBorder = this.GetTemplateChild("bd") as Border;
+            if (mBorder != null)
+            {
+                mBorder.SizeChanged += MBorder_SizeChanged;
+                InitBd();
+            }
+
+        }
+
+        private void MBorder_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            mBorder.Clip = new System.Windows.Media.RectangleGeometry() { Rect = new Rect(1, 1, mBorder.ActualWidth - 2, mBorder.ActualHeight - 2), RadiusX = 5, RadiusY = 5 };
+        }
+
+        private void InitBd()
+        {
+            Border bd = new Border();
+            Grid.SetRowSpan(bd, 3);
+            bd.BorderThickness = new Thickness(2);
+            bd.BorderBrush = System.Windows.Media.Brushes.DarkGray;
+            bd.CornerRadius = new CornerRadius(5);
+            mMain.Children.Add(bd);
         }
 
         /// <summary>
@@ -316,7 +344,7 @@ namespace InAntStudio
             this.WindowState = WindowState.Minimized;
         }
 
-        
+
 
         private void MHead_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
@@ -457,7 +485,7 @@ namespace InAntStudio
             }
         }
 
-       
+
 
         internal void EnableBlur()
         {

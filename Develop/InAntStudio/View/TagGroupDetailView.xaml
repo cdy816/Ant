@@ -253,11 +253,11 @@
                     </DataTemplate>
                 </Button.ContentTemplate>
             </Button>
-            <ToggleButton x:Name="pb" Content="V" Height="26" Width="12" IsChecked="{Binding IsPopup,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Background="#1FFFFFFF"  BorderBrush="Green"  Foreground="{StaticResource Window.Forground}" Margin="0,0,5,0"  BorderThickness="0,0,0,2" >
+            <ToggleButton Style="{StaticResource ToggleButtonStyle1}" x:Name="pb" FontSize="9" Content="V" Height="26" Width="12" IsChecked="{Binding IsPopup,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Background="#01FFFFFF"  BorderBrush="Green"  Foreground="{StaticResource Window.Forground}" Margin="0,0,5,0"  BorderThickness="0,0,0,2" >
                 
             </ToggleButton>
             <Popup IsOpen="{Binding IsChecked,ElementName=pb,Mode=TwoWay}" StaysOpen="False"  PlacementTarget="{Binding ElementName=add}" AllowsTransparency="True" >
-                <StackPanel Orientation="Vertical" Background="#7F000000">
+                <StackPanel Orientation="Vertical" Background="#CF000000">
                     <MenuItem Header="{local:ResMarker AddFromMarsOnline}" Command="{Binding AddFromMarsOnlineCommand}" Height="26" />
                     <MenuItem Header="{local:ResMarker AddFromMarsExport}" Command="{Binding ImportFromMarsDatabseCommand}" Height="26" />
                 </StackPanel>
@@ -293,7 +293,7 @@
                 </Button.ContentTemplate>
             </Button>
         </StackPanel>
-        <StackPanel Grid.Row="2" Orientation="Horizontal" Grid.Column="1" Height="32" HorizontalAlignment="Right" VerticalAlignment="Bottom" >
+        <StackPanel Grid.Row="2" Orientation="Horizontal" Grid.Column="1" Height="32" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10,0" >
             <Label VerticalAlignment="Center" Content="{local:ResMarker TagCount,:}" Foreground="{DynamicResource Window.Forground}"/>
             <Label VerticalAlignment="Center" Content="{Binding TagCount}" Foreground="{DynamicResource Window.Forground}"/>
         </StackPanel>

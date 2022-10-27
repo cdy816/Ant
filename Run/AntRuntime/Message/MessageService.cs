@@ -1,4 +1,5 @@
-﻿using AntRuntime.Message;
+﻿using AntRuntime.Enginer;
+using AntRuntime.Message;
 using Cdy.Ant.Tag;
 using System;
 using System.Collections.Generic;
@@ -104,7 +105,8 @@ namespace AntRuntime
                     mCount++;
                     if(mCount>9)
                     {
-                        Thread.Sleep(1);
+                        Thread.Sleep(10);
+                        mCount = 0;
                     }
                 }
                 else
@@ -123,7 +125,8 @@ namespace AntRuntime
         /// <returns></returns>
         public long GetId(DateTime id)
         {
-            return id.Ticks * 10;
+            return TimerIdHelper.GetID(id);
+           // return id.Ticks * 10;
         }
 
         /// <summary>
@@ -133,8 +136,9 @@ namespace AntRuntime
         /// <returns></returns>
         public DateTime RestoreTimeFromId(long lid)
         {
-            var vid = lid / 10;
-            return DateTime.FromBinary(vid);
+            return TimerIdHelper.IDToTimer(lid);
+            //var vid = lid / 10;
+            //return DateTime.FromBinary(vid);
         }
 
         /// <summary>

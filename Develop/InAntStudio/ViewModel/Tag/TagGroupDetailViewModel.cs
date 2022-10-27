@@ -848,6 +848,10 @@ namespace InAntStudio.ViewModel
                 }
                 stream.Close();
             }
+            else
+            {
+                return;
+            }
 
             int mode = 0;
             var mm = new ImportModeSelectViewModel();

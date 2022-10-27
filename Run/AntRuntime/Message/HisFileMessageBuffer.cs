@@ -80,10 +80,10 @@ namespace AntRuntime
                 {
                     foreach (var vvv in ltmp)
                     {
-                        if ((vvv.AlarmArea != null && (vvv.AlarmArea.IsAckDirty || vvv.AlarmArea.IsRestoreDirty))|| (vvv.CommonArea != null && vvv.CommonArea.IsDeleteDirty))
+                        if ((vvv.AlarmArea != null && (vvv.AlarmArea.IsAckDirty || vvv.AlarmArea.IsRestoreDirty || vvv.AlarmArea.IsDeleteDirty))|| (vvv.CommonArea != null && vvv.CommonArea.IsDeleteDirty))
                         {
                             MessageFileSerise.UpdateDirtyToDisk(vvv, vv);
-                            vvv.AlarmArea.IsAckDirty = vvv.AlarmArea.IsRestoreDirty = false;
+                            vvv.AlarmArea.IsAckDirty = vvv.AlarmArea.IsRestoreDirty = vvv.AlarmArea.IsDeleteDirty = false;
                             if(vvv.CommonArea!=null) vvv.CommonArea.IsDeleteDirty = false;
                         }
                     }

@@ -208,14 +208,14 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:CustomWindowBase}">
-                    <Border BorderThickness="1" BorderBrush="DarkGray">
-                    <Grid Background="{TemplateBinding Background}" x:Name="head" >
+                    <Border BorderThickness="0" BorderBrush="DarkGray" x:Name="bd">
+                    <Grid Background="{TemplateBinding Background}" x:Name="main" >
                         <Grid.RowDefinitions>
                             <RowDefinition Height="32" />
                             <RowDefinition Height="*" />
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
-                        <Grid Background="#AF000000">
+                        <Grid Background="#9F000000" x:Name="head">
                             <Image Margin="5,0"  Source="{Binding Icon,RelativeSource={RelativeSource AncestorType=Window}}" Height="16" HorizontalAlignment="Left" Width="24" VerticalAlignment="Center" RenderOptions.BitmapScalingMode="HighQuality" Stretch="Fill" />
                             <Label Margin="30,0,115,0" VerticalContentAlignment="Center" Content="{Binding Title,RelativeSource={RelativeSource AncestorType=Window}}" Foreground="{Binding Foreground,RelativeSource={RelativeSource AncestorType=Window}}"/>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
@@ -250,11 +250,11 @@
                                 </Button>
                             </StackPanel>
                         </Grid >
-                            <Grid Background="#1FFFFFFF" Grid.Row="1">
+                            <Grid Background="#0FFFFFFF" Grid.Row="1">
                                 <ContentControl  x:Name="content_host" Content="{Binding}" Margin="0" />
                             </Grid>
 
-                            <Border  Background="#AF000000"  Height="32"  Grid.Row="2" BorderBrush="Gray" BorderThickness="0,1,0,0"  Visibility="{Binding IsOkCancel,Converter={StaticResource bvc}}">
+                            <Border   Height="32"  Grid.Row="2" BorderBrush="Gray" BorderThickness="0,1,0,0"  Visibility="{Binding IsOkCancel,Converter={StaticResource bvc}}">
                             <Grid  Margin="0" >
                                 <Label  Content="{Binding Message}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,0,200,0" />
                                     <Button  Style="{DynamicResource ButtonStyle1}" Name="btn_Cancel" BorderBrush="IndianRed" BorderThickness="0,0,0,2" IsCancel="{Binding IsEnableDefault}" Content="{local:ResMarker Cancel}" Height="22" Width="75" Margin="0,0,10,0" Command="{Binding CancelCommand}" HorizontalAlignment="Right" VerticalAlignment="Center"   >

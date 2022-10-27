@@ -468,7 +468,7 @@ namespace AntRuntime.Enginer
             msg.MessageBody = messageBody;
             msg.AlarmLevel = level;
             msg.AlarmValue = value;
-            msg.Id = MessageService.Service.GetId(dt.Ticks);
+            msg.Id = MessageService.Service.GetId(TimerIdHelper.GetTicks(dt));
             msg.AppendContent1 = LinkedTag.CustomContent1;
             msg.AppendContent2 = LinkedTag.CustomContent2;
             msg.AppendContent3 = LinkedTag.CustomContent3;
@@ -499,7 +499,7 @@ namespace AntRuntime.Enginer
             msg.MessageBody = messageBody;
             msg.AlarmLevel = level;
             msg.AlarmValue = value;
-            msg.Id = MessageService.Service.GetId(dt.Ticks);
+            msg.Id = MessageService.Service.GetId(TimerIdHelper.GetTicks(dt));
             msg.AppendContent1 = LinkedTag.CustomContent1;
             msg.AppendContent2 = LinkedTag.CustomContent2;
             msg.AppendContent3 = LinkedTag.CustomContent3;
@@ -521,7 +521,7 @@ namespace AntRuntime.Enginer
             msg.Server = this.Source;
             msg.SourceTag = TagName;
             msg.MessageBody = message;
-            msg.Id = MessageService.Service.GetId(dt.Ticks);
+            msg.Id = MessageService.Service.GetId(TimerIdHelper.GetTicks(dt));
             
             msg.AppendContent1 = LinkedTag.CustomContent1;
             msg.AppendContent2 = LinkedTag.CustomContent2;

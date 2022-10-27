@@ -1,4 +1,5 @@
 ﻿using AntRuntime;
+using AntRuntime.Enginer;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -82,7 +83,7 @@ namespace MessageServiceTest
                 msg.MessageBody = $"Tag{i} 高报警 ";
                 msg.AlarmLevel = Cdy.Ant.AlarmLevel.Critical;
                 msg.AlarmValue = "1";
-                msg.Id = MessageService.Service.GetId(dt.Ticks);
+                msg.Id = MessageService.Service.GetId(TimerIdHelper.GetTicks(dt));
                 msg.AlarmCondition = ">1";
 
                 MessageService.Service.RaiseMessage(msg);
@@ -99,7 +100,7 @@ namespace MessageServiceTest
                 msg.Server = "Server";
                 msg.SourceTag = "Tag" + i;
                 msg.MessageBody =  $"Tag {i} 日志消息";
-                msg.Id = MessageService.Service.GetId(dt.Ticks);
+                msg.Id = MessageService.Service.GetId(TimerIdHelper.GetTicks(dt));
 
                 MessageService.Service.RaiseMessage(msg);
             }

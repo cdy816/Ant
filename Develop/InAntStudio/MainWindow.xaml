@@ -7,7 +7,7 @@
        ResizeMode="CanResizeWithGrip"
         
         mc:Ignorable="d"  Foreground="{DynamicResource Window.Forground}" Background="Transparent" AllowsTransparency="True" WindowStyle="None" 
-        Title="{Binding MainwindowTitle}" Height="768" Width="1024" WindowState="Maximized" WindowStartupLocation="Manual" Icon="/Image/Ant.ico">
+        Title="{Binding MainwindowTitle}" Height="768" Width="1024" WindowState="Normal" WindowStartupLocation="CenterScreen" Icon="/Image/Ant.ico">
     <Window.Resources>
         <local:IndexConverter x:Key="ic" />
         <BooleanToVisibilityConverter x:Key="btv" />
@@ -104,11 +104,11 @@
 
 
     </Window.Resources>
-    <Border  Margin="5" BorderThickness="1" BorderBrush="DarkGray" >
+    <Border x:Name="bd"  Margin="0"  BorderBrush="DarkGray" >
         <Border.Background>
             <ImageBrush x:Name="bgi" ImageSource="/Image/AntBackground.png" Opacity="0.6" Stretch="None" TileMode="FlipXY"/>
         </Border.Background>
-        <Grid x:Name="bg" Background="#CF26282C">
+        <Grid x:Name="bg" Background="#9F26282C">
             <Grid.RowDefinitions>
                 <RowDefinition Height="32"/>
                 <RowDefinition Height="48"/>
