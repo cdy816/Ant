@@ -337,7 +337,7 @@
                         <HierarchicalDataTemplate  DataType="{x:Type local:TagGroupViewModel}"  ItemsSource="{Binding Children}" >
                             <StackPanel Orientation="Horizontal" Height="24"  Background="Transparent">
                                 <Image Focusable="False" Source="/Image/文件夹.png"  Margin="0,0,4,0" Height="18" VerticalAlignment="Center" RenderOptions.BitmapScalingMode="NearestNeighbor"/>
-                                <Grid ContextMenu="{StaticResource groupMenu}"  Background="{Binding Background}" VerticalAlignment="Center" Focusable="False"  Name="spanel"    >
+                                <Grid ContextMenu="{StaticResource groupMenu}"   VerticalAlignment="Center" Focusable="False"  Name="spanel"    >
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*" />
                                         <ColumnDefinition Width="*" />

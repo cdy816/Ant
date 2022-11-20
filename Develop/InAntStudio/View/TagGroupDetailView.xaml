@@ -237,7 +237,7 @@
             </DataGrid.Columns>
             <DataGrid.RowDetailsTemplate>
                 <DataTemplate>
-                    <ContentControl Content="{Binding TagDetailModel}" />
+                    <ContentControl Content="{Binding TagDetailModel}" IsEnabled="{Binding IsEnable}" />
                 </DataTemplate>
             </DataGrid.RowDetailsTemplate>
         </DataGrid>
@@ -258,7 +258,7 @@
             </ToggleButton>
             <Popup IsOpen="{Binding IsChecked,ElementName=pb,Mode=TwoWay}" StaysOpen="False"  PlacementTarget="{Binding ElementName=add}" AllowsTransparency="True" >
                 <StackPanel Orientation="Vertical" Background="#CF000000">
-                    <MenuItem Header="{local:ResMarker AddFromMarsOnline}" Command="{Binding AddFromMarsOnlineCommand}" Height="26" />
+                    <MenuItem Header="{local:ResMarker AddFromMarsOnline}" Command="{Binding AddFromMarsOnlineCommand}" Height="26"  />
                     <MenuItem Header="{local:ResMarker AddFromMarsExport}" Command="{Binding ImportFromMarsDatabseCommand}" Height="26" />
                 </StackPanel>
             </Popup>

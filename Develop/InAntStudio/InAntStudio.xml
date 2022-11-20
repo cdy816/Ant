@@ -3085,6 +3085,11 @@
             
             </summary>
         </member>
+        <member name="P:InAntStudio.MainViewModel.ProcessNotifyPercent">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="P:InAntStudio.MainViewModel.IsCanOperate">
             <summary>
             
@@ -3096,6 +3101,16 @@
             </summary>
         </member>
         <member name="P:InAntStudio.MainViewModel.ExportCommand">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.MainViewModel.RemoveCommand">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.MainViewModel.ReNameCommand">
             <summary>
             
             </summary>

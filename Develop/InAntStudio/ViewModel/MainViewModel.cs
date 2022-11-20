@@ -58,6 +58,9 @@ namespace InAntStudio
 
         private ICommand mDatabaseSelectCommand;
 
+        private ICommand mReNameCommand;
+        private ICommand mRemoveCommand;
+
         //private ICommand mNewDatabaseCommand;
 
         private ICommand mCancelCommand;
@@ -315,6 +318,9 @@ namespace InAntStudio
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public double ProcessNotifyPercent
         {
             get
@@ -378,6 +384,38 @@ namespace InAntStudio
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        public ICommand RemoveCommand
+        {
+            get {
+                if(mRemoveCommand==null)
+                {
+                    mRemoveCommand = new RelayCommand(() => {
+                        CurrentSelectGroup.RemoveCommand.Execute(null);
+                    }, () => { return CurrentSelectGroup != null && CurrentSelectGroup.RemoveCommand.CanExecute(null); });
+                }
+                return mRemoveCommand; 
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public ICommand ReNameCommand
+        {
+            get
+            {
+                if(mReNameCommand==null)
+                {
+                    mReNameCommand = new RelayCommand(() => {
+                        CurrentSelectGroup.ReNameCommand.Execute(null);
+                    }, () => { return CurrentSelectGroup != null && CurrentSelectGroup.ReNameCommand.CanExecute(null); });
+                }
+                return mReNameCommand;
+            }
+        }
 
         /// <summary>
         /// 
