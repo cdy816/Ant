@@ -106,6 +106,10 @@
         <view:ScriptNewView />
     </DataTemplate>
 
+    <DataTemplate DataType="{x:Type local:MarsSyncConfigViewModel}">
+        <view:MarsSyncConfigView />
+    </DataTemplate>
+
     <BooleanToVisibilityConverter x:Key="bvc" />
 
     <SolidColorBrush x:Key="Button.Static.Background" Color="#FFDDDDDD"/>

@@ -186,6 +186,12 @@ namespace InAntDevelopServer
             {
                 DbManager.Instance.NewDB(request.Database, request.Database);
                 var user = SecurityManager.Manager.GetUser(request.LoginId);
+                db = DbManager.Instance.GetDatabase(request.Database);
+                db.Setting.ApiType = ApiFactory.Factory.ListDevelopApis().First();
+                db.Setting.ApiData = ApiFactory.Factory.GetDevelopInstance(db.Setting.ApiType).Save();
+
+                db.Setting.ProxyType = ProxyServiceFactory.Factory.ProxyService.First();
+                db.Setting.ProxyData = ProxyServiceFactory.Factory.GetDevelopInstance(db.Setting.ProxyType).Save();
 
                 user.Databases.Add(request.Database);
             }

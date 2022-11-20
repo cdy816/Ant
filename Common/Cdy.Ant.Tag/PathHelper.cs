@@ -25,9 +25,13 @@ namespace Cdy.Ant
 
         private string mDataPath;
 
+        /// <summary>
+        /// 
+        /// </summary>
         public static PathHelper helper = new PathHelper();
 
         //private string mDatabaseName;
+        private string mBasePath = "";
 
         #endregion ...Variables...
 
@@ -36,14 +40,17 @@ namespace Cdy.Ant
         #endregion ...Events...
 
         #region ... Constructor...
-        
+
         /// <summary>
         /// 
         /// </summary>
         public PathHelper()
         {
             mAppPath = System.IO.Path.GetDirectoryName(this.GetType().Assembly.Location);
-            mDataPath = System.IO.Path.Combine(mAppPath,"Data");
+            mBasePath = mAppPath;
+            LoadBasePathConfig();
+            mDataPath = System.IO.Path.Combine(mBasePath, "Data");
+            //mDataPath = System.IO.Path.Combine(mAppPath,"Data");
         }
 
         #endregion ...Constructor...
@@ -80,6 +87,48 @@ namespace Cdy.Ant
         #endregion ...Properties...
 
         #region ... Methods    ...
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        private bool IsWorkWithMars()
+        {
+            string sfile = System.IO.Path.Combine(System.IO.Directory.GetParent(AppPath).FullName, "DBInRun.dll");
+            return System.IO.File.Exists(sfile);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void LoadBasePathConfig()
+        {
+            if (IsWorkWithMars())
+            {
+                mBasePath = System.IO.Directory.GetParent(AppPath).FullName;
+                string sfile =  System.IO.Path.Combine(mBasePath, "BasePath.cfg");
+                if(System.IO.File.Exists(sfile))
+                {
+                    string txt = System.IO.File.ReadAllText(sfile, Encoding.UTF8);
+                    if (!string.IsNullOrWhiteSpace(txt) && System.IO.Directory.Exists(txt))
+                    {
+                        mBasePath = txt;
+                    }
+                }
+            }
+            else
+            {
+                string sfile = System.IO.Path.Combine(mAppPath, "BasePath.cfg");
+                if (System.IO.File.Exists(sfile))
+                {
+                    string txt = System.IO.File.ReadAllText(sfile, Encoding.UTF8);
+                    if (!string.IsNullOrWhiteSpace(txt) && System.IO.Directory.Exists(txt))
+                    {
+                        mBasePath = txt;
+                    }
+                }
+            }
+        }
 
         ///// <summary>
         ///// 

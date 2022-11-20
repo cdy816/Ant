@@ -130,7 +130,7 @@ namespace AntRuntime.Enginer
                 mExecuter.Add(new AlarmEnginerExecuter());
             }
             LoadTag();
-            mDataTagService = ServiceLocator.Locator.Resolve<IDataTagApi>().TagService;
+            mDataTagService = ServiceLocator.Locator.Resolve<IDataTagApi>()?.TagService;
             if(mDataTagService!=null)
             {
                 mDataTagService.RegistorTagChangeCallBack(DataTagValueChanged);

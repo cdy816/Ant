@@ -26,6 +26,9 @@ using DBDevelopClientApi;
 
 namespace InAntStudio
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class MainViewModel : ViewModelBase, IProcessNotify
     {
 
@@ -109,12 +112,24 @@ namespace InAntStudio
 
             mContentViewModel = infoModel;
 
+            mRootTagGroupModel.Owner = this;
         }
 
         
         #endregion ...Constructor...
 
         #region ... Properties ...
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public bool IsManualLogin
+        {
+            get
+            {
+                return string.IsNullOrEmpty(AutoLoginHelper.Helper.Server);
+            }
+        }
 
         /// <summary>
         /// 
@@ -1009,7 +1024,7 @@ namespace InAntStudio
         /// <summary>
         /// 
         /// </summary>
-        private void QueryGroups()
+        public void QueryGroups()
         {
             Application.Current?.Dispatcher.Invoke(() => {
                 this.mRootTagGroupModel.Children.Clear();

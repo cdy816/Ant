@@ -84,11 +84,10 @@
                             
                             <MultiTrigger>
                                 <MultiTrigger.Conditions>
-                                    <Condition Property="Selector.IsSelectionActive" Value="True"/>
                                     <Condition Property="IsSelected" Value="True"/>
                                 </MultiTrigger.Conditions>
                                 <Setter Property="Background" TargetName="Bd" Value="{StaticResource Item.SelectedActive.Background}"/>
-                                <Setter Property="BorderBrush" TargetName="Bd" Value="{StaticResource Item.SelectedActive.Border}"/>
+                                <!--<Setter Property="BorderBrush" TargetName="Bd" Value="{StaticResource Item.SelectedActive.Border}"/>-->
                             </MultiTrigger>
                             <Trigger Property="IsEnabled" Value="False">
                                 <Setter Property="Opacity" TargetName="Bd" Value="0.5"/>
@@ -101,7 +100,7 @@
     </UserControl.Resources>
     <Grid Margin="36,0">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto"  MinWidth="460"/>
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
         <Grid.Resources>
@@ -130,16 +129,16 @@
 
                     <StackPanel Orientation="Horizontal" Grid.Column="3">
                         <TextBlock Text="{local:ResMarker AlarmLevel}"  Foreground="{DynamicResource Window.Forground}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,0" />
-                        <ComboBox VerticalAlignment="Center" ItemsSource="{Binding AlarmLevels}" Width="100" SelectedItem="{Binding AlarmLevel}" />
+                        <ComboBox VerticalAlignment="Center" ItemsSource="{Binding AlarmLevels}" Width="160" SelectedIndex="{Binding AlarmLevel,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
                     </StackPanel>
 
                 </Grid>
             </DataTemplate>
         </Grid.Resources>
-        <ListBox ItemContainerStyle="{DynamicResource ListBoxItemContainerStyle1}" Style="{DynamicResource ListBoxStyle1}" ItemsSource="{Binding Items}"  SelectedItem="{Binding CurrentItem}" Background="Transparent" BorderThickness="0,0,1,0" >
+        <ListBox ItemContainerStyle="{DynamicResource ListBoxItemContainerStyle1}" Style="{DynamicResource ListBoxStyle1}" ItemsSource="{Binding Items}"  SelectedItem="{Binding CurrentItem,Mode=TwoWay}" Background="Transparent" BorderBrush="#1FFFFFFF" Margin="0,2,0,0" BorderThickness="0,0,0,0" >
             
         </ListBox>
-        <StackPanel Grid.Column="1">
+        <StackPanel Grid.Column="1" Margin="20,0,0,0">
             <Button Content="{local:ResMarker Add}" Command="{Binding AddItemCommand}" Width="80" Margin="5" />
             <Button Content="{local:ResMarker Remove}" Command="{Binding RemoveItemCommand}" Width="80" Margin="4" />
         </StackPanel>

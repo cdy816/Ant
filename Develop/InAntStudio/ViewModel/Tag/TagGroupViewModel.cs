@@ -9,11 +9,13 @@
 
 
 using DBDevelopClientApi;
+using Google.Protobuf.WellKnownTypes;
 using InAntStudio.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
@@ -74,6 +76,9 @@ namespace InAntStudio
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public override string FullName => (Parent!=null && !(Parent is RootTagGroupViewModel)) ? (Parent as TagGroupViewModel).FullName + "." + Name : Name;
 
         /// <summary>
@@ -307,10 +312,14 @@ namespace InAntStudio
         #endregion ...Interfaces...
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public class RootTagGroupViewModel : TagGroupViewModel
     {
 
         #region ... Variables  ...
+        private ICommand mImportFromMarsCommand;
         #endregion ...Variables...
 
         #region ... Events     ...
@@ -333,9 +342,200 @@ namespace InAntStudio
         /// </summary>
         public override string FullName => string.Empty;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        public ICommand ImportFromMarsCommand
+        {
+            get
+            {
+                if (mImportFromMarsCommand == null)
+                {
+                    mImportFromMarsCommand = new RelayCommand(() => {
+                        ImportFromMars();
+                    });
+                }
+                return mImportFromMarsCommand;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public MainViewModel Owner { get; set; }
+
         #endregion ...Properties...
 
         #region ... Methods    ...
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void ImportFromMars()
+        {
+            string database = ServiceHelper.Helper.Database;
+            string saddr = ServiceHelper.Helper.Server;
+            string pass = ServiceHelper.Helper.Password;
+            string user = ServiceHelper.Helper.UserName;
+
+            if (string.IsNullOrEmpty(database))
+            {
+                MarsSyncConfigViewModel viewModel = new MarsSyncConfigViewModel();
+                if (viewModel.ShowDialog().Value)
+                {
+                    database = viewModel.CurrentDatabase;
+                    saddr = viewModel.ServerAddress;
+                    pass = viewModel.ServerPassword;
+                    user = viewModel.ServerUserName;
+                }
+                else
+                {
+                    return;
+                }
+            }
+
+            if (!saddr.Contains(":"))
+            {
+                saddr = saddr + ":9000";
+            }
+
+            var client = GetClient(saddr, user, pass);
+            if(client==null)
+            {
+                MessageBox.Show(String.Format(Res.Get("ConnectServerErro"),saddr));
+                return;
+            }
+            var antgroups = ListAllGroup();
+            if(client!=null)
+            {
+                var grps = client.GetTagGroup(database);    
+                if(grps!=null)
+                {
+                    foreach(var grp in grps)
+                    {
+                        string sgroupname = grp.Name;
+                        if(!antgroups.Contains(sgroupname))
+                        {
+                            string sname = grp.Name;
+                            if(!string.IsNullOrEmpty(grp.Parent))
+                            {
+                                sname = grp.Name.Substring(grp.Parent.Length+1);
+                            }
+                            AddGroupInner(grp.Parent, sname);
+                        }
+                        SyncTagGroup(database, sgroupname, client);
+                    }
+
+                    Task.Run(() => {
+                        Owner?.QueryGroups();
+                    });
+                }
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="parent"></param>
+        /// <param name="group"></param>
+        /// <returns></returns>
+        public bool AddGroupInner(string parent,string group)
+        {
+            group = DevelopServiceHelper.Helper.AddTagGroup(this.Database, group, parent);
+            if (!string.IsNullOrEmpty(group))
+            {
+                return true;
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        List<string> ListAllGroup()
+        {
+            List<string> re = new List<string>();
+            var vvs = DevelopServiceHelper.Helper.QueryTagGroups(this.Database);
+            re.AddRange(vvs.Select(e => string.IsNullOrEmpty(e.Item3) ? e.Item1 : e.Item3 + "." + e.Item1));
+            return re;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="database"></param>
+        /// <param name="group"></param>
+        /// <param name="client"></param>
+        private void SyncTagGroup(string database, string group, DBDevelopClientWebApi.DevelopServiceHelper client)
+        {
+          
+            int currentpage = 0, pagecount = 10;
+            while (currentpage < pagecount)
+            {
+                var tags = client.GetTagByGroup(database, group, currentpage++, out pagecount);
+                var atags = ListTags(group);
+                foreach (var vv in tags)
+                {
+                    if(!atags.Contains(vv.Item1.Name))
+                    {
+                        var vtag = new MarsTagViewModel() { Name = vv.Item1.Name, Desc = vv.Item1.Desc, Type = vv.Item1.Type.ToString(), ReadWriteMode = vv.Item1.ReadWriteType.ToString(), Group = group };
+                        if (vv.Item1 is Cdy.Tag.NumberTagBase)
+                        {
+                            vtag.MaxValue = (vv.Item1 as Cdy.Tag.NumberTagBase).MaxValue;
+                            vtag.MinValue = (vv.Item1 as Cdy.Tag.NumberTagBase).MinValue;
+                        }
+                        if (vv.Item1 is Cdy.Tag.FloatingTagBase)
+                        {
+                            vtag.Precision = (vv.Item1 as Cdy.Tag.FloatingTagBase).Precision;
+                        }
+
+                        var tag = vtag.ConvertTo();
+                        tag.RealTagMode.Group = group;
+
+                        DevelopServiceHelper.Helper.AddTag(database, tag.RealTagMode, out int id);
+                    }
+                }
+            }
+        }
+
+        private DBDevelopClientWebApi.DevelopServiceHelper GetClient(string addr,string user,string pass)
+        {
+            DBDevelopClientWebApi.DevelopServiceHelper mHelper = new DBDevelopClientWebApi.DevelopServiceHelper();
+            mHelper.Server = addr;
+
+            if (!mHelper.Server.StartsWith("http://"))
+            {
+                mHelper.Server = "http://" + mHelper.Server;
+            }
+            if (mHelper.Login(user, pass))
+            {
+               
+                return mHelper;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="parent"></param>
+        /// <returns></returns>
+        private List<string> ListTags(string parent)
+        {
+            var tags = DevelopServiceHelper.Helper.QueryTagByGroup(this.Database, parent);
+            if(tags!=null)
+            {
+                return tags.Values.Select(e=>e.Name).ToList();
+            }
+            else
+            {
+                return null;
+            }
+        }
 
         /// <summary>
         /// 

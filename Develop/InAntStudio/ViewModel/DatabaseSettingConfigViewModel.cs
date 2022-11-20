@@ -194,7 +194,12 @@ namespace InAntStudio.ViewModel
         private void Init()
         {
             mSetting = DevelopServiceHelper.Helper.GetServerSetting(this.Database);
-            mApiKey = mSetting.ApiType;
+            if (mSetting != null)
+            {
+                mApiKey = mSetting.ApiType;
+                mProxyKey = mSetting.ProxyType;
+            }
+
             mApiConfig = ApiFactory.Factory.GetDevelopInstance(mApiKey);
 
             if (mApiConfig != null)
@@ -203,8 +208,6 @@ namespace InAntStudio.ViewModel
 
                 ApiConfigModel = mApiConfig.Config();
             }
-
-            mProxyKey = mSetting.ProxyType;
 
             mMessageConfig = ProxyServiceFactory.Factory.GetDevelopInstance(mProxyKey);
             if (mMessageConfig != null)

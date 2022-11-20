@@ -34,7 +34,7 @@ namespace DBDevelopService.Security
         /// </summary>
         public void Save()
         {
-            string sfile = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(this.GetType().Assembly.Location), "Sec.sdb");
+            string sfile = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(this.GetType().Assembly.Location), "Sec.asdb");
             System.IO.File.WriteAllText(sfile, Md5Helper.Encode(SaveToXML().ToString()));
         }
 
@@ -83,9 +83,12 @@ namespace DBDevelopService.Security
             return xe;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void Load()
         {
-            string sfile = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(this.GetType().Assembly.Location), "Sec.sdb");
+            string sfile = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(this.GetType().Assembly.Location), "Sec.asdb");
             if (System.IO.File.Exists(sfile))
             {
                 var txt = Md5Helper.Decode(System.IO.File.ReadAllText(sfile));

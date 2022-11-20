@@ -171,6 +171,9 @@
   <data name="Connect" xml:space="preserve">
     <value>Connect</value>
   </data>
+  <data name="ConnectServerErro" xml:space="preserve">
+    <value>Connect to server {0} failed.</value>
+  </data>
   <data name="Convert" xml:space="preserve">
     <value>Convert</value>
   </data>
@@ -599,6 +602,9 @@
   </data>
   <data name="Switch" xml:space="preserve">
     <value>Switch</value>
+  </data>
+  <data name="SyncFromMars" xml:space="preserve">
+    <value>Sync from mars</value>
   </data>
   <data name="Tag" xml:space="preserve">
     <value>Tag</value>

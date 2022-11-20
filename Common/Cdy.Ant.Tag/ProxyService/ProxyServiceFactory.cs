@@ -60,6 +60,17 @@ namespace Cdy.Ant
 
         #region ... Properties ...
 
+        /// <summary>
+        /// 
+        /// </summary>
+        public List<string> ProxyService
+        {
+            get
+            {
+                return mProxyService;
+            }
+        }
+
         #endregion ...Properties...
 
         #region ... Methods    ...

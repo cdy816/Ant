@@ -2,8 +2,8 @@
   "profiles": {
     "InAntStudio": {
       "commandName": "Executable",
-      "executablePath": "C:\\Users\\cdy81\\source\\repos\\cdy816\\Ant\\Output\\InAntStudio.exe",
-      "commandLineArgs": "localhost Admin Admin Test"
+      "executablePath": "C:\\Users\\cdy81\\source\\repos\\cdy816\\Ant\\Develop\\InAntStudio\\bin\\Debug\\net6.0-windows\\InAntStudio.exe",
+      "commandLineArgs": "localhost Admin Admin DT"
     }
   }
 }

@@ -50,7 +50,9 @@ namespace InAntDevelopServer
         {
             try
             {
+             
                 LoggerService.Service.Info("Service", "Ready to start....");
+                ApiFactory.Factory.LoadForDevelop();
                 DbManager.Instance.PartLoad();
                 if (isEnableGrpc)
                     grpcDBService.Start(grpcPort);

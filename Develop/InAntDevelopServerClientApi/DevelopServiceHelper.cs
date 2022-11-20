@@ -299,7 +299,7 @@ namespace DBDevelopClientApi
         /// 
         /// </summary>
         /// <returns></returns>
-        public Dictionary<string,string> ListDatabase()
+        public Dictionary<string, string> ListDatabase()
         {
             var re = new Dictionary<string, string>();
             try
@@ -307,9 +307,10 @@ namespace DBDevelopClientApi
                 if (mCurrentClient != null && !string.IsNullOrEmpty(mLoginId))
                 {
                     var vv = mCurrentClient.QueryAntDatabase(new AntDevelopServer.QueryDatabaseRequest() { LoginId = mLoginId }).Database.ToList();
-                    foreach(var vvv in vv)
+                    foreach (var vvv in vv)
                     {
-                        re.Add(vvv.Key, vvv.Value);
+                        if (!re.ContainsKey(vvv.Key))
+                            re.Add(vvv.Key, vvv.Value);
                     }
                 }
             }
@@ -867,7 +868,12 @@ namespace DBDevelopClientApi
             if (mCurrentClient != null && !string.IsNullOrEmpty(mLoginId))
             {
                 var res = mCurrentClient.GetServerSetting(new AntDevelopServer.DatabasesRequest() { Database = database, LoginId = mLoginId });
-                return new Setting() { ApiType = res.Value.ApiKey, ApiData = !string.IsNullOrEmpty(res.Value.ApiValue) ? XElement.Parse(res.Value.ApiValue):null,ProxyType = res.Value.ProxyKey, ProxyData = !string.IsNullOrEmpty(res.Value.ProxyValue) ? XElement.Parse(res.Value.ProxyValue) : null };
+                if (res.Value != null)
+                    return new Setting() { ApiType = res.Value.ApiKey, ApiData = !string.IsNullOrEmpty(res.Value.ApiValue) ? XElement.Parse(res.Value.ApiValue) : null, ProxyType = res.Value.ProxyKey, ProxyData = !string.IsNullOrEmpty(res.Value.ProxyValue) ? XElement.Parse(res.Value.ProxyValue) : null };
+                else
+                {
+                    return new Setting();
+                }
             }
             else
             {
@@ -991,9 +997,12 @@ namespace DBDevelopClientApi
             }
             else if (tag is Cdy.Ant.AnalogRangeAlarmTag)
             {
-                foreach (var vv in (tag as Cdy.Ant.AnalogRangeAlarmTag).Items)
+                if ((tag as Cdy.Ant.AnalogRangeAlarmTag).Items!=null)
                 {
-                    re.Append(vv.ToString() + ";");
+                    foreach (var vv in (tag as Cdy.Ant.AnalogRangeAlarmTag).Items)
+                    {
+                        re.Append(vv.ToString() + ";");
+                    }
                 }
             }
             else if (tag is Cdy.Ant.DigitalAlarmTag)

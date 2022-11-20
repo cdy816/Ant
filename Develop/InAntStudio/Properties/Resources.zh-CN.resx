@@ -171,6 +171,9 @@
   <data name="Connect" xml:space="preserve">
     <value>连接</value>
   </data>
+  <data name="ConnectServerErro" xml:space="preserve">
+    <value>连接服务器 {0} 失败.</value>
+  </data>
   <data name="Convert" xml:space="preserve">
     <value>转换</value>
   </data>
@@ -599,6 +602,9 @@
   </data>
   <data name="Switch" xml:space="preserve">
     <value>切换</value>
+  </data>
+  <data name="SyncFromMars" xml:space="preserve">
+    <value>从数据库同步</value>
   </data>
   <data name="Tag" xml:space="preserve">
     <value>变量</value>

@@ -38,12 +38,14 @@ namespace DBDevelopService
 
         #region ... Methods    ...
 
+
+
         /// <summary>
         /// 
         /// </summary>
         public void Load()
         {
-            string databasePath = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(this.GetType().Assembly.Location) , "Data");
+            string databasePath = PathHelper.helper.DataPath;
             
             if (System.IO.Directory.Exists(databasePath))
             {
@@ -68,7 +70,7 @@ namespace DBDevelopService
         /// </summary>
         public void PartLoad()
         {
-            string databasePath = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(this.GetType().Assembly.Location), "Data");
+            string databasePath = PathHelper.helper.DataPath;
 
             if (System.IO.Directory.Exists(databasePath))
             {
@@ -111,7 +113,7 @@ namespace DBDevelopService
         /// </summary>
         public void QuickReload()
         {
-            string databasePath = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(this.GetType().Assembly.Location), "Data");
+            string databasePath = PathHelper.helper.DataPath;
 
             if (System.IO.Directory.Exists(databasePath))
             {
@@ -134,7 +136,7 @@ namespace DBDevelopService
         public List<string> ListMarsDatabase()
         {
             List<string> ll = new List<string>();
-            string databasePath = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(this.GetType().Assembly.Location), "Data");
+            string databasePath = PathHelper.helper.DataPath;
             if (System.IO.Directory.Exists(databasePath))
             {
                 foreach (var vv in System.IO.Directory.EnumerateDirectories(databasePath))
@@ -152,7 +154,7 @@ namespace DBDevelopService
         /// <param name="database"></param>
         public void ReLoad(string database)
         {
-            string databasePath = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(this.GetType().Assembly.Location), "Data");
+            string databasePath = PathHelper.helper.DataPath;
 
             if (System.IO.Directory.Exists(databasePath))
             {

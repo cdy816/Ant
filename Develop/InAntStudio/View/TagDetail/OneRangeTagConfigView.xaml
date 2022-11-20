@@ -29,7 +29,7 @@
 
         <StackPanel Orientation="Horizontal" Grid.Column="2" Margin="5,0">
             <TextBlock Text="{local:ResMarker AlarmLevel}"  Foreground="{DynamicResource Window.Forground}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,0" />
-            <ComboBox VerticalAlignment="Center" ItemsSource="{Binding AlarmLevels}" Width="100" SelectedItem="{Binding AlarmLevel}" />
+            <ComboBox VerticalAlignment="Center" ItemsSource="{Binding AlarmLevels}" Width="100" SelectedIndex="{Binding AlarmLevel,Mode=TwoWay}" />
         </StackPanel>
 
     </Grid>

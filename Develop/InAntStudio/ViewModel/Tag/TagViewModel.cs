@@ -39,6 +39,8 @@ namespace InAntStudio
 
         private ICommand mClearLinkTagsCommand;
 
+
+
         #endregion ...Variables...
 
         #region ... Events     ...
@@ -85,6 +87,8 @@ namespace InAntStudio
                 return mClearLinkTagsCommand;
             }
         }
+
+
 
         /// <summary>
         /// 
@@ -419,6 +423,8 @@ namespace InAntStudio
         #endregion ...Properties....
 
         #region ... Methods    ...
+
+
 
         /// <summary>
         /// 
@@ -1420,7 +1426,9 @@ namespace InAntStudio
             }
         }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
         public ICommand AddItemCommand
         {
             get
@@ -1445,11 +1453,25 @@ namespace InAntStudio
             {
                 if(mRemoveItemCommand==null)
                 {
-                    mRemoveItemCommand = new RelayCommand(() => { 
+                    mRemoveItemCommand = new RelayCommand(() => {
+                        int id = Items.Count - 1;
                         if(CurrentItem!=null)
                         {
-                            CurrentItem.PropertyChanged += Mm_PropertyChanged;
+                            CurrentItem.PropertyChanged -= Mm_PropertyChanged;
+                            id=Items.IndexOf(CurrentItem);
                             Items.Remove(CurrentItem);
+                            if(id>=Items.Count)
+                            {
+                                id=Items.Count-1;
+                            }
+                        }
+                        if(id>=0 && id<Items.Count)
+                        {
+                            CurrentItem = Items[id];
+                        }
+                        else
+                        {
+                            CurrentItem=null;
                         }
                     },()=> { return CurrentItem != null; });
                 }
@@ -1482,6 +1504,7 @@ namespace InAntStudio
             AnalogRangTagItemConfigViewModel mm = new AnalogRangTagItemConfigViewModel() { Model = item };
             mm.PropertyChanged += Mm_PropertyChanged;
             mItems.Add(mm);
+            CurrentItem = mm;
         }
 
         /// <summary>
@@ -1578,15 +1601,15 @@ namespace InAntStudio
         {
             get
             {
-                return (byte)mModel.AlarmLevel;
+                return (int)mModel.AlarmLevel;
             }
             set
             {
                 if ((int)mModel.AlarmLevel != value)
                 {
                     mModel.AlarmLevel = (Cdy.Ant.AlarmLevel) value;
-                    OnPropertyChanged("AlarmLevel");
                 }
+                OnPropertyChanged("AlarmLevel");
             }
         }
 

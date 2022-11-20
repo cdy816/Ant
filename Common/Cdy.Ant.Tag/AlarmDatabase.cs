@@ -401,7 +401,7 @@ namespace Cdy.Ant
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="tag"></param>
         /// <returns></returns>
         public bool RemoveWithoutGroupProcess(Tagbase tag)
         {

@@ -16,7 +16,7 @@
     <None Remove="Image\add.png" />
     <None Remove="Image\AllSelect.png" />
     <None Remove="Image\Ant.ico" />
-    <None Remove="Image\AntBackground.png" />
+    <None Remove="Image\AntBackground2.jpg" />
     <None Remove="Image\cancel.png" />
     <None Remove="Image\cancelSave.png" />
     <None Remove="Image\cellselect.png" />
@@ -56,7 +56,7 @@
 
   <ItemGroup>
     <PackageReference Include="Cdy.Spider.CalculateExpressEditor" Version="1.0.2" />
-    <PackageReference Include="Mars.DBDevelopClientWebApi" Version="1.0.5" />
+    <PackageReference Include="Mars.DBDevelopClientWebApi" Version="1.0.8" />
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="3.11.0" />
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Features" Version="3.11.0" />
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Scripting" Version="3.11.0" />
@@ -72,7 +72,7 @@
     <Resource Include="Image\add.png" />
     <Resource Include="Image\AllSelect.png" />
     <Resource Include="Image\Ant.ico" />
-    <Resource Include="Image\AntBackground.png" />
+    <Resource Include="Image\AntBackground2.jpg" />
     <Resource Include="Image\cancel.png" />
     <Resource Include="Image\cancelSave.png" />
     <Resource Include="Image\cellselect.png" />

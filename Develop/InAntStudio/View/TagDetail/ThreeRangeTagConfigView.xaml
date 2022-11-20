@@ -22,7 +22,7 @@
 
         <StackPanel Orientation="Horizontal" Grid.Column="1"  Margin="5,0" >
             <TextBlock Text="{local:ResMarker AlarmLevel}"  Foreground="{DynamicResource Window.Forground}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,0" />
-            <ComboBox Margin="5,0" VerticalAlignment="Center" ItemsSource="{Binding AlarmLevels}" Width="100" SelectedItem="{Binding AlarmLevel}" />
+            <ComboBox Margin="5,0" VerticalAlignment="Center" ItemsSource="{Binding AlarmLevels}" Width="100" SelectedIndex="{Binding AlarmLevel,Mode=TwoWay}" />
         </StackPanel>
 
         <TextBlock Text="{local:ResMarker Points}"  Grid.Row="1" Foreground="{DynamicResource Window.Forground}" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5,0" />

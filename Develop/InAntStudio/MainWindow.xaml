@@ -7,7 +7,7 @@
        ResizeMode="CanResizeWithGrip"
         
         mc:Ignorable="d"  Foreground="{DynamicResource Window.Forground}" Background="Transparent" AllowsTransparency="True" WindowStyle="None" 
-        Title="{Binding MainwindowTitle}" Height="768" Width="1024" WindowState="Normal" WindowStartupLocation="CenterScreen" Icon="/Image/Ant.ico">
+        Title="{Binding MainwindowTitle}" Height="620" Width="1024" WindowState="Normal" WindowStartupLocation="CenterScreen" Icon="/Image/Ant.ico">
     <Window.Resources>
         <local:IndexConverter x:Key="ic" />
         <BooleanToVisibilityConverter x:Key="btv" />
@@ -106,15 +106,23 @@
     </Window.Resources>
     <Border x:Name="bd"  Margin="0"  BorderBrush="DarkGray" >
         <Border.Background>
-            <ImageBrush x:Name="bgi" ImageSource="/Image/AntBackground.png" Opacity="0.6" Stretch="None" TileMode="FlipXY"/>
+            <ImageBrush x:Name="bgi" ImageSource="/Image/AntBackground2.jpg" Opacity="0.8" Stretch="Fill" TileMode="FlipXY"/>
         </Border.Background>
-        <Grid x:Name="bg" Background="#9F26282C">
+        <Grid x:Name="bg" >
             <Grid.RowDefinitions>
                 <RowDefinition Height="32"/>
                 <RowDefinition Height="48"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <Grid Background="#9F000000"  MouseMove="Grid_MouseMove" MouseLeftButtonUp="Grid_MouseLeftButtonUp" MouseLeftButtonDown="Grid_MouseLeftButtonDown">
+            <Grid.Background>
+                <RadialGradientBrush RadiusX="1" RadiusY="1" Center="0.5,0.5" GradientOrigin="0.5,0.1">
+                    <RadialGradientBrush.GradientStops>
+                        <GradientStop Color="#7F000000" Offset="0" />
+                        <GradientStop Color="#01000000" Offset="1" />
+                    </RadialGradientBrush.GradientStops>
+                </RadialGradientBrush>
+            </Grid.Background>
+            <Grid Background="#AF000000"  MouseMove="Grid_MouseMove" MouseLeftButtonUp="Grid_MouseLeftButtonUp" MouseLeftButtonDown="Grid_MouseLeftButtonDown">
                 <ProgressBar x:Name="pb" Maximum="100"  Minimum="0" Value="{Binding ProcessNotify}" Background="Transparent" VerticalAlignment="Top" Height="32" BorderThickness="0" BorderBrush="Transparent" />
                 <Label Content="{Binding Value,ElementName=pb,Converter={StaticResource dfc}}"  Foreground="{DynamicResource Window.Forground}"  Visibility="{Binding NotifyVisiblity}" HorizontalAlignment="Center" VerticalAlignment="Top" VerticalContentAlignment="Center"  FontSize="16"  Height="32"/>
                 
@@ -155,7 +163,7 @@
             <Border Grid.Row="1" BorderThickness="0,0,0,1" BorderBrush="LightGray" Background="#4F000000">
                 <Grid>
                     <StackPanel Orientation="Horizontal">
-                        <Grid Margin="10,0,0,0">
+                        <Grid Margin="10,0,0,0" Visibility="{Binding IsManualLogin,Converter={StaticResource btv}}">
                             <Button BorderThickness="0" ToolTip="{local:ResMarker Login}" Visibility="{Binding IsLoginOut,Converter={StaticResource btv}}"  Command="{Binding LoginCommand}" HorizontalAlignment="Left"   Height="32"  VerticalAlignment="Center" Width="80"  >
                                 <Button.ContentTemplate>
                                     <DataTemplate>
@@ -190,7 +198,7 @@
                             </Button.ContentTemplate>
                         </Button>-->
 
-                        <Button BorderThickness="0"  ToolTip="{local:ResMarker Switch}"  Command="{Binding DatabaseSelectCommand}" HorizontalAlignment="Left"  Margin="10,0,0,0" Height="32"  VerticalAlignment="Center" Width="80" >
+                        <Button BorderThickness="0"  ToolTip="{local:ResMarker Switch}"  Visibility="{Binding IsManualLogin,Converter={StaticResource btv}}" Command="{Binding DatabaseSelectCommand}" HorizontalAlignment="Left"  Margin="10,0,0,0" Height="32"  VerticalAlignment="Center" Width="80" >
                             <Button.ContentTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal">
@@ -201,7 +209,7 @@
                             </Button.ContentTemplate>
                         </Button>
 
-                        <Border BorderBrush="LightGray" BorderThickness="1,0,0,0" Width="2" VerticalAlignment="Stretch" Margin="2,4" />
+                        <Border BorderBrush="LightGray" BorderThickness="1,0,0,0"  Visibility="{Binding IsManualLogin,Converter={StaticResource btv}}" Width="2" VerticalAlignment="Stretch" Margin="2,4" />
 
                         <Button BorderThickness="0" ToolTip="{local:ResMarker Save}"  Command="{Binding SaveCommand}" HorizontalAlignment="Left"  Margin="10,0,0,0" Height="32"  VerticalAlignment="Center" Width="80" >
                             <Button.ContentTemplate>
@@ -320,6 +328,12 @@
                             <MenuItem Header="{local:ResMarker Paste}" Command="{Binding PasteCommand}" />
                         </ContextMenu>
 
+                        <ContextMenu x:Key="roottaggroupMenu">
+                            <MenuItem Header="{local:ResMarker Add}"  Command="{Binding AddCommand}" />
+                            <MenuItem Header="{local:ResMarker Paste}" Command="{Binding PasteCommand}" />
+                            <MenuItem Header="{local:ResMarker SyncFromMars}" Command="{Binding ImportFromMarsCommand}" />
+                        </ContextMenu>
+
                         <HierarchicalDataTemplate  DataType="{x:Type local:TagGroupViewModel}"  ItemsSource="{Binding Children}" >
                             <StackPanel Orientation="Horizontal" Height="24"  Background="Transparent">
                                 <Image Focusable="False" Source="/Image/文件夹.png"  Margin="0,0,4,0" Height="18" VerticalAlignment="Center" RenderOptions.BitmapScalingMode="NearestNeighbor"/>
@@ -352,7 +366,7 @@
                         </DataTemplate>
 
                         <HierarchicalDataTemplate  DataType="{x:Type local:RootTagGroupViewModel}"  ItemsSource="{Binding Children}">
-                            <StackPanel ContextMenu="{StaticResource rootgroupMenu}" Orientation="Horizontal" Height="24"  Background="Transparent">
+                            <StackPanel ContextMenu="{StaticResource roottaggroupMenu}" Orientation="Horizontal" Height="24"  Background="Transparent">
                                 <Image Focusable="False" Source="/Image/文件夹.png" VerticalAlignment="Center" Margin="0,0,4,0" Height="18" RenderOptions.BitmapScalingMode="NearestNeighbor"/>
                                 <TextBlock Foreground="{DynamicResource Window.Forground}" Text="{Binding Name}" VerticalAlignment="Center" />
                             </StackPanel>

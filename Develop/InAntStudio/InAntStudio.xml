@@ -770,6 +770,212 @@
             
             </summary>
         </member>
+        <member name="T:InAntStudio.View.MarsSyncConfigView">
+            <summary>
+            MarsSyncConfigView.xaml 的交互逻辑
+            </summary>
+            <summary>
+            MarsSyncConfigView
+            </summary>
+        </member>
+        <member name="M:InAntStudio.View.MarsSyncConfigView.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.View.MarsSyncConfigView.MarsSyncConfigView_Loaded(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:InAntStudio.View.MarsSyncConfigView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:InAntStudio.View.DatabaseSettingView">
+            <summary>
+            DatabaseSettingView.xaml 的交互逻辑
+            </summary>
+            <summary>
+            DatabaseSettingView
+            </summary>
+        </member>
+        <member name="M:InAntStudio.View.DatabaseSettingView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:InAntStudio.View.IdResetView">
+            <summary>
+            IdResetView.xaml 的交互逻辑
+            </summary>
+            <summary>
+            IdResetView
+            </summary>
+        </member>
+        <member name="M:InAntStudio.View.IdResetView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:InAntStudio.View.ImportModeSelectView">
+            <summary>
+            ImportModeSelectView.xaml 的交互逻辑
+            </summary>
+            <summary>
+            ImportModeSelectView
+            </summary>
+        </member>
+        <member name="M:InAntStudio.View.ImportModeSelectView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:InAntStudio.View.ListDatabaseView">
+            <summary>
+            ListDatabaseView.xaml 的交互逻辑
+            </summary>
+            <summary>
+            ListDatabaseView
+            </summary>
+        </member>
+        <member name="M:InAntStudio.View.ListDatabaseView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:InAntStudio.View.LoginView">
+            <summary>
+            LoginView.xaml 的交互逻辑
+            </summary>
+            <summary>
+            LoginView
+            </summary>
+        </member>
+        <member name="M:InAntStudio.View.LoginView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:InAntStudio.View.MarInfoView">
+            <summary>
+            MarInfoView.xaml 的交互逻辑
+            </summary>
+            <summary>
+            MarInfoView
+            </summary>
+        </member>
+        <member name="M:InAntStudio.View.MarInfoView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:InAntStudio.View.NewDatabaseView">
+            <summary>
+            NewDatabaseView.xaml 的交互逻辑
+            </summary>
+            <summary>
+            NewDatabaseView
+            </summary>
+        </member>
+        <member name="M:InAntStudio.View.NewDatabaseView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:InAntStudio.View.ScriptNewView">
+            <summary>
+            ScriptNewView.xaml 的交互逻辑
+            </summary>
+            <summary>
+            ScriptNewView
+            </summary>
+        </member>
+        <member name="M:InAntStudio.View.ScriptNewView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:InAntStudio.View.TagGroupDetailView">
+            <summary>
+            TagGroupDetailView.xaml 的交互逻辑
+            </summary>
+            <summary>
+            TagGroupDetailView
+            </summary>
+        </member>
+        <member name="M:InAntStudio.View.TagGroupDetailView.GetVisualParent(System.Windows.DependencyObject,System.Collections.Generic.List{System.String})">
+            <summary>
+            
+            </summary>
+            <param name="target"></param>
+            <param name="ll"></param>
+        </member>
+        <member name="M:InAntStudio.View.TagGroupDetailView.DataGrid_SelectedCellsChanged(System.Object,System.Windows.Controls.SelectedCellsChangedEventArgs)">
+            <summary>
+            
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:InAntStudio.View.TagGroupDetailView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:InAntStudio.MarsSyncConfigViewModel">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.MarsSyncConfigViewModel.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.MarsSyncConfigViewModel.Databases">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.MarsSyncConfigViewModel.CurrentDatabase">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.MarsSyncConfigViewModel.ServerPassword">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.MarsSyncConfigViewModel.ServerAddress">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.MarsSyncConfigViewModel.ServerUserName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.MarsSyncConfigViewModel.PreLoadDatabase">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.MarsSyncConfigViewModel.Load">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.MarsSyncConfigViewModel.LoadConfig">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:InAntStudio.MarsTagBrowserView">
             <summary>
             TagBrowserView.xaml 的交互逻辑
@@ -2814,7 +3020,17 @@
             
             </summary>
         </member>
+        <member name="T:InAntStudio.MainViewModel">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="M:InAntStudio.MainViewModel.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.MainViewModel.IsManualLogin">
             <summary>
             
             </summary>
@@ -3052,6 +3268,11 @@
             <param name="name"></param>
             <param name="description"></param>
         </member>
+        <member name="P:InAntStudio.TagGroupViewModel.FullName">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="P:InAntStudio.TagGroupViewModel.Description">
             <summary>
             
@@ -3139,6 +3360,11 @@
             </summary>
             <param name="groups"></param>
         </member>
+        <member name="T:InAntStudio.RootTagGroupViewModel">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="M:InAntStudio.RootTagGroupViewModel.#ctor">
             <summary>
             
@@ -3148,6 +3374,50 @@
             <summary>
             
             </summary>
+        </member>
+        <member name="P:InAntStudio.RootTagGroupViewModel.ImportFromMarsCommand">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.RootTagGroupViewModel.Owner">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.RootTagGroupViewModel.ImportFromMars">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.RootTagGroupViewModel.AddGroupInner(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="parent"></param>
+            <param name="group"></param>
+            <returns></returns>
+        </member>
+        <member name="M:InAntStudio.RootTagGroupViewModel.ListAllGroup">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:InAntStudio.RootTagGroupViewModel.SyncTagGroup(System.String,System.String,DBDevelopClientWebApi.DevelopServiceHelper)">
+            <summary>
+            
+            </summary>
+            <param name="database"></param>
+            <param name="group"></param>
+            <param name="client"></param>
+        </member>
+        <member name="M:InAntStudio.RootTagGroupViewModel.ListTags(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="parent"></param>
+            <returns></returns>
         </member>
         <member name="M:InAntStudio.RootTagGroupViewModel.CanRemove">
             <summary>
@@ -3580,6 +3850,11 @@
             </summary>
         </member>
         <member name="P:InAntStudio.AnalogRangTagConfigViewModel.CurrentItem">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.AnalogRangTagConfigViewModel.AddItemCommand">
             <summary>
             
             </summary>
@@ -4168,137 +4443,6 @@
             
             </summary>
         </member>
-        <member name="T:InAntStudio.View.DatabaseSettingView">
-            <summary>
-            DatabaseSettingView.xaml 的交互逻辑
-            </summary>
-            <summary>
-            DatabaseSettingView
-            </summary>
-        </member>
-        <member name="M:InAntStudio.View.DatabaseSettingView.InitializeComponent">
-            <summary>
-            InitializeComponent
-            </summary>
-        </member>
-        <member name="T:InAntStudio.View.IdResetView">
-            <summary>
-            IdResetView.xaml 的交互逻辑
-            </summary>
-            <summary>
-            IdResetView
-            </summary>
-        </member>
-        <member name="M:InAntStudio.View.IdResetView.InitializeComponent">
-            <summary>
-            InitializeComponent
-            </summary>
-        </member>
-        <member name="T:InAntStudio.View.ImportModeSelectView">
-            <summary>
-            ImportModeSelectView.xaml 的交互逻辑
-            </summary>
-            <summary>
-            ImportModeSelectView
-            </summary>
-        </member>
-        <member name="M:InAntStudio.View.ImportModeSelectView.InitializeComponent">
-            <summary>
-            InitializeComponent
-            </summary>
-        </member>
-        <member name="T:InAntStudio.View.ListDatabaseView">
-            <summary>
-            ListDatabaseView.xaml 的交互逻辑
-            </summary>
-            <summary>
-            ListDatabaseView
-            </summary>
-        </member>
-        <member name="M:InAntStudio.View.ListDatabaseView.InitializeComponent">
-            <summary>
-            InitializeComponent
-            </summary>
-        </member>
-        <member name="T:InAntStudio.View.LoginView">
-            <summary>
-            LoginView.xaml 的交互逻辑
-            </summary>
-            <summary>
-            LoginView
-            </summary>
-        </member>
-        <member name="M:InAntStudio.View.LoginView.InitializeComponent">
-            <summary>
-            InitializeComponent
-            </summary>
-        </member>
-        <member name="T:InAntStudio.View.MarInfoView">
-            <summary>
-            MarInfoView.xaml 的交互逻辑
-            </summary>
-            <summary>
-            MarInfoView
-            </summary>
-        </member>
-        <member name="M:InAntStudio.View.MarInfoView.InitializeComponent">
-            <summary>
-            InitializeComponent
-            </summary>
-        </member>
-        <member name="T:InAntStudio.View.NewDatabaseView">
-            <summary>
-            NewDatabaseView.xaml 的交互逻辑
-            </summary>
-            <summary>
-            NewDatabaseView
-            </summary>
-        </member>
-        <member name="M:InAntStudio.View.NewDatabaseView.InitializeComponent">
-            <summary>
-            InitializeComponent
-            </summary>
-        </member>
-        <member name="T:InAntStudio.View.ScriptNewView">
-            <summary>
-            ScriptNewView.xaml 的交互逻辑
-            </summary>
-            <summary>
-            ScriptNewView
-            </summary>
-        </member>
-        <member name="M:InAntStudio.View.ScriptNewView.InitializeComponent">
-            <summary>
-            InitializeComponent
-            </summary>
-        </member>
-        <member name="T:InAntStudio.View.TagGroupDetailView">
-            <summary>
-            TagGroupDetailView.xaml 的交互逻辑
-            </summary>
-            <summary>
-            TagGroupDetailView
-            </summary>
-        </member>
-        <member name="M:InAntStudio.View.TagGroupDetailView.GetVisualParent(System.Windows.DependencyObject,System.Collections.Generic.List{System.String})">
-            <summary>
-            
-            </summary>
-            <param name="target"></param>
-            <param name="ll"></param>
-        </member>
-        <member name="M:InAntStudio.View.TagGroupDetailView.DataGrid_SelectedCellsChanged(System.Object,System.Windows.Controls.SelectedCellsChangedEventArgs)">
-            <summary>
-            
-            </summary>
-            <param name="sender"></param>
-            <param name="e"></param>
-        </member>
-        <member name="M:InAntStudio.View.TagGroupDetailView.InitializeComponent">
-            <summary>
-            InitializeComponent
-            </summary>
-        </member>
         <member name="T:InAntStudio.AnalogRangTagConfigView">
             <summary>
             AnalogRangTagConfigView.xaml 的交互逻辑
@@ -4841,36 +4985,6 @@
             </summary>
             <param name="source">触发者</param>
             <param name="msg">消息内容</param>
-        </member>
-        <member name="T:XamlGeneratedNamespace.GeneratedInternalTypeHelper">
-            <summary>
-            GeneratedInternalTypeHelper
-            </summary>
-        </member>
-        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.CreateInstance(System.Type,System.Globalization.CultureInfo)">
-            <summary>
-            CreateInstance
-            </summary>
-        </member>
-        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.GetPropertyValue(System.Reflection.PropertyInfo,System.Object,System.Globalization.CultureInfo)">
-            <summary>
-            GetPropertyValue
-            </summary>
-        </member>
-        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.SetPropertyValue(System.Reflection.PropertyInfo,System.Object,System.Object,System.Globalization.CultureInfo)">
-            <summary>
-            SetPropertyValue
-            </summary>
-        </member>
-        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.CreateDelegate(System.Type,System.Object,System.String)">
-            <summary>
-            CreateDelegate
-            </summary>
-        </member>
-        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.AddEventHandler(System.Reflection.EventInfo,System.Object,System.Delegate)">
-            <summary>
-            AddEventHandler
-            </summary>
         </member>
     </members>
 </doc>
