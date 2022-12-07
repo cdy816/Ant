@@ -40,13 +40,19 @@ namespace InAntStudio.ViewModel
         private ICommand mImportCommand;
         private ICommand mExportCommand;
 
+
+
         private ICommand mImportFromMarsCommand;
         private ICommand mAddFromMarsOnlineCommand;
 
         private ICommand mCopyCommand;
         private ICommand mCellCopyCommand;
+        private ICommand mAlarmCopyCommand;
+
+
         private ICommand mPasteCommand;
         private ICommand mCellPasteCommand;
+        private ICommand mAlarmPasteCommand;
 
         private ICommand mReplaceCommand;
 
@@ -75,6 +81,8 @@ namespace InAntStudio.ViewModel
         private bool mEnableFilter = true;
 
         private Tuple<TagViewModel, int> mPropertyCopy;
+
+        private AlarmConfigDoc mAlarmCopy;
 
         private DataGridSelectionUnit mSelectMode = DataGridSelectionUnit.FullRow;
 
@@ -344,6 +352,24 @@ namespace InAntStudio.ViewModel
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        public ICommand AlarmCopyCommand
+        {
+            get
+            {
+                if(mAlarmCopyCommand==null)
+                {
+                    mAlarmCopyCommand = new RelayCommand(() =>
+                    {
+                        CopyAlarmConfig();
+                    });
+                }
+                return mAlarmCopyCommand;
+            }
+        }
+
 
         /// <summary>
         /// 
@@ -361,6 +387,24 @@ namespace InAntStudio.ViewModel
                 return mPasteCommand;
             }
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public ICommand AlarmPasteCommand
+        {
+            get
+            {
+                if(mAlarmPasteCommand==null)
+                {
+                    mAlarmPasteCommand = new RelayCommand(() => {
+                        PasteAlarmConfig();
+                    }, () => { return mAlarmCopy != null; });
+                }
+                return mAlarmPasteCommand;
+            }
+        }
+
 
         /// <summary>
         /// 
@@ -1103,6 +1147,17 @@ namespace InAntStudio.ViewModel
         /// <summary>
         /// 
         /// </summary>
+        public void CopyAlarmConfig()
+        {
+            var tm = grid.SelectedItem as TagViewModel;
+            if (tm != null) { 
+                this.mAlarmCopy = tm.TagDetailModel.CloneAlarmConfig();
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         private void CopyTagProperty()
         {
             if(this.SelectedCells.Count()>0)
@@ -1138,6 +1193,15 @@ namespace InAntStudio.ViewModel
                     CurrentSelectTag = tm;
             }
             TagCount += mCopyTags.Count;
+        }
+
+        private void PasteAlarmConfig()
+        {
+            var tm = grid.SelectedItem as TagViewModel;
+            if (tm != null)
+            {
+                tm.TagDetailModel.ParsteAlarmConfig(this.mAlarmCopy);
+            }
         }
 
         /// <summary>

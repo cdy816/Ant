@@ -132,11 +132,17 @@
   <data name="AddTagFail" xml:space="preserve">
     <value>添加变量 {0} 失败!</value>
   </data>
+  <data name="AlarmCopy" xml:space="preserve">
+    <value>报警配置拷贝   Shift+C</value>
+  </data>
   <data name="AlarmEnable" xml:space="preserve">
     <value>使能</value>
   </data>
   <data name="AlarmLevel" xml:space="preserve">
     <value>等级</value>
+  </data>
+  <data name="AlarmPaste" xml:space="preserve">
+    <value>报警配置粘贴   Shift+V</value>
   </data>
   <data name="AlarmTag" xml:space="preserve">
     <value>关联变量</value>
@@ -456,10 +462,10 @@
     <value>精度</value>
   </data>
   <data name="PropertyCopy" xml:space="preserve">
-    <value>拷贝属性</value>
+    <value>拷贝属性  Alt+C</value>
   </data>
   <data name="PropertyPaste" xml:space="preserve">
-    <value>粘贴属性</value>
+    <value>粘贴属性  Alt+V</value>
   </data>
   <data name="PulseType" xml:space="preserve">
     <value>触发类型</value>

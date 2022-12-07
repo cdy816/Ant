@@ -146,6 +146,10 @@ namespace Cdy.Ant
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        public bool IsLoaded { get; set; }
 
         #region ITagManager
         /// <summary>

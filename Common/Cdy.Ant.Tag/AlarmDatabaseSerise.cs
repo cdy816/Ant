@@ -253,6 +253,8 @@ namespace Cdy.Ant
                 }
 
                 db.MinId = db.Tags.Count > 0 ? db.Tags.Keys.Min() : 0;
+
+                db.IsLoaded= true;
             }
         }
 
@@ -359,6 +361,7 @@ namespace Cdy.Ant
             }
             db.IsDirty = false;
             this.Database = db;
+            db.IsLoaded = true;
             return db;
         }
 

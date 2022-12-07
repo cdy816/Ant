@@ -20,8 +20,14 @@
             <MenuItem Header="{local:ResMarker Remove}" Command="{Binding RemoveCommand}" />
             <MenuItem Header="{local:ResMarker Copy}" Command="{Binding CopyCommand}" />
             <MenuItem Header="{local:ResMarker Paste}" Command="{Binding PasteCommand}" />
+
+            
             <MenuItem Header="{local:ResMarker PropertyCopy}" Command="{Binding CellCopyCommand}" />
             <MenuItem Header="{local:ResMarker PropertyPaste}" Command="{Binding CellPasteCommand}" />
+
+            <MenuItem Header="{local:ResMarker AlarmCopy}" Command="{Binding AlarmCopyCommand}" />
+            <MenuItem Header="{local:ResMarker AlarmPaste}" Command="{Binding AlarmPasteCommand}" />
+            
             <Separator/>
             <MenuItem Header="{local:ResMarker Import}" Command="{Binding ImportCommand}" />
             <MenuItem Header="{local:ResMarker Export}" Command="{Binding ExportCommand}" />
@@ -89,7 +95,9 @@
             <DataGrid.InputBindings>
                 <KeyBinding Command="{Binding CopyCommand}" Key="C" Modifiers="Ctrl" />
                 <KeyBinding Command="{Binding CellCopyCommand}" Key="C" Modifiers="Alt" />
+                <KeyBinding Command="{Binding AlarmCopyCommand}" Key="C" Modifiers="Shift" />
                 <KeyBinding Command="{Binding PasteCommand}" Key="V" Modifiers="Ctrl" />
+                <KeyBinding Command="{Binding AlarmPasteCommand}" Key="V" Modifiers="Shift" />
                 <KeyBinding Command="{Binding CellPasteCommand}" Key="V" Modifiers="Alt" />
                 <KeyBinding Command="{Binding RemoveCommand}" Key="Delete" />
                 <KeyBinding Command="{Binding AddCommand}" Key="A"  Modifiers="Alt" />
@@ -184,7 +192,7 @@
                     </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>
 
-                <DataGridTemplateColumn Header="{local:ResMarker CustomContent1}" Width="150">
+                <DataGridTemplateColumn Header="{local:ResMarker CustomContent1}" Width="*">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <TextBlock Foreground="{DynamicResource Window.Forground}" Margin="5,0" Text="{Binding CustomContent1}" VerticalAlignment="Center" />
@@ -197,7 +205,7 @@
                     </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>
 
-                <DataGridTemplateColumn Header="{local:ResMarker CustomContent2}" Width="150">
+                <DataGridTemplateColumn Header="{local:ResMarker CustomContent2}" Width="*">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <TextBlock Foreground="{DynamicResource Window.Forground}" Margin="5,0" Text="{Binding CustomContent2}" VerticalAlignment="Center" />
@@ -210,7 +218,7 @@
                     </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>
 
-                <DataGridTemplateColumn Header="{local:ResMarker CustomContent3}" Width="150">
+                <DataGridTemplateColumn Header="{local:ResMarker CustomContent3}" Width="*">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <TextBlock Foreground="{DynamicResource Window.Forground}" Margin="5,0" Text="{Binding CustomContent3}" VerticalAlignment="Center" />

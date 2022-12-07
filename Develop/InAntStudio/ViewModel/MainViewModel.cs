@@ -29,7 +29,7 @@ namespace InAntStudio
     /// <summary>
     /// 
     /// </summary>
-    public class MainViewModel : ViewModelBase, IProcessNotify
+    public class MainViewModel : ViewModelBase, IProcessNotify, IRefreshContent
     {
 
         #region ... Variables  ...
@@ -108,6 +108,8 @@ namespace InAntStudio
             ApiFactory.Factory.LoadForDevelop();
 
             ServiceLocator.Locator.Registor<IProcessNotify>(this);
+            ServiceLocator.Locator.Registor<IRefreshContent>(this);
+
             CurrentUserManager.Manager.RefreshNameEvent += Manager_RefreshNameEvent;
             mCheckRunningTimer = new System.Timers.Timer(3000);
             mCheckRunningTimer.Elapsed += MCheckRunningTimer_Elapsed;
@@ -1149,6 +1151,14 @@ namespace InAntStudio
            
         }
 
+        public void RefreshContent()
+        {
+            if(ContentViewModel!=null && ContentViewModel is IModeSwitch)
+            {
+                (ContentViewModel as IModeSwitch).Active();
+            }
+        }
+
         #endregion ...Methods...
 
         #region ... Interfaces ...
@@ -1183,6 +1193,12 @@ namespace InAntStudio
         /// 
         /// </summary>
         void EndShowNotify();
+    }
+
+
+    public interface IRefreshContent
+    {
+        void RefreshContent();
     }
 
 

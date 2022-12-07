@@ -652,6 +652,18 @@ namespace InAntStudio
     /// <summary>
     /// 
     /// </summary>
+    public class AlarmConfigDoc
+    {
+        public TagType Type { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public Dictionary<string,object> Configs = new Dictionary<string,object>();
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
     public abstract  class TagDetailConfigViewModelBase : ViewModelBase
     {
 
@@ -716,6 +728,34 @@ namespace InAntStudio
         protected virtual void Init()
         {
 
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public virtual AlarmConfigDoc CloneAlarmConfig()
+        {
+            return new AlarmConfigDoc() { Type = this.Model.Type };
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="alarmConfig"></param>
+        public virtual void ParsteAlarmConfig(AlarmConfigDoc alarmConfig)
+        {
+            IsChanged = true;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="alarmConfig"></param>
+        /// <returns></returns>
+        public bool SupportAlarmConfig(AlarmConfigDoc alarmConfig)
+        {
+            return alarmConfig != null && alarmConfig.Type == this.Model.Type;
         }
 
         #endregion ...Methods...
@@ -949,6 +989,28 @@ namespace InAntStudio
         #endregion ...Properties...
 
         #region ... Methods    ...
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public override AlarmConfigDoc CloneAlarmConfig()
+        {
+            var re = base.CloneAlarmConfig();
+            re.Configs.Add("AlarmLevel", AlarmLevel);
+            return re;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="alarmConfig"></param>
+        public override void ParsteAlarmConfig(AlarmConfigDoc alarmConfig)
+        {
+            base.ParsteAlarmConfig(alarmConfig);
+            this.AlarmLevel = (int)alarmConfig.Configs["AlarmLevel"];
+        }
+
 
         private static void InitEnumType()
         {
@@ -1186,6 +1248,9 @@ namespace InAntStudio
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public bool HasLowValue
         {
             get
@@ -1230,6 +1295,9 @@ namespace InAntStudio
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public double LowValue
         {
             get
@@ -1269,7 +1337,9 @@ namespace InAntStudio
             }
         }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
         public bool HasLowLowValue
         {
             get
@@ -1361,6 +1431,80 @@ namespace InAntStudio
 
         #region ... Methods    ...
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public override AlarmConfigDoc CloneAlarmConfig()
+        {
+            var re = base.CloneAlarmConfig();
+            if(this.mTag.HighHighValue!= null)
+            {
+                re.Configs.Add("HighHighValue", mTag.HighHighValue.Clone());
+            }
+            if (this.mTag.HighValue != null)
+            {
+                re.Configs.Add("HighValue", mTag.HighValue.Clone());
+            }
+            if (this.mTag.LowLowValue != null)
+            {
+                re.Configs.Add("LowLowValue", mTag.LowLowValue.Clone());
+            }
+            if (this.mTag.LowValue != null)
+            {
+                re.Configs.Add("LowValue", mTag.LowValue.Clone());
+            }
+            
+            return re;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="alarmConfig"></param>
+        public override void ParsteAlarmConfig(AlarmConfigDoc alarmConfig)
+        {
+            base.ParsteAlarmConfig(alarmConfig);
+            if(alarmConfig.Configs.ContainsKey("HighHighValue"))
+            {
+                mTag.HighHighValue = (alarmConfig.Configs["HighHighValue"] as AnalogAlarmItem).Clone();
+            }
+            if (alarmConfig.Configs.ContainsKey("HighValue"))
+            {
+                mTag.HighValue = (alarmConfig.Configs["HighValue"] as AnalogAlarmItem).Clone();
+            }
+            if (alarmConfig.Configs.ContainsKey("LowLowValue"))
+            {
+                mTag.LowLowValue = (alarmConfig.Configs["LowLowValue"] as AnalogAlarmItem).Clone();
+            }
+            if (alarmConfig.Configs.ContainsKey("LowValue"))
+            {
+                mTag.LowValue = (alarmConfig.Configs["LowValue"] as AnalogAlarmItem).Clone();
+            }
+            
+
+            OnPropertyChanged("HasHighHighValue");
+            OnPropertyChanged("HighHighAlarmLevel");
+            OnPropertyChanged("HighHighValue");
+            OnPropertyChanged("HighHighDeadArea");
+
+            OnPropertyChanged("HasHighValue");
+            OnPropertyChanged("HighAlarmLevel");
+            OnPropertyChanged("HighValue");
+            OnPropertyChanged("HighDeadArea");
+
+            OnPropertyChanged("HasLowLowValue");
+            OnPropertyChanged("LowLowAlarmLevel");
+            OnPropertyChanged("LowLowValue");
+            OnPropertyChanged("LowLowDeadArea");
+
+            OnPropertyChanged("HasLowValue");
+            OnPropertyChanged("LowAlarmLevel");
+            OnPropertyChanged("LowValue");
+            OnPropertyChanged("LowDeadArea");
+
+        }
+
         private static void InitEnumType()
         {
             mAlarmLevels = Enum.GetNames(typeof(Cdy.Ant.AlarmLevel)).Select(e=>Res.Get(e)).ToArray();
@@ -1436,7 +1580,9 @@ namespace InAntStudio
                 if(mAddItemCommand==null)
                 {
                     mAddItemCommand = new RelayCommand(() => {
-                        AddItem(new AnalogRangeAlarmItem() { MinValue = 0, MaxValue = 100 ,AlarmLevel = AlarmLevel.Normal,DeadArea=0});
+                        var item = new AnalogRangeAlarmItem() { MinValue = 0, MaxValue = 100, AlarmLevel = AlarmLevel.Normal, DeadArea = 0 };
+                        AddItem(item);
+                        mTag.Items.Add(item);
                         IsChanged = true;
                     });
                 }
@@ -1458,9 +1604,12 @@ namespace InAntStudio
                         if(CurrentItem!=null)
                         {
                             CurrentItem.PropertyChanged -= Mm_PropertyChanged;
-                            id=Items.IndexOf(CurrentItem);
+                            mTag.Items.Add(CurrentItem.Model);
+
+                            id =Items.IndexOf(CurrentItem);
                             Items.Remove(CurrentItem);
-                            if(id>=Items.Count)
+                           
+                            if (id>=Items.Count)
                             {
                                 id=Items.Count-1;
                             }
@@ -1498,12 +1647,44 @@ namespace InAntStudio
         /// <summary>
         /// 
         /// </summary>
+        /// <returns></returns>
+        public override AlarmConfigDoc CloneAlarmConfig()
+        {
+            var re = base.CloneAlarmConfig();
+            List<AnalogRangeAlarmItem> items = new List<AnalogRangeAlarmItem>(mTag.Items.Select(e=>e.Clone()));
+            re.Configs.Add("items", items);
+            return re;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="alarmConfig"></param>
+        public override void ParsteAlarmConfig(AlarmConfigDoc alarmConfig)
+        {
+            base.ParsteAlarmConfig(alarmConfig);
+            if(alarmConfig.Configs.ContainsKey("items"))
+            {
+                var vitems = alarmConfig.Configs["items"] as List<AnalogRangeAlarmItem>;
+                if (vitems != null)
+                {
+                    mTag.Items=new List<AnalogRangeAlarmItem>(vitems.Select(e=>e.Clone()));
+                    Init();
+                    IsChanged=true;
+                }
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="item"></param>
         private void AddItem(Cdy.Ant.AnalogRangeAlarmItem item)
         {
             AnalogRangTagItemConfigViewModel mm = new AnalogRangTagItemConfigViewModel() { Model = item };
             mm.PropertyChanged += Mm_PropertyChanged;
             mItems.Add(mm);
+         
             CurrentItem = mm;
         }
 
@@ -1522,6 +1703,7 @@ namespace InAntStudio
         /// </summary>
         protected override void Init()
         {
+            mItems.Clear();
             base.Init();
             mTag = Model as Cdy.Ant.AnalogRangeAlarmTag;
             if (mTag.Items != null)
@@ -1676,6 +1858,9 @@ namespace InAntStudio
         #endregion ...Properties...
 
         #region ... Methods    ...
+
+        
+
         private static void InitEnumType()
         {
             mAlarmLevels = Enum.GetNames(typeof(Cdy.Ant.AlarmLevel));
@@ -1742,6 +1927,28 @@ namespace InAntStudio
         #endregion ...Properties...
 
         #region ... Methods    ...
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public override AlarmConfigDoc CloneAlarmConfig()
+        {
+            var re = base.CloneAlarmConfig();
+            re.Configs.Add("Value", mTag.Value);
+            return re;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="alarmConfig"></param>
+        public override void ParsteAlarmConfig(AlarmConfigDoc alarmConfig)
+        {
+            base.ParsteAlarmConfig(alarmConfig);
+            this.Value = (bool)alarmConfig.Configs["Value"];
+        }
+
         /// <summary>
         /// 
         /// </summary>
@@ -1807,7 +2014,28 @@ namespace InAntStudio
 
         #region ... Methods    ...
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public override AlarmConfigDoc CloneAlarmConfig()
+        {
+            var re = base.CloneAlarmConfig();
+            re.Configs.Add("Value", mTag.Value);
+            re.Configs.Add("Delay", mTag.Delay);
+            return re;
+        }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="alarmConfig"></param>
+        public override void ParsteAlarmConfig(AlarmConfigDoc alarmConfig)
+        {
+            base.ParsteAlarmConfig(alarmConfig);
+            this.Value = (bool)alarmConfig.Configs["Value"];
+            this.Delay = (double)alarmConfig.Configs["Delay"];
+        }
 
         /// <summary>
         /// 
@@ -1884,6 +2112,28 @@ namespace InAntStudio
         #endregion ...Properties...
 
         #region ... Methods    ...
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public override AlarmConfigDoc CloneAlarmConfig()
+        {
+            var re = base.CloneAlarmConfig();
+            re.Configs.Add("Type", mTag.Type);
+            return re;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="alarmConfig"></param>
+        public override void ParsteAlarmConfig(AlarmConfigDoc alarmConfig)
+        {
+            base.ParsteAlarmConfig(alarmConfig);
+            this.Type = (int)alarmConfig.Configs["Type"];
+        }
+
 
         private static void InitEnumType()
         {
@@ -1988,6 +2238,35 @@ namespace InAntStudio
         #endregion ...Properties...
 
         #region ... Methods    ...
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public override AlarmConfigDoc CloneAlarmConfig()
+        {
+            var re = base.CloneAlarmConfig();
+            re.Configs.Add("MaxValue", mTag.MaxValue);
+            re.Configs.Add("MinValue", mTag.MinValue);
+            re.Configs.Add("IsInRangeAlarm", mTag.IsInRangeAlarm);
+            return re;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="alarmConfig"></param>
+        public override void ParsteAlarmConfig(AlarmConfigDoc alarmConfig)
+        {
+            base.ParsteAlarmConfig(alarmConfig);
+            this.MaxValue = (double)alarmConfig.Configs["MaxValue"];
+            this.MinValue = (double)alarmConfig.Configs["MinValue"];
+            this.IsInRangeAlarm = (bool)alarmConfig.Configs["IsInRangeAlarm"];
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         protected override void Init()
         {
             base.Init();
@@ -2040,6 +2319,26 @@ namespace InAntStudio
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public override AlarmConfigDoc CloneAlarmConfig()
+        {
+            var re = base.CloneAlarmConfig();
+            re.Configs.Add("Value", mTag.Value);
+            return re;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="alarmConfig"></param>
+        public override void ParsteAlarmConfig(AlarmConfigDoc alarmConfig)
+        {
+            base.ParsteAlarmConfig(alarmConfig);
+            this.Value = (string)alarmConfig.Configs["Value"];
+        }
 
         #endregion ...Properties...
 
@@ -2101,6 +2400,9 @@ namespace InAntStudio
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public bool IsInRangeAlarm
         {
             get
@@ -2120,6 +2422,29 @@ namespace InAntStudio
         #endregion ...Properties...
 
         #region ... Methods    ...
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public override AlarmConfigDoc CloneAlarmConfig()
+        {
+            var re = base.CloneAlarmConfig();
+            re.Configs.Add("Value", mTag.AlarmDatas);
+            re.Configs.Add("IsInRangeAlarm", mTag.IsInRangeAlarm);
+            return re;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="alarmConfig"></param>
+        public override void ParsteAlarmConfig(AlarmConfigDoc alarmConfig)
+        {
+            base.ParsteAlarmConfig(alarmConfig);
+            this.Value = (string)alarmConfig.Configs["Value"];
+            this.IsInRangeAlarm = (bool)alarmConfig.Configs["IsInRangeAlarm"];
+        }
 
         /// <summary>
         /// 
@@ -2218,6 +2543,9 @@ namespace InAntStudio
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public bool IsInRangeAlarm
         {
             get
@@ -2237,6 +2565,29 @@ namespace InAntStudio
         #endregion ...Properties...
 
         #region ... Methods    ...
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public override AlarmConfigDoc CloneAlarmConfig()
+        {
+            var re = base.CloneAlarmConfig();
+            re.Configs.Add("Value", mTag.AlarmDatas);
+            re.Configs.Add("IsInRangeAlarm", mTag.IsInRangeAlarm);
+            return re;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="alarmConfig"></param>
+        public override void ParsteAlarmConfig(AlarmConfigDoc alarmConfig)
+        {
+            base.ParsteAlarmConfig(alarmConfig);
+            this.Value = (string)alarmConfig.Configs["Value"];
+            this.IsInRangeAlarm = (bool)alarmConfig.Configs["IsInRangeAlarm"];
+        }
 
         /// <summary>
         /// 
@@ -2532,6 +2883,40 @@ namespace InAntStudio
         #endregion ...Properties...
 
         #region ... Methods    ...
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public override AlarmConfigDoc CloneAlarmConfig()
+        {
+            var re = base.CloneAlarmConfig();
+            re.Configs.Add("Expresse", mTag.Expresse);
+            re.Configs.Add("Duration", mTag.Duration);
+            re.Configs.Add("Mode", mTag.Mode);
+            re.Configs.Add("StartTrigger", mTag.StartTrigger.Clone());
+            return re;
+        }
+
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="alarmConfig"></param>
+        public override void ParsteAlarmConfig(AlarmConfigDoc alarmConfig)
+        {
+            base.ParsteAlarmConfig(alarmConfig);
+            this.Express = (string)alarmConfig.Configs["Expresse"];
+            this.Duration = (int)alarmConfig.Configs["Duration"];
+            this.ExecuteMode = (int)alarmConfig.Configs["Mode"];
+            mTag.StartTrigger = (alarmConfig.Configs["Mode"] as TriggerBase).Clone();
+            OnPropertyChanged("StartTriggerType");
+            OnPropertyChanged("StartTrigger");
+            OnPropertyChanged("IsTimerTrigger");
+            OnPropertyChanged("TimerTriggerTimers");
+            OnPropertyChanged("IsSupportRepeatModel");
+        }
 
         /// <summary>
         /// 

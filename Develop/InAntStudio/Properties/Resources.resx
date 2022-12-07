@@ -132,11 +132,17 @@
   <data name="AddTagFail" xml:space="preserve">
     <value>Add tag {0} failed!</value>
   </data>
+  <data name="AlarmCopy" xml:space="preserve">
+    <value>AlarmCopy   Shift+C</value>
+  </data>
   <data name="AlarmEnable" xml:space="preserve">
     <value>Enable</value>
   </data>
   <data name="AlarmLevel" xml:space="preserve">
     <value>AlarmLevel</value>
+  </data>
+  <data name="AlarmPaste" xml:space="preserve">
+    <value>AlarmPaste   Shift+V</value>
   </data>
   <data name="AlarmTag" xml:space="preserve">
     <value>Alarm Link Tag</value>
@@ -456,10 +462,10 @@
     <value>Precision</value>
   </data>
   <data name="PropertyCopy" xml:space="preserve">
-    <value>PropertyCopy</value>
+    <value>PropertyCopy  Alt+C</value>
   </data>
   <data name="PropertyPaste" xml:space="preserve">
-    <value>PropertyPaste</value>
+    <value>PropertyPaste  Alt+V</value>
   </data>
   <data name="PulseType" xml:space="preserve">
     <value>PulseType</value>

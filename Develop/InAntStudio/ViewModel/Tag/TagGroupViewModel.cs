@@ -8,6 +8,7 @@
 //==============================================================
 
 
+using Cdy.Ant;
 using DBDevelopClientApi;
 using Google.Protobuf.WellKnownTypes;
 using InAntStudio.ViewModel;
@@ -426,10 +427,15 @@ namespace InAntStudio
                         SyncTagGroup(database, sgroupname, client);
                     }
 
+                    //同步根组
+                    SyncTagGroup(database, "", client);
+
                     Task.Run(() => {
                         Owner?.QueryGroups();
                     });
                 }
+
+                ServiceLocator.Locator.Resolve<IRefreshContent>()?.RefreshContent();
             }
         }
 

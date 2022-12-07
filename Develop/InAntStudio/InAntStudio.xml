@@ -2797,7 +2797,17 @@
             
             </summary>
         </member>
+        <member name="P:InAntStudio.ViewModel.TagGroupDetailViewModel.AlarmCopyCommand">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="P:InAntStudio.ViewModel.TagGroupDetailViewModel.PasteCommand">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.ViewModel.TagGroupDetailViewModel.AlarmPasteCommand">
             <summary>
             
             </summary>
@@ -2940,6 +2950,11 @@
             </summary>
         </member>
         <member name="M:InAntStudio.ViewModel.TagGroupDetailViewModel.CopyTag">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.ViewModel.TagGroupDetailViewModel.CopyAlarmConfig">
             <summary>
             
             </summary>
@@ -3614,6 +3629,16 @@
             <param name="val"></param>
             <returns></returns>
         </member>
+        <member name="T:InAntStudio.AlarmConfigDoc">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:InAntStudio.AlarmConfigDoc.Configs">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:InAntStudio.TagDetailConfigViewModelBase">
             <summary>
             
@@ -3628,6 +3653,25 @@
             <summary>
             
             </summary>
+        </member>
+        <member name="M:InAntStudio.TagDetailConfigViewModelBase.CloneAlarmConfig">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:InAntStudio.TagDetailConfigViewModelBase.ParsteAlarmConfig(InAntStudio.AlarmConfigDoc)">
+            <summary>
+            
+            </summary>
+            <param name="alarmConfig"></param>
+        </member>
+        <member name="M:InAntStudio.TagDetailConfigViewModelBase.SupportAlarmConfig(InAntStudio.AlarmConfigDoc)">
+            <summary>
+            
+            </summary>
+            <param name="alarmConfig"></param>
+            <returns></returns>
         </member>
         <member name="T:InAntStudio.AlarmTagConfigViewModel">
             <summary>
@@ -3774,6 +3818,18 @@
             
             </summary>
         </member>
+        <member name="M:InAntStudio.SimpleTagConfigViewModel.CloneAlarmConfig">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:InAntStudio.SimpleTagConfigViewModel.ParsteAlarmConfig(InAntStudio.AlarmConfigDoc)">
+            <summary>
+            
+            </summary>
+            <param name="alarmConfig"></param>
+        </member>
         <member name="M:InAntStudio.SimpleTagConfigViewModel.Init">
             <summary>
             
@@ -3829,12 +3885,27 @@
             
             </summary>
         </member>
+        <member name="P:InAntStudio.AnalogTagConfigViewModel.HasLowValue">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="P:InAntStudio.AnalogTagConfigViewModel.LowAlarmLevel">
             <summary>
             
             </summary>
         </member>
+        <member name="P:InAntStudio.AnalogTagConfigViewModel.LowValue">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="P:InAntStudio.AnalogTagConfigViewModel.LowDeadArea">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:InAntStudio.AnalogTagConfigViewModel.HasLowLowValue">
             <summary>
             
             </summary>
@@ -3853,6 +3924,18 @@
             <summary>
             
             </summary>
+        </member>
+        <member name="M:InAntStudio.AnalogTagConfigViewModel.CloneAlarmConfig">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:InAntStudio.AnalogTagConfigViewModel.ParsteAlarmConfig(InAntStudio.AlarmConfigDoc)">
+            <summary>
+            
+            </summary>
+            <param name="alarmConfig"></param>
         </member>
         <member name="M:InAntStudio.AnalogTagConfigViewModel.Init">
             <summary>
@@ -3883,6 +3966,18 @@
             <summary>
             
             </summary>
+        </member>
+        <member name="M:InAntStudio.AnalogRangTagConfigViewModel.CloneAlarmConfig">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:InAntStudio.AnalogRangTagConfigViewModel.ParsteAlarmConfig(InAntStudio.AlarmConfigDoc)">
+            <summary>
+            
+            </summary>
+            <param name="alarmConfig"></param>
         </member>
         <member name="M:InAntStudio.AnalogRangTagConfigViewModel.AddItem(Cdy.Ant.AnalogRangeAlarmItem)">
             <summary>
@@ -3952,6 +4047,18 @@
             
             </summary>
         </member>
+        <member name="M:InAntStudio.DigitalTagConfigViewModel.CloneAlarmConfig">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:InAntStudio.DigitalTagConfigViewModel.ParsteAlarmConfig(InAntStudio.AlarmConfigDoc)">
+            <summary>
+            
+            </summary>
+            <param name="alarmConfig"></param>
+        </member>
         <member name="M:InAntStudio.DigitalTagConfigViewModel.Init">
             <summary>
             
@@ -3971,6 +4078,18 @@
             <summary>
             
             </summary>
+        </member>
+        <member name="M:InAntStudio.DigitalDelayTagConfigViewModel.CloneAlarmConfig">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:InAntStudio.DigitalDelayTagConfigViewModel.ParsteAlarmConfig(InAntStudio.AlarmConfigDoc)">
+            <summary>
+            
+            </summary>
+            <param name="alarmConfig"></param>
         </member>
         <member name="M:InAntStudio.DigitalDelayTagConfigViewModel.Init">
             <summary>
@@ -3992,6 +4111,18 @@
             
             </summary>
         </member>
+        <member name="M:InAntStudio.PulseTagConfigViewModel.CloneAlarmConfig">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:InAntStudio.PulseTagConfigViewModel.ParsteAlarmConfig(InAntStudio.AlarmConfigDoc)">
+            <summary>
+            
+            </summary>
+            <param name="alarmConfig"></param>
+        </member>
         <member name="T:InAntStudio.OneRangeTagConfigViewModel">
             <summary>
             
@@ -4012,6 +4143,23 @@
             
             </summary>
         </member>
+        <member name="M:InAntStudio.OneRangeTagConfigViewModel.CloneAlarmConfig">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:InAntStudio.OneRangeTagConfigViewModel.ParsteAlarmConfig(InAntStudio.AlarmConfigDoc)">
+            <summary>
+            
+            </summary>
+            <param name="alarmConfig"></param>
+        </member>
+        <member name="M:InAntStudio.OneRangeTagConfigViewModel.Init">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:InAntStudio.StringTagConfigViewModel">
             <summary>
             
@@ -4021,6 +4169,18 @@
             <summary>
             
             </summary>
+        </member>
+        <member name="M:InAntStudio.StringTagConfigViewModel.CloneAlarmConfig">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:InAntStudio.StringTagConfigViewModel.ParsteAlarmConfig(InAntStudio.AlarmConfigDoc)">
+            <summary>
+            
+            </summary>
+            <param name="alarmConfig"></param>
         </member>
         <member name="M:InAntStudio.StringTagConfigViewModel.Init">
             <summary>
@@ -4036,6 +4196,23 @@
             <summary>
             
             </summary>
+        </member>
+        <member name="P:InAntStudio.TwoRangeTagConfigViewModel.IsInRangeAlarm">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.TwoRangeTagConfigViewModel.CloneAlarmConfig">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:InAntStudio.TwoRangeTagConfigViewModel.ParsteAlarmConfig(InAntStudio.AlarmConfigDoc)">
+            <summary>
+            
+            </summary>
+            <param name="alarmConfig"></param>
         </member>
         <member name="M:InAntStudio.TwoRangeTagConfigViewModel.ToStringAlarmPoint(System.Collections.Generic.List{Cdy.Ant.Point})">
             <summary>
@@ -4065,6 +4242,23 @@
             <summary>
             
             </summary>
+        </member>
+        <member name="P:InAntStudio.ThreeRangeTagConfigViewModel.IsInRangeAlarm">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InAntStudio.ThreeRangeTagConfigViewModel.CloneAlarmConfig">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:InAntStudio.ThreeRangeTagConfigViewModel.ParsteAlarmConfig(InAntStudio.AlarmConfigDoc)">
+            <summary>
+            
+            </summary>
+            <param name="alarmConfig"></param>
         </member>
         <member name="M:InAntStudio.ThreeRangeTagConfigViewModel.ToStringAlarmPoint(System.Collections.Generic.List{Cdy.Ant.Point3D})">
             <summary>
@@ -4154,6 +4348,18 @@
             <summary>
             
             </summary>
+        </member>
+        <member name="M:InAntStudio.ScriptTagConfigViewModel.CloneAlarmConfig">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:InAntStudio.ScriptTagConfigViewModel.ParsteAlarmConfig(InAntStudio.AlarmConfigDoc)">
+            <summary>
+            
+            </summary>
+            <param name="alarmConfig"></param>
         </member>
         <member name="M:InAntStudio.ScriptTagConfigViewModel.ChangedStartTrigger(Cdy.Ant.TriggerType)">
             <summary>
@@ -5000,6 +5206,36 @@
             </summary>
             <param name="source">触发者</param>
             <param name="msg">消息内容</param>
+        </member>
+        <member name="T:XamlGeneratedNamespace.GeneratedInternalTypeHelper">
+            <summary>
+            GeneratedInternalTypeHelper
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.CreateInstance(System.Type,System.Globalization.CultureInfo)">
+            <summary>
+            CreateInstance
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.GetPropertyValue(System.Reflection.PropertyInfo,System.Object,System.Globalization.CultureInfo)">
+            <summary>
+            GetPropertyValue
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.SetPropertyValue(System.Reflection.PropertyInfo,System.Object,System.Object,System.Globalization.CultureInfo)">
+            <summary>
+            SetPropertyValue
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.CreateDelegate(System.Type,System.Object,System.String)">
+            <summary>
+            CreateDelegate
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.AddEventHandler(System.Reflection.EventInfo,System.Object,System.Delegate)">
+            <summary>
+            AddEventHandler
+            </summary>
         </member>
     </members>
 </doc>

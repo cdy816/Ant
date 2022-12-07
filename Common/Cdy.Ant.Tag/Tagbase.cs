@@ -682,6 +682,20 @@ namespace Cdy.Ant
             return this;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public AnalogRangeAlarmItem Clone()
+        {
+            AnalogRangeAlarmItem re =new AnalogRangeAlarmItem();
+            re.AlarmLevel = this.AlarmLevel;
+            re.MinValue= this.MinValue;
+            re.MaxValue= this.MaxValue;
+            re.DeadArea= this.DeadArea;
+            return re;
+        }
+
     }
 
     /// <summary>
@@ -1083,6 +1097,19 @@ namespace Cdy.Ant
             Value = double.Parse(ss[1]);
             DeadArea = double.Parse(ss[2]);
             return this;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public AnalogAlarmItem Clone()
+        {
+            AnalogAlarmItem re = new AnalogAlarmItem();
+            re.AlarmLevel = AlarmLevel;
+            re.Value= Value;
+            re.DeadArea= DeadArea;
+            return re;
         }
     }
 
@@ -2060,6 +2087,11 @@ namespace Cdy.Ant
         {
             return Type.ToString();
         }
+
+        public virtual TriggerBase Clone()
+        {
+            return null;
+        }
     }
 
     /// <summary>
@@ -2071,6 +2103,15 @@ namespace Cdy.Ant
         /// 
         /// </summary>
         public override TriggerType Type => TriggerType.TagChanged;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public override TriggerBase Clone()
+        {
+            return new TagChangedTrigger();
+        }
     }
 
     /// <summary>
@@ -2083,7 +2124,14 @@ namespace Cdy.Ant
         /// </summary>
         public override TriggerType Type => TriggerType.Start;
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public override TriggerBase Clone()
+        {
+            return new StartTrigger();
+        }
 
     }
 
@@ -2121,6 +2169,16 @@ namespace Cdy.Ant
             Timer = val;
             return this;
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public override TriggerBase Clone()
+        {
+            return new TimerTrigger() { Timer = this.Timer };
+        }
+
     }
 
 
