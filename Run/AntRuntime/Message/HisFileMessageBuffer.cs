@@ -356,7 +356,8 @@ namespace AntRuntime
                     {
                         foreach (var vvb in new MessageFileSerise().Load(vv, itmp).Result)
                         {
-                            dd.Add(vvb.Hour, vvb);
+                            if (!dd.ContainsKey(vvb.Hour) && vvb.Hour >= 0)
+                                dd.Add(vvb.Hour, vvb);
                         }
                     }
                 }
@@ -399,7 +400,7 @@ namespace AntRuntime
                     {
                         foreach (var vvb in new MessageFileSerise().Load(vv, itmp).Result)
                         {
-                            if (!mBuffers.ContainsKey(vvb.Hour))
+                            if (!mBuffers.ContainsKey(vvb.Hour) && vvb.Hour>=0)
                                 mBuffers.Add(vvb.Hour, vvb);
                         }
                     }

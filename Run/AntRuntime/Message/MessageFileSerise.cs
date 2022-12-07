@@ -106,7 +106,7 @@ namespace AntRuntime.Message
             foreach (var vv in ltmp)
             {
                 stream.Position = vv;
-                MessageBlockBuffer mbb = new MessageBlockBuffer();
+                MessageBlockBuffer mbb = new MessageBlockBuffer() { Hour=-1};
                 if (vv >= (64 + 24 * 8))
                 {
                     mbb.Hour = mHours[i];
