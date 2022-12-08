@@ -223,7 +223,7 @@ namespace InAntRun
                                     }
                                     else if (cmd == 1)
                                     {
-                                        Console.WriteLine("Start to restart database.......");
+                                        Console.WriteLine("Ready to restart .......");
                                         Task.Run(() =>
                                         {
                                             mRunner.ReStartDatabase();

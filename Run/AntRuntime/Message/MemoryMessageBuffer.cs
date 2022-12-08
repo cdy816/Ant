@@ -139,6 +139,8 @@ namespace AntRuntime
         /// </summary>
         public void LoadBuffer()
         {
+            mBufferItems.Clear();
+
             DateTime dnow = DateTime.Now;
             var vv = new HisFileMessageBuffer() {AlarmDate = dnow, Starttime = dnow, Endtime = dnow.AddHours(1), DatabaseName = DatabaseName }.ReadDataBlockFromFile();
             if(vv!=null && vv.Count()>0)

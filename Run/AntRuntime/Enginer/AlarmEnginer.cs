@@ -13,7 +13,7 @@ namespace AntRuntime.Enginer
     /// <summary>
     /// 
     /// </summary>
-    public class AlarmEnginer: IRuntimeTagService
+    public class AlarmEnginer: IRuntimeTagService,IDisposable
     {
 
         #region ... Variables  ...
@@ -515,6 +515,15 @@ namespace AntRuntime.Enginer
         public IEnumerable<string> ListTagNames()
         {
             return mRunTags.Values.Select(e=>e.Name).Distinct();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public void Dispose()
+        {
+            mRunTags.Clear();
+            mExecuter.Clear();
         }
 
         #endregion ...Methods...

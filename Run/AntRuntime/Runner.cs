@@ -153,7 +153,24 @@ namespace AntRuntime
         /// </summary>
         public void ReStartDatabase()
         {
+            LoggerService.Service.Info("Runner", "Restart the " + this.Name + " ... ");
 
+            alarmEnginer.Stop();
+            mSecurityRunner?.Stop();
+            alarmEnginer.SaveTagStatus();
+            alarmEnginer.Dispose();
+
+
+            LoadDatabase();
+            LoadServerProxy();
+            alarmEnginer.Init();
+            alarmEnginer.LoadTagStatus();
+
+            alarmEnginer.Start();
+            mSecurityRunner?.Start();
+
+
+            LoggerService.Service.Info("Runner", "Restart the " + this.Name + " complete. ");
         }
 
         /// <summary>

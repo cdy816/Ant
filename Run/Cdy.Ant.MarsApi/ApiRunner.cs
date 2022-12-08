@@ -115,7 +115,15 @@ namespace Cdy.Ant.MarsApi
         public void Close()
         {
             mIsClosed = true;
-            client.Close();
+            try
+            {
+                client.Close();
+                client.Dispose();
+            }
+            catch
+            {
+
+            }
         }
 
         /// <summary>
@@ -198,7 +206,14 @@ namespace Cdy.Ant.MarsApi
                             var vtag = mTags[vv.Key];
                             vtag.Id = vv.Value;
 
-                            mIdMapTags.Add(vv.Value, vtag);
+                            if (mIdMapTags.ContainsKey(vv.Value))
+                            {
+                                mIdMapTags[vv.Value]=vtag;
+                            }
+                            else
+                            {
+                                mIdMapTags.Add(vv.Value, vtag);
+                            }
                         }
                     }
                     mChangedApi = new List<ApiTag>(mIdMapTags.Count);
