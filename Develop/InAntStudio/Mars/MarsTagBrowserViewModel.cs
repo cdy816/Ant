@@ -7,6 +7,7 @@
 //  种道洋
 //==============================================================
 
+using Cdy.Tag;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -920,6 +921,10 @@ namespace InAntStudio
                     {
                         foreach (var vv in tags)
                         {
+                            if(vv.Item1 is ComplexTag)
+                            {
+                                continue;
+                            }
                             var vtag = new MarsTagViewModel() { Name = vv.Item1.Name, Desc = vv.Item1.Desc, Type = vv.Item1.Type.ToString(), ReadWriteMode = vv.Item1.ReadWriteType.ToString(), Group = group };
                             if (vv.Item1 is Cdy.Tag.NumberTagBase)
                             {

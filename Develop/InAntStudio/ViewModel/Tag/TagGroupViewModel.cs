@@ -497,9 +497,12 @@ namespace InAntStudio
                         }
 
                         var tag = vtag.ConvertTo();
-                        tag.RealTagMode.Group = group;
+                        if (tag != null)
+                        {
+                            tag.RealTagMode.Group = group;
 
-                        DevelopServiceHelper.Helper.AddTag(database, tag.RealTagMode, out int id);
+                            DevelopServiceHelper.Helper.AddTag(database, tag.RealTagMode, out int id);
+                        }
                     }
                 }
             }
