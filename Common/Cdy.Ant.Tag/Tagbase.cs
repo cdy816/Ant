@@ -706,7 +706,7 @@ namespace Cdy.Ant
         /// <summary>
         /// 
         /// </summary>
-        public List<AnalogRangeAlarmItem> Items { get; set; }
+        public List<AnalogRangeAlarmItem> Items { get; set; }=new List<AnalogRangeAlarmItem>();
 
         /// <summary>
         /// 

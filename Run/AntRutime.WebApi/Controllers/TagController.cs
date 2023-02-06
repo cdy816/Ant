@@ -20,7 +20,7 @@ namespace AntRutime.WebApi.Controllers
     {
 
         /// <summary>
-        /// 
+        /// 枚举变量
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
