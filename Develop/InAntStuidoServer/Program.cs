@@ -150,20 +150,24 @@ namespace InAntStuidoServer
                 WindowConsolHelper.MinWindow("AntDevelopServer");
             }
 
-            Console.CancelKeyPress += Console_CancelKeyPress;
-
-            AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
+            if (!Console.IsInputRedirected)
+            {
+                Console.CancelKeyPress += Console_CancelKeyPress;
+                AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
+            }
 
 
             Service.Instanse.Start(port, webPort, Config.Instance.IsGrpcEnable, Config.Instance.IsWebApiEnable);
 
             Thread.Sleep(100);
 
-            OutByLine("", Res.Get("HelpMsg"));
+            if (!Console.IsInputRedirected)
+                OutByLine("", Res.Get("HelpMsg"));
+
             while (!mIsExited)
             {
                 OutInLine("", "");
-                var vv = Console.ReadLine();
+                var vv = Console.In.ReadLine();
 
                 if (vv != null)
                 {
@@ -174,11 +178,18 @@ namespace InAntStuidoServer
 
                     if (cmsg == "exit")
                     {
-                        OutByLine("", Res.Get("AppExitHlp"));
-                        cmd = Console.ReadLine().Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
-                        if (cmd.Length == 0) continue;
-                        if (cmd[0].ToLower() == "y")
+                        if (!Console.IsInputRedirected)
+                        {
+                            OutByLine("", Res.Get("AppExitHlp"));
+                            cmd = Console.ReadLine().Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
+                            if (cmd.Length == 0) continue;
+                            if (cmd[0].ToLower() == "y")
+                                break;
+                        }
+                        else
+                        {
                             break;
+                        }
                     }
                     else if (cmsg == "db")
                     {

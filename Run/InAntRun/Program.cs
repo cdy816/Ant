@@ -16,8 +16,11 @@ namespace InAntRun
             LogoHelper.Print();
             Console.WriteLine(Res.Get("WelcomeMsg"));
 
-            Console.CancelKeyPress += Console_CancelKeyPress;
-            AppDomain.CurrentDomain.ProcessExit += CurrentDomain_ProcessExit;
+            if (!Console.IsInputRedirected)
+            {
+                Console.CancelKeyPress += Console_CancelKeyPress;
+                AppDomain.CurrentDomain.ProcessExit += CurrentDomain_ProcessExit;
+            }
 
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 
@@ -29,7 +32,8 @@ namespace InAntRun
                     //mRunner.Name = args[0];
                     mRunner.Init();
                     mRunner.Start();
-                    Console.Title = " InAntRun " + mRunner.Name;
+                    if (!Console.IsInputRedirected)
+                        Console.Title = " InAntRun " + mRunner.Name;
                     Task.Run(() =>
                     {
                         StartMonitor(args[0]);
@@ -46,13 +50,17 @@ namespace InAntRun
             while (!mIsClosed)
             {
                 Console.Write(">");
-                while (!Console.KeyAvailable)
+
+                if (!Console.IsInputRedirected)
                 {
-                    if (mIsClosed)
+                    while (!Console.KeyAvailable)
                     {
-                        break;
+                        if (mIsClosed)
+                        {
+                            break;
+                        }
+                        Thread.Sleep(100);
                     }
-                    Thread.Sleep(100);
                 }
                 if (mIsClosed)
                 {
@@ -69,7 +77,8 @@ namespace InAntRun
                         if (mRunner != null && mRunner.IsStarted)
                         {
                             mRunner.Stop();
-                            Console.Title = " InAntRun";
+                            if (!Console.IsInputRedirected)
+                                Console.Title = " InAntRun";
                         }
                         mIsClosed = true;
 
@@ -78,7 +87,8 @@ namespace InAntRun
                         if (mRunner != null && mRunner.IsStarted)
                         {
                             mRunner.Stop();
-                            Console.Title = " InAntRun";
+                            if (!Console.IsInputRedirected)
+                                Console.Title = " InAntRun";
                         }
                         break;
                     case "list":
@@ -96,7 +106,8 @@ namespace InAntRun
                                     mRunner.Init();
                                     mRunner.Start();
                                 }
-                                Console.Title = " InAntRun " + mRunner.Name;
+                                if (!Console.IsInputRedirected)
+                                    Console.Title = " InAntRun " + mRunner.Name;
                                 Task.Run(() => {
                                     StartMonitor(cmd[1]);
                                 });
