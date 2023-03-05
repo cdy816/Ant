@@ -3415,6 +3415,11 @@
             
             </summary>
         </member>
+        <member name="P:InAntStudio.RootTagGroupViewModel.IsBusy">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="M:InAntStudio.RootTagGroupViewModel.ImportFromMars">
             <summary>
             

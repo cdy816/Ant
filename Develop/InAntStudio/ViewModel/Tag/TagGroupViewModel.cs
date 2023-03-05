@@ -365,6 +365,28 @@ namespace InAntStudio
         /// </summary>
         public MainViewModel Owner { get; set; }
 
+        private bool mIsBusy = false;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public bool IsBusy
+        {
+            get
+            {
+                return mIsBusy;
+            }
+            set
+            {
+                if (mIsBusy != value)
+                {
+                    mIsBusy = value;
+                    OnPropertyChanged("IsBusy");
+                }
+            }
+        }
+
+
         #endregion ...Properties...
 
         #region ... Methods    ...
@@ -475,37 +497,52 @@ namespace InAntStudio
         /// <param name="client"></param>
         private void SyncTagGroup(string database, string group, DBDevelopClientWebApi.DevelopServiceHelper client)
         {
-          
-            int currentpage = 0, pagecount = 10;
-            while (currentpage < pagecount)
+            IsBusy = true;
+            ServiceLocator.Locator.Resolve<IProcessNotify>().BeginShowNotify();
+            Task.Run(() =>
             {
-                var tags = client.GetTagByGroup(database, group, currentpage++, out pagecount);
-                var atags = ListTags(group);
-                foreach (var vv in tags)
+                try
                 {
-                    if(!atags.Contains(vv.Item1.Name))
+                    int currentpage = 0, pagecount = 10;
+                    while (currentpage < pagecount)
                     {
-                        var vtag = new MarsTagViewModel() { Name = vv.Item1.Name, Desc = vv.Item1.Desc, Type = vv.Item1.Type.ToString(), ReadWriteMode = vv.Item1.ReadWriteType.ToString(), Group = group };
-                        if (vv.Item1 is Cdy.Tag.NumberTagBase)
+                        var tags = client.GetTagByGroup(database, group, currentpage++, out pagecount);
+                        ServiceLocator.Locator.Resolve<IProcessNotify>().ShowNotifyValue(currentpage * 100.0 / pagecount);
+                        var atags = ListTags(group);
+                        foreach (var vv in tags)
                         {
-                            vtag.MaxValue = (vv.Item1 as Cdy.Tag.NumberTagBase).MaxValue;
-                            vtag.MinValue = (vv.Item1 as Cdy.Tag.NumberTagBase).MinValue;
-                        }
-                        if (vv.Item1 is Cdy.Tag.FloatingTagBase)
-                        {
-                            vtag.Precision = (vv.Item1 as Cdy.Tag.FloatingTagBase).Precision;
-                        }
+                            if (!atags.Contains(vv.Item1.Name))
+                            {
+                                var vtag = new MarsTagViewModel() { Name = vv.Item1.Name, Desc = vv.Item1.Desc, Type = vv.Item1.Type.ToString(), ReadWriteMode = vv.Item1.ReadWriteType.ToString(), Group = group };
+                                if (vv.Item1 is Cdy.Tag.NumberTagBase)
+                                {
+                                    vtag.MaxValue = (vv.Item1 as Cdy.Tag.NumberTagBase).MaxValue;
+                                    vtag.MinValue = (vv.Item1 as Cdy.Tag.NumberTagBase).MinValue;
+                                }
+                                if (vv.Item1 is Cdy.Tag.FloatingTagBase)
+                                {
+                                    vtag.Precision = (vv.Item1 as Cdy.Tag.FloatingTagBase).Precision;
+                                }
 
-                        var tag = vtag.ConvertTo();
-                        if (tag != null)
-                        {
-                            tag.RealTagMode.Group = group;
+                                var tag = vtag.ConvertTo();
+                                if (tag != null)
+                                {
+                                    tag.RealTagMode.Group = group;
 
-                            DevelopServiceHelper.Helper.AddTag(database, tag.RealTagMode, out int id);
+                                    DevelopServiceHelper.Helper.AddTag(database, tag.RealTagMode, out int id);
+                                }
+                            }
                         }
                     }
                 }
-            }
+                catch
+                {
+
+                }
+                ServiceLocator.Locator.Resolve<IProcessNotify>().EndShowNotify();
+                IsBusy = false;
+                MessageBox.Show("同步完成!");
+            });
         }
 
         private DBDevelopClientWebApi.DevelopServiceHelper GetClient(string addr,string user,string pass)
