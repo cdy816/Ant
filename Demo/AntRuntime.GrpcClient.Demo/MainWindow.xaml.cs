@@ -60,46 +60,63 @@ namespace AntRuntime.GrpcClient.Demo
             client.Login(ipa.Text,user.Text,pass.Text);
             conn.IsEnabled = false;
 
-            Task.Run(() => { 
-            
-                while(true)
+            client.MessageNotifyCallBack = new GrpcApi.Client.MessageNotifyCallBackDelegate((mm,iscancel) => {
+                if (!iscancel)
                 {
-
-                    IEnumerable<Cdy.Ant.Message> msgs=null;
-
-                    switch (GetType)
-                    {
-                        case GetMessageType.All:
-
-                            msgs = client.QueryRecentMessage(mLastTime);
-                            mLastTime = DateTime.Now;
-                            break;
-                        case GetMessageType.Alarm:
-                            msgs = client.QueryRecentAlarmMessage(mLastTime);
-                            mLastTime = DateTime.Now;
-                            break;
-                        case GetMessageType.Info:
-                            msgs = client.QueryRecentInfoMessage(mLastTime);
-                            mLastTime = DateTime.Now;
-                            break;
-                    }
-
-                    if(msgs!=null)
-                    {
-                        foreach (Cdy.Ant.Message msg in msgs)
-                        {
-                            this.Dispatcher.Invoke(() => { 
-                            
-                                msgShow.AppendText(msg.FormateToString()+"\r\n");
-                                msgShow.ScrollToEnd();
-                            });
-                        }
-                    }
-
-
-                    Thread.Sleep(1000);
+                    this.Dispatcher.Invoke(() => {
+                        msgShow.AppendText(mm.FormateToString() + "\r\n");
+                        msgShow.ScrollToEnd();
+                    });
+                }
+                else
+                {
+                    Task.Run(() => {
+                        client.RegistorMessageNotify();
+                    });
                 }
             });
+            client.RegistorMessageNotify();
+
+            //Task.Run(() => { 
+            
+            //    while(true)
+            //    {
+
+            //        IEnumerable<Cdy.Ant.Message> msgs=null;
+
+            //        switch (GetType)
+            //        {
+            //            case GetMessageType.All:
+
+            //                msgs = client.QueryRecentMessage(mLastTime);
+            //                mLastTime = DateTime.Now;
+            //                break;
+            //            case GetMessageType.Alarm:
+            //                msgs = client.QueryRecentAlarmMessage(mLastTime);
+            //                mLastTime = DateTime.Now;
+            //                break;
+            //            case GetMessageType.Info:
+            //                msgs = client.QueryRecentInfoMessage(mLastTime);
+            //                mLastTime = DateTime.Now;
+            //                break;
+            //        }
+
+            //        if(msgs!=null)
+            //        {
+            //            foreach (Cdy.Ant.Message msg in msgs)
+            //            {
+            //                this.Dispatcher.Invoke(() => { 
+                            
+            //                    msgShow.AppendText(msg.FormateToString()+"\r\n");
+            //                    msgShow.ScrollToEnd();
+            //                });
+            //            }
+            //        }
+
+
+            //        Thread.Sleep(1000);
+            //    }
+            //});
 
         }
 

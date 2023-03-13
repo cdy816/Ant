@@ -1,22 +1,19 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>C:\Users\cdy81\source\repos\cdy816\Ant\Common\Cdy.Ant.Tag\Cdy.Ant.Tag.xml</DocumentationFile>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Cdy.Ant.Tag.xml" />
-    <None Remove="Logo\Author.txt" />
-    <None Remove="Logo\Logo.txt" />
+    <PackageReference Include="Cheetah" Version="0.8.6" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Logo\Author.txt" />
-    <EmbeddedResource Include="Logo\Logo.txt" />
+    <ProjectReference Include="..\..\Common\Cdy.Ant.Common\Cdy.Ant.Common.csproj" />
+    <ProjectReference Include="..\..\Common\Cdy.Ant.Tag\Cdy.Ant.Tag.csproj" />
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">

@@ -136,6 +136,10 @@ namespace Cdy.Ant.Tag
     /// </summary>
     public interface IMessageQuery
     {
+        public delegate void NewMessageDelegate(Cdy.Ant.Tag.Message msg);
+
+        public event NewMessageDelegate NewMessage;
+
         /// <summary>
         /// 
         /// </summary>

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using static Cdy.Ant.Tag.IMessageQuery;
 
 namespace AntRuntime
 {
@@ -30,6 +31,8 @@ namespace AntRuntime
         private object mLockObj = new object();
 
         private MemoryMessageBuffer mMemoryBuffer = new MemoryMessageBuffer() { NewestMessageTime=DateTime.Now,OldestMessageTime=DateTime.Now};
+
+        public event NewMessageDelegate NewMessage;
 
         #endregion ...Variables...
 
@@ -150,6 +153,11 @@ namespace AntRuntime
             lock (mMemoryBuffer)
             {
                 mMemoryBuffer.AddMessage(msg);
+
+                if(NewMessage!=null)
+                {
+                    NewMessage(msg);
+                }
             }
         }
 

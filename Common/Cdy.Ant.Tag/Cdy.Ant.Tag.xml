@@ -2019,6 +2019,11 @@
             非常紧急
             </summary>
         </member>
+        <member name="F:Cdy.Ant.AlarmLevel.Custom1">
+            <summary>
+            自定义级别
+            </summary>
+        </member>
         <member name="T:Cdy.Ant.Tagbase">
             <summary>
             

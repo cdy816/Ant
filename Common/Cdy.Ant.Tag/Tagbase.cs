@@ -114,28 +114,47 @@ namespace Cdy.Ant
         /// <summary>
         /// 提示信息
         /// </summary>
-        Info=0,
+        Info = 0,
         /// <summary>
         /// 预警
         /// </summary>
-        EarlyWarning=1,
+        EarlyWarning = 1,
         /// <summary>
         /// 一般
         /// </summary>
-        Normal =2,
+        Normal = 2,
         /// <summary>
         /// 重要
         /// </summary>
-        Critical=3,
+        Critical = 3,
         /// <summary>
         /// 紧急
         /// </summary>
-        Urgency=4,
+        Urgency = 4,
 
         /// <summary>
         /// 非常紧急
         /// </summary>
         VeryUrgency = 5,
+        /// <summary>
+        /// 自定义级别
+        /// </summary>
+        Custom1 = 6,
+        Custom2 = 7,
+        Custom3 = 8,
+        Custom4 = 9,
+        Custom5 = 10,
+        Custom6 = 11,
+        Custom7 = 12,
+        Custom8 = 13,
+        Custom9 = 14,
+        Custom10 = 15,
+        Custom11 = 16,
+        Custom12 = 17,
+        Custom13 = 18,
+        Custom14 = 19,
+        Custom15 = 20,
+        Custom16 = 21
 
     }
 

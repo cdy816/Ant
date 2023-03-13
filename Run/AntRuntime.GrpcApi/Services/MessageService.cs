@@ -375,6 +375,28 @@ namespace AntRuntime.GrpcApi.Services
             return   Task.FromResult<QueryTagProperyReply>(new QueryTagProperyReply());
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="responseStream"></param>
+        /// <param name="context"></param>
+        /// <returns></returns>
+        public override Task RegistorAlarmNotify(RegistorAlarmNotifyRequest request, IServerStreamWriter<GetMessageResponse> responseStream, ServerCallContext context)
+        {
+            return Task.Run(()=> {
+                var service = ServiceLocator.Locator.Resolve<IRuntimeSecurity>();
+                if (service.CheckLogin(request.Token) && service.IsAdmin(request.Token))
+                {
+                    string skey = context.Peer;
+                    bool iscancel = false;
+                    MessageHelper.Helper.RegistorMessageSend(skey, responseStream, () => {
+                        iscancel = true;
+                    });
+                    while (!iscancel) ;
+                }
+            });
+        }
 
     }
 }

@@ -31,7 +31,14 @@ service Message {
 
    rpc ModityTagProperty(ModityTagPropertyRequest) returns (BoolMessageReply);
 
+   rpc RegistorAlarmNotify(RegistorAlarmNotifyRequest) returns (stream GetMessageResponse);
 
+}
+
+message RegistorAlarmNotifyRequest
+{
+    string Token=1;
+    int64 Type=2;
 }
 
 message LogoutRequest

@@ -1,8 +1,11 @@
-﻿using Grpc.Net.Client;
+﻿using Grpc.Core;
+using Grpc.Net.Client;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net.Http;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace AntRuntime.GrpcApi
 {
@@ -562,7 +565,51 @@ namespace AntRuntime.GrpcApi
             return false;
         }
 
+        public delegate void MessageNotifyCallBackDelegate(Cdy.Ant.Message callback,bool isCanceled);
 
+        /// <summary>
+        /// 新消息回调
+        /// </summary>
+        public  MessageNotifyCallBackDelegate MessageNotifyCallBack { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public bool RegistorMessageNotify()
+        {
+            if (mCurrentClient != null && !string.IsNullOrEmpty(mLoginId))
+            {
+                RegistorAlarmNotifyRequest rr = new RegistorAlarmNotifyRequest() { Token = mLoginId };
+                res = mCurrentClient.RegistorAlarmNotify(rr);
+                if (res != null)
+                {
+                    Task.Run(MessageReceivePro);
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        AsyncServerStreamingCall<GetMessageResponse> res;
+        private async void MessageReceivePro()
+        {
+            while(res!=null)
+            {
+                try
+                {
+                    await res.ResponseStream.MoveNext();
+                    foreach (var vv in res.ResponseStream.Current.Messages)
+                    {
+                        MessageNotifyCallBack?.Invoke(Cdy.Ant.Message.LoadFromString(vv),false);
+                    }
+                }
+                catch
+                {
+                    MessageNotifyCallBack?.Invoke(null, true);
+                    return;
+                }
+            }
+        }
 
     }
 

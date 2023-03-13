@@ -18,8 +18,14 @@ namespace InAntStudio
     {
         public static string Get(string name)
         {
-            string str = Properties.Resources.ResourceManager.GetString(name, Thread.CurrentThread.CurrentUICulture);
-            return string.IsNullOrEmpty(str) ? name : str;
+            try
+            {
+                string str = Properties.Resources.ResourceManager.GetString(name, Thread.CurrentThread.CurrentUICulture);
+                return string.IsNullOrEmpty(str) ? name : str;
+            }catch
+            {
+                return name;
+            }
         }
     }
 }
